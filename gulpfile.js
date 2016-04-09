@@ -4,6 +4,7 @@ var jshint = require("gulp-jshint");
 var cache = require("gulp-cached");
 var react = require("gulp-react");
 var jscs = require("gulp-jscs");
+
 // Load plugins
 var $ = require("gulp-load-plugins")();
 var browserify = require("browserify");
@@ -12,6 +13,13 @@ var reactify = require('reactify');
 var babelify = require('babelify');
 var source = require("vinyl-source-stream");
 var browserSync = require("browser-sync");
+var rename = require("gulp-rename");
+
+var minifyCSS = require("gulp-minify-css");
+var sass = require('gulp-ruby-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var minifycss = require('gulp-minify-css');
+var rename = require('gulp-rename');
 
 // Config client
 var reload = browserSync.reload;
@@ -44,22 +52,30 @@ gulp.task("vendor", function() {
         .pipe(gulp.dest("server/app/public/vendor"));
 });
 
-gulp.task("styles", ["moveCss", "assets"]);
-
-gulp.task("img", function() {
-    return gulp.src(["./client/app/img/**/*.*"], { base: "./client/app/img/" })
-        .pipe(gulp.dest("server/app/public/img"));
-});
-
 gulp.task("fonts", function() {
     return gulp.src(["./client/app/fonts/**/*.*"], { base: "./client/app/fonts/" })
         .pipe(gulp.dest("server/app/public/fonts"));
 });
 
-gulp.task("assets", ["img", "fonts", "js"]);
+gulp.task("styles", function() {
+    return $.rubySass(
+            ["./client/app/styles/**/*.sass"],
+            {
+                style: "expanded",
+                precision: 10,
+                loadPath: ["app/bower_components","node_modules"]
+            }
+        )
+        .pipe($.autoprefixer("last 1 version"))
+        .pipe(gulp.dest("client/app/css/"))
+        .pipe($.size())
+        .pipe(rename({suffix: ".min"}))
+        .pipe(minifyCSS())
+        .pipe(gulp.dest("server/app/public/styles"));;
+});
 
-gulp.task("moveCss",["clean"], function(){
-    return gulp.src(["./client/app/styles/**/*.css"], { base: "./client/app/styles/" })
+gulp.task("copyCss",["clean"], function(){
+    return gulp.src(["./client/app/css/**/*.css"], { base: "./client/app/css/" })
         .pipe(gulp.dest("server/app/public/styles"));
 });
 
@@ -68,15 +84,10 @@ gulp.task("js", function() {
         .pipe(gulp.dest("server/app/public/js"));
 });
 
+
 gulp.task("images", function() {
-    return gulp.src("/client/app/images/**/*")
-        .pipe($.cache($.imagemin({
-            optimizationLevel: 3,
-            progressive: true,
-            interlaced: true
-        })))
-        .pipe(gulp.dest("server/app/public/images"))
-        .pipe($.size());
+    return gulp.src(["./client/app/images/**/*.*"], { base: "./client/app/img/" })
+        .pipe(gulp.dest("server/app/public/images"));
 });
 
 gulp.task("extras", function() {
@@ -85,9 +96,10 @@ gulp.task("extras", function() {
         .pipe($.size());
 });
 
+gulp.task("assets", ["vendor", "js", "fonts", "images", "extras", "styles", "html", "copyCss"]);
 // ---
 
-gulp.task("watch", ["dev", "vendor", "html", "styles", "images", "extras"], function() {
+gulp.task("watch", ["dev", "assets"], function() {
 
     browserSync({
         notify: false,
@@ -98,13 +110,13 @@ gulp.task("watch", ["dev", "vendor", "html", "styles", "images", "extras"], func
         server: ["server/app/public", "app"]
     });
 
-    // // Watch .html files
-    // gulp.watch("app/*.html", reload);
+    // Watch .html files
+    gulp.watch("client/app/*.html", reload);
 
-    // gulp.watch(["app/styles/**/*.css"], ["styles", reload]);
+    gulp.watch(["client/app/styles/**/*.css"], ["styles", reload]);
 
-    // // Watch image files
-    // gulp.watch("app/images/**/*", reload);
+    // Watch image files
+    gulp.watch("client/app/images/**/*", reload);
 });
 
 var bundler = watchify(browserify({
@@ -135,7 +147,7 @@ function rebundle() {
 gulp.task("dev", rebundle);
 
 // build all app
-gulp.task("build", ["buildScripts", "vendor", "html", "styles", "images", "extras"], function() {
+gulp.task("build", ["buildScripts", "assets"], function() {
     gulp.src("server/app/public/scripts/app.js")
         .pipe($.uglify())
         .pipe($.stripDebug())
