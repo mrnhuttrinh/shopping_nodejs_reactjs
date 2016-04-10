@@ -3449,6 +3449,10 @@ nav.chose_cate > a {
   padding-left: 20px;
   cursor: default;
   padding-top: 12px;
+  color: white;
+}
+nav.chose_cate > a:hover {
+  text-decoration: none;
 }
 nav.chose_cate span.icon-menu {
   font-size: 22px;
@@ -6267,6 +6271,7 @@ ul.menu_ver > li:hover span.ic_cm, ul.menu_ver > li:hover span.icon_cm {
   color: #fff;
 }
 ul.menu_ver > li > a {
+  text-decoration: none;
   color: #414141;
   white-space: nowrap;
   line-height: 40px;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class HeaderMenu extends Component{
+export default class HeaderMenu extends Component {
     render() {
         return (
             <div className="header_menu">

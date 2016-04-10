@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class Bxslider extends Component{
+export default class Bxslider extends Component {
     render() {
         return (
             <ul className="bxslider">

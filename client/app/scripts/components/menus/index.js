@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import Bxslider from './Bxslider'
+import JumpMenu from './JumpMenu'
 
-export default class Menu extends Component{
+export default class Menu extends Component {
     componentDidMount() {
         $(document).ready(function(){
             var slider = $('.bxslider');
@@ -709,6 +710,7 @@ export default class Menu extends Component{
                     </div>
                     <br className="clean" />
                 </div>
+                <JumpMenu />
             </div>
         );
     }

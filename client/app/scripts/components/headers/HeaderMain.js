@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class HeaderMain extends Component{
+export default class HeaderMain extends Component {
     render() {
         return (
             <div className="header_main ">
@@ -636,7 +636,7 @@ export default class HeaderMain extends Component{
                         </div>
                     </nav>
                     <div className="logo_cungmua">
-                        <a href="/" className="logo_cungmua"><img alt="cungmua" src="/Content/images/logo_cungmua.png" width="163" height="34" /></a>
+                        <a href="/" className="logo_cungmua"><img alt="cungmua" src="/images/logo_cungmua.png" width="163" height="34" /></a>
                     </div>
                     <div className="menu_right_home">
                         <div id="divSearch" className="search">
