@@ -5,15 +5,12 @@
  * Module dependencies.
  */
 var app = require("../app");
-var path = require("path");
 var http = require("http");
-var url = path.resolve(__dirname, "../..");
-var fs = require("fs");
-var config = JSON.parse(fs.readFileSync("./config.json", "utf8"));
+var config = require("../config");
 /**
  * Get port from environment and store in Express.
  */
-var port = config.server.port || 8001;
+var port = process.env.PORT || config.server.port;
 app.set("port", port);
 /**
  * Create HTTP server.

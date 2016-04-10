@@ -1,0 +1,26 @@
+{
+    "development": {
+        "server": {
+            "port": 8000
+        },
+        "datastores": {
+            "username": "root",
+            "password": "root",
+            "database": "database_production",
+            "host": "127.0.0.1",
+            "dialect": "mysql"
+        }
+    },
+    "production": {
+        "server": {
+            "port": 9000
+        },
+        "datastores": {
+            "username": "root",
+            "password": "root",
+            "database": "database_production",
+            "host": "127.0.0.1",
+            "dialect": "mysql"
+        }
+    }
+}

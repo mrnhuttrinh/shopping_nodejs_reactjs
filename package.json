@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "gulp client & node ./server/app/bin/www",
+    "database": "node ./server/app/generateDB.js",
     "test": "node ./server/app/bin/www"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "machina": "^1.0.0-1",
     "moment": "^2.10.3",
     "morgan": "~1.5.1",
+    "mysql": "^2.10.2",
     "object-assign": "^4.0.1",
     "pg": "~4.2.0",
     "q": "1.2.0",
@@ -40,6 +42,7 @@
     "request": "^2.55.0",
     "s3": "^4.4.0",
     "semver": "^4.3.5",
+    "sequelize": "^3.21.0",
     "serve-favicon": "~2.2.0",
     "shelljs": "~0.5.3",
     "string-format": "^0.5.0"
