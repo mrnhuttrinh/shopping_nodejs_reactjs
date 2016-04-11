@@ -1,5 +1,5 @@
 http://chatjs.net/
-
+http://www.softslate.com/documentation/html/images/full2.0.gif
 set evironment server
 http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
 

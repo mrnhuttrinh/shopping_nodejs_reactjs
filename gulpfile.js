@@ -57,22 +57,6 @@ gulp.task("fonts", function() {
         .pipe(gulp.dest("server/app/public/fonts"));
 });
 
-gulp.task("styles", function() {
-    return $.rubySass(
-            ["./client/app/styles/**/*.sass"],
-            {
-                style: "expanded",
-                precision: 10,
-                loadPath: ["app/bower_components","node_modules"]
-            }
-        )
-        .pipe($.autoprefixer("last 1 version"))
-        .pipe(gulp.dest("client/app/css/"))
-        .pipe($.size())
-        .pipe(rename({suffix: ".min"}))
-        .pipe(gulp.dest("server/app/public/styles"));;
-});
-
 // gulp.task("styles", function() {
 //     return $.rubySass(
 //             ["./client/app/styles/**/*.sass"],
@@ -86,9 +70,14 @@ gulp.task("styles", function() {
 //         .pipe(gulp.dest("client/app/css/"))
 //         .pipe($.size())
 //         .pipe(rename({suffix: ".min"}))
-//         .pipe(minifyCSS())
 //         .pipe(gulp.dest("server/app/public/styles"));;
 // });
+// 
+gulp.task("styles", function() {
+    return gulp.src(["./client/app/css/**/*.*"], { base: "./client/app/css/" })
+        .pipe(rename({suffix: ".min"}))
+        .pipe(gulp.dest("server/app/public/css"));
+});
 
 gulp.task("copyCss",["clean"], function(){
     return gulp.src(["./client/app/css/**/*.css"], { base: "./client/app/css/" })

@@ -31,7 +31,7 @@ export default class Header extends Component {
         return (
             <header id="mainHeader" className="index_header">
                 <HeaderMenu />
-                <HeaderMain />
+                <HeaderMain menus={this.props.menus}/>
             </header>
         );
     }
