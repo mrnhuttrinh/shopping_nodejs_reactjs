@@ -4,13 +4,21 @@ import Menu from './menus'
 import ScrollTop from './ScrollTop'
 import Contents from './contents'
 import Footer from './footers'
+import MainMenu from './MainMenu'
+
+import { connect, bindActionCreators } from 'react-redux'
+import {getMenu} from '../actions/main'
 
 export default class Main extends Component {
+    componentDidMount() {
+        this.props.getMenu();
+    }
     render() {
         return (
             <div className="index">
-                <Header />
-                <Menu />
+                <MainMenu />
+                <Header menus={this.props.menus}/>
+                <Menu menus={this.props.menus}/>
                 <Contents />
                 <ScrollTop />
                 <Footer />
@@ -18,3 +26,16 @@ export default class Main extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        ...state.default
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {
+        getMenu
+    }
+)(Main)
