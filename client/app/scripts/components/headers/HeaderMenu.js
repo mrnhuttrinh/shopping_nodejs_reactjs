@@ -5,7 +5,7 @@ export default class HeaderMenu extends Component {
         return (
             <div className="header_menu">
                 <div className="container">
-                    <div className="col-lg-3"><a className="link_premium" href="/premium"><span className="ic_cm icon-card">o</span>Hội viên premium</a></div>
+                    <div className="col-lg-3"><a className="link_premium" href="/#"><span className="ic_cm icon-card">c</span>Trang Chủ</a></div>
                     <div className="col-lg-9">
                         <ul className="menu_top">
                             <li className="end">
@@ -34,18 +34,6 @@ export default class HeaderMenu extends Component {
                                             trong giỏ hàng của bạn
                                         </p>
                                     </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="/dang-nhap">Đăng nhập<span className="ic_cm icon-arrow-d">k</span></a>
-                                <div className="hover_menu">
-                                    <ul className="list_hotline">
-                                        <li className="btn"><a className="btn_face" onclick="login.FacebookLogin()"></a></li>
-                                        <li className="btn">
-                                            <button className="btn_brand1" onclick="location.href = '/dang-nhap'">ĐĂNG NHẬP</button>
-                                        </li>
-                                        <li className="note">Khách hàng mới? <a href="/dang-ky-tai-khoan"> Tạo tài khoản</a></li>
-                                    </ul>
                                 </div>
                             </li>
                         </ul>
