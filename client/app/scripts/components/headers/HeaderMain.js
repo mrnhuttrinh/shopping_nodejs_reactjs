@@ -34,7 +34,7 @@ export default class HeaderMain extends Component {
                 <div className="container">
                     <nav className="chose_cate">
                         <a><span className="ic_cm icon-menu">A</span><span className="text_cate">CHỌN DANH MỤC</span></a>
-                        <div className="menu_cate menu_ver_inside ">
+                        <div className="menu_cate menu_ver_inside " id="menu_cate_header">
                             <HeaderMenu menus={this.props.menus} />
                         </div>
                     </nav>

@@ -44,6 +44,7 @@ export default class HeaderMenu extends Component {
                 });
 
                 var TwoLevelHtml;
+                var TwoLevelHtmlHidden;
                 if (html.length) {
                     TwoLevelHtml = (
                         <div className="menu_ver_hover">
@@ -51,6 +52,11 @@ export default class HeaderMenu extends Component {
                                 {html}
                             </ul>
                         </div>
+                    );
+                    TwoLevelHtmlHidden = (
+                        <ul className="menu_cate_hidden">
+                            {html}
+                        </ul>
                     );
                 }
                 menu.html = (
@@ -65,6 +71,7 @@ export default class HeaderMenu extends Component {
                             </span>
                         </a>
                         {TwoLevelHtml}
+                        {TwoLevelHtmlHidden}
                     </li>
                 );
                 return menu;
