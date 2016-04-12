@@ -375,6 +375,9 @@ input, select {
 }
 
 @media (max-width: 768px) {
+  .mainmenu{
+    display: none;
+  }
   .col-sm-offset-0, .col-md-offset-0, .col-lg-offset-0, .col-xs-offset-0 {
     margin-left: 0;
   }
@@ -14524,9 +14527,6 @@ ul.deal_forever p.num_down {
     width: 32.68%;
     margin-right: 2%;
   }
-  ul.listdeal_four li.end, ul.listdeal_three li.end, ul.listdeal_three_m li.end {
-    display: none;
-  }
   ul.listdeal_two li {
     width: 96%;
     margin-left: 2%;
@@ -14674,10 +14674,6 @@ ul.deal_forever p.num_down {
     display: none !important;
   }
   div.banner_header {
-    display: none;
-  }
-
-  li.end {
     display: none;
   }
 

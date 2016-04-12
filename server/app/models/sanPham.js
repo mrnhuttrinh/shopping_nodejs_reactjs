@@ -21,5 +21,5 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     }) 
-    return LoaiSP;
+    return SanPham;
 }
