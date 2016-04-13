@@ -1,5 +1,6 @@
 {
     "development": {
+        "secret": "aothunphongcach",
         "server": {
             "port": 8000
         },
@@ -12,6 +13,7 @@
         }
     },
     "production": {
+        "secret": "aothunphongcach",
         "server": {
             "port": 9000
         },

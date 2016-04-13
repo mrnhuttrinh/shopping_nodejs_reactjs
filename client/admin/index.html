@@ -48,6 +48,7 @@
 
         <script src="vendor/jquery/dist/jquery.min.js"></script>
         <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="styles/jquery.chatjs.css">
     </head>
     <body>
         <div id="app"></div>
@@ -56,7 +57,34 @@
     <script src="js/app.config.js"></script>
     <script src="js/app.min.js"></script>
     <script src="js/superbox/superbox.min.js"></script>
+    <!-- chatjs files-->
+    <script src="js/chat/jquery.autosize.js"></script>
+    <script src="js/chat/jquery.chatjs.utils.js"></script>
+    <script src="js/chat/jquery.chatjs.adapter.servertypes.js"></script>
+    <script src="js/chat/jquery.chatjs.adapter.js"></script>
+    <script src="js/chat/jquery.chatjs.adapter.demo.js"></script>
+    <script src="js/chat/jquery.chatjs.window.js"></script>
+    <script src="js/chat/jquery.chatjs.messageboard.js"></script>
+    <script src="js/chat/jquery.chatjs.userlist.js"></script>
+    <script src="js/chat/jquery.chatjs.pmwindow.js"></script>
+    <script src="js/chat/jquery.chatjs.friendswindow.js"></script>
+    <script src="js/chat/jquery.chatjs.controller.js"></script>
     <script type="text/javascript">
-       
+        $(function () {
+            $.chat({
+                // your user information
+                userId: 1,
+                // id of the room. The friends list is based on the room Id
+                roomId: 1,
+                // text displayed when the other user is typing
+                typingText: ' is typing...',
+                // text displayed when there's no other users in the room
+                emptyRoomText: "There's no one around here. You can still open a session in another browser and chat with yourself :)",
+                // the adapter you are using
+                chatJsContentPath: '/Chatjs/',
+                adapter: new DemoAdapter()
+            });
+        });
     </script>
+    <script src="js/chat/scale.fix.js"></script>
 </html>
