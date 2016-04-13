@@ -11,6 +11,11 @@ export default class ScrollTop extends Component {
     componentDidMount() {
         $(function() {
             $(window).on("scroll", function() {
+                var chatWindow = $(".chat-window");
+                if (chatWindow.length) {
+                    var height = chatWindow[0].offsetHeight + 12;
+                    $(".top_control").css("bottom", height +"px")
+                }
                 window.requestAnimationFrame(HandleOnScrolling)
             })
 

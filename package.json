@@ -23,6 +23,7 @@
     "extend": "^3.0.0",
     "fs-extra": "^0.18.4",
     "jshint": "^2.9.1",
+    "jsonwebtoken": "^5.7.0",
     "lodash": "^3.7.0",
     "machina": "^1.0.0-1",
     "moment": "^2.10.3",
