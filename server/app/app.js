@@ -15,7 +15,9 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/shop")));
+app.use("/admin", express.static(path.join(__dirname, "public/admin")));
+// app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use(morgan("dev"));
@@ -31,6 +33,17 @@ app.use(function(req, res, next) {
  */
 var routes = require('./routes/index');
 app.use(Constrains.ROUTE.API.INDEX, routes);
+ 
+// index
+app.get(Constrains.ROUTE.INDEX, function(req, res) {
+    res.sendFile(path.join(__dirname, "public/shop/index.html"));
+});
+
+// admin
+app.get(Constrains.ROUTE.ADMIN, function(req, res) {
+    res.sendFile(path.join(__dirname, "public/admin/index.html"));
+});
+
 
 // catch 404 and forward to error handler
 app.use( function(req, res, next) {

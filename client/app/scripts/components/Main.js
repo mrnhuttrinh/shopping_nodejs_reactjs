@@ -5,6 +5,7 @@ import ScrollTop from './ScrollTop'
 import Contents from './contents'
 import Footer from './footers'
 import MainMenu from './MainMenu'
+import Chat from './Chat'
 
 import { connect, bindActionCreators } from 'react-redux'
 import {getMenu} from '../actions/main'
@@ -22,6 +23,7 @@ export default class Main extends Component {
                 <Contents />
                 <ScrollTop />
                 <Footer />
+                <Chat />
             </div>
         );
     }
