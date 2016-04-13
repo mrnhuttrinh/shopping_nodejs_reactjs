@@ -89,5 +89,11 @@
     "transform": [
       "babelify"
     ]
-  }
+  },
+  "engines": {
+    "node": "v5.5.0",
+    "npm": "3.5.0",
+    "bower": "1.6.5",
+    "gem": "2.4.5.1"
+ }
 }

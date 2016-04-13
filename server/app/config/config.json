@@ -1,7 +1,7 @@
 {
     "development": {
         "server": {
-            "port": 8000
+            "port": 8080
         },
         "datastores": {
             "username": "root",
@@ -13,7 +13,7 @@
     },
     "production": {
         "server": {
-            "port": 9000
+            "port": 8080
         },
         "datastores": {
             "username": "root",

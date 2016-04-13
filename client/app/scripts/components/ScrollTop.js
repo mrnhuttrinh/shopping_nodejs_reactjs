@@ -11,6 +11,11 @@ export default class ScrollTop extends Component {
     componentDidMount() {
         $(function() {
             $(window).on("scroll", function() {
+                var zopim = $(".zopim");
+                if (zopim) {
+                    var height = zopim[0].offsetHeight + zopim[1].offsetHeight + 20;
+                    $(".top_control").css("bottom", height +"px")
+                }
                 window.requestAnimationFrame(HandleOnScrolling)
             })
 

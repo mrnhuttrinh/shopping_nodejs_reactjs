@@ -13835,12 +13835,10 @@ ul.deal_forever p.num_down {
     color: #32004b;
 }
 
-
 nav.mainmenu {
     z-index: 9999;
     width: 245px;
     position: fixed;
-    bottom: 10px;
     left: -200px;
     background-color: #464646;
     font-family: Verdana, Arial, sans-serif;
@@ -13853,45 +13851,33 @@ nav.mainmenu {
     -webkit-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
 }
-
 nav.mainmenu:hover {
-    top: 10px;
-    left: 0px !important;
-    -moz-transition: all 0.3s ease-out !important;
-    -o-transition: all 0.3s ease-out !important;
-    -webkit-transition: all 0.3s ease-out !important;
-    transition: all 0.3s ease-out !important;
+    left: 0;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
-
-nav.mainmenu:hover ul {
-    display: block;
-}
-
 nav.mainmenu h4 {
     padding: 10px;
     color: #eee;
     font-family: fantasy;
 }
-
 nav.mainmenu h4 span {
     position: absolute;
     right: 13px;
     top: 10px;
 }
-
 nav.mainmenu ul {
     list-style: none;
     display: none;
 }
-
 nav.mainmenu li {
     border-top: 1px solid #333;
 }
-
 nav.mainmenu li:first-child {
     border-top: 1px solid #db0000;
 }
-
 nav.mainmenu a {
     font-family: sans-serif;
     margin: 0;
@@ -13913,7 +13899,6 @@ nav.mainmenu a {
     -webkit-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
-
 nav.mainmenu a:hover {
     color: #eee;
     background-color: #3f3f3f;
@@ -13926,11 +13911,9 @@ nav.mainmenu a:hover {
     background-image: -webkit-linear-gradient(top, #3f3f3f 0%, #3f3f3f 100%);
     background-image: linear-gradient(to bottom, #3f3f3f 0%, #3f3f3f 100%);
 }
-
 nav.mainmenu a:hover span {
     color: #eee;
 }
-
 nav.mainmenu a span {
     padding: 10px 20px 10px 10px;
     width: 20px;
@@ -13942,6 +13925,48 @@ nav.mainmenu a span {
     color: #db0000;
     font-size: 0.9em;
     border-left: 1px solid #333;
+}
+
+
+@media (max-width: 1199px) {
+    nav.mainmenu {
+        bottom: 10px;
+    }
+
+    nav.mainmenu:hover {
+        top: 10px;
+        left: 0px !important;
+        -moz-transition: all 0.3s ease-out !important;
+        -o-transition: all 0.3s ease-out !important;
+        -webkit-transition: all 0.3s ease-out !important;
+        transition: all 0.3s ease-out !important;
+    }
+
+    nav.mainmenu:hover ul {
+        display: block;
+    }
+
+    nav.mainmenu ul {
+        list-style: none;
+        display: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    nav.mainmenu {
+        top: 100px;
+    }
+    nav.mainmenu:hover {
+        left: 0;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        -webkit-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+    nav.mainmenu ul {
+        list-style: none;
+        display: block;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -14929,12 +14954,160 @@ nav.mainmenu a span {
         width: 100%;
         padding-left: 0px;
     }
-    header#mainHeader {
+    /*header#mainHeader {
+        display: none !important;
+    }*/
+
+
+
+    .scroll_menu {
+        display: block;
+    }
+
+    div.menu_ver_hover {
         display: none !important;
     }
+    div.header_menu {
+        display: none !important;
+    }
+    div.logo_cungmua {
+        display: none !important;
+    }
+    nav.chose_cate span.text_cate {
+        display: none !important;
+    }
+
+    nav.chose_cate {
+        background: none;
+        width: 50px;
+    }
+    nav.chose_cate span.text_cate {
+        display: none;
+    }
+    div.hightlight_deal a.big_deal img {
+        width: 100%;
+        height: auto;
+    }
+    div.search {
+        width: 32px;
+        position: absolute;
+        right: 0;
+        background: none;
+    }
+    div.search button.btn_search {
+        background: #81d8d0;
+        width: auto;
+    }
+    div.search button.btn_search span.ic_cm {
+        color: #fff;
+    }
+    div.search button.btn_search:hover {
+        background: #81d8d0;
+    }
+    div.search input[type="text"] {
+        display: none;
+        position: absolute;
+        z-index: 9990;
+    }
+    nav.chose_cate {
+        cursor: pointer !important;
+    }
+    nav.chose_cate > a {
+        padding: 12px 10px 15px 10px;
+        cursor: pointer !important;
+    }
+    nav.chose_cate:hover div.menu_ver_inside {
+        display: block;
+    }
+
+    nav.chose_cate > a {
+        padding: 12px 10px 15px 10px;
+        cursor: pointer !important;
+    }
+
     div.menu_cate {
-        display: none !important;
+        display: none;
     }
+
+    nav.chose_cate:hover div.menu_ver_inside {
+        display: block;
+    }
+
+    /*div.menu_cate {
+        display: none !important;
+    }*/
+
+
+    ul.menu_ver li:hover ul.menu_cate_hidden {
+        display: block;
+        list-style: none;
+        background-color: white;
+    }
+
+    ul.menu_ver li:hover ul.menu_cate_hidden li.bold{
+        background-color: #85CACA;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 28px;
+        color: white;
+        border-left: 1px solid white;
+        border-bottom: 1px solid white;
+        padding-left: 20px;
+        text-decoration: none;
+    }
+
+    ul.menu_ver li:hover ul.menu_cate_hidden li{
+        background-color: #7DB1CA;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 50px;
+        color: white;
+        border-left: 1px solid white;
+        border-bottom: 1px solid white;
+        padding-left: 40px;
+        text-decoration: none;
+    }
+
+    ul.menu_cate_hidden li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    ul.menu_ver li:hover div.menu_ver_inside, div.menu_cate {
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+        height: 410px !important;
+        width: 310px !important;
+    }
+
+    body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    body.thin::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    #menu_cate_header::-webkit-scrollbar-track
+    {
+        border-radius: 10px;
+        background: #eee;
+    }
+
+    #menu_cate_header::-webkit-scrollbar
+    {
+        width: 4px;
+    }
+
+    #menu_cate_header::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        background: #888;
+    }
+    #menu_cate_header::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(100,100,100,0.4); 
+    }
+
     ul.listdeal_four li, ul.listdeal_three li, ul.listdeal_three_m li {
         width: 47.6%;
         margin-left: 1.2%;
@@ -14991,4 +15164,8 @@ nav.mainmenu a span {
         width: 32.68%;
         margin-right: 2%;
     }
+}
+
+ul.menu_cate_hidden {
+    display: none;
 }
