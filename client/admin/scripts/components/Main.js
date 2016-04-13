@@ -3,6 +3,7 @@ import { connect, bindActionCreators } from 'react-redux'
 import {getGroup} from '../actions/main'
 import Group from './detailMains/Group';
 
+
 class Main extends Component{
     constructor(props) {
         super(props)
@@ -28,6 +29,7 @@ class Main extends Component{
                 <div id="content">
                     <Group data_group={this.props.data_group} />
                 </div>
+                
             </div>
         );
     }
