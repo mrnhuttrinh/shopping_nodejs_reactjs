@@ -1,10 +1,10 @@
 {
-  "name": "MASS-PolicyEngine",
+  "name": "aothunphongcach",
   "version": "1.0.0",
-  "description": "Mass Policy Engine",
+  "description": "aothunphongcach",
   "private": true,
   "scripts": {
-    "start": "gulp client & node ./server/app/bin/www",
+    "start": "gulp client & gulp admin & node ./server/app/bin/www",
     "database": "node ./server/app/generateDB.js",
     "test": "node ./server/app/bin/www"
   },
