@@ -5,12 +5,9 @@ import MasterPage           from './MasterPage'
 import Contents             from '../components/contents'
 
 export default class Main extends Component {
-    componentDidMount() {
-        this.props.getMenu();
-    }
     render() {
         return (
-            <MasterPage menus={this.props.menus}>
+            <MasterPage>
                 <Contents />
             </MasterPage>
         );
@@ -23,9 +20,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    {
-        getMenu
-    }
-)(Main)
+export default connect(mapStateToProps)(Main)
