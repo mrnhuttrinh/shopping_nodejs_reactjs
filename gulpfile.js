@@ -115,7 +115,8 @@ gulp.task("watch", ["dev", "assets"], function() {
         // Run as an https by uncommenting "https: true"
         // Note: this uses an unsigned certificate which on first access
         // will present a certificate warning in the browser.
-        server: [publicFolder, "app"]
+        server: [publicFolder, "app"],
+        port: 3000
     });
 
     // Watch .html files
@@ -256,7 +257,8 @@ gulp.task("watch_admin", [
         // Run as an https by uncommenting "https: true"
         // Note: this uses an unsigned certificate which on first access
         // will present a certificate warning in the browser.
-        server: [adminFolder, "admin"]
+        server: [adminFolder, "admin"],
+        port: 4000
     });
 
     // Watch .html files

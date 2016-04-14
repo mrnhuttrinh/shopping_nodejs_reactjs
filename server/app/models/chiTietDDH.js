@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var LoaiSP = sequelize.define("LoaiSP", {
+    var ChiTietDDH = sequelize.define("ChiTietDDH", {
         STT: DataTypes.INTEGER,
         TENLOAI: DataTypes.STRING
     }) 

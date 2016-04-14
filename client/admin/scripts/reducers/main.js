@@ -1,15 +1,19 @@
-import { GET_GROUP, GET_CATEGORIES } from '../constants'
-import _ from 'lodash'
+import Constants from '../constants'
+import _ from 'lodash';
+var ACTION = Constants.ACTION;
+import localItem from '../utils/localItem';
 
-export default function update(state = {}, action) {
+var initialState = {
+    user: {}
+}
+
+export default function update(state = initialState, action) {
+    var newState;
     switch (action.type) {
-        case GET_GROUP:
-            return {
-                data_group: action.data_group
-            };
-        case GET_CATEGORIES: 
-            let newState = _.cloneDeep(state);
-            newState.categories = action.categories;
+        case ACTION.SIGN_IN:
+            localItem.setItem("token", action.user.token);
+            newState = _.cloneDeep(state);
+            newState.user = action.user;
             return newState;
         default:
             return state;

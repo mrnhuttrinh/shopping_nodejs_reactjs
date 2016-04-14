@@ -1,43 +1,36 @@
 import React, {Component} from 'react'
 
 export default class Chat extends Component {
-    componentDidMount() {
-        $(document).on('click', '.panel-heading span.icon_minim', function (e) {
-            var $this = $(this);
-            if (!$this.hasClass('panel-collapsed')) {
-                $this.parents('.panel').find('.panel-body').slideUp();
-                $this.addClass('panel-collapsed');
-                $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
-            } else {
-                $this.parents('.panel').find('.panel-body').slideDown();
-                $this.removeClass('panel-collapsed');
-                $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
-            }
-        });
-        $(document).on('focus', '.panel-footer input.chat_input', function (e) {
-            var $this = $(this);
-            if ($('#minim_chat_window').hasClass('panel-collapsed')) {
-                $this.parents('.panel').find('.panel-body').slideDown();
-                $('#minim_chat_window').removeClass('panel-collapsed');
-                $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-            }
-        });
-        $(document).on('click', '#new_chat', function (e) {
-            var size = $( ".chat-window:last-child" ).css("margin-left");
-             size_total = parseInt(size) + 400;
-            alert(size_total);
-            var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
-            clone.css("margin-left", size_total);
-        });
-        $(document).on('click', '.icon_close', function (e) {
-            //$(this).parent().parent().parent().parent().remove();
-            $( "#chat_window_1" ).remove();
-        });
+    onFocusWriteMessage(event) {
+        self = $(event.currentTarget);
+        var miniChatWindow = $(this.refs["minim_chat_window"]);
+        if (miniChatWindow.hasClass('panel-collapsed')) {
+            self.parents('.panel').find('.panel-body').slideDown();
+            miniChatWindow.removeClass('panel-collapsed');
+            miniChatWindow.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        }
+    }
+    panelHeadingClick(event) {
+        self = $(event.currentTarget);
+        event.preventDefault();
+        if (!self.hasClass('panel-collapsed')) {
+            self.parents('.panel').find('.panel-body').slideUp();
+            self.addClass('panel-collapsed');
+            self.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+        } else {
+            self.parents('.panel').find('.panel-body').slideDown();
+            self.removeClass('panel-collapsed');
+            self.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        }
+    }
+    iconCloseClick(event) {
+        this.refs["chat_window"].remove();
+        event.preventDefault();
     }
     render() {
         return (
             <div className="container">
-                <div className="row chat-window" id="chat_window_1" style={{"margin-left": "10px"}}>
+                <div ref="chat_window" className="row chat-window" id="chat_window">
                     <div className="col-xs-12 col-md-12">
                         <div className="panel panel-default">
                             <div className="panel-heading top-bar">
@@ -48,13 +41,13 @@ export default class Chat extends Component {
                                         Chat - Miguel
                                     </h3>
                                 </div>
-                                <div className="col-md-4 col-xs-4" style={{"text-align": "right"}}>
+                                <div className="col-md-4 col-xs-4">
                                     <a href="#">
-                                        <span className="glyphicon icon_minim panel-collapsed glyphicon-plus" id="minim_chat_window">
+                                        <span ref="icon_minim" onClick={this.panelHeadingClick.bind(this)} className="glyphicon icon_minim panel-collapsed glyphicon-plus" ref="minim_chat_window" id="minim_chat_window">
                                         </span>
                                     </a>
                                     <a href="#">
-                                        <span className="glyphicon glyphicon-remove icon_close" data-id="chat_window_1">
+                                        <span onClick={this.iconCloseClick.bind(this)} ref="icon_close" className="glyphicon glyphicon-remove icon_close" data-id="chat_window_1">
                                         </span>
                                     </a>
                                 </div>
@@ -165,7 +158,7 @@ export default class Chat extends Component {
                             </div>
                             <div className="panel-footer">
                                 <div className="input-group">
-                                    <input className="form-control input-sm chat_input" id="btn-input" placeholder="Write your message here..." type="text"/>
+                                    <input onFocus ={this.onFocusWriteMessage.bind(this)} className="form-control input-sm chat_input" id="btn-input" placeholder="Write your message here..." type="text"/>
                                     <span className="input-group-btn">
                                         <button className="btn btn-primary btn-sm" id="btn-chat">
                                             Send
@@ -175,47 +168,6 @@ export default class Chat extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="btn-group dropup">
-                    <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
-                        <span className="glyphicon glyphicon-cog">
-                        </span>
-                        <span className="sr-only">
-                            Toggle Dropdown
-                        </span>
-                    </button>
-                    <ul className="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#" id="new_chat">
-                                <span className="glyphicon glyphicon-plus">
-                                </span>
-                                Novo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span className="glyphicon glyphicon-list">
-                                </span>
-                                Ver outras
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span className="glyphicon glyphicon-remove">
-                                </span>
-                                Fechar Tudo
-                            </a>
-                        </li>
-                        <li className="divider">
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span className="glyphicon glyphicon-eye-close">
-                                </span>
-                                Invisivel
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         );

@@ -141,30 +141,18 @@ export default class Products extends Component{
     render() {
         var ViewContent = this.state.viewType == "table" ? Table : Grid;
         return (
-            <div id="main" role="main">
-                <div id="ribbon">
-                    <span className="ribbon-button-alignment"> 
-                        <span id="refresh" className="btn btn-ribbon" data-action="resetWidgets" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i className='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-                            <i className="fa fa-refresh"></i>
-                        </span> 
-                    </span>
-                    <ol className="breadcrumb">
-                        <li>Home</li><li>Products</li>
-                    </ol>
-                </div>
-                <div id="content">
-                    <div className="row">
-                        <div className="btn-group col-sm-12"> 
-                            <button onClick={this._grid.bind(null, this)} type="button" className="btn btn-default" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-th" aria-hidden="true"></span>
-                            </button> 
-                            <button onClick={this._table.bind(null, this)} type="button" className="btn btn-default" aria-label="Justify">
-                                <span className="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-                            </button> 
-                        </div>
+            <div>
+                <div className="row">
+                    <div className="btn-group col-sm-12"> 
+                        <button onClick={this._grid.bind(null, this)} type="button" className="btn btn-default" aria-label="Left Align">
+                            <span className="glyphicon glyphicon-th" aria-hidden="true"></span>
+                        </button> 
+                        <button onClick={this._table.bind(null, this)} type="button" className="btn btn-default" aria-label="Justify">
+                            <span className="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                        </button> 
                     </div>
-                    <ViewContent />
                 </div>
+                <ViewContent />
             </div>
         )
     }

@@ -1,24 +1,17 @@
-import { GET_GROUP, GET_CATEGORIES } from '../constants'
-import apis from '../apis/main';
+import Constants from '../constants'
+var ACTION = Constants.ACTION;
 
-export function getGroup() {
-    return (dispatch) => {
-        apis.getGroup((data_group) => {
-            dispatch({
-                type: GET_GROUP,
-                data_group: data_group
-            })
-        })
-    }
-}
-
-export function getCategories() {
-    return (dispatch) => {
-        apis.getCategory((categories) => {
-            dispatch({
-                type: GET_CATEGORIES,
-                categories: categories
-            })
-        })
+export default {
+    signIn: function (user) {
+        return {
+            type: ACTION.SIGN_IN,
+            user: user
+        }
+    },
+    navigation: function(path) {
+        return {
+            type: ACTION.NAVIGATION,
+            path: path
+        }
     }
 }
