@@ -16,26 +16,21 @@ export default class Header extends Component{
         })
         e.preventDefault()
     }
-    componentDidMount() {
-        $(function() {
-            $("#activity").click(function(a) {
-                var self = $(this);
-                if (self.find(".badge").hasClass("bg-color-red")) {
-                    self.find(".badge").removeClass("bg-color-red");
-                    self.find(".badge").text("0");
-                }
-                if (self.next(".ajax-dropdown").is(":visible")) {
-                    self.next(".ajax-dropdown").fadeOut(150);
-                    self.next(".ajax-dropdown").css("display", "block");
-                    self.removeClass("active");
-                } else {
-                    self.next(".ajax-dropdown").fadeIn(150);
-                    self.next(".ajax-dropdown").css("display", "none");
-                    self.addClass("active");
-                }
-                a.preventDefault()
-            })
-        })
+    clickActivity(event) {
+        var elementActivity = this.refs["activity"];
+        var self = $(elementActivity);
+        if (self.find(".badge").hasClass("bg-color-red")) {
+            self.find(".badge").removeClass("bg-color-red");
+            self.find(".badge").text("0");
+        }
+        if (self.next(".ajax-dropdown").is(":visible")) {
+            self.next(".ajax-dropdown").fadeOut(150);
+            self.removeClass("active");
+        } else {
+            self.next(".ajax-dropdown").fadeIn(150);
+            self.addClass("active");
+        }
+        event.preventDefault();
     }
     render() {
         var listChat = this.state.listChat;
@@ -43,7 +38,7 @@ export default class Header extends Component{
             <header id="header">
                 <div id="logo-group">
                     <span id="logo"> <img src="img/logo.png" alt="SmartAdmin" /> </span>
-                    <span id="activity" className="activity-dropdown">
+                    <span onClick={this.clickActivity.bind(this)} ref="activity" id="activity" className="activity-dropdown">
                         <i className="fa fa-user"></i>
                         <b className="badge"> 4 </b>
                     </span>
