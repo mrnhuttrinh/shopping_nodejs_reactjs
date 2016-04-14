@@ -1,6 +1,16 @@
-import App from './components/App';
+import App from './views/App';
+import Home from './views/Home';
 
 export default {
     path: '/',
-    component: App
+    component: App,
+    indexRoute: {
+        component: Home
+    },
+    childRoutes: [
+        {
+            path: 'home',
+            component: Home
+        }
+    ]
 }

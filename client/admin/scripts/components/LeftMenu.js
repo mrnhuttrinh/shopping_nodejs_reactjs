@@ -5,7 +5,7 @@ export default class LeftMenu extends Component{
     render() {
         var pathName = this.props.pathName;
         return (
-            <aside id="left-panel" style={{"position": "fixed"}}>
+            <aside id="left-panel">
                 <div className="login-info">
                     <span>
                         <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
@@ -22,8 +22,8 @@ export default class LeftMenu extends Component{
                         <li className={pathName == "/" ? "active" : ""}>
                             <Link to="/"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Dashboard</span></Link>
                         </li>
-                        <li className={pathName == "/products" ? "active" : ""}>
-                            <Link to="/products"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Products</span><span className="badge pull-right inbox-badge">14</span></Link>
+                        <li className={pathName == "/product" ? "active" : ""}>
+                            <Link to="/product"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Products</span><span className="badge pull-right inbox-badge">14</span></Link>
                         </li>
                         <li className={pathName == "/inbox" ? "active" : ""}>
                             <Link to="/inbox"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Inbox</span><span className="badge pull-right inbox-badge">14</span></Link>

@@ -40,7 +40,7 @@ export default class Header extends Component{
     render() {
         var listChat = this.state.listChat;
         return (
-            <header id="header" style={{"position": "fixed", "width": "100%"}}>
+            <header id="header">
                 <div id="logo-group">
                     <span id="logo"> <img src="img/logo.png" alt="SmartAdmin" /> </span>
                     <span id="activity" className="activity-dropdown">
