@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import { connect, bindActionCreators } from 'react-redux'
-import {getGroup} from '../actions/main'
+import _ from 'lodash'
+import localItem from '../utils/localItem';
+import { connect } from 'react-redux'
 import Group from '../components/detailMains/Group';
 import Header from '../components/Header';
 import LeftMenu from '../components/LeftMenu';
@@ -12,7 +13,9 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.getGroup();
+        if(_.isEmpty(localItem.getItem("token"))) {
+            window.location = "/admin/#/login";
+        }
     }
 
     render() {
@@ -43,8 +46,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps,
-    {
-        getGroup
-    }
+    mapStateToProps
 )(Dashboard)

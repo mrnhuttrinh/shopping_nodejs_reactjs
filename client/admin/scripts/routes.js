@@ -71,6 +71,8 @@
 // }
 // 
 // 
+// 
+import _ from 'lodash'
 import App          from './views/App';
 import Dashboard    from './views/Dashboard';
 import NotFound     from './views/NotFound';
@@ -78,6 +80,18 @@ import Login        from './views/Login';
 import Inbox        from './views/Inbox';
 import About        from './views/About';
 import Product      from './views/Product';
+
+import localItem from './utils/localItem';
+
+function requireAuth(nextState, replace) {
+    if (_.isEmpty(localItem.getItem("token"))) {
+        replace({
+            pathname: '/login',
+            state: { nextPathname: nextState.location.pathname }
+        })
+    }
+    // else occurs loop infinite
+}
 
 export default {
     path: '/',
@@ -88,19 +102,23 @@ export default {
     childRoutes: [
         {
             path: 'dashboard',
-            component: Dashboard
+            component: Dashboard,
+            onEnter: requireAuth
         }, {
             path: 'login',
             component: Login
         }, {
             path: 'product',
-            component: Product
+            component: Product,
+            onEnter: requireAuth
         }, {
             path: 'inbox',
-            component: Inbox
+            component: Inbox,
+            onEnter: requireAuth
         }, {
             path: 'about',
-            component: About
+            component: About,
+            onEnter: requireAuth
         }, {
             component: NotFound,
             path: '*'
