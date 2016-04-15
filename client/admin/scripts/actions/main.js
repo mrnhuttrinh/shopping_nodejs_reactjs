@@ -8,10 +8,21 @@ export default {
             user: user
         }
     },
-    navigation: function(path) {
+    getAllUser: function(allUser) {
         return {
-            type: ACTION.NAVIGATION,
-            path: path
+            type: ACTION.GET_ALL_USER,
+            allUser: allUser
+        }
+    },
+    setToken: function(token) {
+        return {
+            type: ACTION.SET_TOKEN,
+            token: token
+        }
+    },
+    logOut: function() {
+        return {
+            type: ACTION.LOG_OUT
         }
     }
 }

@@ -3,7 +3,7 @@ module.exports = {
         INDEX: "/",
         ADMIN: "/admin",
         API: {
-            INDEX: "/apis"
+            INDEX: "/api"
         }
     }
 }

@@ -20,7 +20,7 @@ export default class Footer extends Component {
                                         <div className="padding-5">
                                             <p className="txt-color-darken font-sm no-margin">Download Progress</p>
                                             <div className="progress progress-micro no-margin">
-                                                <div className="progress-bar progress-bar-success" style= {{"width": "50%;"}}></div>
+                                                <div className="progress-bar progress-bar-success"></div>
                                             </div>
                                         </div>
                                     </li>
@@ -29,7 +29,7 @@ export default class Footer extends Component {
                                         <div className="padding-5">
                                             <p className="txt-color-darken font-sm no-margin">Server Load</p>
                                             <div className="progress progress-micro no-margin">
-                                                <div className="progress-bar progress-bar-success" style={{"width": "20%;"}}></div>
+                                                <div className="progress-bar progress-bar-success"></div>
                                             </div>
                                         </div>
                                     </li>
@@ -38,7 +38,7 @@ export default class Footer extends Component {
                                         <div className="padding-5">
                                             <p className="txt-color-darken font-sm no-margin">Memory Load <span className="text-danger">*critical*</span></p>
                                             <div className="progress progress-micro no-margin">
-                                                <div className="progress-bar progress-bar-danger" style={{"width": "70%;"}}></div>
+                                                <div className="progress-bar progress-bar-danger"></div>
                                             </div>
                                         </div>
                                     </li>

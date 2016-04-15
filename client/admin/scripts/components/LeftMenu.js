@@ -22,6 +22,9 @@ export default class LeftMenu extends Component{
                         <li className={pathName == "/" ? "active" : ""}>
                             <Link to="/"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Dashboard</span></Link>
                         </li>
+                        <li className={pathName == "/listuser" ? "active" : ""}>
+                            <Link to="/listuser"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Nhân Viên</span></Link>
+                        </li>
                         <li className={pathName == "/product" ? "active" : ""}>
                             <Link to="/product"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Products</span><span className="badge pull-right inbox-badge">14</span></Link>
                         </li>

@@ -7,7 +7,11 @@ export default class Header extends Component{
             listChat: []
         }
     }
-
+    logOut(event) {
+        event.preventDefault();
+        this.props.logOut();
+        window.location = "/admin/#/login";
+    }
     openChat(self, e) {
         $(".ajax-dropdown").fadeOut(150);
         self.state.listChat.push(<Chat chatNo={"chat_window_1"}/>);
@@ -106,6 +110,9 @@ export default class Header extends Component{
                 <div className="pull-right">
                     <div id="hide-menu" className="btn-header pull-right">
                         <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i className="fa fa-reorder"></i></a> </span>
+                    </div>
+                    <div id="logout" className="btn-header transparent pull-right">
+                        <span> <a onClick={this.logOut.bind(this)} href="javascript:void(0);" title="Sign Out" ><i className="fa fa-sign-out"></i></a> </span>
                     </div>
                 </div>
                 {listChat}

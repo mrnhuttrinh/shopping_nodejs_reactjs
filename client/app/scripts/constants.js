@@ -1,6 +1,6 @@
 module.exports = {
     apis: {
-        getMenu: "/apis/menu"
+        getMenu: "/api/menu"
     },
     actions: {
         GET_MENU: "GET_MENU"
