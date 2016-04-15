@@ -75,7 +75,6 @@ module.exports = {
                 "id",
                 "username",
                 "email",
-                "password",
                 "level",
                 "info",
                 "fullname",
@@ -98,16 +97,21 @@ module.exports = {
                 });
             }
 
-            delete employer["password"];
             res.status(200).send({
                 data: {
-                    employer: employer,
                     token: jwt.sign({
                         "employer": employer
-                    }, config.secret)
+                    }, config.secret, {
+                        expiresIn: 86400 // expires in 24 hours
+                    })
                 }
             })
         });
+    },
+    me: function(req, res) {
+        res.status(200).send({
+            data: req.userToken.employer
+        })
     },
     updateUser: function(req, res) {
         models.Employer.find({
@@ -116,14 +120,11 @@ module.exports = {
             }
         }).then(function(employer, err) {
             if (err) {
-                return res.send({
-                    status: 400,
-                    message: "",
+                return res.status(400).send({
                     error: err
                 });
             }
-            return res.send({
-                status: 200,
+            return res.status(200).send({
                 data: employer
             });
         })
@@ -135,29 +136,24 @@ module.exports = {
             }
         }).then(function(employer, err) {
             if (err) {
-                return res.send({
-                    status: 400,
-                    message: "",
+                return res.status(400).send({
                     error: err
                 });
             }
-            return res.send({
-                status: 200,
+            return res.status(200).send({
                 data: employer
             });
         })
     },
     getAllUser: function(req, res) {
+        console.log(JSON.stringify(req.decoded))
         models.Employer.findAll().then(function(employers, err) {
             if (err) {
-                return res.send({
-                    status: 400,
-                    message: "",
+                return res.status(400).send({
                     error: err
                 });
             }
-            return res.send({
-                status: 200,
+            return res.status(200).send({
                 data: employers
             });
         })

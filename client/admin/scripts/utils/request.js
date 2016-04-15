@@ -18,13 +18,22 @@ function Request() {
         return this;
     },
     this.authorized = function() {
-        var token = localItem("token");
-        this._params.set('Authorization', token);
+        var token = localItem.getItem("token");
+        if (this._params) {
+            this._params.set('Authorization', 'Bearer ' + token);
+        } else {
+            this._params = this._method.set('Authorization', 'Bearer ' + token);
+        }
         return this;
     },
     this.then = function(cb) {
-        this._params.end(cb);
+        if (this._params) {
+            this._params.end(cb);
+        } else {
+            this._method.end(cb);
+        }
+        
         return this;
     }
 }
-export default (new Request());
+export default Request;

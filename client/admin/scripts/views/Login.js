@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
-import actions from '../actions/main'
 import apis from '../apis/main';
+import actions from '../actions/main'
 
 class Login extends Component {
     constructor(props) {
@@ -9,6 +9,20 @@ class Login extends Component {
         this.state = {
             loading: ''
         }
+    }
+
+    componentDidMount() {
+        var self = this;
+        apis.getMe(function(err, res) {
+            if (err) {
+
+            } else {
+                if (res.status === 200) {
+                    self.props.signIn(res.body.data);
+                    window.location = "/admin/#/dashboard";
+                }
+            }
+        });
     }
 
     handleSubmit(event) {
@@ -38,7 +52,7 @@ class Login extends Component {
                 });
             } else {
                 if (res.status === 200) {
-                    self.props.signIn(res.body.data);
+                    self.props.setToken(res.body.data.token);
                     window.location = "/admin/#/dashboard";
                 } else {
                     self.setState({

@@ -62,4 +62,6 @@ app.use( function(err, req, res) {
     });
 });
 
+var autoUpdateDB = require("./db/autoUpdate");
+
 module.exports = app;
