@@ -5,9 +5,11 @@ var Sequelize = require("sequelize");
 var sequelize = require("../db");
 
 var Employer            = sequelize.import("./employer");
+var Category    = sequelize.import("./category");
 
 var db = {};
 db[Employer.name] = Employer;
+db[Category.name] = Category;
 
 Object.keys(db).forEach(function(modelName) {
     if ("associate" in db[modelName]) {
