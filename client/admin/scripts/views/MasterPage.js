@@ -10,14 +10,15 @@ import localItem from '../utils/localItem';
 export default class MasterPage extends Component{
 
     componentDidMount() {
-
+        var tokenLocal = localItem.getItem("token");
         var self = this;
-        if(_.isEmpty(localItem.getItem("token")) 
-            || _.isNull(localItem.getItem("token"))
-            || _.isUndefined(localItem.getItem("token"))
-            || localItem.getItem("token") === "null") {
+        if(_.isEmpty(tokenLocal) 
+            || _.isNull(tokenLocal)
+            || _.isUndefined(tokenLocal)
+            || tokenLocal === "null") {
             window.location = "/admin/#/login";
-        } else if (_.isNull(self.props.user) ) {
+        } else if (_.isNull(self.props.user) 
+                || _.isEmpty(self.props.user) ) {
             apis.getMe(function(err, res) {
                 if (err) {
                     window.location = "/admin/#/login";

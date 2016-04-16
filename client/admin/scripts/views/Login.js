@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import apis from '../apis/main';
 import actions from '../actions/main'
+import _ from 'lodash'
+import localItem from '../utils/localItem';
 
 class Login extends Component {
     constructor(props) {
@@ -12,17 +14,26 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        var tokenLocal = localItem.getItem("token");
         var self = this;
-        apis.getMe(function(err, res) {
-            if (err) {
 
-            } else {
-                if (res.status === 200) {
-                    self.props.signIn(res.body.data);
-                    window.location = "/admin/#/dashboard";
+        if(_.isEmpty(tokenLocal) 
+            || _.isNull(tokenLocal)
+            || _.isUndefined(tokenLocal)
+            || tokenLocal === "null") {
+
+        } else if (_.isNull(self.props.user) ) {
+            apis.getMe(function(err, res) {
+                if (err) {
+
+                } else {
+                    if (res.status === 200) {
+                        self.props.signIn(res.body.data);
+                        window.location = "/admin/#/dashboard";
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     handleSubmit(event) {

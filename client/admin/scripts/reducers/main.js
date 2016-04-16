@@ -13,11 +13,12 @@ export default function update(state = initialState, action) {
     var newState;
     switch (action.type) {
         case ACTION.LOG_OUT:
-            localItem.setItem("token", null);
+            localItem.removeItem("token");
             state = initialState;
             return state;
         case ACTION.SIGN_IN:
             newState = _.cloneDeep(state);
+            newState.token = localItem.getItem("token");
             newState.user = action.user;
             return newState;
         case ACTION.GET_ALL_USER:

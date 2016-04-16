@@ -4,5 +4,8 @@ export default {
     },
     getItem: function(keyName) {
         return localStorage[keyName];
+    },
+    removeItem: function(keyName) {
+        localStorage.removeItem(keyName);
     }
 }
