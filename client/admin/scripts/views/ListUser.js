@@ -5,11 +5,9 @@ import MasterPage from './MasterPage'
 import actions from '../actions/main'
 import apis from '../apis/main';
 import Table from '../components/Table';
+import Modal from '../components/Modal';
 
 class ListUser extends Component{
-    editClick(user, event) {
-        event.preventDefault();
-    }
     componentDidMount() {
         var self = this;
         if (_.isEmpty(this.props.allUser)) {
@@ -26,8 +24,15 @@ class ListUser extends Component{
             });
         }
     }
+    modalExcute(event) {
+        event.preventDefault();
+    }
     render() {
         var self = this;
+        var modalName = "myModal";
+        var modalTitle = "Chỉnh Sửa Nhân Viên";
+        var modalContent = "";
+        var modalExcute = this.modalExcute;
         // var listUser;
         var head= [
             "No.", 
@@ -41,13 +46,18 @@ class ListUser extends Component{
         var rows = _.map(this.props.allUser, (user) => {
             indexNo++;
             var level = user.level === 0 ? "Admin" : "User";
+            
             return [
                 indexNo,
                 user.username,
                 level,
                 user.phone,
                 user.email,
-                (<a onClick={self.editClick.bind(self, user)} className="btn btn-primary btn-xs">Edit</a>)
+                (
+                    <button className="btn btn-primary btn-xs" data-target={"#" + modalName} data-toggle="modal" type="button">
+                        Edit
+                    </button>
+                )
             ]
         });
         return (
@@ -60,6 +70,10 @@ class ListUser extends Component{
                         head={head}
                         rows={rows}/>
                 </div>
+                <Modal modalName={modalName}
+                    modalExcute={modalExcute}
+                    modalContent={modalContent}
+                    modalTitle={modalTitle}/>
             </MasterPage>
         )
     }

@@ -59,6 +59,7 @@ module.exports = {
     signin: function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
+        var checked = req.body.checked;
         if (!username) {
             return res.status(400).send({
                 error: {
@@ -97,15 +98,25 @@ module.exports = {
                 });
             }
 
-            res.status(200).send({
-                data: {
-                    token: jwt.sign({
-                        "employer": employer
-                    }, config.secret, {
-                        expiresIn: 86400 // expires in 24 hours
-                    })
-                }
-            })
+            if (checked) {
+                res.status(200).send({
+                    data: {
+                        token: jwt.sign({
+                            "employer": employer
+                        }, config.secret)
+                    }
+                })
+            } else {
+                res.status(200).send({
+                    data: {
+                        token: jwt.sign({
+                            "employer": employer
+                        }, config.secret, {
+                            expiresIn: 86400 // expires in 24 hours
+                        })
+                    }
+                })
+            }
         });
     },
     me: function(req, res) {

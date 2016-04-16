@@ -12,7 +12,7 @@ class MyProfile extends Component{
                 {...this.props}
                 title={"My Profile"}>
                 <div id="content">
-                    <Profile />
+                    <Profile {...this.props}/>
                 </div>
             </MasterPage>
         )
