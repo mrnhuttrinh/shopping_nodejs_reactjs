@@ -151,3 +151,49 @@
 .login:not(.loading) button:focus {
     border-bottom-width: 4px;
 }
+
+
+/*Page not found*/
+
+.quote {
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.quote:before {
+    content: '{';
+}
+
+.quote:after {
+    content: '}';
+}
+
+.error {
+    text-align: center;
+    position: relative;
+    margin-top: 70px;
+}
+
+.text {
+    position: absolute;
+    right: 13px;
+}
+
+.not-found {
+    margin: 0 auto;
+    width: 334px;
+    padding: 5px;
+}
+
+.info-label {
+    display: inline;
+}
+
+.info-text {
+    text-align: center;
+}
+
+.not-found p {
+    text-align: center;
+}
