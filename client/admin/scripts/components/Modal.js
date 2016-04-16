@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 
 export default class Modal extends Component {
+    componentWillUnmount() {
+        $(this.refs["closeModal"]).click();
+    }
     render() {
         var modalName = this.props.modalName;
         var modalTitle = this.props.modalTitle;
@@ -24,7 +27,7 @@ export default class Modal extends Component {
                             {modalContent}
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-default" data-dismiss="modal" type="button">
+                            <button ref="closeModal" className="btn btn-default" data-dismiss="modal" type="button">
                                 Close
                             </button>
                             <button onClick={modalExcute} className="btn btn-primary" type="button">

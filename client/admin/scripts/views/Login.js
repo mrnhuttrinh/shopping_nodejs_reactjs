@@ -22,7 +22,9 @@ class Login extends Component {
             || _.isUndefined(tokenLocal)
             || tokenLocal === "null") {
 
-        } else if (_.isNull(self.props.user) ) {
+        }
+        if (_.isNull(self.props.user)  ||
+            _.isEmpty(self.props.user)) {
             apis.getMe(function(err, res) {
                 if (err) {
 
@@ -33,6 +35,8 @@ class Login extends Component {
                     }
                 }
             });
+        } else {
+            window.location = "/admin/#/dashboard";
         }
     }
 

@@ -40,8 +40,8 @@ export default class Profile extends Component{
                         <div className="row">
                             <div className="col-sm-4 profile-pic">
                                 <div className="col-sm-3 profile-pic" style={{"width": "100%"}}>
-                                    <img src={user.image} alt="Ảnh Đại Diện" style={{"max-width": "100%","width": "250px", "height": "250px", "top": "-100px"}}/>
-                                    <div style={{"margin-top": "-60px", "margin-left": "100px"}} className="padding-10">
+                                    <img src={user.image} alt="Ảnh Đại Diện" style={{"maxWidth": "100%","width": "250px", "height": "250px", "top": "-100px"}}/>
+                                    <div style={{"marginTop": "-60px", "marginLeft": "100px"}} className="padding-10">
                                         <input type="file" id="exampleInputFile" />
                                     </div>
                                 </div>
