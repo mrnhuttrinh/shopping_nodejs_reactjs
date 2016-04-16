@@ -1,13 +1,9 @@
-import { actions } from '../constants'
-import apis from '../apis/main';
+import Constants from '../constants'
+var ACTION = Constants.ACTION;
 
-export function getMenu() {
-    return (dispatch) => {
-        apis.getMenu().then((data) => {
-            dispatch({
-                type: actions.GET_MENU,
-                menus: data
-            })
-        })
+export function getMenu(data) {
+    return {
+        type: ACTION.GET_MENU,
+        menus: data
     }
 }

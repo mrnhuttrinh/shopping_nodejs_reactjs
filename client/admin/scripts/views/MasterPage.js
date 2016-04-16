@@ -36,8 +36,8 @@ export default class MasterPage extends Component{
     render() {
         return (
             <div>
-                <Header logOut={this.props.logOut} />
-                <LeftMenu pathName={this.props.pathname}/>
+                <Header {...this.props} />
+                <LeftMenu {...this.props} pathName={this.props.pathname}/>
                 <div id="main" role="main">
                     <BreadCrumb title={this.props.title} />
                     {this.props.children}

@@ -1,9 +1,12 @@
 "use strict";
 module.exports = function(sequelize, DataTypes) {
     var Category = sequelize.define("Category", {
-        id: DataTypes.INTEGER,
-        name: DataTypes.STRING.
-        char: DataTypes.CHAR
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true
+        },
+        name: DataTypes.STRING,
+        char: DataTypes.CHAR,
         content: DataTypes.STRING,
         parent: DataTypes.INTEGER,
         level: DataTypes.INTEGER,

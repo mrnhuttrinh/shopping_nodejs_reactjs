@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 export default class LeftMenu extends Component{
     render() {
         var pathName = this.props.pathName;
+        var user = this.props.user;
         return (
             <aside id="left-panel">
                 <div className="login-info">
@@ -11,9 +12,8 @@ export default class LeftMenu extends Component{
                         <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
                             <img src="img/avatars/sunny.png" alt="me" className="online" /> 
                             <span>
-                                john.doe 
+                                {user.fullname || user.username}
                             </span>
-                            <i className="fa fa-angle-down"></i>
                         </a> 
                     </span>
                 </div>
