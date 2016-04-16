@@ -155,16 +155,6 @@
 
 /*Page not found*/
 
-
-.not-found h2 {
-    display: inline;
-    font-size: 200px;
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    margin-top: 50px;
-}
-
 .quote {
     display: inline;
     margin-left: 5px;
@@ -191,6 +181,7 @@
 }
 
 .not-found {
+    margin: 0 auto;
     width: 334px;
     padding: 5px;
 }
@@ -204,5 +195,5 @@
 }
 
 .not-found p {
-    text-align: justify;
+    text-align: center;
 }
