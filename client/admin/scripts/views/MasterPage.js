@@ -21,11 +21,13 @@ export default class MasterPage extends Component{
                 || _.isEmpty(self.props.user) ) {
             apis.getMe(function(err, res) {
                 if (err) {
+                    localItem.removeItem("token");
                     window.location = "/admin/#/login";
                 } else {
                     if (res.status === 200) {
                         self.props.signIn(res.body.data);
                     } else {
+                        localItem.removeItem("token");
                         window.location = "/admin/#/login";
                     }
                 }
@@ -42,7 +44,6 @@ export default class MasterPage extends Component{
                     <BreadCrumb title={this.props.title} />
                     {this.props.children}
                 </div>
-                <Footer />
             </div>
         );
     }

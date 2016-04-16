@@ -44,6 +44,7 @@ class Login extends Component {
         }
         var username = self.refs["username"].value;
         var password = self.refs["password"].value;
+        var remember = self.refs["rememberCheck"].checked;
         if (!username) {
             return ;
         }
@@ -56,7 +57,7 @@ class Login extends Component {
         self.setState({
             loading: 'loading'
         });
-        apis.signIn(username, password, function(err, res) {
+        apis.signIn(username, password, remember, function(err, res) {
             if (err) {
                 self.setState({
                     loading: ''
@@ -87,9 +88,9 @@ class Login extends Component {
                     <i className="fa fa-user"></i>
                     <input ref="password" placeholder="Password" type="password"/>
                     <i className="fa fa-key"></i>
-                    <a href="#">
-                        Forgot your password?
-                    </a>
+                    <p className="remember">
+                        <input type="checkbox" ref="rememberCheck" /><label>Forgot your password?</label>
+                    </p>
                     <button ref="submit_button">
                         <i className="spinner"></i>
                         <span className="state">

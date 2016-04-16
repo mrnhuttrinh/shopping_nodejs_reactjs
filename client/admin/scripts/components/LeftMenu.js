@@ -8,19 +8,20 @@ export default class LeftMenu extends Component{
         return (
             <aside id="left-panel">
                 <div className="login-info">
-                    <span>
-                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                            <img src="img/avatars/sunny.png" alt="me" className="online" /> 
-                            <span>
-                                {user.fullname || user.username}
-                            </span>
-                        </a> 
-                    </span>
+                    <Link to="/myprofile">
+                        <img src={user.image} alt="me" className="online" /> 
+                        <span>
+                            {user.fullname || user.username}
+                        </span>
+                    </Link>
                 </div>
                 <nav>
                     <ul>
                         <li className={pathName == "/" ? "active" : ""}>
                             <Link to="/"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Dashboard</span></Link>
+                        </li>
+                         <li className={pathName == "/myprofile" ? "active" : ""}>
+                            <Link to="/myprofile"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">My Profile</span></Link>
                         </li>
                         <li className={pathName == "/listuser" ? "active" : ""}>
                             <Link to="/listuser"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Nhân Viên</span></Link>

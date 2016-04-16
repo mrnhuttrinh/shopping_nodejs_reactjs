@@ -15,6 +15,7 @@ module.exports = function ensureAuthorized(req, res, next) {
                 // if everything is good, 
                 // save to request for use in other routes
                 req.userToken = userToken;
+                console.log(userToken)
                 // decode 
                 // { 
                 //      employer: { 
