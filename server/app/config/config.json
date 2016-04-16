@@ -2,26 +2,26 @@
     "development": {
         "secret": "aothunphongcach",
         "server": {
-            "port": 8000
+            "port": 8080
         },
         "datastores": {
-            "username": "root",
-            "password": "root",
-            "database": "database_production",
-            "host": "127.0.0.1",
+            "username": "sql6115340",
+            "password": "3SdmrWi9lx",
+            "database": "sql6115340",
+            "host": "sql6.freemysqlhosting.net",
             "dialect": "mysql"
         }
     },
     "production": {
         "secret": "aothunphongcach",
         "server": {
-            "port": 9000
+            "port": 8080
         },
         "datastores": {
-            "username": "root",
-            "password": "root",
-            "database": "database_production",
-            "host": "127.0.0.1",
+            "username": "sql6115340",
+            "password": "3SdmrWi9lx",
+            "database": "sql6115340",
+            "host": "sql6.freemysqlhosting.net",
             "dialect": "mysql"
         }
     }
