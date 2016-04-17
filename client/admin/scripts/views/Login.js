@@ -22,21 +22,22 @@ class Login extends Component {
             || _.isUndefined(tokenLocal)
             || tokenLocal === "null") {
 
-        }
-        if (_.isNull(self.props.user)  ||
-            _.isEmpty(self.props.user)) {
-            apis.getMe(function(err, res) {
-                if (err) {
-
-                } else {
-                    if (res.status === 200) {
-                        self.props.signIn(res.body.data);
-                        window.location = "/admin/#/dashboard";
-                    }
-                }
-            });
         } else {
-            window.location = "/admin/#/dashboard";
+            if (_.isNull(self.props.user)  ||
+                _.isEmpty(self.props.user)) {
+                apis.getMe(function(err, res) {
+                    if (err) {
+
+                    } else {
+                        if (res.status === 200) {
+                            self.props.signIn(res.body.data);
+                            window.location = "/admin/#/dashboard";
+                        }
+                    }
+                });
+            } else {
+                window.location = "/admin/#/dashboard";
+            }
         }
     }
 

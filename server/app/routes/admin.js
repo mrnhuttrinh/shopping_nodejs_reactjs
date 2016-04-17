@@ -120,9 +120,33 @@ module.exports = {
         });
     },
     me: function(req, res) {
-        res.status(200).send({
-            data: req.userToken.employer
-        })
+        var empl = req.userToken.employer;
+        models.Employer.find({
+            where: {
+                id: empl.id
+            },
+            attributes: [
+                "id",
+                "username",
+                "email",
+                "level",
+                "info",
+                "fullname",
+                "address",
+                "phone",
+                "image",
+            ]
+        }).then(function(employer, err) {
+            if (err) {
+                return res.status(400).send({
+                    error: err
+                });
+            }
+
+            return res.status(200).send({
+                data: employer
+            })
+        });
     },
     updateUser: function(req, res) {
         models.Employer.find({
