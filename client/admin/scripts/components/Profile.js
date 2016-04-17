@@ -1,4 +1,8 @@
 import React, {Component} from 'react'
+import checkfileimage from '../utils/checkfileimage';
+import apis from '../apis/main';
+import _ from 'lodash';
+
 export default class Profile extends Component{
     constructor(props) {
         super(props);
@@ -20,6 +24,38 @@ export default class Profile extends Component{
             changePassword: !this.state.changePassword
         });
     }
+
+    changePhoto(event) {
+        event.preventDefault();
+        var self = this;
+        var inputPhoto = self.refs["exampleInputFile"];
+        if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+            console.log('The File APIs are not fully supported in this browser.');
+            return;
+        } 
+        var file = $(inputPhoto)[0].files[0];
+        if (checkfileimage(file)) {
+            var fr = new FileReader();
+            fr.onload = function receivedText() {
+                // fr.result is base-64
+                // console.log(fr.result);
+                apis.updateEmployerPhoto(fr.result, function(err, res) {
+                    if (err) {
+
+                    } else {
+                        var user = _.cloneDeep(self.props.user);
+                        user.image = fr.result;
+                        $(inputPhoto).val("");
+                        self.props.signIn(user);
+                    }
+                })
+            }
+            fr.readAsDataURL(file);
+        } else {
+            $(inputPhoto).val("");
+        }
+    }
+
     render() {
         var edit = this.state.edit;
         var user = this.props.user;
@@ -41,8 +77,8 @@ export default class Profile extends Component{
                             <div className="col-sm-4 profile-pic">
                                 <div className="col-sm-3 profile-pic" style={{"width": "100%"}}>
                                     <img src={user.image} alt="Ảnh Đại Diện" style={{"maxWidth": "100%","width": "250px", "height": "250px", "top": "-100px"}}/>
-                                    <div style={{"marginTop": "-60px", "marginLeft": "100px"}} className="padding-10">
-                                        <input type="file" id="exampleInputFile" />
+                                    <div style={{"marginTop": "-60px", "marginLeft": "70px"}} className="padding-10">
+                                        <input type="file" onChange={this.changePhoto.bind(this)} id="exampleInputFile" ref="exampleInputFile" />
                                     </div>
                                 </div>
                             </div>

@@ -33,5 +33,16 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    updateEmployerPhoto(image, cb) {
+        var request = new Request();
+        request.post(API.UPDATE_EMPLOYER_PHOTO)
+            .params({
+                image: image
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            }) 
     }
 }

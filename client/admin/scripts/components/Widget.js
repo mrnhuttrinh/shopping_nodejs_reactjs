@@ -1,19 +1,56 @@
 import React, {Component} from 'react'
 import Modal from './Modal';
+import _ from 'lodash';
+import checkfileimage from '../utils/checkfileimage';
 
 export default class Widget extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            myDropzone: null,
+            numberImage: 0
+        }
+    }
     modalExcute(event) {
         event.preventDefault();
+        var self = this;
+        if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+            console.log('The File APIs are not fully supported in this browser.');
+            return;
+        } 
+        var files = self.state.myDropzone.files;
+        _.map(files, function(file) {
+            var fr = new FileReader();
+            fr.onload = function receivedText() {
+            // fr.result is base-64
+                console.log("fr.result");
+            }
+            fr.readAsDataURL(file);
+        });
+
+        // remove file in dropzone if successed
+        // self.state.myDropzone.removeAllFiles();
     }
     componentDidMount() {
+        var self = this;
         $(function() {
-            $("#mydropzone").dropzone({
+            // Dropzone.autoDiscover = false;
+            self.state.myDropzone = new Dropzone("#mydropzone", { 
                 url: "/file/post",
                 addRemoveLinks : true,
                 maxFilesize: 0.5,
-                dictResponseError: 'Error uploading file!'
+                dictResponseError: 'Error uploading file!',
             });
-        })
+            self.state.myDropzone.on("addedfile", function(file) {
+                if (!checkfileimage(file)) {
+                    self.state.myDropzone.removeFile(file);
+                } else {
+                    self.state.numberImage++;
+                }
+            });
+        });
+    }
+    componentWillUnmount() {
 
     }
     render() {
@@ -35,7 +72,7 @@ export default class Widget extends Component {
         return (
             <div>
                 <Modal modalName={modalName}
-                    modalExcute={modalExcute}
+                    modalExcute={modalExcute.bind(this)}
                     modalContent={modalContent}
                     modalTitle={modalTitle}/>
                 <ul className="nav nav-tabs" role="tablist">

@@ -11,6 +11,8 @@ router.get('/get_me', authorized, admin.me);
 router.post('/create_employer', admin.create);
 router.get('/all_employer', authorized, admin.getAllUser);
 
+router.post('/upload_employer_photo', authorized, admin.uploadEmployerPhoto)
+
 // for client
 router.get("/menu", menu.get);
 

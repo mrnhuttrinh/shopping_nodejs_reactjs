@@ -27,12 +27,22 @@ class ListUser extends Component{
     modalExcute(event) {
         event.preventDefault();
     }
+
+    modalExcuteAdd(event) {
+        event.preventDefault();
+    }
     render() {
         var self = this;
         var modalName = "myModal";
         var modalTitle = "Chỉnh Sửa Nhân Viên";
         var modalContent = "";
         var modalExcute = this.modalExcute;
+
+        var modalNameAdd = "addNewEmployer";
+        var modalTitleAdd = "Thêm Mới Nhân Viên";
+        var modalContentAdd = "";
+        var modalExcuteAdd = this.modalExcuteAdd;
+
         // var listUser;
         var head= [
             "No.", 
@@ -69,11 +79,16 @@ class ListUser extends Component{
                     <Table 
                         head={head}
                         rows={rows}/>
+                    <button type="button" className="btn btn-success" data-target={"#" + modalNameAdd} data-toggle="modal">Thêm Mới</button>
                 </div>
                 <Modal modalName={modalName}
                     modalExcute={modalExcute}
                     modalContent={modalContent}
                     modalTitle={modalTitle}/>
+                <Modal modalName={modalNameAdd}
+                    modalExcute={modalExcuteAdd}
+                    modalContent={modalContentAdd}
+                    modalTitle={modalTitleAdd}/>
             </MasterPage>
         )
     }

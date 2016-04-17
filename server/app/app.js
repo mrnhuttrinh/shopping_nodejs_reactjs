@@ -9,17 +9,19 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 
 var Constrains = require("./constrains");
+var configGlobal = require("./config");
+configGlobal._globalPath = __dirname;
 
 var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public/shop")));
 app.use("/admin", express.static(path.join(__dirname, "public/admin")));
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-
+app.disable('etag');
 app.use(morgan("dev"));
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -2,10 +2,33 @@ var jwt = require("jsonwebtoken");
 var md5 = require('md5');
 var uuid = require("../utils/uuid");
 var config = require("../config");
+var toImage = require("../utils/toImage");
 
 var models = require("../models");
 
 module.exports = {
+    uploadEmployerPhoto: function(req, res) {
+        var empl = req.userToken.employer;
+        var image = req.body.image;
+        var dataImage = image.split(";");
+        var imageType = (dataImage[0]).split("/")[1];
+        var imageFilePath = "img/data/employers/" + empl.id + "." + imageType;
+        toImage(dataImage[1], imageFilePath, config.adminPath)
+        models.Employer.update({
+            image: imageFilePath
+        }, {
+            where: {
+                id: empl.id
+            }
+        }).then(function(suc, err) {
+            if (err) {
+                return res.status(400).send({
+                    error: err
+                });
+            }
+            return res.status(200).send();
+        });
+    },
     create: function(req, res) {
         var username = req.body.username;
         var password = req.body.password;

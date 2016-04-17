@@ -1,5 +1,7 @@
 {
     "development": {
+        "adminPath": "public/admin/",
+        "shopPath": "public/shop/",
         "secret": "aothunphongcach",
         "server": {
             "port": 8000
@@ -13,6 +15,8 @@
         }
     },
     "production": {
+        "adminPath": "public/admin/",
+        "shopPath": "public/shop/",
         "secret": "aothunphongcach",
         "server": {
             "port": 9000
