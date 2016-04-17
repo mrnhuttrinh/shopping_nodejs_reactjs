@@ -13,7 +13,11 @@ module.exports = function(sequelize, DataTypes) {
         fullname: DataTypes.STRING,
         address: DataTypes.STRING,
         phone: DataTypes.STRING,
-        image: DataTypes.STRING
+        image: DataTypes.STRING,
+        status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        }
     }, {
         instanceMethods: {
             validPassword: function(password) {

@@ -51,7 +51,8 @@
     "serve-favicon": "~2.2.0",
     "shelljs": "~0.5.3",
     "string-format": "^0.5.0",
-    "superagent": "^1.8.3"
+    "superagent": "^1.8.3",
+    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "babelify": "^6.1.3",

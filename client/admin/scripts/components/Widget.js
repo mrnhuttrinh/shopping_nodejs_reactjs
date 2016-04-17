@@ -3,12 +3,59 @@ import Modal from './Modal';
 import _ from 'lodash';
 import checkfileimage from '../utils/checkfileimage';
 
-export default class Widget extends Component {
+class DropDown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myDropzone: null,
-            numberImage: 0
+            dropdownCategory: false
+        }
+    }
+    expandCategory(event) {
+        var self = this;
+        event.preventDefault();
+        this.setState({
+            dropdownCategory: !this.state.dropdownCategory
+        });
+    }
+    render() {
+        var self = this;
+        var dropdownContent = this.state.dropdownCategory ? "block" : "none";
+        var listChoose = _.map(this.props.menus, function(menu) {
+            if (menu.id !== 1 && menu.id !== 2 && menu.level === 1) {
+                return (
+                    <li className="list-group-item">
+                        <span className="icon expand-icon glyphicon glyphicon-plus"></span>
+                        {"  " + menu.name}
+                    </li>
+                );
+            }
+        })
+        return (
+            <div id="dropdownCategory" className="dropdown">
+                <button onClick={this.expandCategory.bind(this)} aria-expanded="true" aria-haspopup="true" className="btn btn-default dropdown-toggle" id="dropdownMenu1" type="button">
+                    Chọn Loại Sản Phẩm
+                    <span className="caret">
+                    </span>
+                </button>
+                <ul className="list-group" 
+                    style={{
+                        "display": dropdownContent,
+                        "position": "absolute",
+                        "zIndex": "9999",
+                        "width": "100%"
+                    }}>
+                    {listChoose}
+                </ul>
+            </div>
+        );
+    }
+}
+
+class AddProduct extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            myDropzone: null
         }
     }
     modalExcute(event) {
@@ -31,6 +78,128 @@ export default class Widget extends Component {
         // remove file in dropzone if successed
         // self.state.myDropzone.removeAllFiles();
     }
+
+    render() {
+        var modalTitle = "Thêm Sản Phẩm Mới";
+        var modalExcute = this.modalExcute;
+        return (
+            <Modal modalName={this.props.modalName}
+                modalExcute={modalExcute.bind(this)}
+                modalTitle={modalTitle}>
+                <div className="row">
+                    <div className="col-md-3">
+                        <p>Hình Ảnh Sản Phẩm</p>
+                        <div>
+                            <form style={{"overflowY": "scroll", "height": "400px"}} id="mydropzone" className="dropzone dz-clickable dz-started" enctype="multipart/form-data">
+                            </form>
+                        </div> 
+                        <br />
+                    </div>
+                    <div className="col-md-9">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <strong>Thông Tin Cần Thiết</strong>
+                                <hr style={{"marginTop": "10px"}} />
+                                <form style={{"overflowY": "scroll","overflowX": "hidden", "height": "400px"}} className="form-horizontal">
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerName">
+                                            Loại Sản Phẩm
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <DropDown {...this.props} />
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerUsername">
+                                            Tên Sản Phẩm
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input  className="form-control" ref="employerUsername" id="employerUsername" placeholder="Tên Đăng Nhập" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerPassword">
+                                            Mã Sản Phẩm (Mã Code)
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerPassword" id="employerPassword" placeholder="Email" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerEmail">
+                                            Ảnh Đại Diện (Thumbnail)
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerEmail" id="employerEmail" placeholder="Email" type="email">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerPhone">
+                                            Đơn Giá
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerPhone" id="employerPhone" placeholder="Số Điện Thoại" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerAddress">
+                                            Số Lượng Size S
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerAddress" id="employerAddress" placeholder="Địa Chỉ" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerRole">
+                                            Số Lượng Size M
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerAddress" id="employerAddress" placeholder="Địa Chỉ" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerRole">
+                                            Số Lượng Size X
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerAddress" id="employerAddress" placeholder="Địa Chỉ" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label" for="employerRole">
+                                            Chọn Màu
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <input className="form-control" ref="employerAddress" id="employerAddress" placeholder="Địa Chỉ" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        );
+    }
+}
+
+export default class Widget extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            numberImage: 0,
+            tabChoose: "home"
+        }
+    }
+    
     componentDidMount() {
         var self = this;
         $(function() {
@@ -50,54 +219,43 @@ export default class Widget extends Component {
             });
         });
     }
-    componentWillUnmount() {
-
+    chooseTab(tab, event) {
+        event.preventDefault();
+        this.setState({
+            tabChoose: tab
+        });
     }
     render() {
+        var self = this;
+        var listTabHeader = _.map(this.props.menus, function(menu) {
+            if (menu.level === 1) {
+                return (
+                    <li className="">
+                        <a onClick={self.chooseTab.bind(self, menu.name)} aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" href={"#" + menu.name} id="dropdown2-tab" role="tab">
+                            {menu.name}
+                        </a>
+                    </li>
+                );
+            }
+        })
         var modalName = "addProduct"
-        var modalTitle = "Thêm Sản Phẩm Mới";
-        var modalContent = (
-            <div className="row">
-                <div className="col-md-3">
-                    <p>Hình Ảnh Sản Phẩm</p>
-                    <div>
-                        <form style={{"overflowY": "scroll", "height": "400px"}} id="mydropzone" className="dropzone dz-clickable dz-started" enctype="multipart/form-data">
-                        </form>
-                    </div> 
-                </div>
-                <div className="col-md-9">.col-md-8</div>
-            </div>
-        );
-        var modalExcute = this.modalExcute;
         return (
             <div>
-                <Modal modalName={modalName}
-                    modalExcute={modalExcute.bind(this)}
-                    modalContent={modalContent}
-                    modalTitle={modalTitle}/>
+                <AddProduct {...this.props} modalName={modalName}/>
                 <ul className="nav nav-tabs" role="tablist">
                     <li className="active" role="presentation">
-                        <a aria-controls="home" data-toggle="tab" href="#home" role="tab">
-                            Home
+                        <a onClick={this.chooseTab.bind(this, "home")} aria-controls="home" data-toggle="tab" href="#home" role="tab">
+                            Tất Cả
                         </a>
                     </li>
                     <li className="dropdown" role="presentation">
                         <a aria-controls="myTabDrop1-contents" aria-expanded="false" className="dropdown-toggle" data-toggle="dropdown" href="#" id="myTabDrop1">
-                            Dropdown
+                            Chọn Theo Loại
                             <span className="caret">
                             </span>
                         </a>
                         <ul aria-labelledby="myTabDrop1" className="dropdown-menu" id="myTabDrop1-contents">
-                            <li>
-                                <a aria-controls="dropdown1" aria-expanded="true" data-toggle="tab" href="#dropdown1" id="dropdown1-tab" role="tab">
-                                    @fat
-                                </a>
-                            </li>
-                            <li className="">
-                                <a aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" href="#dropdown2" id="dropdown2-tab" role="tab">
-                                    @mdo
-                                </a>
-                            </li>
+                            {listTabHeader}
                         </ul>
                     </li>
                     <li className="pull-right" role="presentation">
@@ -105,7 +263,7 @@ export default class Widget extends Component {
                     </li>
                 </ul>
                 <div className="tab-content">
-                    <div className="tab-pane active" id="home" role="tabpanel">
+                    <div className="tab-pane active" id={this.state.tabChoose} role="tabpanel">
                         <div className="row">
                             <div className="col-md-3 col-sm-6">.col-md-3</div>
                             <div className="col-md-3 col-sm-6">.col-md-3</div>
@@ -179,12 +337,6 @@ export default class Widget extends Component {
                             </div>
                             <div className="col-md-4"></div>
                         </div>
-                    </div>
-                    <div className="tab-pane" id="dropdown1" role="tabpanel">
-                        Messages
-                    </div>
-                    <div className="tab-pane" id="dropdown2" role="tabpanel">
-                        Settings
                     </div>
                 </div>
             </div>

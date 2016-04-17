@@ -44,5 +44,24 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             }) 
+    },
+    createEmployer(newUser, cb) {
+        var request = new Request();
+        request.post(API.CREATE_EMPLOYER)
+            .params({
+                newuser: newUser
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            }) 
+    },
+    getMenu(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_MENU)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

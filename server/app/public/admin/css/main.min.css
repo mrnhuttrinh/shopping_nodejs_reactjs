@@ -207,3 +207,11 @@
 .not-found p {
     text-align: center;
 }
+
+/*Custom modal bootstrap*/
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}

@@ -1,5 +1,6 @@
 {
     "development": {
+        "adminImage": "img/data/employers/",
         "adminPath": "public/admin/",
         "shopPath": "public/shop/",
         "secret": "aothunphongcach",

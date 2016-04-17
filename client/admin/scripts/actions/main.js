@@ -24,5 +24,11 @@ export default {
         return {
             type: ACTION.LOG_OUT
         }
+    },
+    getMenu: function(data) {
+        return {
+            type: ACTION.GET_MENU,
+            menus: data
+        }
     }
 }

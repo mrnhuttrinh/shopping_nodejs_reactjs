@@ -6,7 +6,8 @@ import localItem from '../utils/localItem';
 var initialState = {
     user: {},
     allUser: [],
-    token: ""
+    token: "",
+    menus: []
 }
 
 export default function update(state = initialState, action) {
@@ -29,6 +30,10 @@ export default function update(state = initialState, action) {
             localItem.setItem("token", action.token);
             newState = _.cloneDeep(state);
             newState.token = action.token;
+            return newState;
+        case ACTION.GET_MENU:
+            newState = _.cloneDeep(state);
+            newState.menus = action.menus;
             return newState;
         default:
             return state;

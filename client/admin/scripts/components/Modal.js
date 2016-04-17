@@ -4,13 +4,16 @@ export default class Modal extends Component {
     componentWillUnmount() {
         $(this.refs["closeModal"]).click();
     }
+    closeModal() {
+        $(this.refs["closeModal"]).click();
+    }
     render() {
         var modalName = this.props.modalName;
         var modalTitle = this.props.modalTitle;
         var modalContent = this.props.modalContent;
         var modalExcute = this.props.modalExcute;
         return (
-            <div aria-labelledby="myModalLabel" className="modal fade" id={modalName} role="dialog" tabindex="-1">
+            <div aria-labelledby="myModalLabel" className="modal modal-wide fade" id={modalName} role="dialog" tabindex="-1">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -24,7 +27,7 @@ export default class Modal extends Component {
                             </h4>
                         </div>
                         <div className="modal-body">
-                            {modalContent}
+                            {this.props.children}
                         </div>
                         <div className="modal-footer">
                             <button ref="closeModal" className="btn btn-default" data-dismiss="modal" type="button">

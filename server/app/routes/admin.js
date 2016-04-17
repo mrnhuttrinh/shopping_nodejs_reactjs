@@ -12,7 +12,7 @@ module.exports = {
         var image = req.body.image;
         var dataImage = image.split(";");
         var imageType = (dataImage[0]).split("/")[1];
-        var imageFilePath = "img/data/employers/" + empl.id + "." + imageType;
+        var imageFilePath = config.adminImage + empl.id + "." + imageType;
         toImage(dataImage[1], imageFilePath, config.adminPath)
         models.Employer.update({
             image: imageFilePath
@@ -30,16 +30,15 @@ module.exports = {
         });
     },
     create: function(req, res) {
-        var username = req.body.username;
-        var password = req.body.password;
-        if (!username) {
+        var newuser = req.body.newuser;
+        if (!newuser.username) {
             return res.status(400).send({
                 error: {
                     message: "Username required!"
                 }
             });
         }
-        if (!password) {
+        if (!newuser.password) {
             return res.status(400).send({
                 error: {
                     message: "Password required!"
@@ -47,7 +46,7 @@ module.exports = {
             });
         }
         models.Employer.find({
-            where: {username: username}
+            where: {username: newuser.username}
         }).then(function(employers, err) {
             if (err) {
                 return res.status(400).send({
@@ -61,11 +60,16 @@ module.exports = {
                     }
                 });
             } else {
-                password = md5(password);
+                password = md5(newuser.password);
                 models.Employer.create({
                     id: uuid(),
-                    username: username,
-                    password: password
+                    username: newuser.username,
+                    password: newuser.password,
+                    fullname: newuser.fullname,
+                    email: newuser.email,
+                    phone: newuser.phone,
+                    address: newuser.address,
+                    level: newuser.level
                 }).then(function(employer, err) {
                     if (err) {
                         return res.status(400).send({
@@ -93,7 +97,8 @@ module.exports = {
         models.Employer.find({
             where: {
                 username: username,
-                password: md5(password)
+                password: md5(password),
+                status: 1
             },
             attributes: [
                 "id",

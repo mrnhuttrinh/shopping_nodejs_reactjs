@@ -6,10 +6,27 @@ import Group from '../components/detailMains/Group';
 import MasterPage from './MasterPage'
 import actions from '../actions/main'
 import Widget from '../components/Widget'
+import apis from '../apis/main';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+        var self = this;
+
+        if (_.isNull(self.props.menus) 
+                || _.isEmpty(self.props.menus) ) {
+            apis.getMenu(function(err, res) {
+                if (err) {
+                } else {
+                    if (res.status === 200) {
+                        self.props.getMenu(res.body.data);
+                    }
+                }
+            })
+        }
     }
 
     render() {
@@ -19,7 +36,7 @@ class Dashboard extends Component {
                 pathname={this.props.location.pathname}
                 title={"Dashboard"}>
                 <div id="content">
-                    <Widget />
+                    <Widget {...this.props} />
                 </div>
             </MasterPage>
         );

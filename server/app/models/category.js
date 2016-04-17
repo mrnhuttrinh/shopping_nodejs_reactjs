@@ -13,7 +13,11 @@ module.exports = function(sequelize, DataTypes) {
         status: DataTypes.BOOLEAN,
         icon: DataTypes.STRING,
         title: DataTypes.STRING,
-        description: DataTypes.STRING
+        description: DataTypes.STRING,
+        status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        }
     });
     return Category;
 };

@@ -7,6 +7,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var cors = require("cors");
+var fs = require("fs-extra");
 
 var Constrains = require("./constrains");
 var configGlobal = require("./config");
@@ -63,5 +64,4 @@ app.use( function(err, req, res) {
 });
 
 var autoUpdateDB = require("./db/autoUpdate");
-
 module.exports = app;

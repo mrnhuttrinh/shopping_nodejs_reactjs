@@ -14,11 +14,10 @@ var configGlobal = require("../config");
 module.exports = function(rawBody, localFile, agent) {
     //jpg|jpeg|png|gif
     base64Data = rawBody.replace(/^base64,/, "");
-    var pathOnDisk = path.join(configGlobal._globalPath, agent);
-    if (!fs.existsSync(pathOnDisk)){
-        fs.mkdirSync(pathOnDisk);
-    }
     var fileOnDisk = path.join(configGlobal._globalPath, agent, localFile);
+    // if (!fs.existsSync(fileOnDisk)){
+    //     fs.mkdirSync(fileOnDisk);
+    // }
     fs.writeFile(fileOnDisk, base64Data, 'base64', function(err) {
         console.log(err);
     });
