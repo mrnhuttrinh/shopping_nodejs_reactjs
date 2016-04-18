@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "gulp client & gulp admin & node ./server/app/bin/www",
-    "database": "node ./server/app/generateDB.js",
+    "database": "node ./server/app/generateDB",
     "test": "node ./server/app/bin/www"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "object-assign": "^4.0.1",
     "pg": "~4.2.0",
     "promise": "^7.1.1",
-    "q": "1.2.0",
+    "q": "^1.2.0",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.1",
     "redux": "^3.3.1",

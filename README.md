@@ -21,3 +21,7 @@ Database name: sql6115340
 Database user: sql6115340
 Database password: 3SdmrWi9lx
 Port number: 3306
+
+http://www.jqueryrain.com/2015/10/bootstrap-tree-view-jquery-plugin/
+
+create db: node ./server/app/generateDB

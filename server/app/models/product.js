@@ -1,18 +1,29 @@
 "use strict";
 module.exports = function(sequelize, DataTypes) {
     var Product = sequelize.define("Product", {
-        id: DataTypes.INTEGER,
-        code: DataTypes.STRING,
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        category: DataTypes.INTEGER,
         name: DataTypes.STRING,
-        content: DataTypes.STRING,
-        title: DataTypes.STRING,
+        code: DataTypes.STRING,
+        thumbnail: DataTypes.STRING,
+        price_retail: DataTypes.DECIMAL,
+        price_retail_promotion: DataTypes.DECIMAL,
+        price_wholesale: DataTypes.DECIMAL,
+        price_wholesale_promotion: DataTypes.DECIMAL,
+        sizeS: DataTypes.INTEGER,
+        sizeM: DataTypes.INTEGER,
+        sizeX: DataTypes.INTEGER,
+        color: DataTypes.STRING,
+        trademark: DataTypes.STRING,
         description: DataTypes.STRING,
-        keywork: DataTypes.STRING,
-        price_value: DataTypes.DECIMAL,
-        price_promotion: DataTypes.DECIMAL,
-        price_currency: DataTypes.STRING,
-        created: DataTypes.DATE,
-        modified: DataTypes.DATE
+        status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        }
     });
     return Product;
 };

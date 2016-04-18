@@ -36,7 +36,7 @@ export default class Profile extends Component{
         var file = $(inputPhoto)[0].files[0];
         if (checkfileimage(file)) {
             var fr = new FileReader();
-            fr.onload = function receivedText() {
+            fr.onload = function() {
                 // fr.result is base-64
                 // console.log(fr.result);
                 apis.updateEmployerPhoto(fr.result, function(err, res) {

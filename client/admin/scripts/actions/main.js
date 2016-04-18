@@ -30,5 +30,17 @@ export default {
             type: ACTION.GET_MENU,
             menus: data
         }
+    },
+    getListProduct: function(listproducts) {
+        return {
+            type: ACTION.GET_LIST_PRODUCT,
+            listProduct: listproducts
+        }
+    },
+    getTotalProduct: function(totalProduct) {
+        return {
+            type: ACTION.GET_TOTAL_PRODUCT,
+            totalProduct: totalProduct
+        }
     }
 }

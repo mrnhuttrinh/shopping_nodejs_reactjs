@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 
 class Grid extends Component {
     componentDidMount() {
-        $(document).ready(function() {
-            $('.superbox').SuperBox();
-        });
+        // $(document).ready(function() {
+        //     $('.superbox').SuperBox();
+        // });
     }
     render() {
         return (

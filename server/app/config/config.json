@@ -1,5 +1,6 @@
 {
     "development": {
+        "productImage": "img/data/products/",
         "adminImage": "img/data/employers/",
         "adminPath": "public/admin/",
         "shopPath": "public/shop/",
@@ -16,6 +17,7 @@
         }
     },
     "production": {
+        "productImage": "img/data/products/",
         "adminPath": "public/admin/",
         "shopPath": "public/shop/",
         "secret": "aothunphongcach",

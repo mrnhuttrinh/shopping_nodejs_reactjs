@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Loading from './ButtonLoading'
 
 export default class Modal extends Component {
     componentWillUnmount() {
@@ -12,6 +13,7 @@ export default class Modal extends Component {
         var modalTitle = this.props.modalTitle;
         var modalContent = this.props.modalContent;
         var modalExcute = this.props.modalExcute;
+        var pressAddButton = this.props.pressAddButton;
         return (
             <div aria-labelledby="myModalLabel" className="modal modal-wide fade" id={modalName} role="dialog" tabindex="-1">
                 <div className="modal-dialog modal-lg" role="document">
@@ -33,9 +35,16 @@ export default class Modal extends Component {
                             <button ref="closeModal" className="btn btn-default" data-dismiss="modal" type="button">
                                 Close
                             </button>
-                            <button onClick={modalExcute} className="btn btn-primary" type="button">
-                                Save
-                            </button>
+                            {
+                                pressAddButton ?  (
+                                    <Loading />
+                                ): (
+                                    <button onClick={modalExcute} className="btn btn-primary" type="button">
+                                        Save
+                                    </button>
+                                )
+                            }
+                            
                         </div>
                     </div>
                 </div>

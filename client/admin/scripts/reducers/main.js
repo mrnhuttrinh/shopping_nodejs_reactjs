@@ -7,7 +7,9 @@ var initialState = {
     user: {},
     allUser: [],
     token: "",
-    menus: []
+    menus: [],
+    listProduct: [],
+    totalProduct: 0
 }
 
 export default function update(state = initialState, action) {
@@ -17,6 +19,14 @@ export default function update(state = initialState, action) {
             localItem.removeItem("token");
             state = initialState;
             return state;
+        case ACTION.GET_LIST_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.listProduct = action.listProduct;
+            return newState;
+        case ACTION.GET_TOTAL_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.totalProduct = action.totalProduct;
+            return newState;
         case ACTION.SIGN_IN:
             newState = _.cloneDeep(state);
             newState.token = localItem.getItem("token");
