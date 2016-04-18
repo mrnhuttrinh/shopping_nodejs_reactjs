@@ -24,6 +24,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
+    }, {
+        tableName: 'products'
     });
     return Product;
 };
