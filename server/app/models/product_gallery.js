@@ -12,6 +12,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
+    }, {
+        tableName: 'product_galleries'
     });
     return ProductGallery;
 };

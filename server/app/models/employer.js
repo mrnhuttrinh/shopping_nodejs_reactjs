@@ -26,7 +26,8 @@ module.exports = function(sequelize, DataTypes) {
                 }
                 return false;
             }
-        }
+        },
+        tableName: 'employers'
     });
 
     return Employer;
