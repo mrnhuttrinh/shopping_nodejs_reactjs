@@ -73,12 +73,12 @@ export default {
                 cb(err, res);
             });
     },
-    getListProduct(type, start, quantity , cb) {
+    getListProduct(type, page, quantity , cb) {
         var request = new Request();
         request
             .get(API.GET_LIST_PRODUCT, {
                 type: type,
-                start: start,
+                page: page,
                 quantity: quantity
             })
             .then(function(err, res) {

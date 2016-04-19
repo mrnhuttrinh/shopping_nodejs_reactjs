@@ -3,18 +3,23 @@ import _ from 'lodash';
 import apis from '../../apis/main';
 import Constants from '../../Constants';
 import GridProduct from './GridProduct';
+import DivLoading from '../DivLoading';
 
 export default class Widget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabChoose: "home"
+            tabChoose: "home",
+            loadData: true
         }
     }
 
     chooseTab(tab, event) {
         event.preventDefault();
         var self = this;
+        self.setState({
+            loadData: true
+        })
         var menu = _.find(self.props.menus, function(menu) {
             return menu.link === tab;
         });
@@ -22,20 +27,20 @@ export default class Widget extends Component {
         var type = "";
         if (menu) {
             type = menu.id;
-        } else {
-            type = "";
         }
 
-        var start = 0;
+        var page = 1;
         var quantity = Constants.TOTAL_ROW;
-        apis.getListProduct(type, start, quantity, function(err, res) {
+        apis.getListProduct(type, page, quantity, function(err, res) {
             if (err) {
 
             } else {
                 self.props.getListProduct(res.body.data);
                 self.setState({
-                    tabChoose: tab
+                    tabChoose: tab,
+                    loadData: false
                 });
+
             }
         })
         apis.getTotalProduct(type, function(err, res) {
@@ -49,15 +54,18 @@ export default class Widget extends Component {
     componentDidMount() {
         var self = this;
         var type = "";
-        var start = 0;
+        var page = 1;
         var quantity = Constants.TOTAL_ROW;
-        if (_.isNull(self.props.user)  ||
-            _.isEmpty(self.props.user)) {
-            apis.getListProduct(type, start, quantity, function(err, res) {
+        if (_.isNull(self.props.listProduct)  ||
+            _.isEmpty(self.props.listProduct)) {
+            apis.getListProduct(type, page, quantity, function(err, res) {
                 if (err) {
 
                 } else {
                     self.props.getListProduct(res.body.data);
+                    self.setState({
+                        loadData: false
+                    })
                 }
             })
             apis.getTotalProduct(type, function(err, res) {
@@ -66,6 +74,10 @@ export default class Widget extends Component {
                 } else {
                     self.props.getTotalProduct(res.body.data);
                 }
+            })
+        } else {
+            self.setState({
+                loadData: false
             })
         }
     }
@@ -107,7 +119,13 @@ export default class Widget extends Component {
                     </li>
                 </ul>
                 <div className="tab-content">
-                    <GridProduct {...this.props} tabChoose={this.state.tabChoose} />
+                    {
+                        this.state.loadData ? (
+                            <DivLoading />
+                        ) : (
+                            <GridProduct {...this.props} tabChoose={this.state.tabChoose} />
+                        )
+                    }
                 </div>
             </div>
         );

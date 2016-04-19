@@ -4,8 +4,7 @@ export default class DropDown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropdownCategory: false,
-            chooseCategory: this.props.chooseCategory
+            dropdownCategory: false
         }
     }
     expandCategory(event) {
@@ -30,11 +29,17 @@ export default class DropDown extends Component {
     }
     liChooseCategory(menu, event) {
         event.preventDefault();
-        this.setState({
-            dropdownCategory: !this.state.dropdownCategory,
-            chooseCategory: menu.name
-        });
+        var self = this;
+        var liParent = $(event.currentTarget).parent("li");
+        if (liParent.hasClass("list-group-item-success")) {
+            liParent.removeClass("list-group-item-success");
+        } else {
+            liParent.addClass("list-group-item-success");
+        }
         this.props.updateProductCategory(menu);
+        this.setState({
+            dropdownCategory: !this.state.dropdownCategory
+        });
     }
     sortMenus(menus) {
         var self = this;
@@ -82,7 +87,7 @@ export default class DropDown extends Component {
         });
 
         var menuLevelOne = _.filter(menus, menu => {
-            if (menu.level === 1 && menu.id !== 1 && menu.id !== 2) {
+            if (menu.level === 1 && menu.id !== 1) {
                 var html = [];
                 _.map(menuLevelTwo, ml2 => {
                     if (ml2.parent === menu.id) {
@@ -114,7 +119,6 @@ export default class DropDown extends Component {
         });
         return menuLevelOne;
     }
-
     render() {
         var self = this;
         var dropdownContent = this.state.dropdownCategory ? "block" : "none";
@@ -122,6 +126,8 @@ export default class DropDown extends Component {
         var html = _.map(listChoose, (list) => {
             return list.html;
         })
+
+        var category_text = "Chọn Loại Sản Phẩm";
         return (
             <div id="dropdownCategory" className="dropdown">
                 <button onClick={this.expandCategory.bind(this)}
@@ -129,7 +135,7 @@ export default class DropDown extends Component {
                     aria-expanded="true" aria-haspopup="true" 
                     className="btn btn-default dropdown-toggle" 
                     id="dropdownMenu1" type="button">
-                        {this.state.chooseCategory}
+                        {category_text}
                     <span className="caret pull-right" style={{"marginTop": "10px"}}>
                     </span>
                 </button>
