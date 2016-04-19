@@ -13,6 +13,7 @@ export default class AddProduct extends Component {
             myDropzone: null,
             fileGallery: [],
             categoryArray: [],
+            sizes: [],
             newProduct: {
                 category: "",
                 name: "",
@@ -76,6 +77,7 @@ export default class AddProduct extends Component {
             // myDropzone: null,
             fileGallery: [],
             categoryArray: [],
+            sizes: [],
             newProduct: {
                 category: "",
                 name: "",
@@ -243,7 +245,29 @@ export default class AddProduct extends Component {
             $(thumbnailImage).attr("src", "");
         }
     }
-
+    newSize(event) {
+        event.preventDefault();
+        var self = this;
+        var lengthSize = self.state.sizes.length;
+        self.state.sizes.push({
+            number: ++lengthSize,
+            quantity: 0,
+            name: ""
+        });
+        self.setState({
+            sizes: self.state.sizes
+        })
+    }
+    removeSize(size, event) {
+        event.preventDefault();
+        var self = this;
+        _.remove(self.state.sizes, (si)=> {
+            return si.number === size.number;
+        })
+        self.setState({
+            sizes: self.state.sizes
+        })
+    }
     updateProductCategory(menu) {
         var cateIndex = this.state.categoryArray.indexOf(menu.id);
         if (cateIndex === -1) {
@@ -255,7 +279,28 @@ export default class AddProduct extends Component {
             categoryArray: this.state.categoryArray 
         })
     }
-
+    sizeNameChange(size, event) {
+        event.preventDefault();
+        var self = this;
+        var sizeUpdate = _.find(self.state.sizes, (si)=> {
+            return si.number === size.number;
+        })
+        sizeUpdate.name = self.refs["size-name-"+size.number].value;
+        self.setState({
+            sizes: self.state.sizes
+        })
+    }
+    sizeQuantityChange(size, event) {
+        event.preventDefault();
+        var self = this;
+        var sizeUpdate = _.find(self.state.sizes, (si)=> {
+            return si.number === size.number;
+        })
+        sizeUpdate.quantity = parseInt(self.refs["size-quantity-"+size.number].value);
+        self.setState({
+            sizes: self.state.sizes
+        })
+    }
     componentDidMount() {
         var self = this;
         $(function() {
@@ -309,6 +354,42 @@ export default class AddProduct extends Component {
             listChooseCategory.push(<li className="list-group-item list-group-item-danger">Chưa chọn Loại Sản Phẩm</li>)
         }
         var productName = newProduct.name;
+        var totalSize = 0;
+        var sizeView = _.map(this.state.sizes, (size) => {
+            totalSize += size.quantity;
+            return (
+                <div className="form-group">
+                    <label className="col-sm-2 control-label">
+                    </label>
+                    <div className="col-sm-10">
+                        <div className="form-group">
+                            <label className="col-sm-1 control-label">
+                            </label>
+                            <label className="col-sm-2 control-label">
+                                Tên Size
+                            </label>
+                            <div className="col-sm-3">
+                                <input onChange={self.sizeNameChange.bind(self, size)} ref={"size-name-" + size.number} className="form-control" placeholder="Tên Size" type="text">
+                                </input>
+                            </div>
+                            <label className="col-sm-2 control-label">
+                                Số Lượng
+                            </label>
+                            <div className="col-sm-3">
+                                <input onChange={self.sizeQuantityChange.bind(self, size)} className="form-control" ref={"size-quantity-" + size.number} placeholder="Số Lượng Size" type="number">
+                                </input>
+                            </div>
+                            <div className="col-sm-1">
+                                <button onClick={self.removeSize.bind(self, size)} type="button" className="btn btn-default">
+                                    <span className="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+        
         return (
             <Modal ref="modalAddProduct"
                 pressAddButton={this.state.pressAddButton}
@@ -319,7 +400,7 @@ export default class AddProduct extends Component {
                     <div className="col-md-3">
                         <p>Hình Ảnh Sản Phẩm</p>
                         <div>
-                            <form style={{"overflowY": "scroll", "height": "400px"}} id="mydropzone" className="dropzone dz-clickable dz-started" enctype="multipart/form-data">
+                            <form style={{"overflowY": "scroll", "height": "400px"}} id="mydropzone" className="dropzone dz-clickable dz-started scroll-customize" enctype="multipart/form-data">
                             </form>
                         </div> 
                         <br />
@@ -329,7 +410,7 @@ export default class AddProduct extends Component {
                             <div className="col-md-12">
                                 <strong>Thông Tin Cần Thiết</strong>
                                 <hr style={{"marginTop": "10px"}} />
-                                <form style={{"overflowY": "scroll","overflowX": "hidden", "height": "400px"}} className="form-horizontal">
+                                <form style={{"overflowY": "scroll","overflowX": "hidden", "height": "400px"}} className="scroll-customize form-horizontal">
                                     <div className="form-group">
                                         <label className="col-sm-2 control-label" for="dropdownCategory">
                                             Loại Sản Phẩm
@@ -426,32 +507,19 @@ export default class AddProduct extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label" for="productSizeS">
-                                            Số Lượng Size S
-                                        </label>
-                                        <div className="col-sm-10">
-                                            <input defaultValue={newProduct.sizeS} className="form-control" ref="productSizeS" id="productSizeS" placeholder="Size S" type="number">
-                                            </input>
+                                    <div>
+                                        <div className="form-group">
+                                            <label className="col-sm-2 control-label" for="">
+                                                Size
+                                            </label>
+                                            <div className="col-sm-10">
+                                                <button onClick={this.newSize.bind(this)} type="button" className="btn btn-default">
+                                                    <span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Thêm Size
+                                                </button>
+                                                {" Tổng Số Sản Phẩm: "}<span className="label label-info">{totalSize}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label" for="productSizeM">
-                                            Số Lượng Size M
-                                        </label>
-                                        <div className="col-sm-10">
-                                            <input defaultValue={newProduct.sizeM} className="form-control" ref="productSizeM" id="productSizeM" placeholder="Size M" type="number">
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label" for="productSizeX">
-                                            Số Lượng Size X
-                                        </label>
-                                        <div className="col-sm-10">
-                                            <input defaultValue={newProduct.sizeX} className="form-control" ref="productSizeX" id="productSizeS" placeholder="Size X" type="number">
-                                            </input>
-                                        </div>
+                                        {sizeView}
                                     </div>
                                     <div className="form-group">
                                         <label className="col-sm-2 control-label" for="productColor">

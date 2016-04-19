@@ -96,7 +96,7 @@ module.exports = {
     createProduct: function(req, res) {
         var product = req.body.product;
         var gallerys = req.body.gallerys;
-        var category_name = product.category_name;
+        var category_name = "product";
         product.thumbnail = createImageOnDisk("thumbnail", product.thumbnail_data);
         models.Product.find({
             where: {

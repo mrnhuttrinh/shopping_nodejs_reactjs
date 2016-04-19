@@ -39,7 +39,7 @@ export default class ViewProduct extends Component{
                     <div className="carousel profile-carousel" id="myCarousel">
                         <div className="carousel-inner">
                             <div className="item active">
-                                <img style={{"width": "100%"}} alt="demo user" src="img/demo/s1.jpg">
+                                <img style={{"width": "100%"}} alt="demo user" src="img/clothes.jpg">
                                 </img>
                             </div>
                         </div>
