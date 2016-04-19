@@ -8,6 +8,7 @@ import About        from './views/About';
 import Product      from './views/Product';
 import ListUser         from './views/ListUser';
 import MyProfile    from './views/MyProfile';
+import ProductDetail from './views/ProductDetail';
 
 import localItem from './utils/localItem';
 
@@ -50,6 +51,10 @@ export default {
         }, {
             path: 'listuser',
             component: ListUser,
+            onEnter: requireAuth
+        }, {
+            path: 'product/:id',
+            component: ProductDetail,
             onEnter: requireAuth
         }, {
             path: 'myprofile',

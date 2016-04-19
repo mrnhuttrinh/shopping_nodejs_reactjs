@@ -12,10 +12,9 @@ export default class AddProduct extends Component {
             pressAddButton: false,
             myDropzone: null,
             fileGallery: [],
+            categoryArray: [],
             newProduct: {
-                category: 0,
-                category_name: "",
-                category_text: "Chọn Loại Sản Phẩm",
+                category: "",
                 name: "",
                 code: "",
                 thumbnail_data: "",
@@ -74,12 +73,11 @@ export default class AddProduct extends Component {
         this.state.myDropzone.removeAllFiles();
         this.setState({
             pressAddButton: false,
-            myDropzone: null,
+            // myDropzone: null,
             fileGallery: [],
+            categoryArray: [],
             newProduct: {
-                category: 0,
-                category_name: "",
-                category_text: "Chọn Loại Sản Phẩm",
+                category: "",
                 name: "",
                 code: "",
                 thumbnail_data: "",
@@ -114,6 +112,7 @@ export default class AddProduct extends Component {
         newProduct.color = self.refs["productColor"].value;
         newProduct.trademark = self.refs["productTrademark"].value;
         newProduct.description = self.refs["productDescription"].value;
+        newProduct.category = this.state.categoryArray.join(", ");
         if (this.formValidate(newProduct) && !self.state.pressAddButton) {
             self.setState({
                 pressAddButton: true
@@ -124,8 +123,15 @@ export default class AddProduct extends Component {
                 } else {
                     if (res.status === 200) {
                         toastr.success("Tạo Sản Phẩm Thành Công!")
-                        self.resetState();
                         modal.closeModal();
+                        var updateTotalProduct = self.props.totalProduct + 1;
+                        self.props.getTotalProduct(updateTotalProduct);
+                        if (self.props.listProduct.length < 16) {
+                            self.props.listProduct.push(res.body.data);
+                            self.props.getListProduct(self.props.listProduct);
+                        }
+                        self.resetState();
+                        self.resetForm();
                     } else {
                         toastr.error("Tạo Sản Phẩm Lỗi");
                     }
@@ -136,7 +142,29 @@ export default class AddProduct extends Component {
             })
         }
     }
+    resetForm() {
+        var self = this;
+        self.refs["productName"].value = "";
+        self.refs["productCode"].value = "";
+        self.refs["productRetailPrice"].value = 0;
+        self.refs["productPriceRetailPromotion"].value = 0;
+        self.refs["productWholeSalePrice"].value = 0;
+        self.refs["productPriceWholeSalePromotion"].value = 0;
+        self.refs["productSizeS"].value = 0;
+        self.refs["productSizeM"].value = 0;
+        self.refs["productSizeX"].value = 0;
+        self.refs["productColor"].value = "";
+        self.refs["productTrademark"].value = "";
+        self.refs["productDescription"].value = "";
+        self.refs["productThumbnail"].value = "";
+        var thumbnailImage = this.refs["thumbnailImage"];
+        $(thumbnailImage).attr("src", "");
 
+        var LiChoosen = $("li.list-group-item-success.li-dropdown");
+        _.map(LiChoosen, (li) => {
+            $(li).removeClass("list-group-item-success");
+        })
+    }
     formValidate(newProduct) {
         if (_.isEmpty(newProduct.sizeS) ) {
             newProduct.sizeS = 0;
@@ -147,7 +175,7 @@ export default class AddProduct extends Component {
         if (_.isEmpty(newProduct.sizeX) ) {
             newProduct.sizeX = 0;
         }
-        if (newProduct.category === 0) {
+        if (_.isEmpty(newProduct.category)) {
             toastr.warning(
                 "Chọn Loại Sản Phẩm"
             );
@@ -217,9 +245,15 @@ export default class AddProduct extends Component {
     }
 
     updateProductCategory(menu) {
-        this.state.newProduct.category = menu.id;
-        this.state.newProduct.category_name = menu.link;
-        this.state.newProduct.category_text = menu.name;
+        var cateIndex = this.state.categoryArray.indexOf(menu.id);
+        if (cateIndex === -1) {
+            this.state.categoryArray.push(menu.id);
+        } else {
+            this.state.categoryArray.splice(cateIndex, 1);
+        }
+        this.setState({
+            categoryArray: this.state.categoryArray 
+        })
     }
 
     componentDidMount() {
@@ -255,8 +289,26 @@ export default class AddProduct extends Component {
     }
 
     render() {
+        var self = this;
+        var state = self.state;
         var modalTitle = "Thêm Sản Phẩm Mới";
         var modalExcute = this.modalExcute;
+        var newProduct = state.newProduct;
+        var listChooseCategory = [];
+        if (state.categoryArray.length) {
+            var cateChoose = _.map(state.categoryArray, (cate) => {
+                var cateMenu = _.find(self.props.menus, (menu) => {
+                    return menu.id === cate;
+                });
+                if (cateMenu) {
+                    return (<li className="list-group-item list-group-item-success">{cateMenu.name}</li>);
+                }
+            });
+            listChooseCategory.push(cateChoose)
+        } else {
+            listChooseCategory.push(<li className="list-group-item list-group-item-danger">Chưa chọn Loại Sản Phẩm</li>)
+        }
+        var productName = newProduct.name;
         return (
             <Modal ref="modalAddProduct"
                 pressAddButton={this.state.pressAddButton}
@@ -284,9 +336,17 @@ export default class AddProduct extends Component {
                                         </label>
                                         <div className="col-sm-10">
                                             <DropDown 
-                                                chooseCategory={this.state.newProduct.category_text}
                                                 {...this.props} 
                                                 updateProductCategory={this.updateProductCategory.bind(this)}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-2 control-label">
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <ul className="list-group">
+                                                {listChooseCategory}
+                                            </ul>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -294,7 +354,7 @@ export default class AddProduct extends Component {
                                             Tên Sản Phẩm
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.name} className="form-control" ref="productName" id="productName" placeholder="Tên Sản Phẩm" type="text">
+                                            <input defaultValue={productName} className="form-control" ref="productName" id="productName" placeholder="Tên Sản Phẩm" type="text">
                                             </input>
                                         </div>
                                     </div>
@@ -303,7 +363,7 @@ export default class AddProduct extends Component {
                                             Mã Sản Phẩm (Mã Code)
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.code} className="form-control" ref="productCode" id="productCode" placeholder="Mã Sản Phẩm" type="text">
+                                            <input defaultValue={newProduct.code} className="form-control" ref="productCode" id="productCode" placeholder="Mã Sản Phẩm" type="text">
                                             </input>
                                         </div>
                                     </div>
@@ -312,9 +372,9 @@ export default class AddProduct extends Component {
                                             Ảnh Đại Diện (Thumbnail)
                                         </label>
                                         <div className="col-sm-10">
-                                            <img src={this.state.newProduct.thumbnail} ref="thumbnailImage" style={{"width": "200px", "height": "200px"}}>
+                                            <img src={newProduct.thumbnail} ref="thumbnailImage" style={{"width": "200px", "height": "200px"}}>
                                             </img>
-                                            <input defaultValue={this.state.newProduct.thumbnail} onChange={this.chooseThumbnialChange.bind(this)} className="form-control" ref="productThumbnail" id="productThumbnail" type="file">
+                                            <input defaultValue={newProduct.thumbnail} onChange={this.chooseThumbnialChange.bind(this)} className="form-control" ref="productThumbnail" id="productThumbnail" type="file">
                                             </input>
                                         </div>
                                     </div>
@@ -323,8 +383,11 @@ export default class AddProduct extends Component {
                                             Giá Bán Lẻ
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.price_retail} className="form-control" ref="productRetailPrice" id="productRetailPrice" placeholder="Giá Bán Lẻ" type="number">
-                                            </input>
+                                            <div className="input-group">
+                                                <span className="input-group-addon">VND</span>
+                                                <input defaultValue={newProduct.price_retail} className="form-control" ref="productRetailPrice" id="productRetailPrice" placeholder="Giá Bán Lẻ" type="number">
+                                                </input>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -332,8 +395,11 @@ export default class AddProduct extends Component {
                                             Giá Bán Lẻ Khuyến Mãi
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.price_retail_promotion} className="form-control" ref="productPriceRetailPromotion" id="productPriceRetailPromotion" placeholder="Giá Bán Lẻ Khuyến Mãi" type="number">
-                                            </input>
+                                            <div className="input-group">
+                                                <span className="input-group-addon">VND</span>
+                                                <input defaultValue={newProduct.price_retail_promotion} className="form-control" ref="productPriceRetailPromotion" id="productPriceRetailPromotion" placeholder="Giá Bán Lẻ Khuyến Mãi" type="number">
+                                                </input>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -341,8 +407,11 @@ export default class AddProduct extends Component {
                                             Giá Bán Sỉ
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.price_wholesale} className="form-control" ref="productWholeSalePrice" id="productWholeSalePrice" placeholder="Giá Bán Sỉ" type="number">
-                                            </input>
+                                            <div className="input-group">
+                                                <span className="input-group-addon">VND</span>
+                                                <input defaultValue={newProduct.price_wholesale} className="form-control" ref="productWholeSalePrice" id="productWholeSalePrice" placeholder="Giá Bán Sỉ" type="number">
+                                                </input>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -350,8 +419,11 @@ export default class AddProduct extends Component {
                                             Giá Bán Sỉ Khuyến Mãi
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.price_wholesale_promotion} className="form-control" ref="productPriceWholeSalePromotion" id="productPriceWholeSalePromotion" placeholder="Giá Bán Sỉ Khuyến Mãi" type="number">
-                                            </input>
+                                            <div className="input-group">
+                                                <span className="input-group-addon">VND</span>
+                                                <input defaultValue={newProduct.price_wholesale_promotion} className="form-control" ref="productPriceWholeSalePromotion" id="productPriceWholeSalePromotion" placeholder="Giá Bán Sỉ Khuyến Mãi" type="number">
+                                                </input>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -359,7 +431,7 @@ export default class AddProduct extends Component {
                                             Số Lượng Size S
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.sizeS} className="form-control" ref="productSizeS" id="productSizeS" placeholder="Size S" type="number">
+                                            <input defaultValue={newProduct.sizeS} className="form-control" ref="productSizeS" id="productSizeS" placeholder="Size S" type="number">
                                             </input>
                                         </div>
                                     </div>
@@ -368,7 +440,7 @@ export default class AddProduct extends Component {
                                             Số Lượng Size M
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.sizeM} className="form-control" ref="productSizeM" id="productSizeM" placeholder="Size M" type="number">
+                                            <input defaultValue={newProduct.sizeM} className="form-control" ref="productSizeM" id="productSizeM" placeholder="Size M" type="number">
                                             </input>
                                         </div>
                                     </div>
@@ -377,7 +449,7 @@ export default class AddProduct extends Component {
                                             Số Lượng Size X
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.sizeX} className="form-control" ref="productSizeX" id="productSizeS" placeholder="Size X" type="number">
+                                            <input defaultValue={newProduct.sizeX} className="form-control" ref="productSizeX" id="productSizeS" placeholder="Size X" type="number">
                                             </input>
                                         </div>
                                     </div>
@@ -386,7 +458,7 @@ export default class AddProduct extends Component {
                                             Màu Sắc
                                         </label>
                                         <div className="col-sm-10">
-                                            <input defaultValue={this.state.newProduct.color} className="form-control" ref="productColor" id="productColor" placeholder="Màu Sắc" type="text">
+                                            <input defaultValue={newProduct.color} className="form-control" ref="productColor" id="productColor" placeholder="Màu Sắc" type="text">
                                             </input>
                                         </div>
                                     </div>
@@ -395,7 +467,7 @@ export default class AddProduct extends Component {
                                             Thương Hiệu Sản Phẩm
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea defaultValue={this.state.newProduct.trademark} className="form-control" ref="productTrademark" id="productTrademark" placeholder="Thương Hiệu Sản Phẩm">
+                                            <textarea defaultValue={newProduct.trademark} className="form-control" ref="productTrademark" id="productTrademark" placeholder="Thương Hiệu Sản Phẩm">
                                             </textarea>
                                         </div>
                                     </div>
@@ -404,7 +476,7 @@ export default class AddProduct extends Component {
                                             Mô Tả Chi Tiết Sản Phẩm
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea defaultValue={this.state.newProduct.description} className="form-control" ref="productDescription" id="productDescription" placeholder="Mô Tả Chi Tiết Sản Phẩm">
+                                            <textarea defaultValue={newProduct.description} className="form-control" ref="productDescription" id="productDescription" placeholder="Mô Tả Chi Tiết Sản Phẩm">
                                             </textarea>
                                         </div>
                                     </div>

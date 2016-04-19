@@ -14,41 +14,84 @@ function createImageOnDisk(prefix, dataImage) {
     return imageFilePath;
 }
 
+function getMenu(cb, res) {
+    models.Category.findAll()
+    .then(function(listMenu, err) {
+        if (err) {
+            return res.status(400).send({
+                error: err
+            });
+        } 
+        cb(listMenu);
+    });
+}
+function getListChildrenMenu(type, menus) {
+    var listRet = [];
+    listRet.push(type);
+    _.forEach(menus, function(menu) {
+        if (menu.parent === type) {
+            listRet.push(menu.id);
+        }
+    });
+    return listRet;
+}
 module.exports = {
     getTotalProduct: function(req, res) {
-        var type = req.param("type");
+        getMenu(function(listMenu) {
+            var type = req.param("type");
 
-        var condition = "";
-        if (!_.isEmpty(type)) {
-            condition = "WHERE products.category = " + type;
-        }
-
-        var query = "SELECT count(*) as total FROM products " + condition;
-        models.sequelize.query(query)
-        .spread(function(total, err) {
-            return res.status(200).send({
-                data: total[0].total
-            });
+            var condition = "";
+            var query = "SELECT count(*) as total FROM products ";
+            if (!_.isEmpty(type)) {
+                type = parseInt(type);
+                if (type !== 1) {
+                    var listType = getListChildrenMenu(type, listMenu);
+                    var typeArray = "(" + listType.toString() + ")";
+                    query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                }
+            }
+            query += condition;
+            models.sequelize.query(query)
+            .spread(function(total, err) {
+                return res.status(200).send({
+                    data: total[0].total
+                });
+            })
         })
+        
     },
     getListProduct: function(req, res) {
-        var type = req.param("type");
-        var quantity  = +req.param("quantity");
-        var start = +req.param("start");
+        getMenu(function(listMenu) {
+            var type = req.param("type");
+            var quantity  = +req.param("quantity");
+            var page = +req.param("page");
+            var start = (page - 1) * quantity;
+            var condition = "";
+            var orderBy = "";
+            var query = "SELECT * FROM products ";
+            if (!_.isEmpty(type)) {
+                type = parseInt(type);
+                if (type === 1) { //newest
+                    orderBy = " ORDER BY createdAt DESC";
+                } else { // promotion
+                    // get list type if type have children
+                    var listType = getListChildrenMenu(type, listMenu);
+                    var typeArray = "(" + listType.toString() + ")";
+                    query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                }
+            }
+            var limit = " LIMIT " + start + " , " + quantity;
+            query += condition + orderBy + limit;
+            models.sequelize.query(query)
+            .spread(function(rows, err) {
+                return res.status(200).send({
+                    data: rows
+                });
+            })
+        });
 
-        var condition = "";
-        if (!_.isEmpty(type)) {
-            condition = "WHERE products.category = " + type;
-        }
-
-        var limit = " LIMIT " + start + " , " + quantity;
-        var query = "SELECT * FROM products " + condition + limit;
-        models.sequelize.query(query)
-        .spread(function(rows, err) {
-            return res.status(200).send({
-                data: rows
-            });
-        })
     },
     createProduct: function(req, res) {
         var product = req.body.product;
@@ -57,7 +100,6 @@ module.exports = {
         product.thumbnail = createImageOnDisk("thumbnail", product.thumbnail_data);
         models.Product.find({
             where: {
-                category: product.category,
                 code: product.code
             }
         }).then(function(productExist, err) {
@@ -69,7 +111,6 @@ module.exports = {
                 });
             }
             models.Product.create({
-                category: product.category,
                 name: product.name,
                 code: product.code,
                 thumbnail: product.thumbnail,
@@ -89,6 +130,18 @@ module.exports = {
                         error: err
                     });
                 }
+                var listCategory = product.category.split(",");
+                // save category 
+                _.forEach(listCategory, function(cate) {
+                    cate = +cate;
+                    models.ProductCategory.create({
+                        category: cate,
+                        product: prod.id
+                    }).then(function(gal, err) {
+
+                    })
+                })
+                // save image to disk and gallery
                 _.forEach(gallerys, function(gallery) {
                     var galleryName = createImageOnDisk(category_name, gallery.data);
                     models.ProductGallery.create({

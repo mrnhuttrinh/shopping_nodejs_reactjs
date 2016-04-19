@@ -108,7 +108,7 @@ class AddUser extends Component {
                                     Mật Khẩu
                                 </label>
                                 <div className="col-sm-10">
-                                    <input defaultValue={newUser.password} className="form-control" ref="employerPassword" id="employerPassword" placeholder="Email" type="text">
+                                    <input defaultValue={newUser.password} className="form-control" ref="employerPassword" id="employerPassword" placeholder="Mật Khẩu" type="text">
                                     </input>
                                 </div>
                             </div>
