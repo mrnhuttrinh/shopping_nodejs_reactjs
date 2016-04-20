@@ -9,7 +9,10 @@ module.exports = {
         GET_MENU: "/api/menu",
         CREATE_PRODUCT: "/api/create_product",
         GET_LIST_PRODUCT: "/api/get_list_product",
-        GET_TOTAL_PRODUCT: "/api/get_total_product"
+        GET_TOTAL_PRODUCT: "/api/get_total_product",
+        GET_PRODUCT: "/api/get_product_by_id",
+        UPDATE_PRODUCT: "/api/update_product",
+        DELETE_PRODUCT: "/api/delete_product"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",
@@ -20,6 +23,9 @@ module.exports = {
         GET_MENU: "GET_MENU",
         CREATE_PRODUCT: "CREATE_PRODUCT",
         GET_LIST_PRODUCT: "GET_LIST_PRODUCT",
-        GET_TOTAL_PRODUCT: "GET_TOTAL_PRODUCT"
+        GET_TOTAL_PRODUCT: "GET_TOTAL_PRODUCT",
+        GET_PRODUCT: "GET_PRODUCT",
+        UPDATE_PRODUCT: "UPDATE_PRODUCT",
+        DELETE_PRODUCT: "DELETE_PRODUCT"
     }
 }

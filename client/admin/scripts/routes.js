@@ -37,10 +37,6 @@ export default {
             path: 'login',
             component: Login
         }, {
-            path: 'product',
-            component: Product,
-            onEnter: requireAuth
-        }, {
             path: 'inbox',
             component: Inbox,
             onEnter: requireAuth

@@ -16,8 +16,11 @@ router.post('/upload_employer_photo', authorized, admin.uploadEmployerPhoto)
 
 // for product
 router.post('/create_product',authorized, product.createProduct)
-router.get('/get_list_product', product.getListProduct);
-router.get('/get_total_product', product.getTotalProduct);
+router.get('/get_product_by_id',authorized, product.getProductById);
+router.get('/get_list_product',authorized, product.getListProduct);
+router.get('/get_total_product',authorized, product.getTotalProduct);
+router.post('/delete_product',authorized, product.deleteProduct);
+router.post('/update_product',authorized, product.updateProduct);
 
 // for client
 router.get("/menu", menu.get);

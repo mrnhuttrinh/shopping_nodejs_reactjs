@@ -23,9 +23,6 @@ export default class AddProduct extends Component {
                 price_retail_promotion: 0,
                 price_wholesale: 0,
                 price_wholesale_promotion: 0,
-                sizeS: 0,
-                sizeM: 0,
-                sizeX: 0,
                 color: "",
                 trademark: "",
                 description: ""
@@ -87,9 +84,6 @@ export default class AddProduct extends Component {
                 price_retail_promotion: 0,
                 price_wholesale: 0,
                 price_wholesale_promotion: 0,
-                sizeS: 0,
-                sizeM: 0,
-                sizeX: 0,
                 color: "",
                 trademark: "",
                 description: ""
@@ -108,14 +102,12 @@ export default class AddProduct extends Component {
         newProduct.price_retail_promotion = self.refs["productPriceRetailPromotion"].value;
         newProduct.price_wholesale = self.refs["productWholeSalePrice"].value;
         newProduct.price_wholesale_promotion = self.refs["productPriceWholeSalePromotion"].value;
-        newProduct.sizeS = self.refs["productSizeS"].value;
-        newProduct.sizeM = self.refs["productSizeM"].value;
-        newProduct.sizeX = self.refs["productSizeX"].value;
         newProduct.color = self.refs["productColor"].value;
         newProduct.trademark = self.refs["productTrademark"].value;
         newProduct.description = self.refs["productDescription"].value;
-        newProduct.category = this.state.categoryArray.join(", ");
-        if (this.formValidate(newProduct) && !self.state.pressAddButton) {
+        newProduct.category = self.state.categoryArray.join(", ");
+        newProduct.sizes = self.state.sizes;
+        if (self.formValidate(newProduct) && !self.state.pressAddButton) {
             self.setState({
                 pressAddButton: true
             });
@@ -152,9 +144,6 @@ export default class AddProduct extends Component {
         self.refs["productPriceRetailPromotion"].value = 0;
         self.refs["productWholeSalePrice"].value = 0;
         self.refs["productPriceWholeSalePromotion"].value = 0;
-        self.refs["productSizeS"].value = 0;
-        self.refs["productSizeM"].value = 0;
-        self.refs["productSizeX"].value = 0;
         self.refs["productColor"].value = "";
         self.refs["productTrademark"].value = "";
         self.refs["productDescription"].value = "";
@@ -264,6 +253,10 @@ export default class AddProduct extends Component {
         _.remove(self.state.sizes, (si)=> {
             return si.number === size.number;
         })
+        var indexFormat = 1;
+        _.forEach(self.state.sizes, (si)=>{
+            si.number = indexFormat++;
+        })
         self.setState({
             sizes: self.state.sizes
         })
@@ -333,6 +326,39 @@ export default class AddProduct extends Component {
         });
     }
 
+    priceRetailPromotionChange(event) {
+        event.preventDefault();
+        var self = this;
+        var priceRetail = parseInt(self.refs["productRetailPrice"].value);
+        var priceReatailPromotion = parseInt(self.refs["productPriceRetailPromotion"].value);
+        if (priceReatailPromotion > priceRetail) {
+            toastr.warning("Giá Khuyến Mãi Phải Thấp Hơn Giá Trị Thật")
+        } else {
+            var newProduct = self.state.newProduct;
+            newProduct.price_retail = priceRetail;
+            newProduct.price_retail_promotion = priceReatailPromotion;
+            self.setState({
+                newProduct: newProduct
+            })
+        }
+    }
+
+    priceWholesalePromotionChange(event) {
+        event.preventDefault();
+        var self = this;
+        var priceWholesale = parseInt(self.refs["productWholeSalePrice"].value);
+        var priceWholesalePromotion = parseInt(self.refs["productPriceWholeSalePromotion"].value);
+        if (priceWholesalePromotion > priceWholesale) {
+            toastr.warning("Giá Khuyến Mãi Phải Thấp Hơn Giá Trị Thật")
+        } else {
+            var newProduct = self.state.newProduct;
+            newProduct.price_wholesale = priceWholesale;
+            newProduct.price_wholesale_promotion = priceWholesalePromotion;
+            self.setState({
+                newProduct: newProduct
+            })
+        }
+    }
     render() {
         var self = this;
         var state = self.state;
@@ -389,7 +415,14 @@ export default class AddProduct extends Component {
                 </div>
             )
         })
-        
+        var price_retail_sale = Math.floor(((newProduct.price_retail - newProduct.price_retail_promotion)/ newProduct.price_retail)*100);
+        if (price_retail_sale.toString() === "NaN") {
+            price_retail_sale = 0;
+        }
+        var price_wholesale_sale = Math.floor(((newProduct.price_wholesale - newProduct.price_wholesale_promotion)/ newProduct.price_wholesale)*100);
+        if (price_wholesale_sale.toString() === "NaN") {
+            price_wholesale_sale = 0;
+        }
         return (
             <Modal ref="modalAddProduct"
                 pressAddButton={this.state.pressAddButton}
@@ -400,7 +433,7 @@ export default class AddProduct extends Component {
                     <div className="col-md-3">
                         <p>Hình Ảnh Sản Phẩm</p>
                         <div>
-                            <form style={{"overflowY": "scroll", "height": "400px"}} id="mydropzone" className="dropzone dz-clickable dz-started scroll-customize" enctype="multipart/form-data">
+                            <form id="mydropzone" className="inline-modal dropzone dz-clickable dz-started scroll-customize" enctype="multipart/form-data">
                             </form>
                         </div> 
                         <br />
@@ -410,7 +443,7 @@ export default class AddProduct extends Component {
                             <div className="col-md-12">
                                 <strong>Thông Tin Cần Thiết</strong>
                                 <hr style={{"marginTop": "10px"}} />
-                                <form style={{"overflowY": "scroll","overflowX": "hidden", "height": "400px"}} className="scroll-customize form-horizontal">
+                                <form className="scroll-customize form-horizontal inline-modal">
                                     <div className="form-group">
                                         <label className="col-sm-2 control-label" for="dropdownCategory">
                                             Loại Sản Phẩm
@@ -430,7 +463,7 @@ export default class AddProduct extends Component {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productName">
                                             Tên Sản Phẩm
                                         </label>
@@ -439,7 +472,7 @@ export default class AddProduct extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productCode">
                                             Mã Sản Phẩm (Mã Code)
                                         </label>
@@ -448,7 +481,7 @@ export default class AddProduct extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productThumbnail">
                                             Ảnh Đại Diện (Thumbnail)
                                         </label>
@@ -459,55 +492,67 @@ export default class AddProduct extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px" >
                                         <label className="col-sm-2 control-label" for="productRetailPrice">
                                             Giá Bán Lẻ
                                         </label>
                                         <div className="col-sm-10">
                                             <div className="input-group">
-                                                <span className="input-group-addon">VND</span>
+                                                <span className="input-group-addon">VNĐ</span>
                                                 <input defaultValue={newProduct.price_retail} className="form-control" ref="productRetailPrice" id="productRetailPrice" placeholder="Giá Bán Lẻ" type="number">
                                                 </input>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productPriceRetailPromotion">
                                             Giá Bán Lẻ Khuyến Mãi
                                         </label>
-                                        <div className="col-sm-10">
+                                        <div className="col-sm-6">
                                             <div className="input-group">
-                                                <span className="input-group-addon">VND</span>
-                                                <input defaultValue={newProduct.price_retail_promotion} className="form-control" ref="productPriceRetailPromotion" id="productPriceRetailPromotion" placeholder="Giá Bán Lẻ Khuyến Mãi" type="number">
+                                                <span className="input-group-addon">VNĐ</span>
+                                                <input onChange={this.priceRetailPromotionChange.bind(this)} defaultValue={newProduct.price_retail_promotion} className="form-control" ref="productPriceRetailPromotion" id="productPriceRetailPromotion" placeholder="Giá Bán Lẻ Khuyến Mãi" type="number">
                                                 </input>
                                             </div>
                                         </div>
+                                        <label className="col-sm-2 control-label">
+                                            Giảm
+                                        </label>
+                                        <label className="col-sm-2 control-label">
+                                            <span className="label label-info">{price_retail_sale}%</span>
+                                        </label>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productWholeSalePrice">
                                             Giá Bán Sỉ
                                         </label>
                                         <div className="col-sm-10">
                                             <div className="input-group">
-                                                <span className="input-group-addon">VND</span>
+                                                <span className="input-group-addon">VNĐ</span>
                                                 <input defaultValue={newProduct.price_wholesale} className="form-control" ref="productWholeSalePrice" id="productWholeSalePrice" placeholder="Giá Bán Sỉ" type="number">
                                                 </input>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productPriceWholeSalePromotion">
                                             Giá Bán Sỉ Khuyến Mãi
                                         </label>
-                                        <div className="col-sm-10">
+                                        <div className="col-sm-6">
                                             <div className="input-group">
-                                                <span className="input-group-addon">VND</span>
-                                                <input defaultValue={newProduct.price_wholesale_promotion} className="form-control" ref="productPriceWholeSalePromotion" id="productPriceWholeSalePromotion" placeholder="Giá Bán Sỉ Khuyến Mãi" type="number">
+                                                <span className="input-group-addon">VNĐ</span>
+                                                <input onChange={this.priceWholesalePromotionChange.bind(this)} defaultValue={newProduct.price_wholesale_promotion} className="form-control" ref="productPriceWholeSalePromotion" id="productPriceWholeSalePromotion" placeholder="Giá Bán Sỉ Khuyến Mãi" type="number">
                                                 </input>
                                             </div>
                                         </div>
+                                        <label className="col-sm-2 control-label">
+                                            Giảm
+                                        </label>
+                                        <label className="col-sm-2 control-label">
+                                            <span className="label label-info">{price_wholesale_sale}%</span>
+                                        </label>
                                     </div>
-                                    <div>
+                                    <div className="margin-right-20px">
                                         <div className="form-group">
                                             <label className="col-sm-2 control-label" for="">
                                                 Size
@@ -521,7 +566,7 @@ export default class AddProduct extends Component {
                                         </div>
                                         {sizeView}
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productColor">
                                             Màu Sắc
                                         </label>
@@ -530,7 +575,7 @@ export default class AddProduct extends Component {
                                             </input>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productTrademark">
                                             Thương Hiệu Sản Phẩm
                                         </label>
@@ -539,7 +584,7 @@ export default class AddProduct extends Component {
                                             </textarea>
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productDescription">
                                             Mô Tả Chi Tiết Sản Phẩm
                                         </label>

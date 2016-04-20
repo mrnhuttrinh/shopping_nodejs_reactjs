@@ -31,21 +31,28 @@ export default class Modal extends Component {
                         <div className="modal-body">
                             {this.props.children}
                         </div>
-                        <div className="modal-footer">
-                            <button ref="closeModal" className="btn btn-default" data-dismiss="modal" type="button">
-                                Close
-                            </button>
-                            {
-                                pressAddButton ?  (
-                                    <Loading />
-                                ): (
-                                    <button onClick={modalExcute} className="btn btn-primary" type="button">
-                                        Save
+                        {
+                            !this.props.hiddenFooter ? (
+                                <div className="modal-footer">
+                                    <button ref="closeModal" className="btn btn-default" data-dismiss="modal" type="button">
+                                        Close
                                     </button>
-                                )
-                            }
-                            
-                        </div>
+                                    {
+                                        pressAddButton ?  (
+                                            <Loading />
+                                        ): (
+                                            <button onClick={modalExcute} className="btn btn-primary" type="button">
+                                                Save
+                                            </button>
+                                        )
+                                    }
+                                    
+                                </div>
+                            ) : (
+                                ""
+                            )
+                        }
+                        
                     </div>
                 </div>
             </div>

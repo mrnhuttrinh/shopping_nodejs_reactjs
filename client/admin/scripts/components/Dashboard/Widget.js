@@ -35,7 +35,7 @@ export default class Widget extends Component {
             if (err) {
 
             } else {
-                self.props.getListProduct(res.body.data);
+                self.props.getListProduct(res.body.data, page);
                 self.setState({
                     tabChoose: tab,
                     loadData: false
@@ -54,7 +54,7 @@ export default class Widget extends Component {
     componentDidMount() {
         var self = this;
         var type = "";
-        var page = 1;
+        var page = this.props.page;
         var quantity = Constants.TOTAL_ROW;
         if (_.isNull(self.props.listProduct)  ||
             _.isEmpty(self.props.listProduct)) {
@@ -62,7 +62,7 @@ export default class Widget extends Component {
                 if (err) {
 
                 } else {
-                    self.props.getListProduct(res.body.data);
+                    self.props.getListProduct(res.body.data, page);
                     self.setState({
                         loadData: false
                     })

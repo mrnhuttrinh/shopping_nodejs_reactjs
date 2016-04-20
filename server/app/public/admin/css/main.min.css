@@ -245,6 +245,17 @@ ul.ul-list-dropdown {
     z-index: 9999;
     width: 100%;
 }
+
+.ul-list-dropdown-category {
+    display: block;
+    z-index: 9999;
+    width: 100%;
+}
+
+ul.ul-children-li-category {
+    margin-bottom: 0px;
+    display: block;
+}
 /*Loading*/
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
@@ -327,4 +338,42 @@ h1.page-header {
   0% {left: 0%;}
   75% {left:100%;}
   100% {left:100%;}
+}
+
+/*Scroll customize*/
+.scroll-customize::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background: #eee;
+}
+
+.scroll-customize::-webkit-scrollbar
+{
+    width: 4px;
+}
+
+.scroll-customize::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background: #888;
+}
+.scroll-customize::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(100,100,100,0.4); 
+}
+
+.margin-right-10px {
+    margin-right: :10px;
+}
+
+.margin-right-20px{
+    margin-right: 20px;
+}
+
+.border-bottom-dotted{
+    border-bottom: 1px dotted black;
+}
+
+.sizeImage50px{
+    width: 50px;
+    height: 50px;
 }

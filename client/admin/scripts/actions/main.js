@@ -31,16 +31,23 @@ export default {
             menus: data
         }
     },
-    getListProduct: function(listproducts) {
+    getListProduct: function(listproducts, page) {
         return {
             type: ACTION.GET_LIST_PRODUCT,
-            listProduct: listproducts
+            listProduct: listproducts,
+            page: page
         }
     },
     getTotalProduct: function(totalProduct) {
         return {
             type: ACTION.GET_TOTAL_PRODUCT,
             totalProduct: totalProduct
+        }
+    },
+    getProduct: function(product) {
+        return {
+            type: ACTION.GET_PRODUCT,
+            product: product
         }
     }
 }

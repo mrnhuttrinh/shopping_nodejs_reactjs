@@ -41,7 +41,7 @@ export default class Profile extends Component{
                 // console.log(fr.result);
                 apis.updateEmployerPhoto(fr.result, function(err, res) {
                     if (err) {
-
+                        toastr.error("Cập Nhật Hình Không Thành Công")
                     } else {
                         var user = _.cloneDeep(self.props.user);
                         user.image = fr.result;
