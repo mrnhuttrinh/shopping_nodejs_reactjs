@@ -372,7 +372,7 @@ export default class AddProduct extends Component {
                     return menu.id === cate;
                 });
                 if (cateMenu) {
-                    return (<li key={menu.id} className="list-group-item list-group-item-success">{cateMenu.name}</li>);
+                    return (<li key={cate} className="list-group-item list-group-item-success">{cateMenu.name}</li>);
                 }
             });
             listChooseCategory.push(cateChoose)
