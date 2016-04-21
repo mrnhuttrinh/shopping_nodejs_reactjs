@@ -1,12 +1,22 @@
 import React, {Component} from 'react'
 import apis from '../../apis/main'
+import Loading from '../ButtonLoading';
 
 export default class DeleteProduct extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            deleteState: false
+        }
+    }
     deleteProduct(event) {
         event.preventDefault();
         var self = this;
-        if (this.props.product.id) {
-            apis.deleteProduct(this.props.product.id, function(err, res) {
+        if (self.props.product.id) {
+            self.setState({
+                deleteState: true
+            })
+            apis.deleteProduct(self.props.product.id, function(err, res) {
                 if (err) {
                     toastr.error("Xóa Không Thành Công");
                 } else {
@@ -16,6 +26,9 @@ export default class DeleteProduct extends Component {
                     self.props.getTotalProduct(0);
                     window.location = "/admin/#/dashboard";
                 }
+                self.setState({
+                    deleteState: false
+                })
             })
         }
     }
@@ -47,9 +60,16 @@ export default class DeleteProduct extends Component {
                                 <button ref="cancelDeleteProduct" className="btn btn-default" data-dismiss="modal" type="button">
                                     Hủy
                                 </button>
-                                <button onClick={this.deleteProduct.bind(this)} className="btn btn-primary" type="button">
-                                    Xóa
-                                </button>
+                                {
+                                    this.state.deleteState ? (
+                                        <Loading />
+                                    ) : (
+                                        <button onClick={this.deleteProduct.bind(this)} className="btn btn-primary" type="button">
+                                            Xóa
+                                        </button>
+                                    )
+                                }
+                                
                             </div>
                         </div>
                     </div>

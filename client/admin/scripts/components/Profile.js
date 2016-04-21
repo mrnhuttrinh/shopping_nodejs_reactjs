@@ -190,10 +190,13 @@ export default class Profile extends Component{
                                         (<div>
                                             <form>
                                                 <div className="form-group">
-                                                    <input type="password" className="form-control" placeholder="Mật Khẩu" />
+                                                    <input type="password" className="form-control" placeholder="Mật Khẩu Hiện Tại" />
                                                 </div>
                                                 <div className="form-group">
-                                                    <input type="password" className="form-control" placeholder="Xác Nhận Lại Mật Khẩu" />
+                                                    <input type="password" className="form-control" placeholder="Mật Khẩu Mới" />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input type="password" className="form-control" placeholder="Xác Nhận Lại Mật Khẩu Mới" />
                                                 </div>
                                             </form>
                                             <br />

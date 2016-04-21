@@ -20,9 +20,13 @@ export default class LeftMenu extends Component{
                         <li className={pathName == "/" ? "active" : ""}>
                             <Link to="/"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Dashboard</span></Link>
                         </li>
-                         <li className={pathName == "/myprofile" ? "active" : ""}>
-                            <Link to="/myprofile"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">My Profile</span></Link>
-                        </li>
+                        {
+                            this.props.user.level === 1 ? (
+                                <li className={pathName == "/myprofile" ? "active" : ""}>
+                                    <Link to="/myprofile"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">My Profile</span></Link>
+                                </li>
+                            ) : ("")
+                        }
                         <li className={pathName == "/listuser" ? "active" : ""}>
                             <Link to="/listuser"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Nhân Viên</span></Link>
                         </li>

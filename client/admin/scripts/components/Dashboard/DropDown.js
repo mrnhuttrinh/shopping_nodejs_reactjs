@@ -46,7 +46,7 @@ export default class DropDown extends Component {
         var menuLevelThree = _.filter(menus, menu => {
             if (menu.level === 3) {
                 menu.html = (
-                    <li className="li-dropdown list-group-item">
+                    <li key={menu.id} className="li-dropdown list-group-item">
                         <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                     </li>
                 );
@@ -75,8 +75,8 @@ export default class DropDown extends Component {
                     )
                 }
                 menu.html = (
-                    <div>
-                        <li className="li-dropdown list-group-item">
+                    <div key={menu.id}>
+                        <li  className="li-dropdown list-group-item">
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
                         {listMenuChildren}
@@ -107,8 +107,8 @@ export default class DropDown extends Component {
                     )
                 }
                 menu.html = (
-                    <div>
-                        <li className="li-dropdown list-group-item">
+                    <div key={menu.id}>
+                        <li  className="li-dropdown list-group-item">
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
                         {listMenuChildren}

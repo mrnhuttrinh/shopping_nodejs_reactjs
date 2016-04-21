@@ -304,8 +304,24 @@ module.exports = {
                 excuteUpdate(res, query);
                 break;
             case "code":
-                query = "UPDATE products SET code = '" + data + "'" + condition;
-                excuteUpdate(res, query);
+                var queryFindExitCode = "SELECT * FROM products WHERE code = '" + data + "' AND id != " + id;
+                models.sequelize.query(queryFindExitCode).then(function(result, err) {
+                    if (err) {
+                        return res.status(400).send({
+                            error: err
+                        });
+                    }
+                    if (result[0].length) {
+                        return res.status(300).send({
+                            error: {
+                                message: "Sản Phẩm Đã Tồn Tại"
+                            }
+                        });
+                    } else {
+                        query = "UPDATE products SET code = '" + data + "'" + condition;
+                        excuteUpdate(res, query);
+                    }
+                })
                 break;
             case "color":
                 query = "UPDATE products SET color = '" + data + "'" + condition;

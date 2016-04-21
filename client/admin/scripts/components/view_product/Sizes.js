@@ -58,6 +58,9 @@ export default class Sizes extends Component {
             update: updatesize,
             remove: remove
         };
+        self.setState({
+            saveUpdateStatus: true
+        })
         apis.updateProduct(id, "size", data, function(err, res) {
             if (err) {
                 toastr.error("Cập Nhật Size Không Thành Công")
@@ -71,6 +74,9 @@ export default class Sizes extends Component {
                 toastr.success("Cập Nhật Size Thành Công")
                 $(self.refs["cancelUpdateSize"]).click();
             }
+            self.setState({
+                saveUpdateStatus: false
+            })
         })
     }
     oldSizeNameChange(sizeid, event) {

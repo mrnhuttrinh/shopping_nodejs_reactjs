@@ -6,6 +6,7 @@ import DeleteProduct from './DeleteProduct';
 import Category from './Category';
 import Sizes from './Sizes';
 import Gallery from './Gallery';
+import Loading from '../ButtonLoading';
 
 export default class ViewProduct extends Component {
     constructor(props) {
@@ -19,7 +20,16 @@ export default class ViewProduct extends Component {
             priceRetailEdit: false,
             priceRetailPromotionEdit: false,
             priceWholesaleEdit: false,
-            priceWholesalePromotionEdit: false
+            priceWholesalePromotionEdit: false,
+            nameEditStatus: false,
+            codeEditStatus: false,
+            colorEditStatus: false,
+            trademarkEditStatus: false,
+            descriptionEditStatus: false,
+            priceRetailEditStatus: false,
+            priceRetailPromotionEditStatus: false,
+            priceWholesaleEditStatus: false,
+            priceWholesalePromotionEditStatus: false
         };
     }
     changePhoto(event) {
@@ -127,6 +137,56 @@ export default class ViewProduct extends Component {
                 break;
         }
     }
+    updateFieldSaveStatus(type) {
+        var self = this;
+        switch(type) {
+            case "name":
+                self.setState({
+                    nameEditStatus: !self.state.nameEditStatus
+                })
+                break;
+            case "code":
+                self.setState({
+                    codeEditStatus: !self.state.codeEditStatus
+                })
+                break;
+            case "color":
+                self.setState({
+                    colorEditStatus: !self.state.colorEditStatus
+                })
+                break;
+            case "trademark":
+                self.setState({
+                    trademarkEditStatus: !self.state.trademarkEditStatus
+                })
+                break;
+            case "description":
+                self.setState({
+                    descriptionEditStatus: !self.state.descriptionEditStatus
+                })
+                break;
+            case "price_retail":
+                self.setState({
+                    priceRetailEditStatus: !self.state.priceRetailEditStatus
+                })
+                break;
+            case "price_retail_promotion":
+                self.setState({
+                    priceRetailPromotionEditStatus: !self.state.priceRetailPromotionEditStatus
+                })
+                break;
+            case "price_wholesale":
+                self.setState({
+                    priceWholesaleEditStatus: !self.state.priceWholesaleEditStatus
+                })
+                break;
+            case "price_wholesale_promotion":
+                self.setState({
+                    priceWholesalePromotionEditStatus: !self.state.priceWholesalePromotionEditStatus
+                })
+                break;
+        }
+    }
     updateValueField(data, type, product) {
         switch(type) {
             case "name":
@@ -214,9 +274,14 @@ export default class ViewProduct extends Component {
                 }
                 break;
         }
+        self.updateFieldSaveStatus(type)
         apis.updateProduct(self.props.product.id, type, data, function(err, res) {
             if (err) {
-                toastr.error("Cập Nhật Không Thành Công!")
+                if (err.status === 400) {
+                    toastr.error("Cập Nhật Không Thành Công!")
+                } else if (err.status === 300) {
+                    toastr.warning(err.response.body.error.message)
+                }
             } else {
                 toastr.success("Cập Nhật Thành Công!")
                 self.updateField(type);
@@ -231,8 +296,8 @@ export default class ViewProduct extends Component {
                     self.updateValueField(data, type, rowUpdate);
                     self.props.getListProduct(self.props.listProduct);
                 }
-                
             }
+            self.updateFieldSaveStatus(type)
         })
     }
     onCancelUpdateField(type, event) {
@@ -373,7 +438,13 @@ export default class ViewProduct extends Component {
                                                     <input defaultValue={product.name} className="form-control" ref="productName" id="productName" placeholder="Tên Sản Phẩm" type="text">
                                                     </input>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "name")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.nameEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "name")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "name")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -397,7 +468,13 @@ export default class ViewProduct extends Component {
                                                     <input defaultValue={product.code} className="form-control" ref="productCode" id="productCode" placeholder="Mã Sản Phẩm" type="text">
                                                     </input>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "code")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.codeEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "code")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "code")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -425,7 +502,14 @@ export default class ViewProduct extends Component {
                                                         </input>
                                                     </div>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_retail")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.priceRetailEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_retail")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
+                                                        
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "price_retail")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -452,7 +536,14 @@ export default class ViewProduct extends Component {
                                                         </input>
                                                     </div>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_retail_promotion")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.priceRetailPromotionEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_retail_promotion")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
+                                                        
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "price_retail_promotion")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -479,7 +570,14 @@ export default class ViewProduct extends Component {
                                                         </input>
                                                     </div>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_wholesale")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.priceWholesaleEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_wholesale")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
+                                                        
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "price_wholesale")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -507,7 +605,13 @@ export default class ViewProduct extends Component {
                                                         </input>
                                                     </div>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_wholesale_promotion")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.priceWholesalePromotionEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "price_wholesale_promotion")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "price_wholesale_promotion")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -533,7 +637,13 @@ export default class ViewProduct extends Component {
                                                     <input defaultValue={product.color} className="form-control" ref="productColor" id="productColor" placeholder="Màu Sắc" type="text">
                                                     </input>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "color")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.colorEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "color")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "color")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -558,7 +668,13 @@ export default class ViewProduct extends Component {
                                                     <input defaultValue={product.trademark} className="form-control" ref="productTrademark" id="productTradeMark" placeholder="Tên Thương Hiệu" type="text">
                                                     </input>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "trademark")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.trademarkEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "trademark")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "trademark")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
@@ -583,7 +699,13 @@ export default class ViewProduct extends Component {
                                                     <input defaultValue={product.description} className="form-control" ref="productDescription" id="productDescription" placeholder="Mô Tả Chi Tiết" type="text">
                                                     </input>
                                                     <p>
-                                                        <button type="button" onClick={this.onSaveUpdateField.bind(this, "description")} className="btn btn-primary btn-sm">Lưu</button>
+                                                        {
+                                                            this.state.descriptionEditStatus ? (
+                                                                <Loading classCSS={"btn-sm"}/>
+                                                            ) : (
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "description")} className="btn btn-primary btn-sm">Lưu</button>
+                                                            )
+                                                        }
                                                         <button type="button" onClick={this.onCancelUpdateField.bind(this, "description")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
