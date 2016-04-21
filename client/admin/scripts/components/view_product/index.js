@@ -305,9 +305,6 @@ export default class ViewProduct extends Component {
         var self = this;
         self.updateField(type);
     }
-    updateParentView() {
-        this.forceUpdate();
-    }
     render() {
         var self = this;
         var product = this.props.product;
@@ -719,7 +716,7 @@ export default class ViewProduct extends Component {
                                             )
                                         }
                                     </tr>
-                                    <Gallery updateParentView={this.updateParentView.bind(this)} {...this.props} />
+                                    <Gallery {...this.props} />
                                     {viewGallery}
                                 </tbody>
                             </table>

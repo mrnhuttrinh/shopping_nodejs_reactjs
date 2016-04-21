@@ -32,7 +32,7 @@ export default class Sizes extends Component {
             return size.id === id;
         });
         self.setState({
-            product: self.state.product.sizes,
+            sizes: self.state.product.sizes,
             sizeRemove: self.state.sizeRemove
         });
     }
@@ -73,6 +73,10 @@ export default class Sizes extends Component {
                 })
                 toastr.success("Cập Nhật Size Thành Công")
                 $(self.refs["cancelUpdateSize"]).click();
+                self.setState({
+                    product: _.cloneDeep(self.props.product),
+                    saveUpdateStatus: false
+                })
             }
             self.setState({
                 saveUpdateStatus: false
@@ -138,7 +142,7 @@ export default class Sizes extends Component {
                 if (product.sizes.length) {
                     viewSize = _.map(product.sizes, (size)=> {
                         return (
-                            <div className="form-group">
+                            <div key={size.id} className="form-group">
                                 <label className="col-sm-2 control-label">
                                     Tên Size
                                 </label>
@@ -172,7 +176,7 @@ export default class Sizes extends Component {
         }
         var sizeNewViews = _.map(this.state.newSizes, (size)=> {
             return (
-                <div className="form-group">
+                <div key={size.id} className="form-group">
                     <label className="col-sm-2 control-label">
                         Tên Size
                     </label>

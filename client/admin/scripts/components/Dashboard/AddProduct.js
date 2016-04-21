@@ -384,7 +384,7 @@ export default class AddProduct extends Component {
         var sizeView = _.map(this.state.sizes, (size) => {
             totalSize += size.quantity;
             return (
-                <div key={size.id} className="form-group">
+                <div key={size.number} className="form-group">
                     <label className="col-sm-2 control-label">
                     </label>
                     <div className="col-sm-10">

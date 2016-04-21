@@ -39,7 +39,14 @@ export default class Gallery extends Component {
                 })
                 toastr.success("Cập Nhật Hình Ảnh Thành Công")
                 $(self.refs["cancelUpdateGallery"]).click();
-                self.props.updateParentView();
+                self.state.myDropzone.removeAllFiles();
+                self.setState({
+                    fileGallery: [],
+                    galleries: _.cloneDeep(self.props.product.galleries),
+                    galleryRemove: [],
+                    saveUpdateStatus: false
+                })
+
             }
             self.setState({
                 saveUpdateStatus: false
@@ -111,6 +118,7 @@ export default class Gallery extends Component {
     }
     cancelUpdateGallery(event) {
         event.preventDefault();
+        this.state.myDropzone.removeAllFiles();
         this.setState({
             fileGallery: [],
             galleries: _.cloneDeep(this.props.product.galleries),

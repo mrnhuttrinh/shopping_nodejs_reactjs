@@ -61,6 +61,12 @@ export default class DropDown extends Component {
                         })
                         toastr.success("Cập Nhật Thành Công")
                         $(self.refs["cancelUpdateCategory"]).click();
+                        self.setState({
+                            product: _.cloneDeep(self.props.product),
+                            menus: _.cloneDeep(self.props.menus),
+                            listSelected: [],
+                            saveUpdate: false
+                        })
                     }
                     self.setState({
                         saveUpdate: false
