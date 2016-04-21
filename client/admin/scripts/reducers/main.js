@@ -9,7 +9,9 @@ var initialState = {
     token: "",
     menus: [],
     listProduct: [],
-    totalProduct: 0
+    totalProduct: 0,
+    product: {},
+    page: 1
 }
 
 export default function update(state = initialState, action) {
@@ -22,6 +24,7 @@ export default function update(state = initialState, action) {
         case ACTION.GET_LIST_PRODUCT:
             newState = _.cloneDeep(state);
             newState.listProduct = action.listProduct;
+            newState.page = action.page || 1;
             return newState;
         case ACTION.GET_TOTAL_PRODUCT:
             newState = _.cloneDeep(state);
@@ -44,6 +47,10 @@ export default function update(state = initialState, action) {
         case ACTION.GET_MENU:
             newState = _.cloneDeep(state);
             newState.menus = action.menus;
+            return newState;
+        case ACTION.GET_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.product = action.product;
             return newState;
         default:
             return state;

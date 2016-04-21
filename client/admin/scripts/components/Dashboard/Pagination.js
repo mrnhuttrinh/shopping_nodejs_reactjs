@@ -27,7 +27,7 @@ export default class Pagination extends Component {
             if (err) {
 
             } else {
-                self.props.getListProduct(res.body.data);
+                self.props.getListProduct(res.body.data, pageNumber);
             }
         })
         self.setState({

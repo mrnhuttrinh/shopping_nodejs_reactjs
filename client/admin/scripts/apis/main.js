@@ -81,6 +81,7 @@ export default {
                 page: page,
                 quantity: quantity
             })
+            .authorized()
             .then(function(err, res) {
                 cb(err, res);
             });
@@ -91,6 +92,42 @@ export default {
             .get(API.GET_TOTAL_PRODUCT, {
                 type: type
             })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    getProduct(id, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_PRODUCT, {
+                id: id
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    deleteProduct(id, cb) {
+        var request = new Request();
+        request
+            .post(API.DELETE_PRODUCT, {
+                id: id
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    updateProduct(id, field, data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_PRODUCT, {
+                id: id,
+                field: field,
+                data: data
+            })
+            .authorized()
             .then(function(err, res) {
                 cb(err, res);
             });
