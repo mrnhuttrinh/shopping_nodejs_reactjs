@@ -41,14 +41,10 @@ export default class MasterPage extends Component{
                 && !_.isEmpty(self.props.user)) {
             if (_.isNull(self.props.menus) 
                 || _.isEmpty(self.props.menus) ) {
-                apis.getMenu(function(err, res) {
-                    if (err) {
-                    } else {
-                        if (res.status === 200) {
-                            self.props.getMenu(res.body.data);
-                        }
-                    }
-                })
+
+                if (self.props.firstRequest) {
+                    self.props.gettingMenu();
+                }
             }
         }
     }

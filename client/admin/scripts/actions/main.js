@@ -1,4 +1,5 @@
 import Constants from '../constants'
+import apis from '../apis/main';
 var ACTION = Constants.ACTION;
 
 export default {
@@ -25,10 +26,22 @@ export default {
             type: ACTION.LOG_OUT
         }
     },
-    getMenu: function(data) {
-        return {
-            type: ACTION.GET_MENU,
-            menus: data
+    gettingMenu: function() {
+        return function(dispatch, getState) {
+            dispatch({
+                type: ACTION.GETTING_MENU
+            })
+            apis.getMenu(function(err, res) {
+                if (err) {
+                } else {
+                    if (res.status === 200) {
+                        return dispatch({
+                            type: ACTION.GET_MENU,
+                            menus: res.body.data
+                        })
+                    }
+                }
+            })
         }
     },
     getListProduct: function(listproducts, page) {
