@@ -6,7 +6,6 @@ module.exports = function ensureAuthorized(req, res, next) {
     if (typeof bearerHeader !== 'undefined') {
         var bearer = bearerHeader.split(" ");
         var token = bearer[1];
-        console.log(token)
         jwt.verify(token, config.secret, function(err, userToken) {
             if (err) {
                 return res.status(403).send({ 

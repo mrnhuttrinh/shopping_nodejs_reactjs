@@ -7,19 +7,22 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var cors = require("cors");
+var fs = require("fs-extra");
 
 var Constrains = require("./constrains");
+var configGlobal = require("./config");
+configGlobal._globalPath = __dirname;
 
 var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public/shop")));
 app.use("/admin", express.static(path.join(__dirname, "public/admin")));
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-
+app.disable('etag');
 app.use(morgan("dev"));
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -46,10 +49,8 @@ app.get(Constrains.ROUTE.ADMIN, function(req, res) {
 
 
 // catch 404 and forward to error handler
-app.use( function(req, res, next) {
-    var err = new Error("Not Found");
-    err.status = 404;
-    next(err);
+app.use( function(req, res) {
+    res.sendFile(path.join(__dirname, "public/shop/notfound.html"));
 });
 
 // production error handler
@@ -63,5 +64,4 @@ app.use( function(err, req, res) {
 });
 
 var autoUpdateDB = require("./db/autoUpdate");
-
 module.exports = app;

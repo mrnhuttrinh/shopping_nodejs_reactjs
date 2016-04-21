@@ -12,7 +12,7 @@ class ProductPage extends Component{
                 {...this.props}
                 title={"Product"}>
                 <div id="content">
-                    <Product />
+                    <Product {...this.props}/>
                 </div>
             </MasterPage>
         )

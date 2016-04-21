@@ -6,18 +6,34 @@ import localItem from '../utils/localItem';
 var initialState = {
     user: {},
     allUser: [],
-    token: ""
+    token: "",
+    menus: [],
+    listProduct: [],
+    totalProduct: 0,
+    product: {},
+    page: 1,
+    firstRequest: true
 }
 
 export default function update(state = initialState, action) {
     var newState;
     switch (action.type) {
         case ACTION.LOG_OUT:
-            localItem.setItem("token", null);
+            localItem.removeItem("token");
             state = initialState;
             return state;
+        case ACTION.GET_LIST_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.listProduct = action.listProduct;
+            newState.page = action.page || 1;
+            return newState;
+        case ACTION.GET_TOTAL_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.totalProduct = action.totalProduct;
+            return newState;
         case ACTION.SIGN_IN:
             newState = _.cloneDeep(state);
+            newState.token = localItem.getItem("token");
             newState.user = action.user;
             return newState;
         case ACTION.GET_ALL_USER:
@@ -28,6 +44,19 @@ export default function update(state = initialState, action) {
             localItem.setItem("token", action.token);
             newState = _.cloneDeep(state);
             newState.token = action.token;
+            return newState;
+        case ACTION.GET_MENU:
+            newState = _.cloneDeep(state);
+            newState.menus = action.menus;
+            newState.firstRequest = false;
+            return newState;
+        case ACTION.GETTING_MENU:
+            newState = _.cloneDeep(state);
+            newState.firstRequest = false;
+            return newState;
+        case ACTION.GET_PRODUCT:
+            newState = _.cloneDeep(state);
+            newState.product = action.product;
             return newState;
         default:
             return state;

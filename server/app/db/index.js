@@ -8,6 +8,7 @@ module.exports = new Sequelize(
     database.database, 
     database.username, 
     database.password, {
+        // logging: false, // disable logging; default: console.log
         host: database.host,
         dialect: database.dialect
     }

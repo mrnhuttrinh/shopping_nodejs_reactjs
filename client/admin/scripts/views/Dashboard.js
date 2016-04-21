@@ -5,10 +5,16 @@ import { connect } from 'react-redux'
 import Group from '../components/detailMains/Group';
 import MasterPage from './MasterPage'
 import actions from '../actions/main'
+import Content from '../components/Dashboard'
+import apis from '../apis/main';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+
     }
 
     render() {
@@ -18,7 +24,7 @@ class Dashboard extends Component {
                 pathname={this.props.location.pathname}
                 title={"Dashboard"}>
                 <div id="content">
-                    <Group data_group={this.props.data_group} />
+                    <Content {...this.props} />
                 </div>
             </MasterPage>
         );

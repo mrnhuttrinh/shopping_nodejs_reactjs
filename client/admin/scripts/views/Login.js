@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import apis from '../apis/main';
 import actions from '../actions/main'
+import _ from 'lodash'
+import localItem from '../utils/localItem';
 
 class Login extends Component {
     constructor(props) {
@@ -12,17 +14,31 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        var tokenLocal = localItem.getItem("token");
         var self = this;
-        apis.getMe(function(err, res) {
-            if (err) {
 
+        if(_.isEmpty(tokenLocal) 
+            || _.isNull(tokenLocal)
+            || _.isUndefined(tokenLocal)
+            || tokenLocal === "null") {
+
+        } else {
+            if (_.isNull(self.props.user)  ||
+                _.isEmpty(self.props.user)) {
+                apis.getMe(function(err, res) {
+                    if (err) {
+
+                    } else {
+                        if (res.status === 200) {
+                            self.props.signIn(res.body.data);
+                            window.location = "/admin/#/dashboard";
+                        }
+                    }
+                });
             } else {
-                if (res.status === 200) {
-                    self.props.signIn(res.body.data);
-                    window.location = "/admin/#/dashboard";
-                }
+                window.location = "/admin/#/dashboard";
             }
-        });
+        }
     }
 
     handleSubmit(event) {
@@ -33,6 +49,7 @@ class Login extends Component {
         }
         var username = self.refs["username"].value;
         var password = self.refs["password"].value;
+        var remember = self.refs["rememberCheck"].checked;
         if (!username) {
             return ;
         }
@@ -45,7 +62,7 @@ class Login extends Component {
         self.setState({
             loading: 'loading'
         });
-        apis.signIn(username, password, function(err, res) {
+        apis.signIn(username, password, remember, function(err, res) {
             if (err) {
                 self.setState({
                     loading: ''
@@ -76,9 +93,9 @@ class Login extends Component {
                     <i className="fa fa-user"></i>
                     <input ref="password" placeholder="Password" type="password"/>
                     <i className="fa fa-key"></i>
-                    <a href="#">
-                        Forgot your password?
-                    </a>
+                    <p className="remember">
+                        <input type="checkbox" ref="rememberCheck" /><label>Forgot your password?</label>
+                    </p>
                     <button ref="submit_button">
                         <i className="spinner"></i>
                         <span className="state">

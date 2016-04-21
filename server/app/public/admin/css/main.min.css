@@ -11,6 +11,12 @@
     box-sizing: border-box;
 }
 
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #BBADAD;
+}
+
 .wrapper {
     font-family: "Open Sans", sans-serif;
     display: flex;
@@ -32,6 +38,16 @@
     position: relative;
     padding-bottom: 80px;
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.login .remember input {
+    width: 20px;
+    position: absolute;
+    margin-left: -3px;
+}
+
+.login .remember label {
+    margin-left: 20px;
 }
 
 .login.loading button {
@@ -150,4 +166,224 @@
 
 .login:not(.loading) button:focus {
     border-bottom-width: 4px;
+}
+
+
+/*Page not found*/
+
+.quote {
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.quote:before {
+    content: '{';
+}
+
+.quote:after {
+    content: '}';
+}
+
+.error {
+    text-align: center;
+    position: relative;
+    margin-top: 70px;
+}
+
+.text {
+    position: absolute;
+    right: 13px;
+}
+
+.not-found {
+    margin: 0 auto;
+    width: 334px;
+    padding: 5px;
+}
+
+.info-label {
+    display: inline;
+}
+
+.info-text {
+    text-align: center;
+}
+
+.not-found p {
+    text-align: center;
+}
+
+/*Custom modal bootstrap*/
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+/*Addition for dashboard*/
+li.li-parent-ul {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 30px;
+    padding-bottom: 0px;
+}
+
+ul.ul-children-li {
+    margin-bottom: 0px;
+    display: none;
+}
+
+li.li-dropdown {
+    cursor: pointer;
+}
+
+ul.ul-list-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+}
+
+.ul-list-dropdown-category {
+    display: block;
+    z-index: 9999;
+    width: 100%;
+}
+
+ul.ul-children-li-category {
+    margin-bottom: 0px;
+    display: block;
+}
+/*Loading*/
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+/*pagination center*/
+.pagination-center {
+    text-align: center;;
+}
+
+.pagination-center li {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+/*Product list view in admin*/
+div.product_view {
+    width: 100%;
+    height: 300px;
+}
+
+img.img-responsive {
+    width: 100%;
+    height: 200px;
+}
+
+div.remove-margin-bottom {
+    margin-bottom: 0px;
+}
+
+label.control-label-left {
+    text-align: left !important;
+}
+
+h1.page-header {
+    font-family: utf8
+}
+
+/* Absolute Center Spinner */
+
+.spinner-div div {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: -20px;
+  top: 40px;
+  background-color: #333;
+  border-radius: 50%;
+  -webkit-animation: move 4s infinite cubic-bezier(.2,.64,.81,.23);
+          animation: move 4s infinite cubic-bezier(.2,.64,.81,.23);
+}
+.spinner-div div:nth-child(2) {
+  -webkit-animation-delay: 150ms;
+          animation-delay: 150ms;
+}
+.spinner-div div:nth-child(3) {
+  -webkit-animation-delay: 300ms;
+          animation-delay: 300ms;
+}
+.spinner-div div:nth-child(4) {
+  -webkit-animation-delay: 450ms;
+          animation-delay: 450ms;
+}
+@-webkit-keyframes move {
+  0% {left: 0%;}
+  75% {left:100%;}
+  100% {left:100%;}
+}
+@keyframes move {
+  0% {left: 0%;}
+  75% {left:100%;}
+  100% {left:100%;}
+}
+
+/*Scroll customize*/
+.scroll-customize::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background: #eee;
+}
+
+.scroll-customize::-webkit-scrollbar
+{
+    width: 4px;
+}
+
+.scroll-customize::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background: #888;
+}
+.scroll-customize::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(100,100,100,0.4); 
+}
+
+.margin-right-10px {
+    margin-right: :10px;
+}
+
+.margin-right-20px{
+    margin-right: 20px;
+}
+
+.border-bottom-dotted{
+    border-bottom: 1px dotted black;
+}
+
+.sizeImage50px{
+    width: 50px;
+    height: 50px;
+}
+
+.inline-modal {
+    overflow-y: scroll; 
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+.cursor-point {
+    cursor: pointer;
 }

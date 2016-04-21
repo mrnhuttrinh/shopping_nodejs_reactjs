@@ -94,7 +94,7 @@ gulp.task("js", function() {
 
 
 gulp.task("images", function() {
-    return gulp.src(["./client/app/images/**/*.*"], { base: "./client/app/images/" })
+    return gulp.src(["./client/app/images/**/*"], { base: "./client/app/images/" })
         .pipe(gulp.dest(publicFolder + "/images"));
 });
 
@@ -224,7 +224,7 @@ gulp.task("js_admin", function() {
 
 
 gulp.task("images_admin", function() {
-    return gulp.src(["./client/admin/img/**/*.*"], { base: "./client/admin/img/" })
+    return gulp.src(["./client/admin/img/**/*"], { base: "./client/admin/img/" })
         .pipe(gulp.dest(adminFolder + "/img"));
 });
 

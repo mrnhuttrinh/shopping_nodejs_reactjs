@@ -11,3 +11,17 @@ http://code.tutsplus.com/tutorials/token-based-authentication-with-angularjs-nod
 
 login reactjs
 https://stormpath.com/blog/build-a-react-app-with-user-authentication/
+
+
+server mysql trial
+https://www.freemysqlhosting.net/account/
+
+Host: sql6.freemysqlhosting.net
+Database name: sql6115340
+Database user: sql6115340
+Database password: 3SdmrWi9lx
+Port number: 3306
+
+http://www.jqueryrain.com/2015/10/bootstrap-tree-view-jquery-plugin/
+
+create db: node ./server/app/generateDB
