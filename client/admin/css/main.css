@@ -383,3 +383,7 @@ h1.page-header {
     max-height: 400px;
     overflow-x: hidden;
 }
+
+.cursor-point {
+    cursor: pointer;
+}

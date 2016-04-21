@@ -335,6 +335,77 @@ module.exports = {
                 query = "UPDATE products SET price_wholesale_promotion = '" + data + "'" + condition;
                 excuteUpdate(res, query);
                 break;
+            case "size":
+                var arrayPromise = [];
+                var addnew = data.new;
+                // add
+                _.forEach(addnew, function(_addnew) {
+                    arrayPromise.push(
+                        models.Size.create({
+                            name: _addnew.name,
+                            product: id,
+                            quantity: _addnew.quantity
+                        })
+                    )
+                })
+
+                // update
+                var update = data.update;
+                _.forEach(update, function(_update) {
+                    var conditionSize = " WHERE id = " + _update.id;
+                    var name = _update.name;
+                    var quantity = _update.quantity;
+                    var queryUpdate = "UPDATE sizes SET name = '" + name + "', quantity = " + quantity + conditionSize; 
+                    arrayPromise.push(models.sequelize.query(queryUpdate))
+                })
+                // remove
+                var remove = data.remove;
+                _.forEach(remove, function(_remove) {
+                    var idRemove = _remove;
+                    var queryRemove = "DELETE FROM sizes WHERE id = " + idRemove; 
+                    arrayPromise.push(models.sequelize.query(queryRemove))
+                })
+                Q.all(arrayPromise).then(function(result) {
+                    return res.status(200).send();
+                }).fail(function(err) {
+                    return res.status(400).send({
+                        error: {
+                            message: "Cập Nhật Không Thành Công!"
+                        }
+                    });
+                })
+                break;
+            case "gallery":
+                var arrayPromise = [];
+                var addnew = data.new;
+                // add new
+                _.forEach(addnew, function(_addnew) {
+                    var category_name = "product";
+                    var galleryName = createImageOnDisk(category_name, _addnew.data);
+                    arrayPromise.push(
+                        models.ProductGallery.create({
+                            product_id: id,
+                            image: galleryName
+                        })
+                    )
+                })
+                // remove
+                var remove = data.remove;
+                _.forEach(remove, function(_remove) {
+                    var idRemove = _remove;
+                    var queryRemove = "DELETE FROM product_galleries WHERE id = " + idRemove; 
+                    arrayPromise.push(models.sequelize.query(queryRemove))
+                })
+                Q.all(arrayPromise).then(function(result) {
+                    return res.status(200).send();
+                }).fail(function(err) {
+                    return res.status(400).send({
+                        error: {
+                            message: "Cập Nhật Không Thành Công!"
+                        }
+                    });
+                })
+                break;
             default: 
                 return res.status(400).send({
                     error: {

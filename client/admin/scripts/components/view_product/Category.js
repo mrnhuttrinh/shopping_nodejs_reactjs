@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
 import _ from 'lodash';
 import apis from '../../apis/main'
+import Loading from '../ButtonLoading';
 
 export default class DropDown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listSelected: []
+            listSelected: [],
+            saveUpdate: false,
+            product: _.cloneDeep(this.props.product),
+            menus: _.cloneDeep(this.props.menus)
         }
     }
     liChooseCategory(menu, event) {
@@ -29,7 +33,7 @@ export default class DropDown extends Component {
         })
         var classSuccess = "";
         if (hasSelected) {
-            classSuccess = "list-group-item-success"
+            classSuccess = "list-group-item-success default-check"
         }
         return classSuccess;
     }
@@ -37,6 +41,9 @@ export default class DropDown extends Component {
         event.preventDefault();
         var self = this;
         if (self.state.listSelected.length) {
+            self.setState({
+                saveUpdate: true
+            })
             apis.updateProduct(
                 self.props.product.id,
                 "category",
@@ -55,6 +62,9 @@ export default class DropDown extends Component {
                         toastr.success("Cập Nhật Thành Công")
                         $(self.refs["cancelUpdateCategory"]).click();
                     }
+                    self.setState({
+                        saveUpdate: false
+                    })
                 }
             )
         } else {
@@ -144,13 +154,29 @@ export default class DropDown extends Component {
         });
         return menuLevelOne;
     }
+    componentWillReceiveProps (nextProps) {
+        this.setState({
+            product: _.cloneDeep(nextProps.product),
+            menus: _.cloneDeep(nextProps.menus)
+        })
+    }
+    cancelUpdateSize(event) {
+        event.preventDefault();
+        this.setState({
+            product: _.cloneDeep(this.props.product),
+            menus: _.cloneDeep(this.props.menus),
+            listSelected: []
+        })
+        $(".li-dropdown.list-group-item-success").removeClass("list-group-item-success");
+        $(".default-check").addClass("list-group-item-success");
+    }
     render() {
         var self = this;
-        var categoriesSelected = this.props.product.categories;
+        var categoriesSelected = this.state.product.categories;
         self.state.listSelected = _.map(categoriesSelected, (cate) => {
             return cate.category
         });
-        var listChoose = this.sortMenus(this.props.menus, categoriesSelected);
+        var listChoose = this.sortMenus(this.state.menus, categoriesSelected);
         var html = _.map(listChoose, (list) => {
             return list.html;
         })
@@ -180,12 +206,18 @@ export default class DropDown extends Component {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button ref="cancelUpdateCategory" className="btn btn-default" data-dismiss="modal" type="button">
+                                <button onClick={this.cancelUpdateSize.bind(this)} ref="cancelUpdateCategory" className="btn btn-default" data-dismiss="modal" type="button">
                                     Hủy
                                 </button>
-                                <button onClick={this.saveChooseCategory.bind(this)} className="btn btn-primary" type="button">
-                                    Lưu
-                                </button>
+                                {
+                                    this.state.saveUpdate ? (
+                                        <Loading />
+                                    ) : (
+                                        <button onClick={this.saveChooseCategory.bind(this)} className="btn btn-primary" type="button">
+                                            Lưu
+                                        </button>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

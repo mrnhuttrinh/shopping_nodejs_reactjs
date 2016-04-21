@@ -377,3 +377,9 @@ h1.page-header {
     width: 50px;
     height: 50px;
 }
+
+.inline-modal {
+    overflow-y: scroll; 
+    max-height: 400px;
+    overflow-x: hidden;
+}

@@ -5,6 +5,7 @@ import checkfileimage from '../../utils/checkfileimage';
 import DeleteProduct from './DeleteProduct';
 import Category from './Category';
 import Sizes from './Sizes';
+import Gallery from './Gallery';
 
 export default class ViewProduct extends Component {
     constructor(props) {
@@ -239,13 +240,16 @@ export default class ViewProduct extends Component {
         var self = this;
         self.updateField(type);
     }
+    updateParentView() {
+        this.forceUpdate();
+    }
     render() {
         var self = this;
         var product = this.props.product;
         var totalCategory = 0;
         var viewCategories = "";
         var viewSizes = "";
-        var totalGallery = 0;
+        
         var viewGallery = "";
         var listImage = "";
         if (!_.isEmpty(product)) {
@@ -304,7 +308,6 @@ export default class ViewProduct extends Component {
 
             var indexSlide = 0;
             var listGallery = _.map(product.galleries, (gallery)=> {
-                totalGallery++;
                 return (
                     <li><img src={gallery.image} /></li>
                 )
@@ -518,8 +521,7 @@ export default class ViewProduct extends Component {
                                             )
                                         }
                                     </tr>
-                                    <Sizes
-                                        {...this.props} />
+                                    <Sizes {...this.props} />
                                     {viewSizes}
                                     <tr>
                                         <td>
@@ -595,17 +597,7 @@ export default class ViewProduct extends Component {
                                             )
                                         }
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            Hình Ảnh
-                                        </td>
-                                        <td>
-                                            <span className="label label-info">{totalGallery}</span>
-                                            <button type="button" className="btn btn-default btn-xs pull-right">
-                                                <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <Gallery updateParentView={this.updateParentView.bind(this)} {...this.props} />
                                     {viewGallery}
                                 </tbody>
                             </table>
