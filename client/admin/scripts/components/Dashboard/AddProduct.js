@@ -372,19 +372,19 @@ export default class AddProduct extends Component {
                     return menu.id === cate;
                 });
                 if (cateMenu) {
-                    return (<li className="list-group-item list-group-item-success">{cateMenu.name}</li>);
+                    return (<li key={menu.id} className="list-group-item list-group-item-success">{cateMenu.name}</li>);
                 }
             });
             listChooseCategory.push(cateChoose)
         } else {
-            listChooseCategory.push(<li className="list-group-item list-group-item-danger">Chưa chọn Loại Sản Phẩm</li>)
+            listChooseCategory.push(<li key={"empty"} className="list-group-item list-group-item-danger">Chưa chọn Loại Sản Phẩm</li>)
         }
         var productName = newProduct.name;
         var totalSize = 0;
         var sizeView = _.map(this.state.sizes, (size) => {
             totalSize += size.quantity;
             return (
-                <div className="form-group">
+                <div key={size.id} className="form-group">
                     <label className="col-sm-2 control-label">
                     </label>
                     <div className="col-sm-10">

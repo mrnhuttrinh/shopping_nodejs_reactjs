@@ -24,6 +24,9 @@ export default class Gallery extends Component {
             new: newgallery,
             remove: remove
         };
+        self.setState({
+            saveUpdateStatus: true
+        })
         apis.updateProduct(id, "gallery", data, function(err, res) {
             if (err) {
                 toastr.error("Cập Nhật Hình Ảnh Không Thành Công")
@@ -38,6 +41,9 @@ export default class Gallery extends Component {
                 $(self.refs["cancelUpdateGallery"]).click();
                 self.props.updateParentView();
             }
+            self.setState({
+                saveUpdateStatus: false
+            })
         })
     }
     componentDidMount() {

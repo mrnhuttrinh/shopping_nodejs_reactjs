@@ -37,7 +37,7 @@ export default class Pagination extends Component {
     render() {
         var numberPage = Math.ceil(this.props.totalProduct/Constants.TOTAL_ROW);
         var previous = (
-            <li>
+            <li key="previous">
                 <a onClick={this.onClickPagination.bind(this, 1)} aria-label="Previous" href="#">
                     <span aria-hidden="true">
                         «
@@ -46,7 +46,7 @@ export default class Pagination extends Component {
             </li>
         );
         var next = (
-            <li>
+            <li key="next">
                 <a onClick={this.onClickPagination.bind(this, numberPage)} aria-label="Next" href="#">
                     <span aria-hidden="true">
                         »
@@ -64,7 +64,7 @@ export default class Pagination extends Component {
         if (numberPage > pageVisible && this.state.pageSelected > (numberPage - pageVisible) ) {
             for ( i = numberPage; i > numberPage - pageVisible; i--) {
                 listPage.push(
-                    <li>
+                    <li key={i}>
                         <a href="#" onClick={this.onClickPagination.bind(this, i)}>
                             {i}
                         </a>
@@ -80,7 +80,7 @@ export default class Pagination extends Component {
             }
             for (; i <= numberPage && i < pageVisible; i++) {
                 listPage.push(
-                    <li>
+                    <li key={i}>
                         <a href="#" onClick={this.onClickPagination.bind(this, i)}>
                             {i}
                         </a>

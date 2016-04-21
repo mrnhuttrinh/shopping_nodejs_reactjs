@@ -88,7 +88,7 @@ export default class Widget extends Component {
         var listTabHeader = _.map(this.props.menus, function(menu) {
             if (menu.level === 1) {
                 return (
-                    <li className="">
+                    <li key={menu.id} className="">
                         <a onClick={self.chooseTab.bind(self, menu.link)} aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" href={"#" + menu.link} id="dropdown2-tab" role="tab">
                             {menu.name}
                         </a>
