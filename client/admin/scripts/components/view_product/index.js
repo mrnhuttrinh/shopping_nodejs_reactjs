@@ -7,6 +7,8 @@ import Category from './Category';
 import Sizes from './Sizes';
 import Gallery from './Gallery';
 import Loading from '../ButtonLoading';
+import DescriptionDetail from './DescriptionDetail';
+import TechInformation from './TechInformation';
 
 export default class ViewProduct extends Component {
     constructor(props) {
@@ -89,6 +91,7 @@ export default class ViewProduct extends Component {
     }
     updateField(type) {
         var self = this;
+        var product = self.props.product;
         switch(type) {
             case "name":
                 self.setState({
@@ -688,7 +691,7 @@ export default class ViewProduct extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            Mô Tả Chi Tiết
+                                            Mô Tả Ngắn
                                         </td>
                                         {
                                             this.state.descriptionEdit ? (
@@ -716,6 +719,8 @@ export default class ViewProduct extends Component {
                                             )
                                         }
                                     </tr>
+                                    <DescriptionDetail {...this.props}/>
+                                    <TechInformation {...this.props} />
                                     <Gallery {...this.props} />
                                     {viewGallery}
                                 </tbody>

@@ -51,16 +51,22 @@ module.exports = {
     getTotalProduct: function(req, res) {
         getMenu(function(listMenu) {
             var type = req.param("type");
-
+            type = parseInt(type);
             var condition = "";
-            var query = "SELECT count(*) as total FROM products ";
-            if (!_.isEmpty(type)) {
-                type = parseInt(type);
-                if (type !== 1) {
+            var query = "SELECT count(id) as total FROM products ";
+            if (type === -1) {
+                condition = " WHERE status = 0";
+            } else if (type === 0) {
+                condition = " WHERE status = 1";
+            } else {
+                if (type === 1) { //newest
+                    condition = " WHERE status = 1";
+                    orderBy = " ORDER BY createdAt DESC";
+                } else {
                     var listType = getListChildrenMenu(type, listMenu);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
                 }
             }
             query += condition;
@@ -76,22 +82,27 @@ module.exports = {
     getListProduct: function(req, res) {
         getMenu(function(listMenu) {
             var type = req.param("type");
+            type = parseInt(type);
             var quantity  = +req.param("quantity");
             var page = +req.param("page");
             var start = (page - 1) * quantity;
-            var condition = "";
+            var condition;
             var orderBy = "";
-            var query = "SELECT * FROM products ";
-            if (!_.isEmpty(type)) {
-                type = parseInt(type);
+            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color FROM products ";
+            if (type === -1) {
+                condition = "WHERE status = 0";
+            } else if (type === 0) {
+                condition = "WHERE status = 1";
+            } else {
                 if (type === 1) { //newest
+                    condition = "WHERE status = 1";
                     orderBy = " ORDER BY createdAt DESC";
                 } else { // promotion
                     // get list type if type have children
                     var listType = getListChildrenMenu(type, listMenu);
                     var typeArray = "(" + listType.toString() + ")";
-                    query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
                 }
             }
             var limit = " LIMIT " + start + " , " + quantity;
@@ -190,12 +201,11 @@ module.exports = {
                 price_retail_promotion: product.price_retail_promotion,
                 price_wholesale: product.price_wholesale,
                 price_wholesale_promotion: product.price_wholesale_promotion,
-                sizeS: product.sizeS,
-                sizeM: product.sizeM,
-                sizeX: product.sizeX,
                 color: product.color,
                 trademark: product.trademark,
                 description: product.description,
+                description_detail: product.description_detail,
+                tech_information: product.tech_information
             }).then(function(prod, err) {
                 if (err) {
                     return res.status(400).send({
@@ -241,8 +251,9 @@ module.exports = {
         
     },
     deleteProduct: function(req, res) {
-        var id = req.body.id;
-        var query = "DELETE FROM products WHERE id = " + id;
+        var id = req.body.data.id;
+        var status = req.body.data.status
+        var query = "UPDATE products SET status = " + status + " WHERE id = " + id;
         models.sequelize.query(query).then(function(row, err) {
             if (err) {
                 return res.status(400).send({
@@ -349,6 +360,14 @@ module.exports = {
                 break;
             case "price_wholesale_promotion":
                 query = "UPDATE products SET price_wholesale_promotion = '" + data + "'" + condition;
+                excuteUpdate(res, query);
+                break;
+            case "description_detail" :
+                query = "UPDATE products SET description_detail = '" + data + "'" + condition;
+                excuteUpdate(res, query);
+                break;
+            case "tech_information" :
+                query = "UPDATE products SET tech_information = '" + data + "'" + condition;
                 excuteUpdate(res, query);
                 break;
             case "size":

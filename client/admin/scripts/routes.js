@@ -9,7 +9,8 @@ import Product      from './views/Product';
 import ListUser         from './views/ListUser';
 import MyProfile    from './views/MyProfile';
 import ProductDetail from './views/ProductDetail';
-
+import Menu from './views/Menu';
+import NewsPost from './views/NewsPost';
 import localItem from './utils/localItem';
 
 function requireAuth(nextState, replace) {
@@ -55,6 +56,14 @@ export default {
         }, {
             path: 'myprofile',
             component: MyProfile,
+            onEnter: requireAuth
+        }, {
+            path: 'menu',
+            component: Menu,
+            onEnter: requireAuth
+        }, {
+            path: 'news',
+            component: NewsPost,
             onEnter: requireAuth
         }, {
             component: NotFound,

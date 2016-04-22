@@ -108,11 +108,11 @@ export default {
                 cb(err, res);
             });
     },
-    deleteProduct(id, cb) {
+    deleteProduct(data, cb) {
         var request = new Request();
         request
             .post(API.DELETE_PRODUCT, {
-                id: id
+                data: data
             })
             .authorized()
             .then(function(err, res) {

@@ -107,6 +107,8 @@ export default class AddProduct extends Component {
         newProduct.description = self.refs["productDescription"].value;
         newProduct.category = self.state.categoryArray.join(", ");
         newProduct.sizes = self.state.sizes;
+        newProduct.description_detail = $("#summernoteDetail").summernote('code');
+        newProduct.tech_information = $("#summernoteInfo").summernote('code');
         if (self.formValidate(newProduct) && !self.state.pressAddButton) {
             self.setState({
                 pressAddButton: true
@@ -118,14 +120,18 @@ export default class AddProduct extends Component {
                     if (res.status === 200) {
                         toastr.success("Tạo Sản Phẩm Thành Công!")
                         modal.closeModal();
-                        var updateTotalProduct = self.props.totalProduct + 1;
-                        self.props.getTotalProduct(updateTotalProduct);
-                        if (self.props.listProduct.length < 16) {
-                            self.props.listProduct.push(res.body.data);
-                            self.props.getListProduct(self.props.listProduct);
+                        if ($(".classTabHome").hasClass("active") ) {
+                            var updateTotalProduct = self.props.totalProduct + 1;
+                            self.props.getTotalProduct(updateTotalProduct);
+                            if (self.props.listProduct.length < 16) {
+                                self.props.listProduct.push(res.body.data);
+                                self.props.getListProduct(self.props.listProduct);
+                            }
                         }
                         self.resetState();
                         self.resetForm();
+                        $("#summernoteDetail").summernote("code", "");
+                        $("#summernoteInfo").summernote("code", "");
                     } else {
                         toastr.error("Tạo Sản Phẩm Lỗi");
                     }
@@ -238,6 +244,9 @@ export default class AddProduct extends Component {
         event.preventDefault();
         var self = this;
         var lengthSize = self.state.sizes.length;
+        if (lengthSize !== 0) {
+            lengthSize = this.state.sizes[lengthSize-1].number;
+        }
         self.state.sizes.push({
             number: ++lengthSize,
             quantity: 0,
@@ -253,10 +262,10 @@ export default class AddProduct extends Component {
         _.remove(self.state.sizes, (si)=> {
             return si.number === size.number;
         })
-        var indexFormat = 1;
-        _.forEach(self.state.sizes, (si)=>{
-            si.number = indexFormat++;
-        })
+        // var indexFormat = 1;
+        // _.forEach(self.state.sizes, (si)=>{
+        //     si.number = indexFormat++;
+        // })
         self.setState({
             sizes: self.state.sizes
         })
@@ -297,6 +306,14 @@ export default class AddProduct extends Component {
     componentDidMount() {
         var self = this;
         $(function() {
+            $("#summernoteDetail").summernote({
+                height: 300,
+                placeholder: 'Mô Tả Chi Tiết...'
+            });
+            $("#summernoteInfo").summernote({
+                height: 300,
+                placeholder: 'Thông Tin Về Sản Phẩm (Thương Hiêu, Nơi Sản Xuất)...'
+            });
             // Dropzone.autoDiscover = false;
             self.state.myDropzone = new Dropzone("#mydropzone", { 
                 url: "/file/post",
@@ -586,11 +603,27 @@ export default class AddProduct extends Component {
                                     </div>
                                     <div className="form-group margin-right-10px">
                                         <label className="col-sm-2 control-label" for="productDescription">
+                                            Mô Tả Ngắn Về Sản Phẩm
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <textarea defaultValue={newProduct.description} className="form-control" ref="productDescription" id="productDescription" placeholder="Mô Tả Ngắn Về Sản Phẩm">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div className="form-group margin-right-10px">
+                                        <label className="col-sm-2 control-label">
                                             Mô Tả Chi Tiết Sản Phẩm
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea defaultValue={newProduct.description} className="form-control" ref="productDescription" id="productDescription" placeholder="Mô Tả Chi Tiết Sản Phẩm">
-                                            </textarea>
+                                            <div id="summernoteDetail"></div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group margin-right-10px">
+                                        <label className="col-sm-2 control-label">
+                                            Thông Tin Chi Tiết Sản Phẩm
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <div id="summernoteInfo"></div>
                                         </div>
                                     </div>
                                 </form>

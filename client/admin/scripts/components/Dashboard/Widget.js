@@ -27,6 +27,12 @@ export default class Widget extends Component {
         var type = "";
         if (menu) {
             type = menu.id;
+        } else {
+            if (tab === "home") {
+                type = 0
+            } else if (tab === "notactive") {
+                type = -1
+            }
         }
 
         var page = 1;
@@ -53,7 +59,7 @@ export default class Widget extends Component {
     }
     componentDidMount() {
         var self = this;
-        var type = "";
+        var type = 0;
         var page = this.props.page;
         var quantity = Constants.TOTAL_ROW;
         if (_.isNull(self.props.listProduct)  ||
@@ -99,7 +105,7 @@ export default class Widget extends Component {
         return (
             <div>
                 <ul className="nav nav-tabs" role="tablist">
-                    <li className="active" role="presentation">
+                    <li className="active classTabHome" role="presentation">
                         <a onClick={this.chooseTab.bind(this, "home")} aria-controls="home" data-toggle="tab" href="#home" role="tab">
                             Tất Cả
                         </a>
@@ -113,6 +119,11 @@ export default class Widget extends Component {
                         <ul aria-labelledby="myTabDrop1" className="dropdown-menu" id="myTabDrop1-contents">
                             {listTabHeader}
                         </ul>
+                    </li>
+                    <li role="presentation">
+                        <a onClick={this.chooseTab.bind(this, "notactive")} aria-controls="home" data-toggle="tab" href="#home" role="tab">
+                            Sản Phẩm Không Buôn Bán
+                        </a>
                     </li>
                     <li className="pull-right" role="presentation">
                         <button type="button" className="btn btn-success" data-target={"#" + modalName} data-toggle="modal">Thêm Mới</button>

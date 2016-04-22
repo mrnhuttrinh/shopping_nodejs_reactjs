@@ -6,13 +6,13 @@
         "shopPath": "public/shop/",
         "secret": "aothunphongcach",
         "server": {
-            "port": 8080
+            "port": 8000
         },
         "datastores": {
-            "username": "sql6115340",
-            "password": "3SdmrWi9lx",
-            "database": "sql6115340",
-            "host": "sql6.freemysqlhosting.net",
+            "username": "root",
+            "password": "root",
+            "database": "database_production",
+            "host": "127.0.0.1",
             "dialect": "mysql"
         }
     },
@@ -22,13 +22,13 @@
         "shopPath": "public/shop/",
         "secret": "aothunphongcach",
         "server": {
-            "port": 8080
+            "port": 9000
         },
         "datastores": {
-            "username": "sql6115340",
-            "password": "3SdmrWi9lx",
-            "database": "sql6115340",
-            "host": "sql6.freemysqlhosting.net",
+            "username": "root",
+            "password": "root",
+            "database": "database_production",
+            "host": "127.0.0.1",
             "dialect": "mysql"
         }
     }

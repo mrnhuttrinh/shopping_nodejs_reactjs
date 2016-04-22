@@ -15,8 +15,11 @@ export default class Sizes extends Component {
     addSize(event) {
         event.preventDefault();
         var numberNew = this.state.newSizes.length;
+        if (numberNew !== 0) {
+            numberNew = this.state.newSizes[numberNew-1].number;
+        }
         this.state.newSizes.push({
-            id: "new_" + numberNew,
+            id: numberNew,
             quantity: 0,
             name: ""
         });
@@ -75,7 +78,9 @@ export default class Sizes extends Component {
                 $(self.refs["cancelUpdateSize"]).click();
                 self.setState({
                     product: _.cloneDeep(self.props.product),
-                    saveUpdateStatus: false
+                    saveUpdateStatus: false,
+                    newSizes: [],
+                    sizeRemove: []
                 })
             }
             self.setState({
@@ -124,7 +129,9 @@ export default class Sizes extends Component {
     cancelUpdateSize(event) {
         event.preventDefault();
         this.setState({
-            product: _.cloneDeep(this.props.product)
+            product: _.cloneDeep(this.props.product),
+            newSizes: [],
+            sizeRemove: []
         })
     }
     render() {

@@ -20,6 +20,12 @@ export default class Pagination extends Component {
         var type = "";
         if (menu) {
             type = menu.id;
+        } else {
+            if (self.props.tabChoose === "home") {
+                type = 0
+            } else if (self.props.tabChoose === "notactive") {
+                type = -1
+            }
         }
 
         var quantity = Constants.TOTAL_ROW;
