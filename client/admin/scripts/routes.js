@@ -10,7 +10,7 @@ import ListUser         from './views/ListUser';
 import MyProfile    from './views/MyProfile';
 import ProductDetail from './views/ProductDetail';
 import Menu from './views/Menu';
-import NewsPost from './views/NewsPost';
+import News from './views/News';
 import localItem from './utils/localItem';
 
 function requireAuth(nextState, replace) {
@@ -31,7 +31,7 @@ export default {
     },
     childRoutes: [
         {
-            path: 'dashboard',
+            path: 'dashboard(/:category(/:page))',
             component: Dashboard,
             onEnter: requireAuth
         }, {
@@ -63,7 +63,7 @@ export default {
             onEnter: requireAuth
         }, {
             path: 'news',
-            component: NewsPost,
+            component: News,
             onEnter: requireAuth
         }, {
             component: NotFound,

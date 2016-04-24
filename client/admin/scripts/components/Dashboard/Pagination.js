@@ -2,94 +2,63 @@ import React, {Component} from 'react'
 import _ from 'lodash';
 import Constants from '../../Constants';
 import apis from '../../apis/main';
+import {Link} from 'react-router'
 
 export default class Pagination extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pageSelected: 1
-        }
-    }
-    onClickPagination(pageNumber, event) {
-        event.preventDefault();
-        var self = this;
-        var menu = _.find(self.props.menus, function(menu) {
-            return menu.link === self.props.tabChoose;
-        });
-
-        var type = "";
-        if (menu) {
-            type = menu.id;
-        } else {
-            if (self.props.tabChoose === "home") {
-                type = 0
-            } else if (self.props.tabChoose === "notactive") {
-                type = -1
-            }
-        }
-
-        var quantity = Constants.TOTAL_ROW;
-        apis.getListProduct(type, pageNumber, quantity, function(err, res) {
-            if (err) {
-
-            } else {
-                self.props.getListProduct(res.body.data, pageNumber);
-            }
-        })
-        self.setState({
-            pageSelected: pageNumber
-        })
-    }
     render() {
+        var category = this.props.category;
+        var pageSelected = this.props.page;
         var numberPage = Math.ceil(this.props.totalProduct/Constants.TOTAL_ROW);
         var previous = (
             <li key="previous">
-                <a onClick={this.onClickPagination.bind(this, 1)} aria-label="Previous" href="#">
+                <Link to={"/dashboard/" + category + "/1"} aria-label="Previous">
                     <span aria-hidden="true">
                         «
                     </span>
-                </a>
+                </Link>
             </li>
         );
         var next = (
             <li key="next">
-                <a onClick={this.onClickPagination.bind(this, numberPage)} aria-label="Next" href="#">
+                <Link to={"/dashboard/" + category + "/" + numberPage+1} aria-label="Next">
                     <span aria-hidden="true">
                         »
                     </span>
-                </a>
+                </Link>
             </li>
         )
 
         var listPage = [];
         var pageVisible = 6;
-        if ( this.state.pageSelected >= pageVisible) {
+        if ( pageSelected >= pageVisible) {
             listPage.push(previous);
         }
         //select last page
-        if (numberPage > pageVisible && this.state.pageSelected > (numberPage - pageVisible) ) {
+        if (numberPage > pageVisible && pageSelected > (numberPage - pageVisible) ) {
             for ( i = numberPage; i > numberPage - pageVisible; i--) {
                 listPage.push(
                     <li key={i}>
-                        <a href="#" onClick={this.onClickPagination.bind(this, i)}>
+                        <Link to={"/dashboard/" + category + "/" + i}>
                             {i}
-                        </a>
+                        </Link>
                     </li>
                 );
             }
         } else {
             // set visible 5 item
             var i = 1;
-            if (this.state.pageSelected > 3) {
-                i += this.state.pageSelected;
-                pageVisible +=this.state.pageSelected;
+            if (pageSelected > 3) {
+                i += pageSelected;
+                pageVisible +=pageSelected;
             }
             for (; i <= numberPage && i < pageVisible; i++) {
+                pageSelected = parseInt(pageSelected)
+                var className = i === pageSelected ? "active" : ""; 
                 listPage.push(
-                    <li key={i}>
-                        <a href="#" onClick={this.onClickPagination.bind(this, i)}>
+                    <li className={className} key={i}>
+                        <Link to={"/dashboard/" + category + "/" + i}>
                             {i}
-                        </a>
+                        </Link>
                     </li>
                 );
             }

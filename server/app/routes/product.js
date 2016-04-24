@@ -26,15 +26,27 @@ function getMenu(cb, res) {
         cb(listMenu);
     });
 }
-function getListChildrenMenu(type, menus) {
+function getListChildrenMenu(type, menus , res) {
     var listRet = [];
-    listRet.push(type);
-    _.forEach(menus, function(menu) {
-        if (menu.parent === type) {
-            listRet.push(menu.id);
-        }
-    });
+    var currentMenu = _.find(menus, function(menu) {
+        return menu.link === type;
+    })
+    if (currentMenu) {
+        listRet.push(currentMenu.id);
+        _.forEach(menus, function(menu) {
+            if (menu.parent === currentMenu.id) {
+                listRet.push(menu.id);
+            }
+        });
     return listRet;
+    } else {
+        return res.status(400).send({
+            error: {
+                message: "Menu Không Tồn Tại"
+            }
+        });
+    }
+    
 }
 
 function excuteUpdate (res, query) {
@@ -51,19 +63,18 @@ module.exports = {
     getTotalProduct: function(req, res) {
         getMenu(function(listMenu) {
             var type = req.param("type");
-            type = parseInt(type);
             var condition = "";
             var query = "SELECT count(id) as total FROM products ";
-            if (type === -1) {
+            if (type === "noactive") {
                 condition = " WHERE status = 0";
-            } else if (type === 0) {
+            } else if (type === "home") {
                 condition = " WHERE status = 1";
             } else {
-                if (type === 1) { //newest
+                if (type === "sanphammoi") { //newest
                     condition = " WHERE status = 1";
                     orderBy = " ORDER BY createdAt DESC";
                 } else {
-                    var listType = getListChildrenMenu(type, listMenu);
+                    var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
                     condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
@@ -72,6 +83,11 @@ module.exports = {
             query += condition;
             models.sequelize.query(query)
             .spread(function(total, err) {
+                // if (err) {
+                //     return res.status(400).send({
+                //         error: err
+                //     })
+                // }
                 return res.status(200).send({
                     data: total[0].total
                 });
@@ -82,24 +98,23 @@ module.exports = {
     getListProduct: function(req, res) {
         getMenu(function(listMenu) {
             var type = req.param("type");
-            type = parseInt(type);
             var quantity  = +req.param("quantity");
             var page = +req.param("page");
             var start = (page - 1) * quantity;
             var condition;
             var orderBy = "";
             var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color FROM products ";
-            if (type === -1) {
+            if (type === "noactive") {
                 condition = "WHERE status = 0";
-            } else if (type === 0) {
+            } else if (type === "home") {
                 condition = "WHERE status = 1";
             } else {
-                if (type === 1) { //newest
+                if (type === "sanphammoi") { //newest
                     condition = "WHERE status = 1";
                     orderBy = " ORDER BY createdAt DESC";
                 } else { // promotion
                     // get list type if type have children
-                    var listType = getListChildrenMenu(type, listMenu);
+                    var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
                     condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
@@ -109,6 +124,11 @@ module.exports = {
             query += condition + orderBy + limit;
             models.sequelize.query(query)
             .spread(function(rows, err) {
+                // if (err) {
+                //     return res.status(400).send({
+                //         error: err
+                //     })
+                // }
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
@@ -131,7 +151,9 @@ module.exports = {
                         data: rows
                     });
                 }).fail(function(err) {
-
+                    return res.status(400).send({
+                        error: err
+                    })
                 })
                 
             })

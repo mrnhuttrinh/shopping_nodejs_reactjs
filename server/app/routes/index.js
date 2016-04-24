@@ -5,6 +5,7 @@ var authorized = require("../authorized");
 var admin = require("./admin");
 var menu = require("./menu");
 var product = require("./product");
+var news = require("./news")
 
 // for admin
 router.post('/signin_employer', admin.signin);
@@ -21,6 +22,9 @@ router.get('/get_list_product',authorized, product.getListProduct);
 router.get('/get_total_product',authorized, product.getTotalProduct);
 router.post('/delete_product',authorized, product.deleteProduct);
 router.post('/update_product',authorized, product.updateProduct);
+
+// for news
+router.get("/get_list_news", authorized, news.getList)
 
 // for client
 router.get("/menu", menu.get);

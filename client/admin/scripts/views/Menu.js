@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import MasterPage from './MasterPage'
 import actions from '../actions/main'
+import MenuContent from '../components/menu';
 
 class Menu extends Component{
     render() {
@@ -9,9 +10,9 @@ class Menu extends Component{
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
-                title={"Dashboard"}>
+                title={"Quản Lý Menu"}>
                 <div id="content">
-                    
+                    <MenuContent {...this.props} />
                 </div>
             </MasterPage>
         )

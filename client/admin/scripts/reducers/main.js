@@ -11,7 +11,6 @@ var initialState = {
     listProduct: [],
     totalProduct: 0,
     product: {},
-    page: 1,
     firstRequest: true
 }
 
@@ -25,7 +24,6 @@ export default function update(state = initialState, action) {
         case ACTION.GET_LIST_PRODUCT:
             newState = _.cloneDeep(state);
             newState.listProduct = action.listProduct;
-            newState.page = action.page || 1;
             return newState;
         case ACTION.GET_TOTAL_PRODUCT:
             newState = _.cloneDeep(state);

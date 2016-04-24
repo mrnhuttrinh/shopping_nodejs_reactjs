@@ -12,7 +12,8 @@ module.exports = {
         GET_TOTAL_PRODUCT: "/api/get_total_product",
         GET_PRODUCT: "/api/get_product_by_id",
         UPDATE_PRODUCT: "/api/update_product",
-        DELETE_PRODUCT: "/api/delete_product"
+        DELETE_PRODUCT: "/api/delete_product",
+        GET_LIST_NEWS: "/api/get_list_news"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",
@@ -27,6 +28,7 @@ module.exports = {
         GET_PRODUCT: "GET_PRODUCT",
         UPDATE_PRODUCT: "UPDATE_PRODUCT",
         DELETE_PRODUCT: "DELETE_PRODUCT",
-        GETTING_MENU: "GETTING_MENU"
+        GETTING_MENU: "GETTING_MENU",
+        GET_LIST_NEWS: "GET_LIST_NEWS"
     }
 }
