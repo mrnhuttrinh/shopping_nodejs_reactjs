@@ -17,7 +17,10 @@ export default class DescriptionDetail extends Component {
     }
     componentDidMount() {
         $(function() {
-            $("#summernoteDetail").summernote();
+            $("#summernoteDetail").summernote({
+                height: 300,
+                placeholder: 'Mô Tả Chi Tiết...'
+            });
         })
     }
     openDialog(event) {

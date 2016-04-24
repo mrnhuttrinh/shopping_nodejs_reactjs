@@ -29,19 +29,15 @@ export default class Widget extends Component {
                 loadData: true
             })
             apis.getListProduct(type, page, quantity, function(err, res) {
-                if (err) {
-
-                } else {
+                if (err) {} else {
                     self.props.getListProduct(res.body.data);
-                    self.setState({
-                        loadData: false
-                    })
                 }
+                self.setState({
+                    loadData: false
+                })
             })
             apis.getTotalProduct(type, function(err, res) {
-                if (err) {
-
-                } else {
+                if (err) {} else {
                     self.props.getTotalProduct(res.body.data);
                 }
             })
@@ -52,8 +48,7 @@ export default class Widget extends Component {
         var self = this;
         var type = this.props.category;
         self.state.category = type;
-
-        var page = this.props.page;
+        var page = this.props.page ? parseInt(this.props.page) : 1;
         self.state.page = page;
         var quantity = Constants.TOTAL_ROW;
         if (_.isNull(self.props.listProduct)  ||

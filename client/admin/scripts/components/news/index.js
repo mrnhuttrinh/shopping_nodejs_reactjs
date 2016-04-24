@@ -4,16 +4,12 @@ import AddNews from './AddNews';
 import Pagination from '../Pagination';
 
 export default class NewsContent extends Component{
-    pageSelected(pageNumber) {
-        console.log(pageNumber)
-    }
     render() {
         return (
             <div>
                 <AddNews />
                 <ListNews />
                 <Pagination 
-                    pageSelected={this.pageSelected}
                     totalRow={60} 
                     rows={10} />
             </div>
