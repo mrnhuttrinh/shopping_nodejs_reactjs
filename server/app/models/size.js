@@ -7,7 +7,10 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         name: DataTypes.STRING,
-        product_id: DataTypes.INTEGER,
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         quantity: DataTypes.INTEGER
     }, {
         tableName: 'sizes'

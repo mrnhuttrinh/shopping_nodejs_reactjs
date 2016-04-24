@@ -402,7 +402,7 @@ module.exports = {
                     arrayPromise.push(
                         models.Size.create({
                             name: _addnew.name,
-                            product: id,
+                            product_id: id,
                             quantity: _addnew.quantity
                         })
                     )
