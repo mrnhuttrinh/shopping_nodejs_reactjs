@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 export default class LeftMenu extends Component{
     render() {
         var pathName = this.props.pathName;
-        var user = this.props.user;
+        var user = this.props.user || {};
         return (
             <aside id="left-panel">
                 <div className="login-info">

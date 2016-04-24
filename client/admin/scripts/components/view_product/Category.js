@@ -29,7 +29,7 @@ export default class DropDown extends Component {
     }
     checkSelect(categoriesSelected, id) {
         var hasSelected = _.find(categoriesSelected, (cate) => {
-            return cate.category === id;
+            return cate.category_id === id;
         })
         var classSuccess = "";
         if (hasSelected) {
@@ -180,7 +180,7 @@ export default class DropDown extends Component {
         var self = this;
         var categoriesSelected = this.state.product.categories;
         self.state.listSelected = _.map(categoriesSelected, (cate) => {
-            return cate.category
+            return cate.category_id
         });
         var listChoose = this.sortMenus(this.state.menus, categoriesSelected);
         var html = _.map(listChoose, (list) => {

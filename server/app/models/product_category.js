@@ -6,8 +6,14 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        category: DataTypes.INTEGER,
-        product: DataTypes.INTEGER
+        category_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     }, {
         tableName: 'products_category'
     });

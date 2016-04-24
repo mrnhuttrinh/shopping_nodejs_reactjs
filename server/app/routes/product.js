@@ -77,7 +77,7 @@ module.exports = {
                     var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
                 }
             }
             query += condition;
@@ -117,7 +117,7 @@ module.exports = {
                     var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.status = 1 and p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
                 }
             }
             var limit = " LIMIT " + start + " , " + quantity;
@@ -132,7 +132,7 @@ module.exports = {
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
-                    var querysize = "SELECT * FROM sizes WHERE product = " + row.id;
+                    var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 })
                 Q.all(arrayQuerySize).then(function(rowsSizes) {
@@ -166,9 +166,9 @@ module.exports = {
         .spread(function(product, err) {
             if (product.length) {
                 //get size 
-                var querysize = "SELECT * FROM sizes WHERE product = " + id;
+                var querysize = "SELECT * FROM sizes WHERE product_id = " + id;
                 // get category of product
-                var queryproductcategory = "SELECT * FROM products_category WHERE product = " + id;
+                var queryproductcategory = "SELECT * FROM products_category WHERE product_id = " + id;
                 // get image of product
                 var queryimage = "SELECT * FROM product_galleries WHERE product_id = " + id;
                 Q.all([
@@ -199,6 +199,7 @@ module.exports = {
         })
     },
     createProduct: function(req, res) {
+        var employer = req.userToken.employer;
         var product = req.body.product;
         var gallerys = req.body.gallerys;
         var category_name = "product";
@@ -227,7 +228,8 @@ module.exports = {
                 trademark: product.trademark,
                 description: product.description,
                 description_detail: product.description_detail,
-                tech_information: product.tech_information
+                tech_information: product.tech_information,
+                employer_id: employer.id
             }).then(function(prod, err) {
                 if (err) {
                     return res.status(400).send({
@@ -238,7 +240,7 @@ module.exports = {
                 _.forEach(sizes, function(size) {
                     models.Size.create({
                         name: size.name,
-                        product: prod.id,
+                        product_id: prod.id,
                         quantity: size.quantity
                     }).then(function(si, err) {
 
@@ -249,8 +251,8 @@ module.exports = {
                 _.forEach(listCategory, function(cate) {
                     cate = +cate;
                     models.ProductCategory.create({
-                        category: cate,
-                        product: prod.id
+                        category_id: cate,
+                        product_id: prod.id
                     }).then(function(gal, err) {
 
                     })
@@ -308,7 +310,7 @@ module.exports = {
                 var promiseArray = [];
                 // delete foregin key in products_category
                 // add new foregin between product and categories
-                query = "DELETE FROM products_category WHERE product = " + id;
+                query = "DELETE FROM products_category WHERE product_id = " + id;
                 models.sequelize.query(query).then(function(result, err) {
                     if (err) {
                         return res.status(400).send({
@@ -317,8 +319,8 @@ module.exports = {
                     }
                     _.forEach(data, function(da) {
                         promiseArray.push(models.ProductCategory.create({
-                            product: id,
-                            category: da
+                            product_id: id,
+                            category_id: da
                         }));
                     });
                     Q.all(promiseArray).then(function(result) {

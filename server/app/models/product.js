@@ -18,6 +18,10 @@ module.exports = function(sequelize, DataTypes) {
         description: DataTypes.STRING,
         description_detail: DataTypes.TEXT,
         tech_information: DataTypes.TEXT,
+        employer_id: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

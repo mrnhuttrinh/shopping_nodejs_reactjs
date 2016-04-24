@@ -323,7 +323,7 @@ export default class ViewProduct extends Component {
                 var cateChoose = _.map(product.categories, (cate) => {
                     totalCategory++;
                     var cateMenu = _.find(self.props.menus, (menu) => {
-                        return menu.id === cate.category;
+                        return menu.id === cate.category_id;
                     });
                     if (cateMenu) {
                         return (
