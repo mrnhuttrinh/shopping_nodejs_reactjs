@@ -5,10 +5,11 @@ import Pagination from '../Pagination';
 
 export default class NewsContent extends Component{
     render() {
+        var page = this.props.params.page || 1;
         return (
             <div>
-                <AddNews />
-                <ListNews />
+                <AddNews {...this.props}/>
+                <ListNews {...this.props} page={page} />
                 <Pagination 
                     totalRow={60} 
                     rows={10} />

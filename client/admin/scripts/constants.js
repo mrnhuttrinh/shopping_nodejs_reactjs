@@ -13,7 +13,8 @@ module.exports = {
         GET_PRODUCT: "/api/get_product_by_id",
         UPDATE_PRODUCT: "/api/update_product",
         DELETE_PRODUCT: "/api/delete_product",
-        GET_LIST_NEWS: "/api/get_list_news"
+        GET_LIST_NEWS: "/api/get_list_news",
+        CREATE_NEWS: "/api/create_news"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",
@@ -29,6 +30,7 @@ module.exports = {
         UPDATE_PRODUCT: "UPDATE_PRODUCT",
         DELETE_PRODUCT: "DELETE_PRODUCT",
         GETTING_MENU: "GETTING_MENU",
-        GET_LIST_NEWS: "GET_LIST_NEWS"
+        GET_LIST_NEWS: "GET_LIST_NEWS",
+        CREATE_NEWS: "CREATE_NEWS"
     }
 }

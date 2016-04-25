@@ -56,6 +56,10 @@ export default function update(state = initialState, action) {
             newState = _.cloneDeep(state);
             newState.product = action.product;
             return newState;
+        case ACTION.GET_LIST_NEWS:
+            newState = _.cloneDeep(state);
+            newState.listNews = action.listNews;
+            return newState;
         default:
             return state;
     }

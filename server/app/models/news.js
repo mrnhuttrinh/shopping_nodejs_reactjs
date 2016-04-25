@@ -7,7 +7,11 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         title: DataTypes.STRING,
-        content: DataTypes.TEXT
+        content: DataTypes.TEXT,
+        employer_id: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
     }, {
         tableName: 'news'
     });

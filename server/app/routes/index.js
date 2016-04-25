@@ -25,6 +25,7 @@ router.post('/update_product',authorized, product.updateProduct);
 
 // for news
 router.get("/get_list_news", authorized, news.getList)
+router.post("/create_news", authorized, news.createNews)
 
 // for client
 router.get("/menu", menu.get);

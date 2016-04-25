@@ -10,7 +10,8 @@ var Product     = sequelize.import("./product");
 var ProductGallary     = sequelize.import("./product_gallery");
 var ProductCategory     = sequelize.import("./product_category");
 var Size     = sequelize.import("./size");
-var Color = sequelize.import("./color")
+var Color = sequelize.import("./color");
+var News = sequelize.import("./news");
 
 var db = {};
 db[Employer.name] = Employer;
@@ -20,6 +21,7 @@ db[ProductGallary.name] = ProductGallary;
 db[ProductCategory.name] = ProductCategory;
 db[Size.name] = Size;
 db[Color.name] = Color;
+db[News.name] = News;
 
 Object.keys(db).forEach(function(modelName) {
     if ("associate" in db[modelName]) {

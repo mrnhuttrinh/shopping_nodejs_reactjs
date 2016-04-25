@@ -62,7 +62,7 @@ export default {
             component: Menu,
             onEnter: requireAuth
         }, {
-            path: 'news',
+            path: 'news(:/page)',
             component: News,
             onEnter: requireAuth
         }, {
