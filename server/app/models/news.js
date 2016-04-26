@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         title: DataTypes.STRING,
-        content: DataTypes.TEXT,
+        content: DataTypes.TEXT('long'),
         employer_id: {
             type: DataTypes.UUID,
             allowNull: false
