@@ -1,4 +1,5 @@
 var models = require("../models");
+var logger = require("../logger")
 var _ = require("lodash");
 var Q = require("q");
 module.exports = {
@@ -10,14 +11,14 @@ module.exports = {
         var query = "SELECT id, title FROM news LIMIT " + startRow + ", " + numberRow;
          
         models.sequelize.query(query)
-        .then(function(listNews, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            } 
+        .then(function(listNews) {
             return res.status(200).send({
                 data: listNews[0]
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
             });
         });
     },
@@ -28,15 +29,15 @@ module.exports = {
             title: data.title,
             content: data.content,
             employer_id: employer.id
-        }).then(function(result, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        }).then(function(result) {
             return res.status(200).send({
                 data: result
             });
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 };

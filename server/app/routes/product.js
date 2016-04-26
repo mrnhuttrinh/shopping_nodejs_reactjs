@@ -2,6 +2,7 @@ var jwt = require("jsonwebtoken");
 var uuid = require("../utils/uuid");
 var config = require("../config");
 var toImage = require("../utils/toImage");
+var logger = require("../logger")
 var _ = require("lodash");
 var Q = require("q");
 
@@ -17,13 +18,13 @@ function createImageOnDisk(prefix, dataImage) {
 
 function getMenu(cb, res) {
     models.Category.findAll()
-    .then(function(listMenu, err) {
-        if (err) {
-            return res.status(400).send({
-                error: err
-            });
-        } 
+    .then(function(listMenu) {
         cb(listMenu);
+    }).catch(function(err) {
+        logger("ERROR", err);
+        return res.status(400).send({
+            error: err
+        });
     });
 }
 function getListChildrenMenu(type, menus , res) {
@@ -50,14 +51,14 @@ function getListChildrenMenu(type, menus , res) {
 }
 
 function excuteUpdate (res, query) {
-    models.sequelize.query(query).then(function(result, err) {
-        if (err) {
-            return res.status(400).send({
-                error: err
-            });
-        }
+    models.sequelize.query(query).then(function(result) {
         return res.status(200).send();
-    })
+    }).catch(function(err) {
+        logger("ERROR", err);
+        return res.status(400).send({
+            error: err
+        });
+    });
 }
 module.exports = {
     getTotalProduct: function(req, res) {
@@ -82,16 +83,16 @@ module.exports = {
             }
             query += condition;
             models.sequelize.query(query)
-            .spread(function(total, err) {
-                // if (err) {
-                //     return res.status(400).send({
-                //         error: err
-                //     })
-                // }
+            .spread(function(total) {
                 return res.status(200).send({
-                    data: total[0].total
+                    data: total.total
                 });
-            })
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
         })
         
     },
@@ -123,12 +124,7 @@ module.exports = {
             var limit = " LIMIT " + start + " , " + quantity;
             query += condition + orderBy + limit;
             models.sequelize.query(query)
-            .spread(function(rows, err) {
-                // if (err) {
-                //     return res.status(400).send({
-                //         error: err
-                //     })
-                // }
+            .spread(function(rows) {
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
@@ -151,19 +147,24 @@ module.exports = {
                         data: rows
                     });
                 }).fail(function(err) {
+                    logger("ERROR", err);
                     return res.status(400).send({
                         error: err
                     })
                 })
-                
-            })
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
         });
     },
     getProductById: function(req, res) {
         var id = req.param("id");
         var query = "SELECT * FROM products WHERE id = " + id;
         models.sequelize.query(query)
-        .spread(function(product, err) {
+        .spread(function(product) {
             if (product.length) {
                 //get size 
                 var querysize = "SELECT * FROM sizes WHERE product_id = " + id;
@@ -196,7 +197,12 @@ module.exports = {
                     }
                 });
             }
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     createProduct: function(req, res) {
         var employer = req.userToken.employer;
@@ -208,8 +214,9 @@ module.exports = {
             where: {
                 code: product.code
             }
-        }).then(function(productExist, err) {
+        }).then(function(productExist) {
             if (productExist) {
+                logger("ERROR", err);
                 return res.status(400).send({
                     error: {
                         message: "Mã Sản Phẩm Đã Tồn Tại"
@@ -230,21 +237,21 @@ module.exports = {
                 description_detail: product.description_detail,
                 tech_information: product.tech_information,
                 employer_id: employer.id
-            }).then(function(prod, err) {
-                if (err) {
-                    return res.status(400).send({
-                        error: err
-                    });
-                }
+            }).then(function(prod) {
                 var sizes = product.sizes;
                 _.forEach(sizes, function(size) {
                     models.Size.create({
                         name: size.name,
                         product_id: prod.id,
                         quantity: size.quantity
-                    }).then(function(si, err) {
+                    }).then(function(si) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 var listCategory = product.category.split(",");
                 // save category 
@@ -253,9 +260,14 @@ module.exports = {
                     models.ProductCategory.create({
                         category_id: cate,
                         product_id: prod.id
-                    }).then(function(gal, err) {
+                    }).then(function(gal) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 // save image to disk and gallery
                 _.forEach(gallerys, function(gallery) {
@@ -263,12 +275,22 @@ module.exports = {
                     models.ProductGallery.create({
                         product_id: prod.id,
                         image: galleryName
-                    }).then(function(gal, err) {
+                    }).then(function(gal) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 return res.status(200).send({
                     data: prod
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
                 });
             });
         })
@@ -279,13 +301,13 @@ module.exports = {
         var status = req.body.data.status
         var query = "UPDATE products SET status = " + status + " WHERE id = " + id;
         models.sequelize.query(query).then(function(row, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
             return res.status(200).send();
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     updateProduct: function(req, res) {
         var id = req.body.id;
@@ -326,11 +348,10 @@ module.exports = {
                     Q.all(promiseArray).then(function(result) {
                         return res.status(200).send(result);
                     }).fail(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                error: err
-                            });
-                        }
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
                     })
                 });
                 break;
@@ -340,12 +361,7 @@ module.exports = {
                 break;
             case "code":
                 var queryFindExitCode = "SELECT * FROM products WHERE code = '" + data + "' AND id != " + id;
-                models.sequelize.query(queryFindExitCode).then(function(result, err) {
-                    if (err) {
-                        return res.status(400).send({
-                            error: err
-                        });
-                    }
+                models.sequelize.query(queryFindExitCode).then(function(result) {
                     if (result[0].length) {
                         return res.status(300).send({
                             error: {
@@ -356,7 +372,12 @@ module.exports = {
                         query = "UPDATE products SET code = '" + data + "'" + condition;
                         excuteUpdate(res, query);
                     }
-                })
+                }).catch(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    });
+                });
                 break;
             case "color":
                 query = "UPDATE products SET color = '" + data + "'" + condition;
@@ -427,6 +448,7 @@ module.exports = {
                 Q.all(arrayPromise).then(function(result) {
                     return res.status(200).send();
                 }).fail(function(err) {
+                    logger("ERROR", err)
                     return res.status(400).send({
                         error: {
                             message: "Cập Nhật Không Thành Công!"
@@ -458,6 +480,7 @@ module.exports = {
                 Q.all(arrayPromise).then(function(result) {
                     return res.status(200).send();
                 }).fail(function(err) {
+                    logger("ERROR",err);
                     return res.status(400).send({
                         error: {
                             message: "Cập Nhật Không Thành Công!"

@@ -57,6 +57,8 @@ export default class AddNews extends Component{
                 submit: false,
                 addNews: false
             })
+            $("#contentTitle").summernote("code", "");
+            self.refs["title"].value = "";
         })
     }
     render() {
@@ -81,7 +83,7 @@ export default class AddNews extends Component{
                             </div>
                             {
                                 this.state.submit ? (
-                                    <Loading />
+                                    <Loading classCSS="pull-right"/>
                                 ) : (
                                     <button onClick={this.onSubmitForm.bind(this)} type="submit" className="btn btn-primary pull-right">
                                         Submit

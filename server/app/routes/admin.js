@@ -3,7 +3,7 @@ var md5 = require('md5');
 var uuid = require("../utils/uuid");
 var config = require("../config");
 var toImage = require("../utils/toImage");
-
+var logger = require("../logger")
 var models = require("../models");
 
 module.exports = {
@@ -20,13 +20,13 @@ module.exports = {
             where: {
                 id: empl.id
             }
-        }).then(function(suc, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        }).then(function(suc) {
             return res.status(200).send();
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
         });
     },
     create: function(req, res) {
@@ -47,12 +47,7 @@ module.exports = {
         }
         models.Employer.find({
             where: {username: newuser.username}
-        }).then(function(employers, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        }).then(function(employers) {
             if (employers) {
                 return res.status(400).send({
                     error: {
@@ -72,6 +67,7 @@ module.exports = {
                     level: newuser.level
                 }).then(function(employer, err) {
                     if (err) {
+                        logger("ERROR", err);
                         return res.status(400).send({
                             error: err
                         });
@@ -81,7 +77,12 @@ module.exports = {
                     });
                 });
             }
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     signin: function(req, res) {
         var username = req.body.username;
@@ -111,13 +112,7 @@ module.exports = {
                 "phone",
                 "image",
             ]
-        }).then(function(employer, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
-
+        }).then(function(employer) {
             if (!employer) {
                 return res.status(400).send({
                     error: {
@@ -145,6 +140,11 @@ module.exports = {
                     }
                 })
             }
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
         });
     },
     me: function(req, res) {
@@ -164,16 +164,15 @@ module.exports = {
                 "phone",
                 "image",
             ]
-        }).then(function(employer, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
-
+        }).then(function(employer) {
             return res.status(200).send({
                 data: employer
             })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
         });
     },
     updateUser: function(req, res) {
@@ -181,44 +180,44 @@ module.exports = {
             where: {
                 id: req.body.id
             }
-        }).then(function(employer, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        }).then(function(employer) {
             return res.status(200).send({
                 data: employer
             });
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     getUser: function(req, res) {
         models.Employer.find({
             where: {
                 id: req.body.id
             }
-        }).then(function(employer, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        }).then(function(employer) {
             return res.status(200).send({
                 data: employer
             });
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     getAllUser: function(req, res) {
         console.log(JSON.stringify(req.decoded))
-        models.Employer.findAll().then(function(employers, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
+        models.Employer.findAll().then(function(employers) {
             return res.status(200).send({
                 data: employers
             });
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 };
