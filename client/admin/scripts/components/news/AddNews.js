@@ -48,11 +48,12 @@ export default class AddNews extends Component{
                 toastr.error("Tạo Bài Viết Không Thành Công");
             }
             toastr.success("Tạo Bài Viết Thành Công");
-            self.props.listNews.push({
+            self.props.news.listNews.push({
                 id: result.body.data.id,
                 title: result.body.data.title
             })
-            self.props.getListNews(self.props.listNews)
+            self.props.getListNews(self.props.news.listNews, "list")
+            self.props.getListNews(self.props.news.total + 1, "total")
             self.setState({
                 submit: false,
                 addNews: false
@@ -60,6 +61,15 @@ export default class AddNews extends Component{
             $("#contentTitle").summernote("code", "");
             self.refs["title"].value = "";
         })
+    }
+    onCancelForm(event) {
+        event.preventDefault();
+        var self = this;
+        $("#contentTitle").summernote("code", "");
+        self.refs["title"].value = "";
+        self.setState({
+            addNews: !self.state.addNews
+        });
     }
     render() {
         var buttonStyle = this.state.addNews ? {"display": "none"} : {"display": "block"}
@@ -85,9 +95,14 @@ export default class AddNews extends Component{
                                 this.state.submit ? (
                                     <Loading classCSS="pull-right"/>
                                 ) : (
-                                    <button onClick={this.onSubmitForm.bind(this)} type="submit" className="btn btn-primary pull-right">
-                                        Submit
-                                    </button>
+                                    <div>
+                                        <button onClick={this.onCancelForm.bind(this)} type="submit" className="btn btn-warning pull-right">
+                                            Hủy
+                                        </button>
+                                        <button onClick={this.onSubmitForm.bind(this)} type="submit" className="btn btn-primary pull-right">
+                                            Lưu
+                                        </button>
+                                    </div>
                                 )
                             }
                         </form>

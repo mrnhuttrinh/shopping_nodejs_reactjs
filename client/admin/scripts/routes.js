@@ -46,7 +46,7 @@ export default {
             component: About,
             onEnter: requireAuth
         }, {
-            path: 'listuser',
+            path: 'listuser(/:page)',
             component: ListUser,
             onEnter: requireAuth
         }, {
@@ -62,7 +62,7 @@ export default {
             component: Menu,
             onEnter: requireAuth
         }, {
-            path: 'news(:/page)',
+            path: 'news(/:page)',
             component: News,
             onEnter: requireAuth
         }, {

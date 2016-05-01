@@ -14,7 +14,15 @@ module.exports = {
         UPDATE_PRODUCT: "/api/update_product",
         DELETE_PRODUCT: "/api/delete_product",
         GET_LIST_NEWS: "/api/get_list_news",
-        CREATE_NEWS: "/api/create_news"
+        CREATE_NEWS: "/api/create_news",
+        GET_NEWS_BY_ID: "/api/get_news_by_id",
+        DELETE_NEWS: "/api/delete_news",
+        GET_TOTAL_NEWS: "/api/get_total_news",
+        GET_TOTAL_USERS: "/api/get_total_users",
+        RESET_PASSWORD: "/api/reset_password_employer",
+        CHANGE_STATUS_EMPLOYER: "/api/change_status_employer",
+        UPDATE_USER_INFO: "/api/update_employer_info",
+        UPDATE_PASSWORD: "/api/update_password_employer"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",

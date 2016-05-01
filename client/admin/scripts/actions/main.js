@@ -9,10 +9,11 @@ export default {
             user: user
         }
     },
-    getAllUser: function(allUser) {
+    getAllUser: function(allUser, typeUpdate) {
         return {
             type: ACTION.GET_ALL_USER,
-            allUser: allUser
+            allUser: allUser,
+            typeUpdate: typeUpdate
         }
     },
     setToken: function(token) {
@@ -62,10 +63,11 @@ export default {
             product: product
         }
     },
-    getListNews: function(listNews) {
+    getListNews: function(listNews, typeUpdate) {
         return {
             type: ACTION.GET_LIST_NEWS,
-            listNews: listNews
+            listNews: listNews,
+            typeUpdate: typeUpdate
         }
     }
 }

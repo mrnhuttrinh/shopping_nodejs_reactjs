@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 import _ from 'lodash';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import localItem from '../../utils/localItem';
 
 export default class GridProduct extends Component {
@@ -112,7 +112,11 @@ export default class GridProduct extends Component {
                 <div className="row">
                     {rows}
                 </div>
-                <Pagination {...this.props}/>
+                <Pagination 
+                    page={this.props.page}
+                    href={"/dashboard/" + this.props.category}
+                    totalRow={this.props.totalProduct} 
+                    rows={16} />
             </div>
         )
     }

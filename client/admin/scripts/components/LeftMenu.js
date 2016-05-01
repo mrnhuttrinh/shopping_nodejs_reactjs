@@ -21,7 +21,7 @@ export default class LeftMenu extends Component{
                             <Link to="/"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Dashboard</span></Link>
                         </li>
                         {
-                            this.props.user.level === 1 ? (
+                            this.props.user.level === 1 || this.props.user.level === 2 ? (
                                 <li className={pathName == "/listuser" ? "active" : ""}>
                                     <Link to="/listuser"><i className="fa fa-lg fa-fw fa-home"></i> <span className="menu-item-parent">Nhân Viên</span></Link>
                                 </li>

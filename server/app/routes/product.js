@@ -85,7 +85,7 @@ module.exports = {
             models.sequelize.query(query)
             .spread(function(total) {
                 return res.status(200).send({
-                    data: total.total
+                    data: total[0].total
                 });
             }).catch(function(err) {
                 logger("ERROR", err);

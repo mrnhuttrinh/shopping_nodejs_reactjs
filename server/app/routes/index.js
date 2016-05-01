@@ -12,8 +12,12 @@ router.post('/signin_employer', admin.signin);
 router.get('/get_me', authorized, admin.me);
 router.post('/create_employer',authorized, admin.create);
 router.get('/all_employer', authorized, admin.getAllUser);
-
+router.get('/get_total_users', authorized, admin.getTotalUsers);
 router.post('/upload_employer_photo', authorized, admin.uploadEmployerPhoto)
+router.post("/reset_password_employer",authorized, admin.resetPassword)
+router.post("/change_status_employer", authorized, admin.changeStatusEmployer)
+router.post("/update_employer_info", authorized, admin.updateEmployerInfo)
+router.post("/update_password_employer", authorized, admin.updatePasswordEmployers)
 
 // for product
 router.post('/create_product',authorized, product.createProduct)
@@ -26,7 +30,9 @@ router.post('/update_product',authorized, product.updateProduct);
 // for news
 router.get("/get_list_news", authorized, news.getList)
 router.post("/create_news", authorized, news.createNews)
-
+router.get("/get_news_by_id", news.getNewsById);
+router.post("/delete_news", authorized, news.deleteNews);
+router.get("/get_total_news", authorized, news.getTotalNews);
 // for client
 router.get("/menu", menu.get);
 

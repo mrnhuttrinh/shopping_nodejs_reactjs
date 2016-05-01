@@ -53,6 +53,10 @@ export default class Gallery extends Component {
             })
         })
     }
+    addMoreGallery(event) {
+        event.preventDefault();
+        $("#dropZoneGallery").trigger("click");
+    }
     componentDidMount() {
         var self = this;
         $(function() {
@@ -196,7 +200,7 @@ export default class Gallery extends Component {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-default pull-left">
+                                    <button onClick={this.addMoreGallery.bind(this)} type="button" className="btn btn-default pull-left">
                                         <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Thêm Hình Ảnh
                                     </button>
                                     <button onClick={this.cancelUpdateGallery.bind(this)} ref="cancelUpdateGallery" className="btn btn-default" data-dismiss="modal" type="button">

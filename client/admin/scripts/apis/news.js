@@ -24,5 +24,35 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             }); 
+    },
+    getNewsById(id, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_NEWS_BY_ID, {
+                id
+            })
+            .then(function(err, res) {
+                cb(err, res);
+            })
+    },
+    deleteNews(id, cb) {
+        var request = new Request();
+        request
+            .post(API.DELETE_NEWS, {
+                id
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res)
+            })
+    },
+    getTotalNews(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_TOTAL_NEWS)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res)
+            })
     }
 }
