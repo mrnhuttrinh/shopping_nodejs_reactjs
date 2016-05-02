@@ -84,7 +84,7 @@ export default class DropDown extends Component {
             if (menu.level === 3) {
                 var classSuccess = self.checkSelect(categoriesSelected, menu.id);
                 menu.html = (
-                    <li className={classSuccess + " li-dropdown list-group-item"}>
+                    <li key={menu.id} className={classSuccess + " li-dropdown list-group-item"}>
                         <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                     </li>
                 );
@@ -118,7 +118,7 @@ export default class DropDown extends Component {
                 var classSuccess = self.checkSelect(categoriesSelected, menu.id);
                 menu.html = (
                     <div>
-                        <li className={classSuccess + " li-dropdown list-group-item"}>
+                        <li key={menu.id} className={classSuccess + " li-dropdown list-group-item"}>
                             {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
@@ -155,7 +155,7 @@ export default class DropDown extends Component {
                 var classSuccess = self.checkSelect(categoriesSelected, menu.id);
                 menu.html = (
                     <div>
-                        <li className={classSuccess + " li-dropdown list-group-item"}>
+                        <li key={menu.id} className={classSuccess + " li-dropdown list-group-item"}>
                             {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
