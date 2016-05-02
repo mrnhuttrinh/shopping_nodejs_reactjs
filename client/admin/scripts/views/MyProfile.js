@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import MasterPage from './MasterPage'
-import Profile from '../components/Profile'
+import Profile from '../components/profile'
 import { connect } from 'react-redux'
 import actions from '../actions/main'
 

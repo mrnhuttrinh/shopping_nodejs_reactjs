@@ -15,8 +15,11 @@ export default class Sizes extends Component {
     addSize(event) {
         event.preventDefault();
         var numberNew = this.state.newSizes.length;
+        if (numberNew !== 0) {
+            numberNew = this.state.newSizes[numberNew-1].number;
+        }
         this.state.newSizes.push({
-            id: "new_" + numberNew,
+            id: numberNew,
             quantity: 0,
             name: ""
         });
@@ -32,7 +35,7 @@ export default class Sizes extends Component {
             return size.id === id;
         });
         self.setState({
-            product: self.state.product.sizes,
+            sizes: self.state.product.sizes,
             sizeRemove: self.state.sizeRemove
         });
     }
@@ -73,6 +76,12 @@ export default class Sizes extends Component {
                 })
                 toastr.success("Cập Nhật Size Thành Công")
                 $(self.refs["cancelUpdateSize"]).click();
+                self.setState({
+                    product: _.cloneDeep(self.props.product),
+                    saveUpdateStatus: false,
+                    newSizes: [],
+                    sizeRemove: []
+                })
             }
             self.setState({
                 saveUpdateStatus: false
@@ -120,7 +129,9 @@ export default class Sizes extends Component {
     cancelUpdateSize(event) {
         event.preventDefault();
         this.setState({
-            product: _.cloneDeep(this.props.product)
+            product: _.cloneDeep(this.props.product),
+            newSizes: [],
+            sizeRemove: []
         })
     }
     render() {
@@ -138,7 +149,7 @@ export default class Sizes extends Component {
                 if (product.sizes.length) {
                     viewSize = _.map(product.sizes, (size)=> {
                         return (
-                            <div className="form-group">
+                            <div key={size.id} className="form-group">
                                 <label className="col-sm-2 control-label">
                                     Tên Size
                                 </label>
@@ -172,7 +183,7 @@ export default class Sizes extends Component {
         }
         var sizeNewViews = _.map(this.state.newSizes, (size)=> {
             return (
-                <div className="form-group">
+                <div key={size.id} className="form-group">
                     <label className="col-sm-2 control-label">
                         Tên Size
                     </label>

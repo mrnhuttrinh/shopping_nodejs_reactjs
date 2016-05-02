@@ -12,7 +12,7 @@ var fs = require("fs-extra");
 var Constrains = require("./constrains");
 var configGlobal = require("./config");
 configGlobal._globalPath = __dirname;
-
+var logger = require("./logger");
 var app = express();
 
 app.use(bodyParser.json({limit: '50mb'}));
@@ -23,6 +23,8 @@ app.use("/admin", express.static(path.join(__dirname, "public/admin")));
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.disable('etag');
+
+// show log
 app.use(morgan("dev"));
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,6 +59,7 @@ app.use( function(req, res) {
 // no stacktraces leaked to user
 app.use( function(err, req, res) {
     res.status(err.status || 500);
+    logger("ERROR", err)
     res.render("error", {
         message: err.message,
         error: (app.get('env') === 'development') ? err : {}

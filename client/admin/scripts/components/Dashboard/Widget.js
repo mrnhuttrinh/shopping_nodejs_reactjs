@@ -4,65 +4,62 @@ import apis from '../../apis/main';
 import Constants from '../../Constants';
 import GridProduct from './GridProduct';
 import DivLoading from '../DivLoading';
+import {Link} from 'react-router'
 
 export default class Widget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabChoose: "home",
-            loadData: true
+            loadData: true,
+            category: this.props.category,
+            page: this.props.page
         }
     }
-
-    chooseTab(tab, event) {
-        event.preventDefault();
-        var self = this;
-        self.setState({
-            loadData: true
-        })
-        var menu = _.find(self.props.menus, function(menu) {
-            return menu.link === tab;
-        });
-
-        var type = "";
-        if (menu) {
-            type = menu.id;
-        }
-
-        var page = 1;
-        var quantity = Constants.TOTAL_ROW;
-        apis.getListProduct(type, page, quantity, function(err, res) {
-            if (err) {
-
-            } else {
-                self.props.getListProduct(res.body.data, page);
+    shouldComponentUpdate (nextProps, nextState) {
+        var nextPage = nextProps.page ? parseInt(nextProps.page) : 1;
+        if (this.state.category !== nextProps.category
+            || this.state.page !== nextPage) {
+            var self = this;
+            var page = nextProps.page;
+            var type = nextProps.category;
+            self.state.category = type;
+            this.state.page = nextPage;
+            var quantity = Constants.TOTAL_ROW;
+            self.setState({
+                loadData: true
+            })
+            apis.getListProduct(type, page, quantity, function(err, res) {
+                if (err) {} else {
+                    self.props.getListProduct(res.body.data);
+                }
                 self.setState({
-                    tabChoose: tab,
                     loadData: false
-                });
-
-            }
-        })
-        apis.getTotalProduct(type, function(err, res) {
-            if (err) {
-
-            } else {
-                self.props.getTotalProduct(res.body.data);
-            }
-        })
+                })
+            })
+            apis.getTotalProduct(type, function(err, res) {
+                if (err) {} else {
+                    self.props.getTotalProduct(res.body.data);
+                }
+            })
+        }
+        return true;
     }
     componentDidMount() {
         var self = this;
-        var type = "";
-        var page = this.props.page;
+        var type = this.props.category;
+        self.state.category = type;
+        var page = this.props.page ? parseInt(this.props.page) : 1;
+        self.state.page = page;
         var quantity = Constants.TOTAL_ROW;
         if (_.isNull(self.props.listProduct)  ||
             _.isEmpty(self.props.listProduct)) {
             apis.getListProduct(type, page, quantity, function(err, res) {
                 if (err) {
-
+                    self.setState({
+                        loadData: false
+                    })
                 } else {
-                    self.props.getListProduct(res.body.data, page);
+                    self.props.getListProduct(res.body.data);
                     self.setState({
                         loadData: false
                     })
@@ -70,7 +67,9 @@ export default class Widget extends Component {
             })
             apis.getTotalProduct(type, function(err, res) {
                 if (err) {
-
+                    self.setState({
+                        loadData: false
+                    })
                 } else {
                     self.props.getTotalProduct(res.body.data);
                 }
@@ -81,15 +80,21 @@ export default class Widget extends Component {
             })
         }
     }
-
+    onChooseTab(link, event) {
+        event.preventDefault();
+        var pathName = window.location.pathname;
+        window.location = pathName + "#/dashboard/"+link;
+    }
     render() {
         var self = this;
         var modalName = this.props.modalName;
+        var category = this.props.category;
         var listTabHeader = _.map(this.props.menus, function(menu) {
             if (menu.level === 1) {
+                var className = category === menu.link ? "active" : ""
                 return (
-                    <li key={menu.id} className="">
-                        <a onClick={self.chooseTab.bind(self, menu.link)} aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" href={"#" + menu.link} id="dropdown2-tab" role="tab">
+                    <li key={menu.id} className={className}>
+                        <a onClick={self.onChooseTab.bind(this,menu.link)} href={"#" + menu.link} aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" id="dropdown2-tab" role="tab">
                             {menu.name}
                         </a>
                     </li>
@@ -99,8 +104,8 @@ export default class Widget extends Component {
         return (
             <div>
                 <ul className="nav nav-tabs" role="tablist">
-                    <li className="active" role="presentation">
-                        <a onClick={this.chooseTab.bind(this, "home")} aria-controls="home" data-toggle="tab" href="#home" role="tab">
+                    <li onClick={this.onChooseTab.bind(this,"home")} className={category === "home" ? "active classTabHome" : "classTabHome"} role="presentation">
+                        <a href="#home" aria-controls="home" data-toggle="tab" role="tab">
                             Tất Cả
                         </a>
                     </li>
@@ -114,6 +119,11 @@ export default class Widget extends Component {
                             {listTabHeader}
                         </ul>
                     </li>
+                    <li className={category === "noactive" ? "active" : ""} role="presentation">
+                        <a onClick={this.onChooseTab.bind(this, "noactive")} href="#home" aria-controls="home" data-toggle="tab" role="tab">
+                            Sản Phẩm Không Buôn Bán
+                        </a>
+                    </li>
                     <li className="pull-right" role="presentation">
                         <button type="button" className="btn btn-success" data-target={"#" + modalName} data-toggle="modal">Thêm Mới</button>
                     </li>
@@ -123,7 +133,7 @@ export default class Widget extends Component {
                         this.state.loadData ? (
                             <DivLoading />
                         ) : (
-                            <GridProduct {...this.props} tabChoose={this.state.tabChoose} />
+                            <GridProduct {...this.props} />
                         )
                     }
                 </div>

@@ -2,6 +2,7 @@ var jwt = require("jsonwebtoken");
 var uuid = require("../utils/uuid");
 var config = require("../config");
 var toImage = require("../utils/toImage");
+var logger = require("../logger")
 var _ = require("lodash");
 var Q = require("q");
 
@@ -17,59 +18,81 @@ function createImageOnDisk(prefix, dataImage) {
 
 function getMenu(cb, res) {
     models.Category.findAll()
-    .then(function(listMenu, err) {
-        if (err) {
-            return res.status(400).send({
-                error: err
-            });
-        } 
+    .then(function(listMenu) {
         cb(listMenu);
+    }).catch(function(err) {
+        logger("ERROR", err);
+        return res.status(400).send({
+            error: err
+        });
     });
 }
-function getListChildrenMenu(type, menus) {
+function getListChildrenMenu(type, menus , res) {
     var listRet = [];
-    listRet.push(type);
-    _.forEach(menus, function(menu) {
-        if (menu.parent === type) {
-            listRet.push(menu.id);
-        }
-    });
+    var currentMenu = _.find(menus, function(menu) {
+        return menu.link === type;
+    })
+    if (currentMenu) {
+        listRet.push(currentMenu.id);
+        _.forEach(menus, function(menu) {
+            if (menu.parent === currentMenu.id) {
+                listRet.push(menu.id);
+            }
+        });
     return listRet;
+    } else {
+        return res.status(400).send({
+            error: {
+                message: "Menu Không Tồn Tại"
+            }
+        });
+    }
+    
 }
 
 function excuteUpdate (res, query) {
-    models.sequelize.query(query).then(function(result, err) {
-        if (err) {
-            return res.status(400).send({
-                error: err
-            });
-        }
+    models.sequelize.query(query).then(function(result) {
         return res.status(200).send();
-    })
+    }).catch(function(err) {
+        logger("ERROR", err);
+        return res.status(400).send({
+            error: err
+        });
+    });
 }
 module.exports = {
     getTotalProduct: function(req, res) {
         getMenu(function(listMenu) {
             var type = req.param("type");
-
             var condition = "";
-            var query = "SELECT count(*) as total FROM products ";
-            if (!_.isEmpty(type)) {
-                type = parseInt(type);
-                if (type !== 1) {
-                    var listType = getListChildrenMenu(type, listMenu);
+            var query = "SELECT count(id) as total FROM products ";
+            if (type === "noactive") {
+                condition = " WHERE status = 0";
+            } else if (type === "home") {
+                condition = " WHERE status = 1";
+            } else {
+                if (type === "sanphammoi") { //newest
+                    condition = " WHERE status = 1";
+                    orderBy = " ORDER BY createdAt DESC";
+                } else {
+                    var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
                     query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
                 }
             }
             query += condition;
             models.sequelize.query(query)
-            .spread(function(total, err) {
+            .spread(function(total) {
                 return res.status(200).send({
                     data: total[0].total
                 });
-            })
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
         })
         
     },
@@ -79,29 +102,33 @@ module.exports = {
             var quantity  = +req.param("quantity");
             var page = +req.param("page");
             var start = (page - 1) * quantity;
-            var condition = "";
+            var condition;
             var orderBy = "";
-            var query = "SELECT * FROM products ";
-            if (!_.isEmpty(type)) {
-                type = parseInt(type);
-                if (type === 1) { //newest
+            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color FROM products ";
+            if (type === "noactive") {
+                condition = "WHERE status = 0";
+            } else if (type === "home") {
+                condition = "WHERE status = 1";
+            } else {
+                if (type === "sanphammoi") { //newest
+                    condition = "WHERE status = 1";
                     orderBy = " ORDER BY createdAt DESC";
                 } else { // promotion
                     // get list type if type have children
-                    var listType = getListChildrenMenu(type, listMenu);
+                    var listType = getListChildrenMenu(type, listMenu, res);
                     var typeArray = "(" + listType.toString() + ")";
-                    query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.id = pc.product and pc.category = c.id and c.id IN " + typeArray;
+                    query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
                 }
             }
             var limit = " LIMIT " + start + " , " + quantity;
             query += condition + orderBy + limit;
             models.sequelize.query(query)
-            .spread(function(rows, err) {
+            .spread(function(rows) {
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
-                    var querysize = "SELECT * FROM sizes WHERE product = " + row.id;
+                    var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 })
                 Q.all(arrayQuerySize).then(function(rowsSizes) {
@@ -120,22 +147,29 @@ module.exports = {
                         data: rows
                     });
                 }).fail(function(err) {
-
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    })
                 })
-                
-            })
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
         });
     },
     getProductById: function(req, res) {
         var id = req.param("id");
         var query = "SELECT * FROM products WHERE id = " + id;
         models.sequelize.query(query)
-        .spread(function(product, err) {
+        .spread(function(product) {
             if (product.length) {
                 //get size 
-                var querysize = "SELECT * FROM sizes WHERE product = " + id;
+                var querysize = "SELECT * FROM sizes WHERE product_id = " + id;
                 // get category of product
-                var queryproductcategory = "SELECT * FROM products_category WHERE product = " + id;
+                var queryproductcategory = "SELECT * FROM products_category WHERE product_id = " + id;
                 // get image of product
                 var queryimage = "SELECT * FROM product_galleries WHERE product_id = " + id;
                 Q.all([
@@ -163,9 +197,15 @@ module.exports = {
                     }
                 });
             }
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     createProduct: function(req, res) {
+        var employer = req.userToken.employer;
         var product = req.body.product;
         var gallerys = req.body.gallerys;
         var category_name = "product";
@@ -174,8 +214,9 @@ module.exports = {
             where: {
                 code: product.code
             }
-        }).then(function(productExist, err) {
+        }).then(function(productExist) {
             if (productExist) {
+                logger("ERROR", err);
                 return res.status(400).send({
                     error: {
                         message: "Mã Sản Phẩm Đã Tồn Tại"
@@ -190,38 +231,43 @@ module.exports = {
                 price_retail_promotion: product.price_retail_promotion,
                 price_wholesale: product.price_wholesale,
                 price_wholesale_promotion: product.price_wholesale_promotion,
-                sizeS: product.sizeS,
-                sizeM: product.sizeM,
-                sizeX: product.sizeX,
                 color: product.color,
                 trademark: product.trademark,
                 description: product.description,
-            }).then(function(prod, err) {
-                if (err) {
-                    return res.status(400).send({
-                        error: err
-                    });
-                }
+                description_detail: product.description_detail,
+                tech_information: product.tech_information,
+                employer_id: employer.id
+            }).then(function(prod) {
                 var sizes = product.sizes;
                 _.forEach(sizes, function(size) {
                     models.Size.create({
                         name: size.name,
-                        product: prod.id,
+                        product_id: prod.id,
                         quantity: size.quantity
-                    }).then(function(si, err) {
+                    }).then(function(si) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 var listCategory = product.category.split(",");
                 // save category 
                 _.forEach(listCategory, function(cate) {
                     cate = +cate;
                     models.ProductCategory.create({
-                        category: cate,
-                        product: prod.id
-                    }).then(function(gal, err) {
+                        category_id: cate,
+                        product_id: prod.id
+                    }).then(function(gal) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 // save image to disk and gallery
                 _.forEach(gallerys, function(gallery) {
@@ -229,28 +275,39 @@ module.exports = {
                     models.ProductGallery.create({
                         product_id: prod.id,
                         image: galleryName
-                    }).then(function(gal, err) {
+                    }).then(function(gal) {
 
-                    })
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
+                    });
                 })
                 return res.status(200).send({
                     data: prod
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
                 });
             });
         })
         
     },
     deleteProduct: function(req, res) {
-        var id = req.body.id;
-        var query = "DELETE FROM products WHERE id = " + id;
+        var id = req.body.data.id;
+        var status = req.body.data.status
+        var query = "UPDATE products SET status = " + status + " WHERE id = " + id;
         models.sequelize.query(query).then(function(row, err) {
-            if (err) {
-                return res.status(400).send({
-                    error: err
-                });
-            }
             return res.status(200).send();
-        })
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     },
     updateProduct: function(req, res) {
         var id = req.body.id;
@@ -275,7 +332,7 @@ module.exports = {
                 var promiseArray = [];
                 // delete foregin key in products_category
                 // add new foregin between product and categories
-                query = "DELETE FROM products_category WHERE product = " + id;
+                query = "DELETE FROM products_category WHERE product_id = " + id;
                 models.sequelize.query(query).then(function(result, err) {
                     if (err) {
                         return res.status(400).send({
@@ -284,18 +341,17 @@ module.exports = {
                     }
                     _.forEach(data, function(da) {
                         promiseArray.push(models.ProductCategory.create({
-                            product: id,
-                            category: da
+                            product_id: id,
+                            category_id: da
                         }));
                     });
                     Q.all(promiseArray).then(function(result) {
                         return res.status(200).send(result);
                     }).fail(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                error: err
-                            });
-                        }
+                        logger("ERROR", err);
+                        return res.status(400).send({
+                            error: err
+                        });
                     })
                 });
                 break;
@@ -305,12 +361,7 @@ module.exports = {
                 break;
             case "code":
                 var queryFindExitCode = "SELECT * FROM products WHERE code = '" + data + "' AND id != " + id;
-                models.sequelize.query(queryFindExitCode).then(function(result, err) {
-                    if (err) {
-                        return res.status(400).send({
-                            error: err
-                        });
-                    }
+                models.sequelize.query(queryFindExitCode).then(function(result) {
                     if (result[0].length) {
                         return res.status(300).send({
                             error: {
@@ -321,7 +372,12 @@ module.exports = {
                         query = "UPDATE products SET code = '" + data + "'" + condition;
                         excuteUpdate(res, query);
                     }
-                })
+                }).catch(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    });
+                });
                 break;
             case "color":
                 query = "UPDATE products SET color = '" + data + "'" + condition;
@@ -351,6 +407,14 @@ module.exports = {
                 query = "UPDATE products SET price_wholesale_promotion = '" + data + "'" + condition;
                 excuteUpdate(res, query);
                 break;
+            case "description_detail" :
+                query = "UPDATE products SET description_detail = '" + data + "'" + condition;
+                excuteUpdate(res, query);
+                break;
+            case "tech_information" :
+                query = "UPDATE products SET tech_information = '" + data + "'" + condition;
+                excuteUpdate(res, query);
+                break;
             case "size":
                 var arrayPromise = [];
                 var addnew = data.new;
@@ -359,7 +423,7 @@ module.exports = {
                     arrayPromise.push(
                         models.Size.create({
                             name: _addnew.name,
-                            product: id,
+                            product_id: id,
                             quantity: _addnew.quantity
                         })
                     )
@@ -384,6 +448,7 @@ module.exports = {
                 Q.all(arrayPromise).then(function(result) {
                     return res.status(200).send();
                 }).fail(function(err) {
+                    logger("ERROR", err)
                     return res.status(400).send({
                         error: {
                             message: "Cập Nhật Không Thành Công!"
@@ -415,6 +480,7 @@ module.exports = {
                 Q.all(arrayPromise).then(function(result) {
                     return res.status(200).send();
                 }).fail(function(err) {
+                    logger("ERROR",err);
                     return res.status(400).send({
                         error: {
                             message: "Cập Nhật Không Thành Công!"

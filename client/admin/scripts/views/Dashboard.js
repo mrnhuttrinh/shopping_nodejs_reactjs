@@ -18,13 +18,15 @@ class Dashboard extends Component {
     }
 
     render() {
+        var category = this.props.params.category || "home";
+        var page = this.props.params.page || 1;
         return (
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
                 title={"Dashboard"}>
                 <div id="content">
-                    <Content {...this.props} />
+                    <Content {...this.props} category={category} page={page}/>
                 </div>
             </MasterPage>
         );

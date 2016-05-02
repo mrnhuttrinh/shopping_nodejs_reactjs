@@ -74,9 +74,14 @@ export default class DropDown extends Component {
                         </li>
                     )
                 }
+                // <span class="badge">14</span>
+                var countChildren = html.length ? (
+                        <span className="badge">{html.length}</span>
+                    ) : "";
                 menu.html = (
                     <div key={menu.id}>
                         <li  className="li-dropdown list-group-item">
+                            {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
                         {listMenuChildren}
@@ -106,9 +111,13 @@ export default class DropDown extends Component {
                         </li>
                     )
                 }
+                var countChildren = html.length ? (
+                        <span className="badge">{html.length}</span>
+                    ) : "";
                 menu.html = (
                     <div key={menu.id}>
                         <li  className="li-dropdown list-group-item">
+                            {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
                         {listMenuChildren}

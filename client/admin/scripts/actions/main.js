@@ -9,10 +9,11 @@ export default {
             user: user
         }
     },
-    getAllUser: function(allUser) {
+    getAllUser: function(allUser, typeUpdate) {
         return {
             type: ACTION.GET_ALL_USER,
-            allUser: allUser
+            allUser: allUser,
+            typeUpdate: typeUpdate
         }
     },
     setToken: function(token) {
@@ -44,11 +45,10 @@ export default {
             })
         }
     },
-    getListProduct: function(listproducts, page) {
+    getListProduct: function(listproducts) {
         return {
             type: ACTION.GET_LIST_PRODUCT,
-            listProduct: listproducts,
-            page: page
+            listProduct: listproducts
         }
     },
     getTotalProduct: function(totalProduct) {
@@ -61,6 +61,13 @@ export default {
         return {
             type: ACTION.GET_PRODUCT,
             product: product
+        }
+    },
+    getListNews: function(listNews, typeUpdate) {
+        return {
+            type: ACTION.GET_LIST_NEWS,
+            listNews: listNews,
+            typeUpdate: typeUpdate
         }
     }
 }

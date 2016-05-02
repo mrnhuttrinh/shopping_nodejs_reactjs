@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 import _ from 'lodash';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import localItem from '../../utils/localItem';
 
 export default class GridProduct extends Component {
@@ -34,7 +34,7 @@ export default class GridProduct extends Component {
                     totalSize += size.quantity;
                 })
                 return (
-                    <div key={product.id} className="col-lg-3 col-md-3 col-sm-6 col-xs-12 thumb">
+                    <div key={product.id} key={product.id} className="col-lg-3 col-md-3 col-sm-6 col-xs-12 thumb">
                         <Link to={"/product/" + product.id} className="thumbnail">
                             <div className="product_view">
                                 <img className="img-responsive" src={product.thumbnail} alt="" />
@@ -52,13 +52,13 @@ export default class GridProduct extends Component {
                 var sizeView = _.map(product.sizes, (size) => {
                     totalSize += size.quantity;
                     return (
-                        <button className="btn btn-default btn-xs" type="button">
+                        <button key={size.id} className="btn btn-default btn-xs" type="button">
                             Size {size.name} <span className="badge">{size.quantity}</span>
                         </button>
                     )
                 })
                 return (
-                    <div className="col-md-12">
+                    <div key={product.id} className="col-md-12">
                         <div className="list-group">
                             <Link to={"/product/" + product.id} className="list-group-item">
                                 <div className="row">
@@ -83,7 +83,7 @@ export default class GridProduct extends Component {
         
         var title = rows.length ? "Số Sản Phẩm Hiện Có " : "Không Có Sản Phẩm Nào";
         return (
-            <div className="tab-pane active" id={this.props.tabChoose} role="tabpanel">
+            <div className="tab-pane active" id={this.props.category} role="`panel">
                 <div className="col-lg-12">
                     <h1 className="page-header">{title}<span className="label label-info">{this.props.totalProduct}</span>
                         {
@@ -112,7 +112,11 @@ export default class GridProduct extends Component {
                 <div className="row">
                     {rows}
                 </div>
-                <Pagination {...this.props}/>
+                <Pagination 
+                    page={this.props.page}
+                    href={"/dashboard/" + this.props.category}
+                    totalRow={this.props.totalProduct} 
+                    rows={16} />
             </div>
         )
     }

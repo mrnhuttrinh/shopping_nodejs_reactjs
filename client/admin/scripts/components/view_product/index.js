@@ -7,6 +7,8 @@ import Category from './Category';
 import Sizes from './Sizes';
 import Gallery from './Gallery';
 import Loading from '../ButtonLoading';
+import DescriptionDetail from './DescriptionDetail';
+import TechInformation from './TechInformation';
 
 export default class ViewProduct extends Component {
     constructor(props) {
@@ -89,6 +91,7 @@ export default class ViewProduct extends Component {
     }
     updateField(type) {
         var self = this;
+        var product = self.props.product;
         switch(type) {
             case "name":
                 self.setState({
@@ -305,9 +308,6 @@ export default class ViewProduct extends Component {
         var self = this;
         self.updateField(type);
     }
-    updateParentView() {
-        this.forceUpdate();
-    }
     render() {
         var self = this;
         var product = this.props.product;
@@ -323,7 +323,7 @@ export default class ViewProduct extends Component {
                 var cateChoose = _.map(product.categories, (cate) => {
                     totalCategory++;
                     var cateMenu = _.find(self.props.menus, (menu) => {
-                        return menu.id === cate.category;
+                        return menu.id === cate.category_id;
                     });
                     if (cateMenu) {
                         return (
@@ -691,7 +691,7 @@ export default class ViewProduct extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            Mô Tả Chi Tiết
+                                            Mô Tả Ngắn
                                         </td>
                                         {
                                             this.state.descriptionEdit ? (
@@ -719,7 +719,9 @@ export default class ViewProduct extends Component {
                                             )
                                         }
                                     </tr>
-                                    <Gallery updateParentView={this.updateParentView.bind(this)} {...this.props} />
+                                    <DescriptionDetail {...this.props}/>
+                                    <TechInformation {...this.props} />
+                                    <Gallery {...this.props} />
                                     {viewGallery}
                                 </tbody>
                             </table>

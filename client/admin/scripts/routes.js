@@ -9,7 +9,8 @@ import Product      from './views/Product';
 import ListUser         from './views/ListUser';
 import MyProfile    from './views/MyProfile';
 import ProductDetail from './views/ProductDetail';
-
+import Menu from './views/Menu';
+import News from './views/News';
 import localItem from './utils/localItem';
 
 function requireAuth(nextState, replace) {
@@ -30,7 +31,7 @@ export default {
     },
     childRoutes: [
         {
-            path: 'dashboard',
+            path: 'dashboard(/:category(/:page))',
             component: Dashboard,
             onEnter: requireAuth
         }, {
@@ -45,7 +46,7 @@ export default {
             component: About,
             onEnter: requireAuth
         }, {
-            path: 'listuser',
+            path: 'listuser(/:page)',
             component: ListUser,
             onEnter: requireAuth
         }, {
@@ -55,6 +56,14 @@ export default {
         }, {
             path: 'myprofile',
             component: MyProfile,
+            onEnter: requireAuth
+        }, {
+            path: 'menu',
+            component: Menu,
+            onEnter: requireAuth
+        }, {
+            path: 'news(/:page)',
+            component: News,
             onEnter: requireAuth
         }, {
             component: NotFound,

@@ -12,7 +12,17 @@ module.exports = {
         GET_TOTAL_PRODUCT: "/api/get_total_product",
         GET_PRODUCT: "/api/get_product_by_id",
         UPDATE_PRODUCT: "/api/update_product",
-        DELETE_PRODUCT: "/api/delete_product"
+        DELETE_PRODUCT: "/api/delete_product",
+        GET_LIST_NEWS: "/api/get_list_news",
+        CREATE_NEWS: "/api/create_news",
+        GET_NEWS_BY_ID: "/api/get_news_by_id",
+        DELETE_NEWS: "/api/delete_news",
+        GET_TOTAL_NEWS: "/api/get_total_news",
+        GET_TOTAL_USERS: "/api/get_total_users",
+        RESET_PASSWORD: "/api/reset_password_employer",
+        CHANGE_STATUS_EMPLOYER: "/api/change_status_employer",
+        UPDATE_USER_INFO: "/api/update_employer_info",
+        UPDATE_PASSWORD: "/api/update_password_employer"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",
@@ -27,6 +37,8 @@ module.exports = {
         GET_PRODUCT: "GET_PRODUCT",
         UPDATE_PRODUCT: "UPDATE_PRODUCT",
         DELETE_PRODUCT: "DELETE_PRODUCT",
-        GETTING_MENU: "GETTING_MENU"
+        GETTING_MENU: "GETTING_MENU",
+        GET_LIST_NEWS: "GET_LIST_NEWS",
+        CREATE_NEWS: "CREATE_NEWS"
     }
 }

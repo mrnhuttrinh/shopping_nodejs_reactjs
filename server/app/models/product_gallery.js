@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         image: DataTypes.STRING,
         product_id: DataTypes.INTEGER,
+        category_id: DataTypes.INTEGER,
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

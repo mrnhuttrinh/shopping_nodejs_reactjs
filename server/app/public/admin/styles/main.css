@@ -239,6 +239,10 @@ li.li-dropdown {
     cursor: pointer;
 }
 
+li.li-dropdown:hover {
+    background-color: #ddd;
+}
+
 ul.ul-list-dropdown {
     display: none;
     position: absolute;
@@ -305,13 +309,26 @@ h1.page-header {
 }
 
 /* Absolute Center Spinner */
+.spinner-div {
+    height: 100vh;
+    
+}
+
+.spinner-div img {
+    display: block;
+    margin: auto;
+    width: 87px;
+    height: 87px;
+    background: url('../img/Preloader_3.gif') -20px -20px;
+    background-repeat: no-repeat;
+}
 
 .spinner-div div {
   width: 20px;
   height: 20px;
   position: absolute;
   left: -20px;
-  top: 40px;
+  top: 40%;
   background-color: #333;
   border-radius: 50%;
   -webkit-animation: move 4s infinite cubic-bezier(.2,.64,.81,.23);

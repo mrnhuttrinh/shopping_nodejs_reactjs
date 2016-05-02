@@ -24,10 +24,12 @@ export default {
                 cb(err, res);
             });
     },
-    getAllUser(cb) {
+    getAllUser(page, cb) {
         var request = new Request();
         request
-            .get(API.GET_ALL_USER)
+            .get(API.GET_ALL_USER, {
+                page
+            })
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
@@ -108,11 +110,11 @@ export default {
                 cb(err, res);
             });
     },
-    deleteProduct(id, cb) {
+    deleteProduct(data, cb) {
         var request = new Request();
         request
             .post(API.DELETE_PRODUCT, {
-                id: id
+                data: data
             })
             .authorized()
             .then(function(err, res) {
@@ -125,6 +127,61 @@ export default {
             .post(API.UPDATE_PRODUCT, {
                 id: id,
                 field: field,
+                data: data
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    getTotalUsers(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_TOTAL_USERS)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    resetPassword(data, cb) {
+        var request = new Request();
+        request
+            .post(API.RESET_PASSWORD, {
+                id: data.id,
+                password: data.password
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    changeStatusUser(data, cb) {
+        var request = new Request();
+        request
+            .post(API.CHANGE_STATUS_EMPLOYER, {
+                id: data.id,
+                status: data.status
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    updateProfile: function(data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_USER_INFO, {
+                data: data
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    updatePassword: function(data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_PASSWORD, {
                 data: data
             })
             .authorized()
