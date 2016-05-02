@@ -239,6 +239,10 @@ li.li-dropdown {
     cursor: pointer;
 }
 
+li.li-dropdown:hover {
+    background-color: #ddd;
+}
+
 ul.ul-list-dropdown {
     display: none;
     position: absolute;

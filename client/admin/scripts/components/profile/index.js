@@ -165,7 +165,7 @@ export default class Profile extends Component{
                                                                     <input ref="fullname" type="text" className="form-control" placeholder="Tên Đầy Đủ" defaultValue={user.fullname} />
                                                                 </div>
                                                             </form>
-                                                        ) : user.fullname
+                                                        ) : this.props.user.fullname
                                                 }
                                             </td>
                                         </tr>
@@ -189,7 +189,7 @@ export default class Profile extends Component{
                                                                     <input ref="email" type="email" className="form-control" placeholder="Email" defaultValue={user.email} />
                                                                 </div>
                                                             </form>
-                                                        ) : user.email
+                                                        ) : this.props.user.email
                                                 }
                                             </td>
                                         </tr>
@@ -205,7 +205,7 @@ export default class Profile extends Component{
                                                                     <input ref="phone" type="text" className="form-control" placeholder="Số Điện Thoại" defaultValue={user.phone} />
                                                                 </div>
                                                             </form>
-                                                        ) : user.phone
+                                                        ) : this.props.user.phone
                                                 }
                                             </td>
                                         </tr>
@@ -221,7 +221,7 @@ export default class Profile extends Component{
                                                                     <input ref="address" type="text" className="form-control" placeholder="Địa Chỉ" defaultValue={user.address} />
                                                                 </div>
                                                             </form>
-                                                        ) : user.address
+                                                        ) : this.props.user.address
                                                 }
                                             </td>
                                         </tr>
