@@ -34,7 +34,10 @@ export default class LeftMenu extends Component{
                             <Link to="/menu"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">Quản Lý Menu</span></Link>
                         </li>
                         <li className={pathName == "/news" ? "active" : ""}>
-                            <Link to="/news"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Tin Tức</span><span className="badge pull-right inbox-badge">14</span></Link>
+                            <Link to="/news"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Tin Tức</span></Link>
+                        </li>
+                        <li className={pathName == "/trademark" ? "active" : ""}>
+                            <Link to="/trademark"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-parent">Thương Hiệu</span></Link>
                         </li>
                     </ul>
                 </nav>

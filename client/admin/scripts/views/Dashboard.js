@@ -14,7 +14,12 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-
+        if (this.props.dashboard.tabSelected !== "home") {
+            if (this.props.params.category !== this.props.dashboard.tabSelected) {
+                var pathName = window.location.pathname;
+                window.location = pathName + "#/dashboard/"+ this.props.dashboard.tabSelected;
+            }
+        }
     }
 
     render() {

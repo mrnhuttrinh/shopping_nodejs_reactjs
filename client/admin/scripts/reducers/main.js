@@ -5,20 +5,30 @@ import localItem from '../utils/localItem';
 
 var initialState = {
     user: {},
-    allUser: [],
     token: "",
     menus: [],
-    listProduct: [],
-    totalProduct: 0,
+    // for view dashboard
+    dashboard: {
+        listProduct: [],
+        totalProduct: 0,
+        tabSelected: "home"
+    },
+    // for view product
     product: {},
     firstRequest: true,
+    // for news page
     news: {
         listNews: [],
         total: 0
     },
+    // for list employers page
     users: {
         listUsers: [],
         total: 0
+    },
+    // for trademark page
+    trademark: {
+        listTrademark: []
     }
 }
 
@@ -31,11 +41,15 @@ export default function update(state = initialState, action) {
             return state;
         case ACTION.GET_LIST_PRODUCT:
             newState = _.cloneDeep(state);
-            newState.listProduct = action.listProduct;
+            newState.dashboard.listProduct = action.listProduct;
             return newState;
         case ACTION.GET_TOTAL_PRODUCT:
             newState = _.cloneDeep(state);
-            newState.totalProduct = action.totalProduct;
+            newState.dashboard.totalProduct = action.totalProduct;
+            return newState;
+        case ACTION.TAB_SELECTED_DASHBOARD: 
+            newState = _.cloneDeep(state);
+            newState.dashboard.tabSelected = action.tabSelected;
             return newState;
         case ACTION.SIGN_IN:
             newState = _.cloneDeep(state);
@@ -75,6 +89,10 @@ export default function update(state = initialState, action) {
             } else if (action.typeUpdate === "total") {
                 newState.news.total = action.listNews;
             }
+            return newState;
+        case ACTION.GET_LIST_TRADEMARK:
+            newState = _.cloneDeep(state);
+            newState.trademark.listTrademark = action.listTrademark;
             return newState;
         default:
             return state;

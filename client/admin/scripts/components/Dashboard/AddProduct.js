@@ -123,8 +123,8 @@ export default class AddProduct extends Component {
                         if ($(".classTabHome").hasClass("active") ) {
                             var updateTotalProduct = self.props.totalProduct + 1;
                             self.props.getTotalProduct(updateTotalProduct);
-                            if (self.props.listProduct.length < 16) {
-                                self.props.listProduct.push(res.body.data);
+                            if (self.props.dashboard.listProduct.length < 16) {
+                                self.props.dashboard.listProduct.push(res.body.data);
                                 self.props.getListProduct(self.props.listProduct);
                             }
                         }

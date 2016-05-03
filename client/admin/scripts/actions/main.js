@@ -57,6 +57,12 @@ export default {
             totalProduct: totalProduct
         }
     },
+    setTabDashboard: function(tabSelected) {
+        return {
+            type: ACTION.TAB_SELECTED_DASHBOARD,
+            tabSelected: tabSelected
+        }
+    },
     getProduct: function(product) {
         return {
             type: ACTION.GET_PRODUCT,
@@ -68,6 +74,12 @@ export default {
             type: ACTION.GET_LIST_NEWS,
             listNews: listNews,
             typeUpdate: typeUpdate
+        }
+    },
+    getListTradeMark: function(listTrademark) {
+        return {
+            type: GET_LIST_TRADEMARK,
+            listTrademark: listTrademark
         }
     }
 }
