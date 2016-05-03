@@ -33,6 +33,7 @@ router.post("/create_news", authorized, news.createNews)
 router.get("/get_news_by_id", news.getNewsById);
 router.post("/delete_news", authorized, news.deleteNews);
 router.get("/get_total_news", authorized, news.getTotalNews);
+router.post("/update_show_on_top", authorized, news.updateShowOnTop)
 // for client
 router.get("/menu", menu.get);
 

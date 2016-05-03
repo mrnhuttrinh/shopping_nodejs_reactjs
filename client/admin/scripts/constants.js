@@ -22,7 +22,8 @@ module.exports = {
         RESET_PASSWORD: "/api/reset_password_employer",
         CHANGE_STATUS_EMPLOYER: "/api/change_status_employer",
         UPDATE_USER_INFO: "/api/update_employer_info",
-        UPDATE_PASSWORD: "/api/update_password_employer"
+        UPDATE_PASSWORD: "/api/update_password_employer",
+        CHANGE_SHOW_ON_TOP: "/api/update_show_on_top"
     },
     ACTION: {
         SIGN_IN: "SIGN_IN",

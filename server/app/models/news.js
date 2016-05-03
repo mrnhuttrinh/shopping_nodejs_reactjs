@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.UUID,
             allowNull: false
         },
+        show_on_top: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

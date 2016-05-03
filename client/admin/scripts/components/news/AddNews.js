@@ -29,6 +29,7 @@ export default class AddNews extends Component{
         event.preventDefault();
         var self = this;
         var title = self.refs["title"].value;
+        var show_on_top = self.refs["show_on_top"].checked;
         if (_.isEmpty(title)) {
             toastr.warning("Tiêu Đề Không Được Để Trống")
         }
@@ -38,7 +39,8 @@ export default class AddNews extends Component{
         }
         var data = {
             title: title,
-            content: content
+            content: content,
+            show_on_top: show_on_top
         };
         self.setState({
             submit: true
@@ -46,20 +48,33 @@ export default class AddNews extends Component{
         apis.createNews(data, function(err, result) {
             if (err) {
                 toastr.error("Tạo Bài Viết Không Thành Công");
+            } else {
+                toastr.success("Tạo Bài Viết Thành Công");
+                if (show_on_top) {
+                    _.forEach(self.props.news.listNews, (_new)=> {
+                        _new.show_on_top = false;
+                    })
+                    self.props.news.listNews.push({
+                        id: result.body.data.id,
+                        title: result.body.data.title,
+                        show_on_top: true
+                    })
+                } else {
+                    self.props.news.listNews.push({
+                        id: result.body.data.id,
+                        title: result.body.data.title
+                    })
+                }
+                self.props.getListNews(self.props.news.listNews, "list")
+                self.props.getListNews(self.props.news.total + 1, "total")
+                self.setState({
+                    submit: false,
+                    addNews: false
+                })
+                $("#contentTitle").summernote("code", "");
+                self.refs["title"].value = "";
+                self.refs["show_on_top"].checked = false;
             }
-            toastr.success("Tạo Bài Viết Thành Công");
-            self.props.news.listNews.push({
-                id: result.body.data.id,
-                title: result.body.data.title
-            })
-            self.props.getListNews(self.props.news.listNews, "list")
-            self.props.getListNews(self.props.news.total + 1, "total")
-            self.setState({
-                submit: false,
-                addNews: false
-            })
-            $("#contentTitle").summernote("code", "");
-            self.refs["title"].value = "";
         })
     }
     onCancelForm(event) {
@@ -67,6 +82,7 @@ export default class AddNews extends Component{
         var self = this;
         $("#contentTitle").summernote("code", "");
         self.refs["title"].value = "";
+        self.refs["show_on_top"].checked = false;
         self.setState({
             addNews: !self.state.addNews
         });
@@ -84,6 +100,11 @@ export default class AddNews extends Component{
                                     Tiều Đề Bài Viết
                                 </label>
                                 <input ref="title" type="text" className="form-control" id="title" placeholder="Tiêu Đề Bài Viết"/>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input ref="show_on_top" type="checkbox" /> Hiển Thị Khi Vào Trang Chính
+                                </label>
                             </div>
                             <div className="form-group">
                                 <label for="Content">
