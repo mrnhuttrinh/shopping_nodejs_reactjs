@@ -216,7 +216,6 @@ module.exports = {
             }
         }).then(function(productExist) {
             if (productExist) {
-                logger("ERROR", err);
                 return res.status(400).send({
                     error: {
                         message: "Mã Sản Phẩm Đã Tồn Tại"

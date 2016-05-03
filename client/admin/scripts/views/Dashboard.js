@@ -12,16 +12,6 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
     }
-
-    componentDidMount() {
-        if (this.props.dashboard.tabSelected !== "home") {
-            if (this.props.params.category !== this.props.dashboard.tabSelected) {
-                var pathName = window.location.pathname;
-                window.location = pathName + "#/dashboard/"+ this.props.dashboard.tabSelected;
-            }
-        }
-    }
-
     render() {
         var category = this.props.params.category || "home";
         var page = this.props.params.page || 1;
