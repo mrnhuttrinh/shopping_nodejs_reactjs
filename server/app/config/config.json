@@ -9,9 +9,9 @@
             "port": 8000
         },
         "datastores": {
-            "username": "root",
-            "password": "root",
-            "database": "database_production",
+            "username": "adminuILpdm4",
+            "password": "FqfC1fMnpmQt",
+            "database": "nodejs",
             "host": "127.0.0.1",
             "dialect": "mysql"
         },
@@ -28,9 +28,9 @@
             "port": 9000
         },
         "datastores": {
-            "username": "root",
-            "password": "root",
-            "database": "database_production",
+            "username": "adminuILpdm4",
+            "password": "FqfC1fMnpmQt",
+            "database": "nodejs",
             "host": "127.0.0.1",
             "dialect": "mysql"
         },
