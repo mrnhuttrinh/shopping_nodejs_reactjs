@@ -64,15 +64,17 @@ export default class DropDown extends Component {
                 });
                 var listMenuChildren = "";
                 var icon = "";
+                var index=0;
                 if (html.length) {
                     icon = (<span onClick={self.expandChildrenCategory.bind(self)} className="icon expand-icon glyphicon glyphicon-plus"></span>);
                     listMenuChildren = (
-                        <li className="li-parent-ul list-group-item">
+                        <li key={menu.id + "_" + index} className="li-parent-ul list-group-item">
                             <ul className="list-group ul-children-li">
                                 {html}
                             </ul>
                         </li>
                     )
+                    index++;
                 }
                 // <span class="badge">14</span>
                 var countChildren = html.length ? (
@@ -80,7 +82,7 @@ export default class DropDown extends Component {
                     ) : "";
                 menu.html = (
                     <div key={menu.id}>
-                        <li  className="li-dropdown list-group-item">
+                        <li key={menu.id} className="li-dropdown list-group-item">
                             {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>
@@ -101,22 +103,24 @@ export default class DropDown extends Component {
                 });
                 var listMenuChildren = "";
                 var icon = "";
+                var index = 0;
                 if (html.length) {
                     icon = (<span onClick={self.expandChildrenCategory.bind(self)} className="icon expand-icon glyphicon glyphicon-plus"></span>);
                     listMenuChildren = (
-                        <li className="li-parent-ul list-group-item">
+                        <li key={menu.id + "_" + index} className="li-parent-ul list-group-item">
                             <ul className="list-group ul-children-li">
                                 {html}
                             </ul>
                         </li>
                     )
+                    index++;
                 }
                 var countChildren = html.length ? (
                         <span className="badge">{html.length}</span>
                     ) : "";
                 menu.html = (
                     <div key={menu.id}>
-                        <li  className="li-dropdown list-group-item">
+                        <li key={menu.id} className="li-dropdown list-group-item">
                             {countChildren}
                             {icon} <a onClick={self.liChooseCategory.bind(self, menu)}>{menu.name}</a>
                         </li>

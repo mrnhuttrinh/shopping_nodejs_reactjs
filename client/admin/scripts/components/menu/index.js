@@ -15,11 +15,6 @@ export default class MenuContent extends Component{
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                            Logo
-                        </a>
-                    </li>
-                    <li role="presentation">
                         <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
                             Icon
                         </a>
@@ -33,9 +28,6 @@ export default class MenuContent extends Component{
                 <div className="tab-content">
                     <div role="tabpanel" className="tab-pane active" id="home">
                         <Thumbnail {...this.props}/>
-                    </div>
-                    <div role="tabpanel" className="tab-pane" id="profile">
-                        <Logo {...this.props}/>
                     </div>
                     <div role="tabpanel" className="tab-pane" id="messages">
                         <Icon {...this.props}/>

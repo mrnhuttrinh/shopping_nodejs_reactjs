@@ -14958,7 +14958,9 @@ nav.mainmenu a span {
         display: none !important;
     }*/
 
-
+    div.banner_home img {
+        height: 210px;
+    }
 
     .scroll_menu {
         display: block;

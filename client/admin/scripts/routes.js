@@ -11,6 +11,7 @@ import MyProfile    from './views/MyProfile';
 import ProductDetail from './views/ProductDetail';
 import Menu from './views/Menu';
 import News from './views/News';
+import TradeMark from './views/TradeMark';
 import localItem from './utils/localItem';
 
 function requireAuth(nextState, replace) {
@@ -64,6 +65,10 @@ export default {
         }, {
             path: 'news(/:page)',
             component: News,
+            onEnter: requireAuth
+        }, {
+            path: 'trademark',
+            component: TradeMark,
             onEnter: requireAuth
         }, {
             component: NotFound,

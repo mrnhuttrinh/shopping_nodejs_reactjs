@@ -28,7 +28,7 @@ export default class GridProduct extends Component {
     render() {
         var rows = [];
         if (this.state.gridView) {
-            rows = _.map(this.props.listProduct, function(product) {
+            rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
                 _.forEach(product.sizes, (size) => {
                     totalSize += size.quantity;
@@ -47,7 +47,7 @@ export default class GridProduct extends Component {
                 );
             })
         } else {
-            rows = _.map(this.props.listProduct, function(product) {
+            rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
                 var sizeView = _.map(product.sizes, (size) => {
                     totalSize += size.quantity;
@@ -85,7 +85,7 @@ export default class GridProduct extends Component {
         return (
             <div className="tab-pane active" id={this.props.category} role="`panel">
                 <div className="col-lg-12">
-                    <h1 className="page-header">{title}<span className="label label-info">{this.props.totalProduct}</span>
+                    <h1 className="page-header">{title}<span className="label label-info">{this.props.dashboard.totalProduct}</span>
                         {
                             this.state.gridView ? (
                                 <div className="pull-right">
@@ -115,7 +115,7 @@ export default class GridProduct extends Component {
                 <Pagination 
                     page={this.props.page}
                     href={"/dashboard/" + this.props.category}
-                    totalRow={this.props.totalProduct} 
+                    totalRow={this.props.dashboard.totalProduct} 
                     rows={16} />
             </div>
         )

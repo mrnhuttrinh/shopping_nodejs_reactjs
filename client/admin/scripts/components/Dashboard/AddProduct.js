@@ -121,11 +121,11 @@ export default class AddProduct extends Component {
                         toastr.success("Tạo Sản Phẩm Thành Công!")
                         modal.closeModal();
                         if ($(".classTabHome").hasClass("active") ) {
-                            var updateTotalProduct = self.props.totalProduct + 1;
+                            var updateTotalProduct = self.props.dashboard.totalProduct + 1;
                             self.props.getTotalProduct(updateTotalProduct);
-                            if (self.props.listProduct.length < 16) {
-                                self.props.listProduct.push(res.body.data);
-                                self.props.getListProduct(self.props.listProduct);
+                            if (self.props.dashboard.listProduct.length < 16) {
+                                self.props.dashboard.listProduct.push(res.body.data);
+                                self.props.getListProduct(self.props.dashboard.listProduct);
                             }
                         }
                         self.resetState();

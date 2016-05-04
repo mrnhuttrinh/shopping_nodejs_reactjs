@@ -54,5 +54,17 @@ export default {
             .then(function(err, res) {
                 cb(err, res)
             })
+    },
+    changeStatusShowOnTop(data, cb) {
+        var request = new Request();
+        request
+            .post(API.CHANGE_SHOW_ON_TOP, {
+                id: data.id,
+                show_on_top: data.show_on_top
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

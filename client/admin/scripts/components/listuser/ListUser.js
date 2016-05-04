@@ -100,7 +100,7 @@ export default class ListUser extends Component{
                 <form className="smart-form">
                     <label className="toggle">
                         <input ref="inputStatus" onChange={self.onChangeStatus.bind(self, user)} type="checkbox" name="checkbox-toggle" defaultChecked={user.status ? "checked" : "" } />
-                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>{user.status ? "Sử Dụng" : "Không Sử Dụng"}
+                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
                     </label>
                 </form>
             )

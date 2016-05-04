@@ -7,7 +7,14 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         name: DataTypes.STRING,
-        detail: DataTypes.TEXT
+        address: DataTypes.TEXT,
+        phone: DataTypes.STRING,
+        email: DataTypes.STRING,
+        detail: DataTypes.TEXT,
+        status: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        }
     }, {
         tableName: 'trademarks'
     });

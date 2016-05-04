@@ -12,11 +12,6 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
     }
-
-    componentDidMount() {
-
-    }
-
     render() {
         var category = this.props.params.category || "home";
         var page = this.props.params.page || 1;
