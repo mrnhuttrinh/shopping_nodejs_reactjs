@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Thumbnail from './Thumbnail';
 import Detail from './Detail';
-import Logo from './Logo';
 import Icon from './Icon';
 
 export default class MenuContent extends Component{

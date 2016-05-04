@@ -57,12 +57,6 @@ export default {
             totalProduct: totalProduct
         }
     },
-    setTabDashboard: function(tabSelected) {
-        return {
-            type: ACTION.TAB_SELECTED_DASHBOARD,
-            tabSelected: tabSelected
-        }
-    },
     getProduct: function(product) {
         return {
             type: ACTION.GET_PRODUCT,

@@ -51,60 +51,40 @@ export default class Widget extends Component {
         var page = this.props.page ? parseInt(this.props.page) : 1;
         self.state.page = page;
         var quantity = Constants.TOTAL_ROW;
-        if (_.isNull(self.props.dashboard.listProduct)  ||
-            _.isEmpty(self.props.dashboard.listProduct)) {
-            apis.getListProduct(type, page, quantity, function(err, res) {
-                if (err) {
-                    self.setState({
-                        loadData: false
-                    })
-                } else {
-                    self.props.getListProduct(res.body.data);
-                    self.setState({
-                        loadData: false
-                    })
-                }
-            })
-            apis.getTotalProduct(type, function(err, res) {
-                if (err) {
-                    self.setState({
-                        loadData: false
-                    })
-                } else {
-                    self.props.getTotalProduct(res.body.data);
-                }
-            })
-        } else {
-            self.setState({
-                loadData: false
-            })
-        }
-
-        // if (this.props.dashboard.tabSelected !== "home") {
-        //     if (this.props.category !== this.props.dashboard.tabSelected) {
-        //         // this.state.category = this.props.dashboard.tabSelected;
-        //         var pathName = window.location.pathname;
-        //         window.location = pathName + "#/dashboard/"+ this.props.dashboard.tabSelected;
-        //     }
-        // }
+        apis.getListProduct(type, page, quantity, function(err, res) {
+            if (err) {
+                self.setState({
+                    loadData: false
+                })
+            } else {
+                self.props.getListProduct(res.body.data);
+                self.setState({
+                    loadData: false
+                })
+            }
+        })
+        apis.getTotalProduct(type, function(err, res) {
+            if (err) {
+                self.setState({
+                    loadData: false
+                })
+            } else {
+                self.props.getTotalProduct(res.body.data);
+            }
+        })
     }
     onChooseTab(link, event) {
         event.preventDefault();
         var pathName = window.location.pathname;
         window.location = pathName + "#/dashboard/"+link;
-        this.props.setTabDashboard(link);
     }
     render() {
         var self = this;
         var modalName = this.props.modalName;
-        var category = this.props.dashboard.tabSelected;
-        var groupClassName = "";
+        var category = this.props.category;
         var listTabHeader = _.map(this.props.menus, function(menu) {
             if (menu.level === 1) {
                 var className = category === menu.link ? "active" : ""
-                if (className === "active") {
-                    groupClassName = "active";
-                }
                 return (
                     <li key={menu.id} className={className}>
                         <a onClick={self.onChooseTab.bind(self,menu.link)} href={"#" + menu.link} aria-controls="dropdown2" aria-expanded="false" data-toggle="tab" id="dropdown2-tab" role="tab">
@@ -122,7 +102,7 @@ export default class Widget extends Component {
                             Tất Cả
                         </a>
                     </li>
-                    <li className={groupClassName + " dropdown"} role="presentation">
+                    <li className="dropdown" role="presentation">
                         <a aria-controls="myTabDrop1-contents" aria-expanded="false" className="dropdown-toggle" data-toggle="dropdown" href="#" id="myTabDrop1">
                             Chọn Theo Loại
                             <span className="caret">
