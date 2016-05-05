@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import _ from 'lodash';
 import apis from '../../apis/main';
-import Constants from '../../Constants';
+import Constants from '../../constants';
 import GridProduct from './GridProduct';
 import DivLoading from '../DivLoading';
 import {Link} from 'react-router'
@@ -29,7 +29,10 @@ export default class Widget extends Component {
                 loadData: true
             })
             apis.getListProduct(type, page, quantity, function(err, res) {
-                if (err) {} else {
+                if (err) {
+                    self.props.getListProduct([]);
+                    toastr.error("Tải Không Thành Công!");
+                } else {
                     self.props.getListProduct(res.body.data);
                 }
                 self.setState({
@@ -37,7 +40,10 @@ export default class Widget extends Component {
                 })
             })
             apis.getTotalProduct(type, function(err, res) {
-                if (err) {} else {
+                if (err) {
+                    self.props.getTotalProduct(0);
+                    toastr.error("Tải Không Thành Công!");
+                } else {
                     self.props.getTotalProduct(res.body.data);
                 }
             })
@@ -53,9 +59,11 @@ export default class Widget extends Component {
         var quantity = Constants.TOTAL_ROW;
         apis.getListProduct(type, page, quantity, function(err, res) {
             if (err) {
+                self.props.getListProduct([]);
                 self.setState({
                     loadData: false
                 })
+                toastr.error("Tải Không Thành Công!");
             } else {
                 self.props.getListProduct(res.body.data);
                 self.setState({
@@ -65,9 +73,8 @@ export default class Widget extends Component {
         })
         apis.getTotalProduct(type, function(err, res) {
             if (err) {
-                self.setState({
-                    loadData: false
-                })
+                self.props.getTotalProduct(0);
+                toastr.error("Tải Không Thành Công!");
             } else {
                 self.props.getTotalProduct(res.body.data);
             }

@@ -28,7 +28,8 @@ module.exports = {
         GET_TRADEMARK_BY_ID:    "/api/get_trademark_by_id",
         CREATE_TRADEMARK:       "/api/create_trademark",
         DELETE_TRADEMARK:       "/api/delete_trademark",
-        UPDATE_TRADEMARK:       "/api/update_trademark"
+        UPDATE_TRADEMARK:       "/api/update_trademark",
+        GET_GALLERY_BY_MENU_ID: "/api/get_gallery_by_menu_id", 
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",

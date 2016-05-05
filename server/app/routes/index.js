@@ -43,7 +43,8 @@ router.post("/create_trademark", authorized, trademark.createTradeMark);
 router.post("/delete_trademark", authorized, trademark.deleteTradeMark);
 router.post("/update_trademark", authorized, trademark.updateTradeMark);
 
-// for client
+// for menu
 router.get("/menu", menu.get);
+router.get("/get_gallery_by_menu_id", menu.getGalleryByMenuId);
 
 module.exports = router;

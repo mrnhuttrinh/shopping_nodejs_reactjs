@@ -7,8 +7,10 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         image: DataTypes.STRING,
-        product_id: DataTypes.INTEGER,
-        category_id: DataTypes.INTEGER,
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
