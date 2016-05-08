@@ -45,6 +45,12 @@ export default {
             })
         }
     },
+    updateMenu: function(menus) {
+        return {
+            type: ACTION.GET_MENU,
+            menus: menus
+        }
+    },
     getListProduct: function(listproducts) {
         return {
             type: ACTION.GET_LIST_PRODUCT,

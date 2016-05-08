@@ -18,6 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         description: DataTypes.STRING,
         description_detail: DataTypes.TEXT,
         tech_information: DataTypes.TEXT,
+        text_link: DataTypes.STRING,
         employer_id: {
             type: DataTypes.UUID,
             allowNull: false

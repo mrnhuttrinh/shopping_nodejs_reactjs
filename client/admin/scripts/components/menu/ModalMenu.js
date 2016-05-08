@@ -1,15 +1,86 @@
 import React, {Component} from 'react'
+import checkfileimage from '../../utils/checkfileimage';
+import apis from '../../apis/menu';
+import _ from 'lodash';
+import ViewPicture from './ViewPicture';
+import ButtonLoading from '../ButtonLoading';
 
 export default class ModalMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectMenu: null,
             newImageStatus: false,
+            savingNewImage: false,
             newImage: {
                 link: "",
-                image: ""
+                image: "",
+                category_id: 0
             }
         }
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            selectMenu: _.cloneDeep(nextProps.menu)
+        });
+    }
+    changePhoto(event) {
+        event.preventDefault();
+        var self = this;
+        var inputPhoto = self.refs["exampleInputFile"];
+        if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+            console.log('The File APIs are not fully supported in this browser.');
+            return;
+        } 
+        var file = $(inputPhoto)[0].files[0];
+        if (checkfileimage(file)) {
+            var fr = new FileReader();
+            fr.onload = function() {
+                // fr.result is base-64
+                self.setState({
+                    newImage: {
+                        category_id: self.props.menu.id,
+                        image: fr.result
+                    }
+                });
+            }
+            fr.readAsDataURL(file);
+        } else {
+            $(inputPhoto).val("");
+        }
+    }
+    saveMorePicture(event) {
+        event.preventDefault();
+        var self = this;
+        var linkTo = self.refs["linkTo"].value;
+        self.state.newImage.link = linkTo;
+        self.setState({
+            savingNewImage: !self.state.savingNewImage
+        })
+        apis.addMorePicture(this.state.newImage, function(err, res) {
+            if (err) {
+                toastr.error("Thêm Hình Ảnh Không Thành Công")
+            } else {
+                self.setState({
+                    newImage: {
+                        link: "",
+                        image: "",
+                        category_id: 0
+                    },
+                    newImageStatus: !self.state.newImageStatus,
+                    savingNewImage: !self.state.savingNewImage
+                });
+                if (!self.state.selectMenu.images) {
+                    self.state.selectMenu.images = [];
+                }
+                self.state.selectMenu.images.push(res.body.data);
+                self.props.addMorePicture(self.state.selectMenu);
+                toastr.success("Thêm Hình Ảnh Thành Công")
+            }
+            self.setState({
+                savingNewImage: !self.state.savingNewImage
+            });
+        })
     }
 
     addMorePicture(event) {
@@ -19,8 +90,14 @@ export default class ModalMenu extends Component {
             newImageStatus: !this.state.newImageStatus
         });
     }
-
+    deleteGallery(_image) {
+        _.remove(this.state.selectMenu.images, (image) => {
+            return image.id === _image.id;
+        })
+        this.props.deleteGallery(this.state.selectMenu);
+    }
     render() {
+        var self = this;
         var addImageContent = "";
         if (this.state.newImageStatus) {
             addImageContent = (
@@ -30,15 +107,15 @@ export default class ModalMenu extends Component {
                             Thêm Hình Ảnh Mới
                         </div>
                         <div className="panel-body">
-                            <img src="" alt="Hình Ảnh Mới" style={{"width": "100%", "height": "387px"}}/>
+                            <img src={this.state.newImage.image} alt="Hình Ảnh Mới" style={{"width": "100%", "height": "387px"}}/>
                             <div>
-                                <input type="file"/>
+                                <input onChange={this.changePhoto.bind(this)} ref="exampleInputFile" id="exampleInputFile" type="file"/>
                             </div>
                             <br />
                             <form className="form-horizontal">
                                 <div className="form-group">
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" id="link" placeholder="Đường Dẫn Liên Kết"/>
+                                        <input id="linkTo" ref="linkTo" type="text" className="form-control" id="link" placeholder="Đường Dẫn Liên Kết"/>
                                     </div>
                                 </div>
                             </form>
@@ -48,6 +125,20 @@ export default class ModalMenu extends Component {
                 </div>
             );
         }
+
+        var indexCount = 0;
+        var listImages = _.map(self.props.menu.images, (image)=> {
+            return (<ViewPicture 
+                    deleteGallery={self.deleteGallery.bind(self)}
+                    indexCount={++indexCount}
+                    image={image} />
+            )
+        })
+        if (!listImages.length) {
+            listImages = (
+                <h2>Chưa Có Hình Ảnh!</h2>
+            )
+        }
         return (
             <div id={this.props.name} className="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div className="modal-dialog modal-lg">
@@ -55,7 +146,7 @@ export default class ModalMenu extends Component {
                         <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 className="modal-title" id="exampleModalLabel">
-                                Danh Sách Hình Ảnh (4)
+                                Danh Sách Hình Ảnh - [<strong className="brand-primary">{this.props.menu.name}</strong>]({indexCount})
                             </h4>
                         </div>
                         <div className="modal-body">
@@ -63,50 +154,23 @@ export default class ModalMenu extends Component {
                                 {addImageContent}
                                 <div className="col-md-12">
                                     <table className="table table-hover">
-                                        <tr>
-                                            <td width="30px">
-                                                1
-                                            </td>
-                                            <td>
-                                                <div className="panel panel-primary">
-                                                    <div className="panel-heading">
-                                                        <h3 className="panel-title">Panel title
-                                                            <button type="button" className="btn btn-danger pull-right">Xóa</button>
-                                                        </h3>
-                                                    </div>
-                                                    <div className="panel-body">
-                                                        <a href="#">
-                                                            <img src="http://localhost:8000/admin/img/data/products/thumbnail_344790CC-9ADC-4697-B792-663C383ECCC0.gif" alt="..." />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                <div className="panel panel-primary">
-                                                    <div className="panel-heading">
-                                                        <h3 className="panel-title">Panel title
-                                                            <button type="button" className="btn btn-danger pull-right">Xóa</button>
-                                                        </h3>
-                                                    </div>
-                                                    <div className="panel-body">
-                                                        <a href="#">
-                                                            <img src="http://localhost:8000/admin/img/data/products/thumbnail_344790CC-9ADC-4697-B792-663C383ECCC0.gif" alt="..." />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {listImages}
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" onClick={this.addMorePicture.bind(this)} className="btn btn-success">Thêm</button>
+                        {
+                            this.state.newImageStatus ? (
+                                this.state.savingNewImage ? (
+                                    <ButtonLoading />
+                                ) : (
+                                    <button type="button" onClick={this.saveMorePicture.bind(this)} className="btn btn-primary">Lưu</button>
+                                )
+                            ) : (
+                                <button type="button" onClick={this.addMorePicture.bind(this)} className="btn btn-success">Thêm</button>
+                            )
+                        }
                         </div>
                     </div>
                 </div>

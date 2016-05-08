@@ -419,3 +419,7 @@ h1.page-header {
     width: 160px !important;
     height: 160px !important;
 }
+
+img.banner_home {
+    height: 387px;
+}

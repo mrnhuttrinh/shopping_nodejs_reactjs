@@ -30,11 +30,14 @@ export default class GridProduct extends Component {
         if (this.state.gridView) {
             rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
-                _.forEach(product.sizes, (size) => {
+                var showSize = _.map(product.sizes, (size) => {
                     totalSize += size.quantity;
+                    return (
+                        <h6 className="border-bottom-dotted"><small>Size: {size.name}</small><span className="label label-primary pull-right">{size.quantity}</span></h6>
+                    )
                 })
                 return (
-                    <div key={product.id} key={product.id} className="col-lg-3 col-md-3 col-sm-6 col-xs-12 thumb">
+                    <div key={product.id} key={product.id} className="col-md-3 col-sm-6 col-xs-12 thumb">
                         <Link to={"/product/" + product.id} className="thumbnail">
                             <div className="product_view">
                                 <img className="img-responsive" src={product.thumbnail} alt="" />
@@ -109,8 +112,10 @@ export default class GridProduct extends Component {
                         }
                     </h1>
                 </div>
-                <div className="row">
-                    {rows}
+                <div className="container-fluid row-eq-height">
+                    <div className="row">
+                        {rows}
+                    </div>
                 </div>
                 <Pagination 
                     page={this.props.page}

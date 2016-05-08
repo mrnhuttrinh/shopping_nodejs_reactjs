@@ -1,27 +1,27 @@
 import React, {Component} from 'react'
 import ImageLoading from '../ImageLoading';
+import _ from 'lodash';
 
 export default class PopOver extends Component {
-    componentDidUpdate() {
-        $(function() {
-            $('.bxslider-menu').bxSlider({
-                controls: false
-            });
-        })
-    }
     render() {
+        var self = this;
         var contents;
         if (this.props.popover.images) {
             if (this.props.popover.images.length) {
-                contents = (
-                    <div className="row">
-                        <div className="col-xs-6 col-md-3">
-                            <a href="#" className="thumbnail thumbnailFixed">
-                                <img src="http://localhost:8000/admin/img/data/products/thumbnail_344790CC-9ADC-4697-B792-663C383ECCC0.gif" alt="..." />
+                var listImage = _.map(self.props.popover.images, (image)=>{
+                    return (
+                        <div className="pull-left">
+                            <a href={image.link} className="thumbnail thumbnailFixed">
+                                <img style={{"height": "150px", "width": "160px"}} src={image.image} alt={image.link} />
                             </a>
                         </div>
+                    )
+                });
+                contents = (
+                    <div className="row">
+                        {listImage}
                     </div>
-                ) 
+                )
             } else {
                 contents = "Chưa có hình ảnh nào!"
             }
