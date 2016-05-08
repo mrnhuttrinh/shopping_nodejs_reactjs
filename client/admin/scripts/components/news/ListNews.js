@@ -123,6 +123,9 @@ export default class ListNews extends Component{
                     name: "view",
                     text: ""
                 }, {
+                    name: "view_browser",
+                    text: "Hiển Thị Trình Duyệt"
+                }, {
                     name: "delete_row",
                     text: ""
                 }
@@ -155,6 +158,10 @@ export default class ListNews extends Component{
                         </label>
                     </form>
                 )
+                var host = window.location.host;
+                row.view_browser = (
+                    <a target="_blank" href={host + "/#/" + "tin-tuc/" + row.id}>{row.title}</a>
+                );
             })
             return (
                 <div>

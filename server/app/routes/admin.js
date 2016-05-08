@@ -65,15 +65,14 @@ module.exports = {
                     phone: newuser.phone,
                     address: newuser.address,
                     level: newuser.level
-                }).then(function(employer, err) {
-                    if (err) {
-                        logger("ERROR", err);
-                        return res.status(400).send({
-                            error: err
-                        });
-                    }
+                }).then(function(employer) {
                     return res.status(200).send({
                         data: employer
+                    });
+                }).catch(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
                     });
                 });
             }

@@ -10,8 +10,7 @@ var initialState = {
     // for view dashboard
     dashboard: {
         listProduct: [],
-        totalProduct: 0,
-        tabSelected: "home"
+        totalProduct: 0
     },
     // for view product
     product: {},
@@ -46,10 +45,6 @@ export default function update(state = initialState, action) {
         case ACTION.GET_TOTAL_PRODUCT:
             newState = _.cloneDeep(state);
             newState.dashboard.totalProduct = action.totalProduct;
-            return newState;
-        case ACTION.TAB_SELECTED_DASHBOARD: 
-            newState = _.cloneDeep(state);
-            newState.dashboard.tabSelected = action.tabSelected;
             return newState;
         case ACTION.SIGN_IN:
             newState = _.cloneDeep(state);

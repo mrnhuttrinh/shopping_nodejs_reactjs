@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var configGlobal = require("../config");
+var _ = require("lodash");
 
 /**
  * [exports description]
@@ -14,10 +15,7 @@ var configGlobal = require("../config");
 module.exports = function(rawBody, localFile, agent) {
     //jpg|jpeg|png|gif
     base64Data = rawBody.replace(/^base64,/, "");
-    var fileOnDisk = path.join(configGlobal._globalPath, agent, localFile);
-    // if (!fs.existsSync(fileOnDisk)){
-    //     fs.mkdirSync(fileOnDisk);
-    // }
+    var fileOnDisk= path.join(configGlobal._globalPath, agent, localFile);
     fs.writeFile(fileOnDisk, base64Data, 'base64', function(err) {
         console.log(err);
     });

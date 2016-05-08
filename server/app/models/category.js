@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         title: DataTypes.STRING,
         description: DataTypes.STRING,
         link: DataTypes.STRING,
+        logo_image: DataTypes.STRING,
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,

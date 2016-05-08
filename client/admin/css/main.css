@@ -401,6 +401,25 @@ h1.page-header {
     overflow-x: hidden;
 }
 
+.inline-modal500px {
+    overflow-y: scroll; 
+    max-height: 500px;
+    overflow-x: hidden;
+}
+
 .cursor-point {
     cursor: pointer;
+}
+
+.expandPopover {
+    max-width: 800px !important;
+}
+
+.thumbnailFixed {
+    width: 160px !important;
+    height: 160px !important;
+}
+
+img.banner_home {
+    height: 387px;
 }

@@ -28,7 +28,13 @@ module.exports = {
         GET_TRADEMARK_BY_ID:    "/api/get_trademark_by_id",
         CREATE_TRADEMARK:       "/api/create_trademark",
         DELETE_TRADEMARK:       "/api/delete_trademark",
-        UPDATE_TRADEMARK:       "/api/update_trademark"
+        UPDATE_TRADEMARK:       "/api/update_trademark",
+        GET_GALLERY_BY_MENU_ID: "/api/get_gallery_by_menu_id", 
+        ADD_MORE_PICTURE:       "/api/add_more_picture",
+        GET_ALL_GALLERIES_MENU: "/api/get_all_gallery_menu",
+        DELETE_GALLERY_MENU:    "/api/delete_gallery_menu",
+        EDIT_GALLERY_MENU:      "/api/edit_gallery_menu",
+        UPDATE_LOGO_CATEGORY:   "/api/update_logo_category"
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",

@@ -23,19 +23,22 @@ export default class ShowMenu extends Component {
         var self = this;
         var menuLevelThree = _.filter(menus, menu => {
             if (menu.level === 3) {
-                var countChildren = "";
-                if (menu.images) {
-                    countChildren = (
-                        <span className="badge">{menu.images.length}</span>
-                    );
-                }
+                var a_id = "popoverData_" + menu.id;
                 menu.html = (
                     <li onClick={self.liChooseCategory.bind(self, menu)}
                         className=" li-dropdown list-group-item">
-                        {countChildren}
-                        <a>{menu.name}</a>
+                        <a id={"link" + a_id} >{menu.name}</a>
                     </li>
                 );
+                var p = $('#link' + a_id).popover({
+                    content: "<img style='height:295px; width: 1000px' src='" + menu.logo_image + "'/>", 
+                    html: true, 
+                    placement: "bottom",
+                    trigger : 'hover'
+                });
+                p.on("show.bs.popover", function(e){
+                    p.data("bs.popover").tip().css({"max-width": "1050px"});
+                });
                 return menu;
             }
         });
@@ -60,22 +63,25 @@ export default class ShowMenu extends Component {
                         </li>
                     )
                 }
-                var countChildren = "";
-                if (menu.images) {
-                    countChildren = (
-                        <span className="badge">{menu.images.length}</span>
-                    );
-                }
+                var a_id = "popoverData_" + menu.id;
                 menu.html = (
                     <div>
                         <li onClick={self.liChooseCategory.bind(self, menu)}
                             className=" li-dropdown list-group-item">
-                            {countChildren}
-                            {icon} <a>{menu.name}</a>
+                            {icon} <a id={"link" + a_id}>{menu.name}</a>
                         </li>
                         {listMenuChildren}
                     </div>
                 );
+                var p = $('#link' + a_id).popover({
+                    content: "<img style='height:295px; width: 1000px' src='" + menu.logo_image + "'/>", 
+                    html: true, 
+                    placement: "bottom",
+                    trigger : 'hover'
+                });
+                p.on("show.bs.popover", function(e){
+                    p.data("bs.popover").tip().css({"max-width": "1050px"});
+                });
                 return menu;
             }
         });
@@ -100,22 +106,25 @@ export default class ShowMenu extends Component {
                         </li>
                     )
                 }
-                var countChildren = "";
-                if (menu.images) {
-                    countChildren = (
-                        <span className="badge">{menu.images.length}</span>
-                    );
-                }
+                var a_id = "popoverData_" + menu.id;
                 menu.html = (
                     <div>
                         <li onClick={self.liChooseCategory.bind(self, menu)}
                             className=" li-dropdown list-group-item">
-                            {countChildren}
-                            {icon} <a>{menu.name}</a>
+                            {icon} <a id={"link" + a_id}>{menu.name}</a>
                         </li>
                         {listMenuChildren}
                     </div>
                 );
+                var p = $('#link' + a_id).popover({
+                    content: "<img style='height:295px; width: 1000px' src='" + menu.logo_image + "'/>", 
+                    html: true, 
+                    placement: "bottom",
+                    trigger : 'hover'
+                });
+                p.on("show.bs.popover", function(e){
+                    p.data("bs.popover").tip().css({"max-width": "1050px"});
+                });
                 return menu;
             }
         });

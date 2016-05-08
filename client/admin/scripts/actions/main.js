@@ -45,6 +45,12 @@ export default {
             })
         }
     },
+    updateMenu: function(menus) {
+        return {
+            type: ACTION.GET_MENU,
+            menus: menus
+        }
+    },
     getListProduct: function(listproducts) {
         return {
             type: ACTION.GET_LIST_PRODUCT,
@@ -55,12 +61,6 @@ export default {
         return {
             type: ACTION.GET_TOTAL_PRODUCT,
             totalProduct: totalProduct
-        }
-    },
-    setTabDashboard: function(tabSelected) {
-        return {
-            type: ACTION.TAB_SELECTED_DASHBOARD,
-            tabSelected: tabSelected
         }
     },
     getProduct: function(product) {

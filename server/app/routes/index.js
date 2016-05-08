@@ -43,7 +43,13 @@ router.post("/create_trademark", authorized, trademark.createTradeMark);
 router.post("/delete_trademark", authorized, trademark.deleteTradeMark);
 router.post("/update_trademark", authorized, trademark.updateTradeMark);
 
-// for client
+// for menu
 router.get("/menu", menu.get);
+router.get("/get_all_gallery_menu", authorized, menu.getGalleries);
+router.get("/get_gallery_by_menu_id", menu.getGalleryByMenuId);
+router.post("/add_more_picture", authorized, menu.addMorePicture);
+router.post("/delete_gallery_menu", authorized, menu.deleteGallery);
+router.post("/edit_gallery_menu", authorized, menu.editGallery);
+router.post("/update_logo_category", authorized, menu.updateLogoImage);
 
 module.exports = router;

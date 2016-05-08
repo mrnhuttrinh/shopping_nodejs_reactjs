@@ -5,6 +5,7 @@ var toImage = require("../utils/toImage");
 var logger = require("../logger")
 var _ = require("lodash");
 var Q = require("q");
+var removeSignText = require("../utils/text_no_sign");
 
 var models = require("../models");
 
@@ -125,21 +126,20 @@ module.exports = {
             query += condition + orderBy + limit;
             models.sequelize.query(query)
             .spread(function(rows) {
+                _.forEach(rows, function(row) {
+                    row.sizes = [];
+                })
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
                     var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 })
-                Q.all(arrayQuerySize).then(function(rowsSizes) {
-                    _.forEach(rowsSizes, function(rowSi) {
-                        var newRowSi = rowSi[0];
+                Q.all(arrayQuerySize).spread(function(rowsSizes) {
+                    _.forEach(rowsSizes[0], function(newRowSi) {
                         _.forEach(rows, function(row) {
-                            var sizeToPro = _.find(newRowSi, function(roSi) {
-                                return roSi.product === row.id;
-                            })
-                            if (sizeToPro) {
-                                row.sizes = newRowSi;
+                            if (row.id === newRowSi.product_id) {
+                                row.sizes.push(newRowSi);
                             }
                         })
                     })
@@ -237,6 +237,14 @@ module.exports = {
                 tech_information: product.tech_information,
                 employer_id: employer.id
             }).then(function(prod) {
+                /////////////////////////////
+                // update text_link product
+                var textLink = removeSignText(product.name) + "-" + prod.id + ".html";
+                var queryUpdateLink = "UPDATE products SET text_link='" + textLink + "' WHERE id=" + prod.id;
+                models.sequelize.query(queryUpdateLink).then(function() {}).catch(function(err) {
+                    logger("ERROR", err);
+                });
+                ////////////////////////////
                 var sizes = product.sizes;
                 _.forEach(sizes, function(size) {
                     models.Size.create({
@@ -355,7 +363,8 @@ module.exports = {
                 });
                 break;
             case "name":
-                query = "UPDATE products SET name = '" + data + "'" + condition;
+                var textLink = removeSignText(data) + "-" + id + ".html";
+                query = "UPDATE products SET name = '" + data + "', text_link='" + textLink + "'" + condition;
                 excuteUpdate(res, query);
                 break;
             case "code":
