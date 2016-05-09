@@ -67,7 +67,7 @@ export default {
             component: News,
             onEnter: requireAuth
         }, {
-            path: 'trademark',
+            path: 'trademark(/:page)',
             component: TradeMark,
             onEnter: requireAuth
         }, {

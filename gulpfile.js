@@ -271,6 +271,28 @@ gulp.task("watch_admin", [
     gulp.watch("client/admin/images/**/*", reload);
 });
 
+gulp.task("watch_admin_dev", function() {
+
+    browserSync({
+        notify: false,
+        logPrefix: "BS",
+        // Run as an https by uncommenting "https: true"
+        // Note: this uses an unsigned certificate which on first access
+        // will present a certificate warning in the browser.
+        server: [adminFolder, "admin"],
+        port: 4000
+    });
+
+    // Watch .html files
+    gulp.watch("client/admin/*.html", reload);
+
+    gulp.watch(["client/admin/styles/**/*.css"], 
+        ["styles", reload]);
+
+    // Watch image files
+    gulp.watch("client/admin/images/**/*", reload);
+});
+
 
 // build all app
 gulp.task("build_admin", [

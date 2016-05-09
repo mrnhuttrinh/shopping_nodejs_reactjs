@@ -39,7 +39,7 @@ export default class AddUser extends Component {
                 role
             }, function(err, res) {
                 if (err) {
-                    toastr.error(err.message);
+                    toastr.error(err.response.body.error.message);
                 } else {
                     toastr.success("Tạo Thành Công!");
                     self.props.users.listUsers.push(res.body.data)

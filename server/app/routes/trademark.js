@@ -19,20 +19,40 @@ module.exports = {
     },
     createTradeMark: function(req, res) {
         var data = req.body.data;
-        models.TradeMark.create({
-            name: data.name,
-            address: data.address,
-            phone: data.phone,
-            email: data.email,
-            detail: data.detail
-        }).then(function() {
-            return res.status(200).send()
+        models.TradeMark.find({
+            where: {
+                name: data.name,
+                phone: data.phone
+            }
+        }).then(function(findTrademark) {
+            if(findTrademark) {
+                return res.status(400).send({
+                    error: {
+                        message: "Nhà Cung Cấp Đã Tồn Tại!"
+                    }
+                });
+            } else {
+                models.TradeMark.create({
+                    name: data.name,
+                    address: data.address,
+                    phone: data.phone,
+                    email: data.email,
+                    detail: data.detail
+                }).then(function(result) {
+                    return res.status(200).send(result);
+                }).catch(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    })
+                });
+            }
         }).catch(function(err) {
             logger("ERROR", err);
             return res.status(400).send({
                 error: err
-            })
-        })
+            });
+        });
     },
     getTradeMarkById: function(req, res) {
         var id = req.param("id");

@@ -27,7 +27,8 @@ var initialState = {
     },
     // for trademark page
     trademark: {
-        listTrademark: []
+        listTrademark: [],
+        total: 0
     }
 }
 
@@ -88,6 +89,7 @@ export default function update(state = initialState, action) {
         case ACTION.GET_LIST_TRADEMARK:
             newState = _.cloneDeep(state);
             newState.trademark.listTrademark = action.listTrademark;
+            newState.trademark.total = action.listTrademark.length;
             return newState;
         default:
             return state;

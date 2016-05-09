@@ -78,7 +78,7 @@ export default {
     },
     getListTradeMark: function(listTrademark) {
         return {
-            type: GET_LIST_TRADEMARK,
+            type: ACTION.GET_LIST_TRADEMARK,
             listTrademark: listTrademark
         }
     }
