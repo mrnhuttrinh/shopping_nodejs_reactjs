@@ -33,15 +33,25 @@ export default class GridProduct extends Component {
                 var showSize = _.map(product.sizes, (size) => {
                     totalSize += size.quantity;
                     return (
-                        <h6 className="border-bottom-dotted"><small>Size: {size.name}</small><span className="label label-primary pull-right">{size.quantity}</span></h6>
+                        <p className="text-left">Size: {size.name} <p className="pull-right">{size.quantity}</p></p>
                     )
                 })
+                if (showSize.length === 0) {
+                    showSize.push(<p className="text-nowrap">Nhập Size cho sản phẩm</p>)
+                }
                 return (
                     <div key={product.id} key={product.id} className="col-md-3 col-sm-6 col-xs-12 thumb">
                         <Link to={"/product/" + product.id} className="thumbnail">
                             <div className="product_view">
-                                <img className="img-responsive" src={product.thumbnail} alt="" />
-                                <h5 className="border-bottom-dotted">Tên <span className="label label-info pull-right">{product.name}</span></h5>
+                                <div className="div-img-responsive">
+                                    <img className="img-responsive" src={product.thumbnail} alt="" />
+                                    <div className="inside-img-responsive">
+                                        {showSize}
+                                    </div>
+                                </div>
+                                <div className="product-name">
+                                    <p>{product.name}</p>
+                                </div>
                                 <h5 className="border-bottom-dotted">Mã <span className="label label-info pull-right">{product.code}</span></h5>
                                 <h5 className="border-bottom-dotted">Số Lượng <span className="label label-info pull-right">{totalSize}</span></h5>
                             </div>
@@ -66,7 +76,7 @@ export default class GridProduct extends Component {
                             <Link to={"/product/" + product.id} className="list-group-item">
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <img style={{"maxWidth": "200px"}} src={product.thumbnail} className="img-responsive" alt="Responsive image" />
+                                        <img style={{"maxWidth": "200px"}} src={product.thumbnail} className="img-responsive" alt="" />
                                     </div>
                                     <div className="col-md-9">
                                         <h5 className="border-bottom-dotted">Tên <span className="label label-info pull-right">{product.name}</span></h5>
@@ -75,6 +85,7 @@ export default class GridProduct extends Component {
                                         <h5 className="border-bottom-dotted">Giá Sỉ <span className="label label-info pull-right">{product.price_wholesale} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Giá Lẻ <span className="label label-info pull-right">{product.price_retail} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Màu Sắc <span className="label label-info pull-right">{product.color}</span></h5>
+                                        <h5 className="border-bottom-dotted">Thương Hiệu <span className="label label-info pull-right">{product.trademark}</span></h5>
                                     </div>
                                 </div>
                             </Link>

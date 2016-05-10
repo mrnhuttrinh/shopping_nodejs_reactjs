@@ -58,6 +58,8 @@ export default class AddTM extends Component {
                 toastr.error(err.response.body.error.message);
             } else {
                 toastr.success("Thêm Nhà Cung Cấp Thành Công!");
+                self.props.trademark.listTrademark.push(res.body.data);
+                self.props.getListTradeMark(self.props.trademark.listTrademark);
                 self.props.cancelAddNewTM();
             }
             self.setState({

@@ -33,11 +33,11 @@ export default {
                 cb(err, res);
             })
     },
-    deleteTrademark(id, cb) {
+    deleteTrademark(data, cb) {
         var request = new Request();
         request
-            .post(API.DELETE_NEWS, {
-                id
+            .post(API.DELETE_TRADEMARK, {
+                data
             })
             .authorized()
             .then(function(err, res) {
