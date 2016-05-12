@@ -38,6 +38,7 @@ router.post("/update_show_on_top", authorized, news.updateShowOnTop)
 
 // for trademark
 router.get("/get_list_trademark", authorized, trademark.getList);
+router.get("/get_list_trademark_mini", authorized, trademark.getListMini);
 router.get("/get_trademark_by_id", authorized, trademark.getTradeMarkById);
 router.post("/create_trademark", authorized, trademark.createTradeMark);
 router.post("/delete_trademark", authorized, trademark.deleteTradeMark);

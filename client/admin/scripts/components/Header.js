@@ -108,12 +108,22 @@ export default class Header extends Component{
                     </div>
                 </div>
                 <div className="pull-right">
-                    <div id="hide-menu" className="btn-header pull-right">
-                        <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i className="fa fa-reorder"></i></a> </span>
-                    </div>
                     <div id="logout" className="btn-header transparent pull-right">
                         <span> <a onClick={this.logOut.bind(this)} href="javascript:void(0);" title="Sign Out" ><i className="fa fa-sign-out"></i></a> </span>
                     </div>
+                    <div id="hide-menu" className="btn-header pull-right">
+                        <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i className="fa fa-reorder"></i></a> </span>
+                    </div>
+                    <div id="search-mobile" className="btn-header transparent pull-right">
+                        <span> <a href="javascript:void(0)" title="Search"><i className="fa fa-search"></i></a> </span>
+                    </div>
+                    <form className="header-search pull-right">
+                        <input id="search-fld"  type="text" name="param" placeholder="Tìm Kiếm Sản Phẩm (Tên, Mã)" />
+                        <button type="submit">
+                            <i className="fa fa-search"></i>
+                        </button>
+                        <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i className="fa fa-times"></i></a>
+                    </form>
                 </div>
                 {listChat}
             </header>

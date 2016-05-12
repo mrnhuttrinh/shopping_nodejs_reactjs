@@ -12,6 +12,15 @@ export default {
                 cb(err, res);
             });
     },
+    getListTrademarkMini(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_LIST_TRADEMARK_MINI)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
     createTrademark(data, cb) {
         var request = new Request();
         request

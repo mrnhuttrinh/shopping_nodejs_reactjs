@@ -105,7 +105,7 @@ module.exports = {
             var start = (page - 1) * quantity;
             var condition;
             var orderBy = "";
-            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color FROM products ";
+            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color, trademark_id FROM products ";
             if (type === "noactive") {
                 condition = "WHERE status = 0";
             } else if (type === "home") {
@@ -231,7 +231,7 @@ module.exports = {
                 price_wholesale: product.price_wholesale,
                 price_wholesale_promotion: product.price_wholesale_promotion,
                 color: product.color,
-                trademark: product.trademark,
+                trademark_id: product.trademark_id,
                 description: product.description,
                 description_detail: product.description_detail,
                 tech_information: product.tech_information,
@@ -391,8 +391,8 @@ module.exports = {
                 query = "UPDATE products SET color = '" + data + "'" + condition;
                 excuteUpdate(res, query);
                 break;
-            case "trademark":
-                query = "UPDATE products SET trademark = '" + data + "'" + condition;
+            case "trademark_id":
+                query = "UPDATE products SET trademark_id = " + data + condition;
                 excuteUpdate(res, query);
                 break;
             case "description":

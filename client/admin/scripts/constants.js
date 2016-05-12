@@ -26,6 +26,7 @@ module.exports = {
         CHANGE_SHOW_ON_TOP:     "/api/update_show_on_top",
         GET_LIST_TRADEMARK:     "/api/get_list_trademark",
         GET_TRADEMARK_BY_ID:    "/api/get_trademark_by_id",
+        GET_LIST_TRADEMARK_MINI:"/api/get_list_trademark_mini",
         CREATE_TRADEMARK:       "/api/create_trademark",
         DELETE_TRADEMARK:       "/api/delete_trademark",
         UPDATE_TRADEMARK:       "/api/update_trademark",
@@ -53,6 +54,7 @@ module.exports = {
         GET_LIST_NEWS:          "GET_LIST_NEWS",
         CREATE_NEWS:            "CREATE_NEWS",
         GET_LIST_TRADEMARK:     "GET_LIST_TRADEMARK",
-        TAB_SELECTED_DASHBOARD: "TAB_SELECTED_DASHBOARD"
+        TAB_SELECTED_DASHBOARD: "TAB_SELECTED_DASHBOARD",
+        GET_LIST_TRADEMARK_MINI:"GET_LIST_TRADEMARK_MINI"
     }
 }

@@ -3,6 +3,20 @@ var logger = require("../logger")
 var _ = require("lodash");
 var Q = require("q");
 module.exports = {
+    getListMini: function(req, res) {
+        var query = "SELECT id, name FROM trademarks ORDER BY createdAt DESC";
+        models.sequelize.query(query)
+        .then(function(listTM) {
+            return res.status(200).send({
+                data: listTM[0]
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
     getList: function(req, res) {
         var query = "SELECT * FROM trademarks ORDER BY createdAt DESC";
         models.sequelize.query(query)

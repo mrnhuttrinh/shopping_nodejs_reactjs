@@ -25,7 +25,17 @@ export default class GridProduct extends Component {
             gridView: !this.state.gridView
         })
     }
+    findLabelSelect(value) {
+        var result = _.find(this.props.commons.trademarks, (trademark) => {
+            return trademark.value === value;
+        });
+        if (result) {
+            return result.label;
+        }
+        return "";
+    }
     render() {
+        var self = this;
         var rows = [];
         if (this.state.gridView) {
             rows = _.map(this.props.dashboard.listProduct, function(product) {
@@ -85,7 +95,7 @@ export default class GridProduct extends Component {
                                         <h5 className="border-bottom-dotted">Giá Sỉ <span className="label label-info pull-right">{product.price_wholesale} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Giá Lẻ <span className="label label-info pull-right">{product.price_retail} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Màu Sắc <span className="label label-info pull-right">{product.color}</span></h5>
-                                        <h5 className="border-bottom-dotted">Thương Hiệu <span className="label label-info pull-right">{product.trademark}</span></h5>
+                                        <h5 className="border-bottom-dotted">Thương Hiệu <span className="label label-info pull-right">{self.findLabelSelect(product.trademark_id)}</span></h5>
                                     </div>
                                 </div>
                             </Link>

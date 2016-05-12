@@ -79,14 +79,8 @@ export default class ListTM extends Component {
                     name: "name",
                     text: "Tên Nhà Cung Cấp"
                 }, {
-                    name: "address",
-                    text: "Địa Chỉ"
-                }, {
                     name: "phone",
                     text: "Số Điện Thoại"
-                }, {
-                    name: "email",
-                    text: "Email"
                 }, {
                     name: "edit_button",
                     text: ""

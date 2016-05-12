@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import _ from 'lodash'
 import apis from '../../apis/main';
+import apisTradeMark from '../../apis/trademark';
 import checkfileimage from '../../utils/checkfileimage';
 import DeleteProduct from './DeleteProduct';
 import Category from './Category';
@@ -9,6 +10,7 @@ import Gallery from './Gallery';
 import Loading from '../ButtonLoading';
 import DescriptionDetail from './DescriptionDetail';
 import TechInformation from './TechInformation';
+import Select from 'react-select';
 
 export default class ViewProduct extends Component {
     constructor(props) {
@@ -31,7 +33,8 @@ export default class ViewProduct extends Component {
             priceRetailEditStatus: false,
             priceRetailPromotionEditStatus: false,
             priceWholesaleEditStatus: false,
-            priceWholesalePromotionEditStatus: false
+            priceWholesalePromotionEditStatus: false,
+            selectValue: {}
         };
     }
     changePhoto(event) {
@@ -80,7 +83,16 @@ export default class ViewProduct extends Component {
             } else {
                 self.props.getProduct(res.body.data);
             }
-        })
+        });
+        if (this.props.commons.trademarks.length ===0) {
+            apisTradeMark.getListTrademarkMini(function(err, res) {
+                if (err) {
+                    toastr.error("Tải Không Thành Công!");
+                } else {
+                    self.props.getListTradeMarkMini(res.body.data);
+                }
+            });
+        }
     }
     componentDidUpdate() {
         $(function() {
@@ -108,7 +120,7 @@ export default class ViewProduct extends Component {
                     colorEdit: !self.state.colorEdit
                 })
                 break;
-            case "trademark":
+            case "trademark_id":
                 self.setState({
                     trademarkEdit: !self.state.trademarkEdit
                 })
@@ -158,7 +170,7 @@ export default class ViewProduct extends Component {
                     colorEditStatus: !self.state.colorEditStatus
                 })
                 break;
-            case "trademark":
+            case "trademark_id":
                 self.setState({
                     trademarkEditStatus: !self.state.trademarkEditStatus
                 })
@@ -201,8 +213,8 @@ export default class ViewProduct extends Component {
             case "color":
                 product.color = data;
                 break;
-            case "trademark":
-                product.trademark = data;
+            case "trademark_id":
+                product.trademark_id = data;
                 break;
             case "description":
                 product.description = data;
@@ -246,8 +258,8 @@ export default class ViewProduct extends Component {
             case "color":
                 data = self.refs["productColor"].value;
                 break;
-            case "trademark":
-                data = self.refs["productTrademark"].value;
+            case "trademark_id":
+                data = self.state.selectValue.value;
                 break;
             case "description":
                 data = self.refs["productDescription"].value;
@@ -307,6 +319,20 @@ export default class ViewProduct extends Component {
         event.preventDefault();
         var self = this;
         self.updateField(type);
+    }
+    selectUpdateValue(newValue) {
+        this.setState({
+            selectValue: newValue
+        });
+    }
+    findLabelSelect(value) {
+        var result = _.find(this.props.commons.trademarks, (trademark) => {
+            return trademark.value === value;
+        });
+        if (result) {
+            return result.label;
+        }
+        return "";
     }
     render() {
         var self = this;
@@ -665,23 +691,25 @@ export default class ViewProduct extends Component {
                                         {
                                             this.state.trademarkEdit ? (
                                                 <td>
-                                                    <input defaultValue={product.trademark} className="form-control" ref="productTrademark" id="productTradeMark" placeholder="Tên Thương Hiệu" type="text">
-                                                    </input>
+                                                    <Select id="productTrademarkId"
+                                                        value={this.state.selectValue.value}
+                                                        onChange={this.selectUpdateValue.bind(this)}
+                                                        options={this.props.commons.trademarks}/>
                                                     <p>
                                                         {
                                                             this.state.trademarkEditStatus ? (
                                                                 <Loading classCSS={"btn-sm"}/>
                                                             ) : (
-                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "trademark")} className="btn btn-primary btn-sm">Lưu</button>
+                                                                <button type="button" onClick={this.onSaveUpdateField.bind(this, "trademark_id")} className="btn btn-primary btn-sm">Lưu</button>
                                                             )
                                                         }
-                                                        <button type="button" onClick={this.onCancelUpdateField.bind(this, "trademark")} className="btn btn-warning btn-sm">Hủy</button>
+                                                        <button type="button" onClick={this.onCancelUpdateField.bind(this, "trademark_id")} className="btn btn-warning btn-sm">Hủy</button>
                                                     </p>
                                                 </td>
                                             ) : (
                                                 <td>
-                                                    {product.trademark}
-                                                    <button onClick={this.openTextBox.bind(this, "trademark")} type="button" className="btn btn-default btn-xs pull-right">
+                                                    {this.findLabelSelect(product.trademark_id)}
+                                                    <button onClick={this.openTextBox.bind(this, "trademark_id")} type="button" className="btn btn-default btn-xs pull-right">
                                                         <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </button>
                                                 </td>

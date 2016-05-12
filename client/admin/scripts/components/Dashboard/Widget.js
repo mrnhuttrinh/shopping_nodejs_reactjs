@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import _ from 'lodash';
 import apis from '../../apis/main';
+import apisTradeMark from '../../apis/trademark';
 import Constants from '../../constants';
 import GridProduct from './GridProduct';
 import DivLoading from '../DivLoading';
@@ -27,7 +28,7 @@ export default class Widget extends Component {
             var quantity = Constants.TOTAL_ROW;
             self.setState({
                 loadData: true
-            })
+            });
             apis.getListProduct(type, page, quantity, function(err, res) {
                 if (err) {
                     self.props.getListProduct([]);
@@ -37,8 +38,8 @@ export default class Widget extends Component {
                 }
                 self.setState({
                     loadData: false
-                })
-            })
+                });
+            });
             apis.getTotalProduct(type, function(err, res) {
                 if (err) {
                     self.props.getTotalProduct(0);
@@ -46,7 +47,7 @@ export default class Widget extends Component {
                 } else {
                     self.props.getTotalProduct(res.body.data);
                 }
-            })
+            });
         }
         return true;
     }
@@ -70,7 +71,7 @@ export default class Widget extends Component {
                     loadData: false
                 })
             }
-        })
+        });
         apis.getTotalProduct(type, function(err, res) {
             if (err) {
                 self.props.getTotalProduct(0);
@@ -78,7 +79,14 @@ export default class Widget extends Component {
             } else {
                 self.props.getTotalProduct(res.body.data);
             }
-        })
+        });
+        apisTradeMark.getListTrademarkMini(function(err, res) {
+            if (err) {
+                toastr.error("Tải Không Thành Công!");
+            } else {
+                self.props.getListTradeMarkMini(res.body.data);
+            }
+        });
     }
     onChooseTab(link, event) {
         event.preventDefault();
