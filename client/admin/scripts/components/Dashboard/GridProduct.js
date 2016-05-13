@@ -106,10 +106,11 @@ export default class GridProduct extends Component {
         }
         
         var title = rows.length ? "Số Sản Phẩm Hiện Có " : "Không Có Sản Phẩm Nào";
+        var totalShow = rows.length === 0 ? "" : this.props.dashboard.totalProduct;
         return (
             <div className="tab-pane active" id={this.props.category} role="`panel">
                 <div className="col-lg-12">
-                    <h1 className="page-header">{title}<span className="label label-info">{this.props.dashboard.totalProduct}</span>
+                    <h1 className="page-header">{title}<span className="label label-info">{totalShow}</span>
                         {
                             this.state.gridView ? (
                                 <div className="pull-right">

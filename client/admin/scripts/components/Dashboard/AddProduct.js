@@ -28,7 +28,7 @@ export default class AddProduct extends Component {
                 trademark_id: 0,
                 description: ""
             },
-            selectValue: {}
+            selectValue: null
         }
     }
 
@@ -608,6 +608,7 @@ export default class AddProduct extends Component {
                                         </label>
                                         <div className="col-sm-10">
                                             <Select id="productTrademarkId"
+                                                placeholder="Chọn Nhà Cung Cấp"
                                                 value={this.state.selectValue}
                                                 onChange={this.selectUpdateValue.bind(this)}
                                                 options={this.props.commons.trademarks}/>

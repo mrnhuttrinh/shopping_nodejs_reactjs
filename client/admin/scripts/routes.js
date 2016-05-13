@@ -32,20 +32,12 @@ export default {
     },
     childRoutes: [
         {
-            path: 'dashboard(/:category(/:page))',
+            path: 'dashboard(/:category(/:page(/:id)))',
             component: Dashboard,
             onEnter: requireAuth
         }, {
             path: 'login',
             component: Login
-        }, {
-            path: 'inbox',
-            component: Inbox,
-            onEnter: requireAuth
-        }, {
-            path: 'about',
-            component: About,
-            onEnter: requireAuth
         }, {
             path: 'listuser(/:page)',
             component: ListUser,

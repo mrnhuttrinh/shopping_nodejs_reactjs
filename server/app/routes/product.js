@@ -32,7 +32,7 @@ function getListChildrenMenu(type, menus , res) {
     var listRet = [];
     var currentMenu = _.find(menus, function(menu) {
         return menu.link === type;
-    })
+    });
     if (currentMenu) {
         listRet.push(currentMenu.id);
         _.forEach(menus, function(menu) {
@@ -42,11 +42,7 @@ function getListChildrenMenu(type, menus , res) {
         });
     return listRet;
     } else {
-        return res.status(400).send({
-            error: {
-                message: "Menu Không Tồn Tại"
-            }
-        });
+        return false;
     }
     
 }
@@ -71,15 +67,25 @@ module.exports = {
                 condition = " WHERE status = 0";
             } else if (type === "home") {
                 condition = " WHERE status = 1";
+            } else if (type === "trademark") {
+                condition = "WHERE trademark_id = " + "trademark_id";
             } else {
                 if (type === "sanphammoi") { //newest
                     condition = " WHERE status = 1";
                     orderBy = " ORDER BY createdAt DESC";
                 } else {
                     var listType = getListChildrenMenu(type, listMenu, res);
-                    var typeArray = "(" + listType.toString() + ")";
-                    query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                    if (listType) {
+                        var typeArray = "(" + listType.toString() + ")";
+                        query = "SELECT count(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                        condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                    } else {
+                        return res.status(400).send({
+                            error: {
+                                message: "Tải Không Thành Công"
+                            }
+                        });
+                    }
                 }
             }
             query += condition;
@@ -110,6 +116,8 @@ module.exports = {
                 condition = "WHERE status = 0";
             } else if (type === "home") {
                 condition = "WHERE status = 1";
+            } else if (type === "trademark") {
+                condition = "WHERE trademark_id = " + "trademark_id";
             } else {
                 if (type === "sanphammoi") { //newest
                     condition = "WHERE status = 1";
@@ -117,9 +125,17 @@ module.exports = {
                 } else { // promotion
                     // get list type if type have children
                     var listType = getListChildrenMenu(type, listMenu, res);
-                    var typeArray = "(" + listType.toString() + ")";
-                    query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
-                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                    if (listType) {
+                        var typeArray = "(" + listType.toString() + ")";
+                        query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                        condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                    } else {
+                        return res.status(400).send({
+                            error: {
+                                message: "Tải Không Thành Công"
+                            }
+                        });
+                    }
                 }
             }
             var limit = " LIMIT " + start + " , " + quantity;
@@ -128,30 +144,36 @@ module.exports = {
             .spread(function(rows) {
                 _.forEach(rows, function(row) {
                     row.sizes = [];
-                })
+                });
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
                     var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
-                })
+                });
                 Q.all(arrayQuerySize).spread(function(rowsSizes) {
-                    _.forEach(rowsSizes[0], function(newRowSi) {
-                        _.forEach(rows, function(row) {
-                            if (row.id === newRowSi.product_id) {
-                                row.sizes.push(newRowSi);
-                            }
-                        })
-                    })
-                    return res.status(200).send({
-                        data: rows
-                    });
+                    if (rowsSizes) {
+                        _.forEach(rowsSizes[0], function(newRowSi) {
+                            _.forEach(rows, function(row) {
+                                if (row.id === newRowSi.product_id) {
+                                    row.sizes.push(newRowSi);
+                                }
+                            });
+                        });
+                        return res.status(200).send({
+                            data: rows
+                        });
+                    } else {
+                        return res.status(200).send({
+                            data: []
+                        });
+                    }
                 }).fail(function(err) {
                     logger("ERROR", err);
                     return res.status(400).send({
                         error: err
-                    })
-                })
+                    });
+                });
             }).catch(function(err) {
                 logger("ERROR", err);
                 return res.status(400).send({

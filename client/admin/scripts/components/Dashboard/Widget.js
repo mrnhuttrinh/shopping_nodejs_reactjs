@@ -5,7 +5,8 @@ import apisTradeMark from '../../apis/trademark';
 import Constants from '../../constants';
 import GridProduct from './GridProduct';
 import DivLoading from '../DivLoading';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
+import Select from 'react-select';
 
 export default class Widget extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ export default class Widget extends Component {
         this.state = {
             loadData: true,
             category: this.props.category,
-            page: this.props.page
+            page: this.props.page,
+            selectValue: null
         }
     }
     shouldComponentUpdate (nextProps, nextState) {
@@ -69,7 +71,7 @@ export default class Widget extends Component {
                 self.props.getListProduct(res.body.data);
                 self.setState({
                     loadData: false
-                })
+                });
             }
         });
         apis.getTotalProduct(type, function(err, res) {
@@ -92,6 +94,13 @@ export default class Widget extends Component {
         event.preventDefault();
         var pathName = window.location.pathname;
         window.location = pathName + "#/dashboard/"+link;
+    }
+    selectUpdateValue(newValue) {
+        this.setState({
+            selectValue: newValue
+        });
+        var pathName = window.location.pathname;
+        window.location = pathName + "#/dashboard/trademark/" + newValue;
     }
     render() {
         var self = this;
@@ -131,6 +140,17 @@ export default class Widget extends Component {
                         <a onClick={this.onChooseTab.bind(this, "noactive")} href="#home" aria-controls="home" data-toggle="tab" role="tab">
                             Sản Phẩm Không Buôn Bán
                         </a>
+                    </li>
+                    <li role="presentation">
+                        <form>
+                            <div style={{"min-width": "250px"}}>
+                                <Select
+                                    placeholder="Tìm Theo Nhà Cung Cấp"
+                                    value={this.state.selectValue}
+                                    onChange={this.selectUpdateValue.bind(this)}
+                                    options={this.props.commons.trademarks}/>
+                            </div>
+                        </form>
                     </li>
                     <li className="pull-right" role="presentation">
                         <button type="button" className="btn btn-success" data-target={"#" + modalName} data-toggle="modal">Thêm Mới</button>
