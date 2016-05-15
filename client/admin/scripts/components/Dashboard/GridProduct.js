@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 import _ from 'lodash';
-import Pagination from '../Pagination';
 import localItem from '../../utils/localItem';
 
 export default class GridProduct extends Component {
@@ -54,6 +53,15 @@ export default class GridProduct extends Component {
                         <Link to={"/product/" + product.id} className="thumbnail">
                             <div className="product_view">
                                 <div className="div-img-responsive">
+                                    {
+                                        product.status === 0 ? (
+                                            <div className="ribbon_bookmark">
+                                                <div>
+                                                    Not use
+                                                </div>
+                                            </div>
+                                        ) : ("")
+                                    }
                                     <img className="img-responsive" src={product.thumbnail} alt="" />
                                     <div className="inside-img-responsive">
                                         {showSize}
@@ -139,11 +147,7 @@ export default class GridProduct extends Component {
                         {rows}
                     </div>
                 </div>
-                <Pagination 
-                    page={this.props.page}
-                    href={"/dashboard/" + this.props.category}
-                    totalRow={this.props.dashboard.totalProduct} 
-                    rows={16} />
+                {this.props.children}
             </div>
         )
     }

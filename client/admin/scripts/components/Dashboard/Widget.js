@@ -7,6 +7,7 @@ import GridProduct from './GridProduct';
 import DivLoading from '../DivLoading';
 import {Link} from 'react-router';
 import Select from 'react-select';
+import Pagination from '../Pagination';
 
 export default class Widget extends Component {
     constructor(props) {
@@ -18,49 +19,9 @@ export default class Widget extends Component {
             selectValue: null
         }
     }
-    shouldComponentUpdate (nextProps, nextState) {
-        var nextPage = nextProps.page ? parseInt(nextProps.page) : 1;
-        if (this.state.category !== nextProps.category
-            || this.state.page !== nextPage) {
-            var self = this;
-            var page = nextProps.page;
-            var type = nextProps.category;
-            self.state.category = type;
-            this.state.page = nextPage;
-            var quantity = Constants.TOTAL_ROW;
-            self.setState({
-                loadData: true
-            });
-            apis.getListProduct(type, page, quantity, function(err, res) {
-                if (err) {
-                    self.props.getListProduct([]);
-                    toastr.error("Tải Không Thành Công!");
-                } else {
-                    self.props.getListProduct(res.body.data);
-                }
-                self.setState({
-                    loadData: false
-                });
-            });
-            apis.getTotalProduct(type, function(err, res) {
-                if (err) {
-                    self.props.getTotalProduct(0);
-                    toastr.error("Tải Không Thành Công!");
-                } else {
-                    self.props.getTotalProduct(res.body.data);
-                }
-            });
-        }
-        return true;
-    }
-    componentDidMount() {
+    getData(data) {
         var self = this;
-        var type = this.props.category;
-        self.state.category = type;
-        var page = this.props.page ? parseInt(this.props.page) : 1;
-        self.state.page = page;
-        var quantity = Constants.TOTAL_ROW;
-        apis.getListProduct(type, page, quantity, function(err, res) {
+        apis.getListProduct(data, function(err, res) {
             if (err) {
                 self.props.getListProduct([]);
                 self.setState({
@@ -74,7 +35,7 @@ export default class Widget extends Component {
                 });
             }
         });
-        apis.getTotalProduct(type, function(err, res) {
+        apis.getTotalProduct(data, function(err, res) {
             if (err) {
                 self.props.getTotalProduct(0);
                 toastr.error("Tải Không Thành Công!");
@@ -82,6 +43,82 @@ export default class Widget extends Component {
                 self.props.getTotalProduct(res.body.data);
             }
         });
+    }
+    shouldComponentUpdate (nextProps, nextState) {
+        var self = this;
+        var type = nextProps.category;
+        var data = {
+            quantity: Constants.TOTAL_ROW
+        }
+        if (type !== "trademark" && type !== "search") {
+            var nextPage = nextProps.page ? parseInt(nextProps.page) : 1;
+            if (self.state.category !== nextProps.category
+                || self.state.page !== nextPage) {
+                var page = nextProps.page;
+                data.page = page;
+                self.state.category = type;
+                self.state.page = nextPage;
+                self.setState({
+                    loadData: true
+                });
+                data.type = self.state.category;
+                self.getData(data);
+            }
+        } else {
+            var nextPage = nextProps.params.search ? parseInt(nextProps.params.search) : 1;
+            if (self.state.category !== nextProps.category
+                || self.state.search !== nextProps.params.page
+                || self.state.page !== nextPage) {
+                var page = nextProps.params.search || 1;
+                data.page = page;
+                self.state.category = type;
+                self.state.page = nextPage;
+                self.state.search = nextProps.params.page;
+                self.setState({
+                    loadData: true
+                });
+                data.type = self.state.category;
+                if (type === "trademark") {
+                    var trademark_id = nextProps.page;
+                    data.trademark_id = trademark_id;
+                }
+                if (type === "search") {
+                    var search_value = nextProps.page;
+                    data.search_value = search_value;
+                }
+                self.getData(data);
+            }
+        }
+        return true;
+    }
+    componentDidMount() {
+        var self = this;
+        var type = this.props.category;
+        var page;
+        var data = {
+            quantity: Constants.TOTAL_ROW,
+            type: type
+        };
+
+        if (type !== "trademark" && type !== "search") {
+            self.state.category = type;
+            page = this.props.page ? parseInt(this.props.page) : 1;
+        } else {
+            if (type === "trademark") {
+                var trademark_id = self.props.params.page;
+                data.trademark_id = trademark_id;
+                page = self.props.params.search || 1;
+            }
+
+            if (type === "search") {
+                var search_value = self.props.params.page;
+                data.search_value = search_value;
+                page = self.props.params.search || 1;
+            }
+        }
+        data.page = page;
+        self.state.page = page;
+        self.getData(data);
         apisTradeMark.getListTrademarkMini(function(err, res) {
             if (err) {
                 toastr.error("Tải Không Thành Công!");
@@ -92,6 +129,9 @@ export default class Widget extends Component {
     }
     onChooseTab(link, event) {
         event.preventDefault();
+        this.setState({
+            selectValue: null
+        });
         var pathName = window.location.pathname;
         window.location = pathName + "#/dashboard/"+link;
     }
@@ -100,7 +140,13 @@ export default class Widget extends Component {
             selectValue: newValue
         });
         var pathName = window.location.pathname;
-        window.location = pathName + "#/dashboard/trademark/" + newValue;
+        if (Number.isInteger(newValue)) {
+            this.props.getListProduct([]);
+            this.props.getTotalProduct(0);
+            window.location = pathName + "#/dashboard/trademark/" + newValue;
+        } else {
+            // window.location = pathName + "#/dashboard/home";
+        }
     }
     render() {
         var self = this;
@@ -117,7 +163,22 @@ export default class Widget extends Component {
                     </li>
                 );
             }
-        })
+        });
+        var paginationContent;
+        if (this.props.category !== "trademark" && this.props.category!== "search") {
+            paginationContent = (<Pagination 
+                page={this.props.page}
+                href={"/dashboard/" + this.props.category}
+                totalRow={this.props.dashboard.totalProduct} 
+                rows={16} />);
+        } else {
+            var page = this.props.params.search || 1;
+            paginationContent = (<Pagination 
+                page={page}
+                href={"/dashboard/" + this.props.category + "/" + this.props.page}
+                totalRow={this.props.dashboard.totalProduct} 
+                rows={16} />);
+        }
         return (
             <div>
                 <ul className="nav nav-tabs" role="tablist">
@@ -161,7 +222,9 @@ export default class Widget extends Component {
                         this.state.loadData ? (
                             <DivLoading />
                         ) : (
-                            <GridProduct {...this.props} />
+                            <GridProduct {...this.props}>
+                                {paginationContent}
+                            </GridProduct>
                         )
                     }
                 </div>

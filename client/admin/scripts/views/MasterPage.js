@@ -7,8 +7,7 @@ import apis from '../apis/main';
 import _ from 'lodash'
 import localItem from '../utils/localItem';
 
-export default class MasterPage extends Component{
-
+export default class MasterPage extends Component {
     componentDidMount() {
         var tokenLocal = localItem.getItem("token");
         var self = this;
@@ -50,13 +49,21 @@ export default class MasterPage extends Component{
     }
 
     render() {
+        var tokenLocal = localItem.getItem("token");
+        var self = this;
+        var contentRender = "";
+        if(_.isEmpty(tokenLocal)) {
+
+        } else {
+            contentRender = this.props.children;
+        }
         return (
             <div>
                 <Header {...this.props} />
                 <LeftMenu {...this.props} pathName={this.props.pathname}/>
                 <div id="main" role="main">
                     <BreadCrumb title={this.props.title} />
-                    {this.props.children}
+                    {contentRender}
                 </div>
             </div>
         );

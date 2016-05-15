@@ -68,7 +68,13 @@ module.exports = {
             } else if (type === "home") {
                 condition = " WHERE status = 1";
             } else if (type === "trademark") {
-                condition = "WHERE trademark_id = " + "trademark_id";
+                //return getListProductByTradeMark();
+                var trademark_id = req.param("trademark_id");
+                condition = "WHERE trademark_id = " + trademark_id;
+            } else if (type === "search") {
+                //return getListSearch();
+                var search_value = req.param("search_value");
+                condition = "WHERE (code like '%" + search_value + "%' OR name like '%" + search_value + "%')";
             } else {
                 if (type === "sanphammoi") { //newest
                     condition = " WHERE status = 1";
@@ -111,13 +117,19 @@ module.exports = {
             var start = (page - 1) * quantity;
             var condition;
             var orderBy = "";
-            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color, trademark_id FROM products ";
+            var query = "SELECT id, name, code, thumbnail, price_retail, price_wholesale,color, trademark_id, status FROM products ";
             if (type === "noactive") {
                 condition = "WHERE status = 0";
             } else if (type === "home") {
                 condition = "WHERE status = 1";
             } else if (type === "trademark") {
-                condition = "WHERE trademark_id = " + "trademark_id";
+                //return getListProductByTradeMark();
+                var trademark_id = req.param("trademark_id");
+                condition = "WHERE trademark_id = " + trademark_id;
+            } else if (type === "search") {
+                //return getListSearch();
+                var search_value = req.param("search_value");
+                condition = "WHERE (code like '%" + search_value + "%' OR name like '%" + search_value + "%')";
             } else {
                 if (type === "sanphammoi") { //newest
                     condition = "WHERE status = 1";

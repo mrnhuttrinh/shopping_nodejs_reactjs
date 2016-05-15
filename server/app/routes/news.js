@@ -7,8 +7,14 @@ module.exports = {
         var page = req.param("page");
         var numberRow = 10;
         var startRow = (page - 1) * 10
-        var query = "SELECT id, title, show_on_top FROM news WHERE status = 1 ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
-         
+        var search = req.param("search");
+        var query = "";
+        if (search) {
+            var conditionExtend = " AND (title like '%" + search + "%') ";
+            query = "SELECT id, title, show_on_top FROM news WHERE status = 1 " + conditionExtend + " ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
+        } else {
+            query = "SELECT id, title, show_on_top FROM news WHERE status = 1 ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
+        }
         models.sequelize.query(query)
         .then(function(listNews) {
             return res.status(200).send({
@@ -22,8 +28,14 @@ module.exports = {
         });
     },
     getTotalNews: function(req, res) {
-        var query = "SELECT count(id) as total FROM news WHERE status = 1";
-         
+        var search = req.param("search");
+        var query = "";
+        if (search) {
+            var conditionExtend = " AND (title like '%" + search + "%') ";
+            query = "SELECT count(id) FROM news WHERE status = 1 " + conditionExtend;
+        } else {
+            query = "SELECT count(id) FROM news WHERE status = 1";
+        }
         models.sequelize.query(query)
         .spread(function(total) {
             return res.status(200).send({

@@ -34,7 +34,8 @@ export default class ViewProduct extends Component {
             priceRetailPromotionEditStatus: false,
             priceWholesaleEditStatus: false,
             priceWholesalePromotionEditStatus: false,
-            selectValue: {}
+            selectValue: null,
+            pageid: 0
         };
     }
     changePhoto(event) {
@@ -76,12 +77,16 @@ export default class ViewProduct extends Component {
     componentDidMount() {
         var self = this;
         var id = this.props.params.id;
+        self.state.pageid = id;
         apis.getProduct(id, function(err, res) {
             if (err) {
                 toastr.warning("Sản Phẩm Không Tồn Tại");
                 window.location = "/admin/#/dashboard";
             } else {
                 self.props.getProduct(res.body.data);
+                self.setState({
+                    selectValue: res.body.data.trademark_id
+                });
             }
         });
         if (this.props.commons.trademarks.length ===0) {
@@ -95,6 +100,22 @@ export default class ViewProduct extends Component {
         }
     }
     componentDidUpdate() {
+        var self = this;
+        var id = this.props.params.id;
+        if (id !== this.state.pageid) {
+            this.state.pageid = id;
+            apis.getProduct(id, function(err, res) {
+                if (err) {
+                    toastr.warning("Sản Phẩm Không Tồn Tại");
+                    window.location = "/admin/#/dashboard";
+                } else {
+                    self.props.getProduct(res.body.data);
+                    self.setState({
+                        selectValue: res.body.data.trademark_id
+                    });
+                }
+            });
+        }
         $(function() {
             $('.bxslider').bxSlider({
                 controls: true
@@ -259,7 +280,7 @@ export default class ViewProduct extends Component {
                 data = self.refs["productColor"].value;
                 break;
             case "trademark_id":
-                data = self.state.selectValue.value;
+                data = self.state.selectValue;
                 break;
             case "description":
                 data = self.refs["productDescription"].value;
@@ -692,7 +713,7 @@ export default class ViewProduct extends Component {
                                             this.state.trademarkEdit ? (
                                                 <td>
                                                     <Select id="productTrademarkId"
-                                                        value={this.state.selectValue.value}
+                                                        value={this.state.selectValue}
                                                         onChange={this.selectUpdateValue.bind(this)}
                                                         options={this.props.commons.trademarks}/>
                                                     <p>

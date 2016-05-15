@@ -2,29 +2,81 @@ import React, {Component} from 'react';
 import _ from "lodash";
 import Table from '../Table';
 import apis from '../../apis/main';
-import ResetPassword from './ResetPassword'
+import ResetPassword from './ResetPassword';
+import Role from './Role';
+import {Link} from 'react-router';
+import DivLoading from '../DivLoading';
 
 export default class ListUser extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            userChangePassword: {}
+            userChangePassword: {},
+            loadingData: true
+        }
+    }
+    getData(data) {
+        var self = this;
+        apis.getAllUser(data, function(err, res) {
+            if (err) {
+                toastr.error("Tải Không Thành Công!");
+            } else {
+                self.props.getAllUser(res.body.data, "list");
+            }
+            self.setState({
+                loadingData: !self.state.loadingData
+            });
+        });
+
+        apis.getTotalUsers(data, function(err, result) {
+            if (err) {
+                toastr.error("Tải Không Thành Công!")
+            } else {
+                self.props.getAllUser(result.body.data.total, "total");
+            }
+        });
+    }
+    componentWillReceiveProps (nextProps) {
+        var self = this;
+        var page = nextProps.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            var oldPage = self.props.params.page;
+            if (page !== oldPage) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextProps.params.page || 1;
+                self.getData(data);
+            }
+        } else {
+            var oldPage = self.props.params.search_page || 1;
+            var nextPage = nextProps.params.search_page || 1;
+
+            var oldSearch = self.props.params.search;
+            var nextSearch = nextProps.params.search;
+            if (oldPage !== nextPage ||
+                oldSearch !== nextSearch) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextPage;
+                data.search = nextSearch;
+                self.getData(data);
+            }
         }
     }
     componentDidMount() {
         var self = this;
-        var page = this.props.params.page || 1;
-        if (_.isEmpty(this.props.users.listUsers)) {
-            apis.getAllUser(page, function(err, res) {
-                if (err) {
-                } else {
-                    if (res.status === 200) {
-                        self.props.getAllUser(res.body.data, "list");
-                    } else {
-                    }
-                }
-            });
+        var page = this.props.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            data.page = page || 1;
+        } else if (page === "search"){
+            data.search = this.props.params.search;
+            data.page = this.props.params.search_page || 1;
         }
+        self.getData(data);
     }
     onChangeStatus(_user, event) {
         event.preventDefault();
@@ -52,7 +104,7 @@ export default class ListUser extends Component{
         event.preventDefault();
         this.setState({
             userChangePassword: user
-        })
+        });
     }
     render() {
         var self = this;
@@ -61,7 +113,7 @@ export default class ListUser extends Component{
                 name: "number",
                 text: "No."
             }, {
-                name: "username",
+                name: "username_a",
                 text: "Username"
             }, {
                 name: "level_text",
@@ -83,7 +135,7 @@ export default class ListUser extends Component{
         var indexNo = 0;
         var rows = [];
         _.forEach(this.props.users.listUsers, (user) => {
-            user.level_text = user.level === 2 ? "Quản Lý" : "Nhân Viên";
+            user.level_text = (<Role {...this.props} user={user} />);
             user.number = ++indexNo;
             user.edit = (
                 user.status ? (
@@ -103,14 +155,21 @@ export default class ListUser extends Component{
                         <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
                     </label>
                 </form>
-            )
-            rows.push(user)
+            );
+            user.username_a = (<Link to={"/viewuser/" + user.id}>{user.username}</Link>);
+            rows.push(user);
         });
-        return (
-            <div>
-                <Table head={head} rows={rows}/>
-                <ResetPassword user={this.state.userChangePassword}/>
-            </div>
-        )
+        if (this.state.loadingData) {
+            return (
+                <DivLoading />
+            );
+        } else {
+            return (
+                <div>
+                    <Table head={head} rows={rows}/>
+                    <ResetPassword user={this.state.userChangePassword}/>
+                </div>
+            );
+        }
     }
 }

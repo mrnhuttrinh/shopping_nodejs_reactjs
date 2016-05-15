@@ -13,12 +13,14 @@ router.post('/signin_employer', admin.signin);
 router.get('/get_me', authorized, admin.me);
 router.post('/create_employer',authorized, admin.create);
 router.get('/all_employer', authorized, admin.getAllUser);
+router.get('/get_employer_by_id', authorized, admin.getUser);
 router.get('/get_total_users', authorized, admin.getTotalUsers);
 router.post('/upload_employer_photo', authorized, admin.uploadEmployerPhoto)
 router.post("/reset_password_employer",authorized, admin.resetPassword)
 router.post("/change_status_employer", authorized, admin.changeStatusEmployer)
 router.post("/update_employer_info", authorized, admin.updateEmployerInfo)
 router.post("/update_password_employer", authorized, admin.updatePasswordEmployers)
+router.post("/update_role_employer", authorized, admin.updateRoleEmployer);
 
 // for product
 router.post('/create_product',authorized, product.createProduct)

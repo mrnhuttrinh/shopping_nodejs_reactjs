@@ -3,10 +3,10 @@ var API = Constants.API;
 import Request from '../utils/request';
 
 export default { 
-    getListTrademark(cb) {
+    getListTrademark(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_LIST_TRADEMARK)
+            .get(API.GET_LIST_TRADEMARK, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);

@@ -33,7 +33,7 @@ module.exports = {
             return res.status(400).send({
                 error: err
             })
-        })
+        });
     },
     getGalleries: function(req, res) {
         var query = "SELECT * FROM category_galleries WHERE status=1";
@@ -48,7 +48,7 @@ module.exports = {
             return res.status(400).send({
                 error: err
             })
-        })
+        });
     },
     addMorePicture: function(req, res) {
         var data = req.body.data;
@@ -131,7 +131,7 @@ module.exports = {
             logger("ERROR", err);
             return res.status(400).send({
                 error: err
-            })
-        })
+            });
+        });
     }
 };

@@ -3,7 +3,8 @@ import Table from '../Table';
 import DivLoading from '../DivLoading';
 import UpdateTM from './UpdateTM';
 import apis from '../../apis/trademark';
-import _ from 'lodash'
+import _ from 'lodash';
+import {Link} from 'react-router'
 
 export default class ListTM extends Component {
     constructor(props) {
@@ -20,24 +21,60 @@ export default class ListTM extends Component {
             }
         }
     }
+    getData(data) {
+        var self = this;
+        apis.getListTrademark(data, function(err, result) {
+            if (err) {
+                toastr.error("Tải Không Thành Công")
+            } else {
+                self.props.getListTradeMark(result.body.data);
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+            }
+        });
+    }
+    componentWillReceiveProps (nextProps) {
+        var self = this;
+        var page = nextProps.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            var oldPage = self.props.params.page;
+            if (page !== oldPage) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextProps.params.page || 1;
+                self.getData(data);
+            }
+        } else {
+            var oldPage = self.props.params.search_page || 1;
+            var nextPage = nextProps.params.search_page || 1;
+
+            var oldSearch = self.props.params.search;
+            var nextSearch = nextProps.params.search;
+            if (oldPage !== nextPage ||
+                oldSearch !== nextSearch) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextPage;
+                data.search = nextSearch;
+                self.getData(data);
+            }
+        }
+    }
     componentDidMount() {
         var self = this;
-        if (self.props.trademark.listTrademark.length === 0) {
-            apis.getListTrademark(function(err, result) {
-                if (err) {
-                    toastr.error("Tải Không Thành Công")
-                } else {
-                    self.props.getListTradeMark(result.body.data)
-                    self.setState({
-                        loadingData: !self.state.loadingData
-                    })
-                }
-            })
-        } else {
-            self.setState({
-                loadingData: !self.state.loadingData
-            })
+        var page = this.props.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            data.page = page || 1;
+        } else if (page === "search"){
+            data.search = this.props.params.search;
+            data.page = this.props.params.search_page || 1;
         }
+        self.getData(data);
     }
     onChangeStatus(_trademark, event) {
         event.preventDefault();
@@ -56,19 +93,19 @@ export default class ListTM extends Component {
                 self.props.getListTradeMark(self.props.trademark.listTrademark);
                 toastr.success("Cập Nhật Trạng Thái Thành Công!");
             }
-        })
+        });
     }
     selectedTM(_trademark, event) {
         event.preventDefault();
         this.setState({
             selectedTM: _trademark
-        })
+        });
     }
     render() {
         if (this.state.loadingData) {
             return (
                 <DivLoading />
-            )
+            );
         } else {
             var self = this;
             var head= [
@@ -76,7 +113,7 @@ export default class ListTM extends Component {
                     name: "number",
                     text: "No."
                 }, {
-                    name: "name",
+                    name: "name_a",
                     text: "Tên Nhà Cung Cấp"
                 }, {
                     name: "phone",
@@ -90,7 +127,8 @@ export default class ListTM extends Component {
                 }
             ];
             var indexNo = 0;
-            var page = this.props.page;
+            var page = this.props.page === "search" ? this.props.search_page : this.props.page;
+            page = page || 1;
             var startElement = (page - 1)* 10;
             var rows = [];
             var j = 0;
@@ -108,7 +146,7 @@ export default class ListTM extends Component {
                             Không Sử Dụng
                         </button>
                     )
-                )
+                );
                 rows[j].delete_button = (
                     <form className="smart-form">
                         <label className="toggle">
@@ -116,7 +154,10 @@ export default class ListTM extends Component {
                             <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
                         </label>
                     </form>
-                )
+                );
+                rows[j].name_a = (
+                    <Link to={"/dashboard/trademark/" + rows[j].id}>{rows[j].name}</Link>
+                );
                 j++;
             }
             return (

@@ -18,7 +18,15 @@ module.exports = {
         });
     },
     getList: function(req, res) {
-        var query = "SELECT * FROM trademarks ORDER BY createdAt DESC";
+        var search = req.param("search");
+        var query = "";
+        if (search) {
+            var conditionExtend = " (name like '%" + search + "%') ";
+            query = "SELECT * FROM trademarks WHERE " + conditionExtend + " ORDER BY createdAt";
+        } else {
+            query = "SELECT * FROM trademarks ORDER BY createdAt";
+        }
+
         models.sequelize.query(query)
         .then(function(listTM) {
             return res.status(200).send({

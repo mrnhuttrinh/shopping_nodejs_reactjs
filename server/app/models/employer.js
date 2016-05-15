@@ -14,6 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         address: DataTypes.STRING,
         phone: DataTypes.STRING,
         image: DataTypes.STRING,
+        birthdate: DataTypes.DATE,
+        hiredate: {
+            type: DataTypes.DATE,
+            defaultValue: new Date()
+        },
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,

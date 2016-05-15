@@ -87,8 +87,21 @@ export default class AddNews extends Component{
             addNews: !self.state.addNews
         });
     }
+    searchPress(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            var search_value = this.refs["inputSearch"].value;
+            var pathName = window.location.pathname;
+            if (_.isEmpty(search_value)) {
+                window.location = pathName + "#/news";
+            } else {
+                window.location = pathName + "#/news/search/" + search_value;
+            }
+            return;
+        }
+    }
     render() {
-        var buttonStyle = this.state.addNews ? {"display": "none"} : {"display": "block"}
+        var buttonStyle = this.state.addNews ? {"display": "none"} : {"display": "block", "marginBottom": "-20px"}
         var formStyle = this.state.addNews ? {"display": "block"} : {"display": "none"}
         return (
             <div>
@@ -131,6 +144,7 @@ export default class AddNews extends Component{
                 </div>
                 <div className="row" style={buttonStyle}>
                     <div className="col-md-12">
+                        <input onKeyUp={this.searchPress.bind(this)} ref="inputSearch"  type="text" placeholder="Tìm Kiếm Bài Viết" />
                         <button onClick={this.addFormNew.bind(this)} type="button" className="btn btn-success pull-right">Thêm Mới</button>
                     </div>
                 </div>

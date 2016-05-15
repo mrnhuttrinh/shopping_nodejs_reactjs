@@ -5,6 +5,7 @@ module.exports = {
         CREATE_EMPLOYER:        "/api/create_employer",
         GET_ME:                 "/api/get_me",
         GET_ALL_USER:           "/api/all_employer",
+        GET_USER_BY_ID:         "/api/get_employer_by_id",
         UPDATE_EMPLOYER_PHOTO:  "/api/upload_employer_photo",
         GET_MENU:               "/api/menu",
         CREATE_PRODUCT:         "/api/create_product",
@@ -35,7 +36,8 @@ module.exports = {
         GET_ALL_GALLERIES_MENU: "/api/get_all_gallery_menu",
         DELETE_GALLERY_MENU:    "/api/delete_gallery_menu",
         EDIT_GALLERY_MENU:      "/api/edit_gallery_menu",
-        UPDATE_LOGO_CATEGORY:   "/api/update_logo_category"
+        UPDATE_LOGO_CATEGORY:   "/api/update_logo_category",
+        UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer"
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",
