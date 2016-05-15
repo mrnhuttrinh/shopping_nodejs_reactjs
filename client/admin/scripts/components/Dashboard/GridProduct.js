@@ -94,7 +94,18 @@ export default class GridProduct extends Component {
                             <Link to={"/product/" + product.id} className="list-group-item">
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <img style={{"maxWidth": "200px"}} src={product.thumbnail} className="img-responsive" alt="" />
+                                        <div>
+                                            {
+                                                product.status === 0 ? (
+                                                    <div className="ribbon_bookmark" style={{"right": "1.3em", "top": "0.05em"}}>
+                                                        <div>
+                                                            Not use
+                                                        </div>
+                                                    </div>
+                                                ) : ("")
+                                            }
+                                            <img style={{"maxWidth": "200px"}} src={product.thumbnail} className="img-responsive" alt="" />
+                                        </div>
                                     </div>
                                     <div className="col-md-9">
                                         <h5 className="border-bottom-dotted">Tên <span className="label label-info pull-right">{product.name}</span></h5>

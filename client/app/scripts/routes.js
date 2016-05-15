@@ -9,7 +9,7 @@ export default {
     },
     childRoutes: [
         {
-            path: 'home',
+            path: 'trang-chu',
             component: Home
         }
     ]

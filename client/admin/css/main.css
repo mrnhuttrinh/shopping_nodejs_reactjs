@@ -13,7 +13,6 @@
 
 img {
     background-image: url('../img/imgNotFound.png');
-    background-repeat: no-repeat;
     background-size: contain;
 }
 
