@@ -7,7 +7,6 @@ import Menu             from '../components/menus'
 import ScrollTop        from '../components/ScrollTop'
 import Footer           from '../components/footers'
 import MainMenu         from '../components/MainMenu'
-import Chat             from '../components/Chat'
 
 import apis from '../apis/main';
 import _ from 'lodash'
@@ -40,7 +39,6 @@ class MasterPage extends Component{
                 </div>
                 <ScrollTop />
                 <Footer />
-                <Chat />
             </div>
         );
     }

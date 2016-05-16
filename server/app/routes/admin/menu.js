@@ -1,8 +1,8 @@
-var models = require("../models");
-var logger = require("../logger")
-var config = require("../config");
-var toImage = require("../utils/toImage");
-var uuid = require("../utils/uuid");
+var models = require("../../models");
+var logger = require("../../logger")
+var config = require("../../config");
+var toImage = require("../../utils/toImage");
+var uuid = require("../../utils/uuid");
 var _ = require("lodash");
 
 module.exports = {

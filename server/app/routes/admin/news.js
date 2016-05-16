@@ -1,5 +1,5 @@
-var models = require("../models");
-var logger = require("../logger")
+var models = require("../../models");
+var logger = require("../../logger")
 var _ = require("lodash");
 var Q = require("q");
 module.exports = {

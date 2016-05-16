@@ -2,11 +2,11 @@ var express = require('express');
 var router  = express.Router();
 var authorized = require("../authorized");
 
-var admin = require("./admin");
-var menu = require("./menu");
-var product = require("./product");
-var news = require("./news")
-var trademark = require("./trademark");
+var admin = require("./admin/admin");
+var menu = require("./admin/menu");
+var product = require("./admin/product");
+var news = require("./admin/news")
+var trademark = require("./admin/trademark");
 
 // for admin
 router.post('/signin_employer', admin.signin);

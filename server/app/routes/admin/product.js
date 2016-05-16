@@ -1,13 +1,13 @@
 var jwt = require("jsonwebtoken");
-var uuid = require("../utils/uuid");
-var config = require("../config");
-var toImage = require("../utils/toImage");
-var logger = require("../logger")
+var uuid = require("../../utils/uuid");
+var config = require("../../config");
+var toImage = require("../../utils/toImage");
+var logger = require("../../logger")
 var _ = require("lodash");
 var Q = require("q");
-var removeSignText = require("../utils/text_no_sign");
+var removeSignText = require("../../utils/text_no_sign");
 
-var models = require("../models");
+var models = require("../../models");
 
 function createImageOnDisk(prefix, dataImage) {
     var data = dataImage.split(";");
