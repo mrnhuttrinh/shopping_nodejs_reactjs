@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import apis from '../../apis/product';
 import ListFour from './ListFour';
 import DivLoading from '../FlatLoading';
 
@@ -65,13 +66,37 @@ class TitleHome extends Component {
 }
 
 export default class GroupProduct extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listProduct: []
+        }
+    }
+    componentDidMount() {
+        var self = this;
+        var props = this.props;
+        var type = props.menu.link;
+        apis.getListProduct({
+            type: type,
+            quantity: 8,
+            page: 1
+        }, (err, res) => {
+            if (err) {
+
+            } else {
+                self.setState({
+                    listProduct: res.body.data
+                });
+            }
+        });
+    }
     render() {
         return (
             <div className="index_middle">
                 <div className="container1" data-cat-id="105" data-floor="T1">
                     <TitleHome menu={this.props.menu} />
                     <HightLightDeal menu={this.props.menu} />
-                    <ListFour menu={this.props.menu} />
+                    <ListFour products={this.state.listProduct} menu={this.props.menu} />
                 </div>
             </div>
         );

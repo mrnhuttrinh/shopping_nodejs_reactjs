@@ -8,7 +8,7 @@ export default class HeaderMenu extends Component {
         var menuLevelThree = _.filter(menus, menu => {
             if (menu.level === 3) {
                 menu.html = (
-                    <li>
+                    <li key={"menu_" + menu.id}>
                         <a href= {menu.href}>{menu.name}</a>
                     </li>
                 );
@@ -20,7 +20,7 @@ export default class HeaderMenu extends Component {
             if (menu.level === 2) {
                 var html = [];
                 html.push(
-                    <li className="bold">
+                    <li key={"menu_" + menu.id} className="bold">
                         <a href= {menu.href}>{menu.name}</a>
                     </li>
                 );
@@ -60,7 +60,7 @@ export default class HeaderMenu extends Component {
                     );
                 }
                 menu.html = (
-                    <li>
+                    <li key={"menu_" + menu.id}>
                         <a href={menu.href}>
                             <span className={"ic_cm " + menu.icon}>
                                 {menu.char}

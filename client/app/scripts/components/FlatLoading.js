@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
-export default class FlatLoading extends Component {
+import React, {Component} from 'react';
+
+export default React.createClass({
     render() {
         return (
             <span className="loading">
@@ -10,4 +11,4 @@ export default class FlatLoading extends Component {
             </span>
         );
     }
-}
+});

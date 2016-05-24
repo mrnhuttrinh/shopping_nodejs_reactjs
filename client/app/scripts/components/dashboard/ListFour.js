@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
+import _ from 'lodash';
 
 class Item extends Component {
     render() {
+        var product = this.props.product;
         return (
             <li>
                 <div className="img">
                     <a href="/voucher/du-lich-khach-san/tour-trong-nuoc/tour-nha-trang-3n3d-ve-vinpearl-land-khach-san-3_p59588.html?cmpid=59588&cmps=home_page&cmpm=list_t2&cmpc=1">
-                        <img alt="Tour Nha Trang 3N3Ð + Vé Vinpearl Land + Khách s?n 3*" className="deal" height="235" src="http://resources.cungmua.com/Product/cm_s59588.jpg" width="235">
+                        <img alt={product.alt} className="deal" height="235" src="http://resources.cungmua.com/Product/cm_s59588.jpg" width="235">
                         </img>
                     </a>
                     <span className="lbl_place">
@@ -66,16 +68,13 @@ class Item extends Component {
 
 export default class ListFour extends Component {
     render() {
+        var products = this.props.products;
+        var listItem = _.map(products, (product) => {
+            return (<Item product={product}/>)
+        });
         return (
             <ul className="listdeal_four">
-                <Item />
-                <Item />
-                <Item />
-                <Item />
-                <Item />
-                <Item />
-                <Item />
-                <Item />
+                {listItem}
             </ul>
         );
     }

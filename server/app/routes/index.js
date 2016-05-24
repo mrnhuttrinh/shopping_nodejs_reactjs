@@ -55,4 +55,9 @@ router.post("/delete_gallery_menu", authorized, menu.deleteGallery);
 router.post("/edit_gallery_menu", authorized, menu.editGallery);
 router.post("/update_logo_category", authorized, menu.updateLogoImage);
 
+
+// for shop
+var productShop = require("./shop/product");
+router.get("/shop_get_list_product", productShop.getListProductByCategory);
+
 module.exports = router;

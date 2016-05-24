@@ -8,7 +8,7 @@ import _ from 'lodash'
 import localItem from '../utils/localItem';
 
 export default class MasterPage extends Component {
-    componentDidMount() {
+    componentWillMount() {
         var tokenLocal = localItem.getItem("token");
         var self = this;
         if(_.isEmpty(tokenLocal) 
