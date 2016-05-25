@@ -2834,7 +2834,9 @@ div.hightlight_deal a.big_deal {
 
 div.hightlight_deal a.big_deal img {
     width: 1000px;
-    height: auto;
+    height: 245px;
+    background: url('../images/background-logo.png');
+    background-repeat: no-repeat;
 }
 
 div.brand_logo {

@@ -55,26 +55,29 @@ module.exports = {
             var page = +req.param("page");
             var start = (page - 1) * quantity;
             var condition;
-            var orderBy = "ORDER BY p.createdAt DESC ";
+            var orderBy = " ORDER BY p.createdAt DESC ";
             var query;
-            var listType = getListChildrenMenu(type, listMenu, res);
-            if (listType) {
-                var typeArray = "(" + listType.toString() + ")";
+            if (type === "sanphammoi") {
                 query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
-                condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id ";
             } else {
-                return res.status(400).send({
-                    error: {
-                        message: "Tải Không Thành Công"
-                    }
-                });
+                var listType = getListChildrenMenu(type, listMenu, res);
+                if (listType) {
+                    var typeArray = "(" + listType.toString() + ")";
+                    query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                } else {
+                    return res.status(400).send({
+                        error: {
+                            message: "Tải Không Thành Công"
+                        }
+                    });
+                }
             }
             var limit = " LIMIT " + start + " , " + quantity;
             query += condition + orderBy + limit;
-            console.log(query)
             models.sequelize.query(query)
             .spread(function(rows) {
-                console.log(rows)
                 _.forEach(rows, function(row) {
                     row.sizes = [];
                 });

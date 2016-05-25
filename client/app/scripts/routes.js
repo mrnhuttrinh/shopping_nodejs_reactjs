@@ -11,6 +11,8 @@ export default {
         {
             path: 'trang-chu',
             component: Home
+        }, {
+            
         }
     ]
 }

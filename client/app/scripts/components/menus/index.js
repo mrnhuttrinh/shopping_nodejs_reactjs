@@ -30,7 +30,7 @@ export default class Menu extends Component {
                     </div>
                     <br className="clean" />
                 </div>
-                <JumpMenu />
+                <JumpMenu menus={this.props.menus}/>
             </div>
         );
     }

@@ -69,8 +69,9 @@ class Item extends Component {
 export default class ListFour extends Component {
     render() {
         var products = this.props.products;
+        var index = 0;
         var listItem = _.map(products, (product) => {
-            return (<Item product={product}/>)
+            return (<Item key={"produt_" + index++} product={product}/>)
         });
         return (
             <ul className="listdeal_four">

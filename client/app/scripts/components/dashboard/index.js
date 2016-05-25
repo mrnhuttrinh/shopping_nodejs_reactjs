@@ -11,7 +11,7 @@ export default class DashboardContents extends Component {
             var index = 0;
             listGroupProduct = _.map(props.menus, (_menu) => {
                 if (_menu.level === 1) {
-                    return (<GroupProduct menu={_menu} key={"group_" + index++} />);
+                    return (<GroupProduct index={++index} menu={_menu} menus={props.menus}key={"group_" + index} />);
                 }
             });
         }
