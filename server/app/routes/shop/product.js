@@ -58,13 +58,13 @@ module.exports = {
             var orderBy = " ORDER BY p.createdAt DESC ";
             var query;
             if (type === "sanphammoi") {
-                query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
                 condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id ";
             } else {
                 var listType = getListChildrenMenu(type, listMenu, res);
                 if (listType) {
                     var typeArray = "(" + listType.toString() + ")";
-                    query = "SELECT DISTINCT(p.id), p.name, p.code, p.thumbnail, p.price_retail, p.price_wholesale, p.color FROM products p, categories c, products_category pc ";
+                    query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
                     condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
                 } else {
                     return res.status(400).send({

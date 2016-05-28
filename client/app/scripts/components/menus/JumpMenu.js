@@ -38,7 +38,7 @@ export default class JumpMenu extends Component {
                 index++;
                 return (
                     <li onClick={this.jumpToSpace.bind(this, index)} data-floor-index={"T" + index} key={"jump_" + index}>
-                        <a href="javascript:void(0);" className={"ic_cm " + menu.icon}>e</a><div className="menu_H_info">{menu.name}</div>
+                        <a href="javascript:void(0);" className={"ic_cm " + menu.icon}>{menu.char}</a><div className="menu_H_info">{menu.name}</div>
                     </li>
                 );
             }

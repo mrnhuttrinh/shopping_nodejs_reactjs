@@ -6603,6 +6603,7 @@ div.title_home a.title_home_text {
     font-weight: 300;
     display: inline-block;
     line-height: 39px;
+    text-decoration: none;
 }
 
 div.title_home div.title_home_text {
@@ -10699,6 +10700,8 @@ ul.listdeal_four div.img {
     position: relative;
     height: 235px;
     min-height: 200px;
+    background: url('../images/background-logo.png');
+    background-repeat: no-repeat;
 }
 
 ul.listdeal_four div.img a {
@@ -14442,6 +14445,7 @@ nav.mainmenu a span {
     div.title_home a.title_home_text {
         font-size: 25px;
     }
+
     div.title_deal div.title_deal_text {
         font-size: 23px;
         line-height: 42px;

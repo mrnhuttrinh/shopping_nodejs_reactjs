@@ -82,7 +82,7 @@ gulp.task("styles", function() {
         .pipe(gulp.dest(publicFolder + "/css"));
 });
 
-gulp.task("copyCss",["clean"], function(){
+gulp.task("copyCss", function(){
     return gulp.src(["./client/app/css/**/*.css"], { base: "./client/app/css/" })
         .pipe(gulp.dest(publicFolder + "/styles"));
 });
@@ -176,8 +176,8 @@ var adminFolder = "server/app/public/admin";
 
 // clean dist foler
 gulp.task("clean_admin", function(callback) {
-    $.cache.clearAll();
-    callback(del.sync([adminFolder]));
+    // $.cache.clearAll();
+    // callback(del.sync([adminFolder]));
 });
 
 // build app script js
