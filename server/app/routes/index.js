@@ -58,6 +58,8 @@ router.post("/update_logo_category", authorized, menu.updateLogoImage);
 
 // for shop
 var productShop = require("./shop/product");
+var newsShow = require("./shop/news");
 router.get("/shop_get_list_product", productShop.getListProductByCategory);
+router.get("/shop_get_news", newsShow.getList);
 
 module.exports = router;

@@ -1,13 +1,13 @@
 import React, {Component}   from 'react';
 import { connect }          from 'react-redux';
-import {getMenu}            from '../actions/main';
+import actions              from '../actions/main';
 import MasterPage           from './MasterPage';
 import Contents             from '../components/dashboard';
 
 export default class Main extends Component {
     render() {
         return (
-            <MasterPage>
+            <MasterPage {...this.props}>
                 <Contents {...this.props}/>
             </MasterPage>
         );
@@ -20,4 +20,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Main)
+export default connect(mapStateToProps, actions)(Main)

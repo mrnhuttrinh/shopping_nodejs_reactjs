@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import _ from 'lodash'
 
 export default class HeaderMenu extends Component {
+    componentDidMount() {
 
+    }
+    
     sortMenus(menus) {
 
         var menuLevelThree = _.filter(menus, menu => {

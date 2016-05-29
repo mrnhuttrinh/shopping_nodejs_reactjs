@@ -69,54 +69,63 @@ var menus = [
         "id": 2,
         "name": "Hàng Khuyến Mãi",
         "level": 1,
-        "char": "k",
+        "char": "w",
+        "icon": "new",
         "link": "hangkhuyenmai"
     }, {
         "id": 3,
         "name": "Thời Trang Nữ",
         "level": 1,
         "icon": "new",
+        "char": "z",
         "link": "thoitrangnu"
     }, {
         "id": 4,
         "name": "Thời Trang Nam",
         "level": 1,
         "icon": "new",
+        "char": "y",
         "link": "thoitrangnam"
     }, {
         "id": 5,
         "name": "Thời Trang Cặp",
         "level": 1,
         "icon": "new",
+        "char": "o",
         "link": "thoitrangcap"
     }, {
         "id": 6,
         "name": "Set Mẹ & Bé",
         "level": 1,
         "icon": "new",
+        "char": "_",
         "link": "setmevabe"
     }, {
         "id": 7,
         "name": "Thời Trang Trẻ Em",
         "level": 1,
         "icon": "new",
+        "char": "m",
         "link": "thoitrangtreem"
     }, {
         "id": 8,
         "name": "Sức Khỏe & Làm Đẹp",
         "level": 1,
         "icon": "new",
+        "char": "q",
         "link": "suckhoevalamdep"
     }, {
         "id": 9,
         "name": "Phụ Kiện Thời Trang",
         "level": 1,
         "icon": "new",
+        "char": "r",
         "link": "phukienthoitrang"
     }, {
         "id": 10,
         "name": "Bảng Giá Áo Lớp Nhóm",
         "level": 1,
+        "char": "-",
         "link": "banggiaaolop"
     }, {
         "id": 11,

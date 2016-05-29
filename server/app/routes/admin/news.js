@@ -1,5 +1,8 @@
 var models = require("../../models");
-var logger = require("../../logger")
+var logger = require("../../logger");
+var uuid = require("../../utils/uuid");
+var config = require("../../config");
+var toImage = require("../../utils/toImage");
 var _ = require("lodash");
 var Q = require("q");
 module.exports = {
@@ -11,9 +14,9 @@ module.exports = {
         var query = "";
         if (search) {
             var conditionExtend = " AND (title like '%" + search + "%') ";
-            query = "SELECT id, title, show_on_top FROM news WHERE status = 1 " + conditionExtend + " ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
+            query = "SELECT id, title, show_on_top, status FROM news " + conditionExtend + " ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
         } else {
-            query = "SELECT id, title, show_on_top FROM news WHERE status = 1 ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
+            query = "SELECT id, title, show_on_top, status FROM news ORDER BY createdAt DESC LIMIT " + startRow + ", " + numberRow;
         }
         models.sequelize.query(query)
         .then(function(listNews) {
@@ -32,9 +35,9 @@ module.exports = {
         var query = "";
         if (search) {
             var conditionExtend = " AND (title like '%" + search + "%') ";
-            query = "SELECT count(id) FROM news WHERE status = 1 " + conditionExtend;
+            query = "SELECT count(id) as total FROM news " + conditionExtend;
         } else {
-            query = "SELECT count(id) FROM news WHERE status = 1";
+            query = "SELECT count(id) as total FROM news";
         }
         models.sequelize.query(query)
         .spread(function(total) {
@@ -52,6 +55,13 @@ module.exports = {
         var data = req.body.data;
         var employer = req.userToken.employer;
         var show_on_top = data.show_on_top;
+
+        var image = data.main_image;
+        var dataImage = image.split(";");
+        var imageType = (dataImage[0]).split("/")[1];
+        var imageFilePath = config.adminImage + uuid() + "." + imageType;
+
+        toImage(dataImage[1], imageFilePath, config.adminPath);
         if (show_on_top) {
             // if select show on top will be update set other row
             // re-set show on top for new row
@@ -62,7 +72,8 @@ module.exports = {
                     title: data.title,
                     content: data.content,
                     show_on_top: 1,
-                    employer_id: employer.id
+                    employer_id: employer.id,
+                    main_image: imageFilePath
                 }).then(function(result) {
                     return res.status(200).send({
                         data: result
@@ -84,7 +95,8 @@ module.exports = {
             models.News.create({
                 title: data.title,
                 content: data.content,
-                employer_id: employer.id
+                employer_id: employer.id,
+                main_image: imageFilePath
             }).then(function(result) {
                 return res.status(200).send({
                     data: result
@@ -116,7 +128,14 @@ module.exports = {
     },
     deleteNews: function(req, res) {
         var id = req.body.id;
-        var query = "UPDATE news SET status = 0 WHERE id = " + id;
+        var status = req.body.status;
+        var show_on_top = req.body.show_on_top;
+        var query = "UPDATE news SET status = " + status + " WHERE id = " + id;
+        // reset show on top if new disable
+        if (!status) {
+            query = "UPDATE news SET status = " + status + ", show_on_top=0 WHERE id = " + id;
+        }
+        
         models.sequelize.query(query)
             .spread(function(result) {
                 return res.status(200).send();
@@ -125,8 +144,8 @@ module.exports = {
                 logger("ERROR", err);
                 return res.status(400).send({
                     error: err
-                })
-            })
+                });
+            });
     },
     updateShowOnTop: function(req, res) {
         var id = req.body.id;
@@ -140,23 +159,23 @@ module.exports = {
                     var queryUpdate = "UPDATE news SET show_on_top = 1 WHERE id=" + id;
                     models.sequelize.query(queryUpdate)
                     .spread(function() {
-                        return res.status(200).send()
+                        return res.status(200).send();
                     })
                     .catch(function(err) {
                         logger("ERROR", err);
                         return res.status(400).send({
                             error: err
-                        })
+                        });
                     })
                 } else {
-                    return res.status(200).send()
+                    return res.status(200).send();
                 }
             })
             .catch(function(err) {
                 logger("ERROR", err);
                 return res.status(400).send({
                     error: err
-                })
-            })
+                });
+            });
     }
 };

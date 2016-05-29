@@ -12,6 +12,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.UUID,
             allowNull: false
         },
+        main_image: DataTypes.STRING,
         show_on_top: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

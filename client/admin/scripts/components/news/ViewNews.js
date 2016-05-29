@@ -51,7 +51,20 @@ export default class ViewNews extends Component{
                                 this.state.loading ? (
                                     <DivLoading />
                                 ) : (
-                                    <div className="col-md-12" dangerouslySetInnerHTML={{__html: this.state.news.content}}>
+                                    <div>
+                                        <div className="col-md-12">
+                                            <p style={{marginBottom: "-20px"}}>Ảnh Hiển Thị</p>
+                                            <hr />
+                                        </div>
+                                        <div className="col-md-12">
+                                            <img src={this.state.news.main_image}/>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <p style={{marginBottom: "-20px"}}>Nội Dung Bài Viết</p>
+                                            <hr />
+                                        </div>
+                                        <div className="col-md-12" dangerouslySetInnerHTML={{__html: this.state.news.content}}>
+                                        </div>
                                     </div>
                                 )
                             }

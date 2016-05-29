@@ -149,6 +149,9 @@ export default class ListNews extends Component{
                     name: "view_browser",
                     text: "Hiển Thị Trình Duyệt"
                 }, {
+                    name: "status_view",
+                    text: "Trạng Thái"
+                }, {
                     name: "delete_row",
                     text: ""
                 }
@@ -162,9 +165,18 @@ export default class ListNews extends Component{
                         Hiển Thị
                     </button>
                 );
-                row.delete_row = (
+                row.status_view = row.status ? (
+                    <p>Đang Sử Dụng</p>
+                ) : (
+                    <p></p>
+                );
+                row.delete_row = row.status ? (
                     <button onClick={self.deleteNews.bind(self, row)} data-target="#deleteNewsModal" data-toggle="modal" className="btn btn-danger btn-xs">
-                        Xóa Bài Viết
+                        Ẩn Bài Viết
+                    </button>
+                ) : (
+                    <button onClick={self.deleteNews.bind(self, row)} data-target="#deleteNewsModal" data-toggle="modal" className="btn btn-primary btn-xs">
+                        Sử Dụng Bài Viết
                     </button>
                 );
                 row.show_on_top_view = (

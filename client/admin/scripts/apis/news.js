@@ -33,12 +33,10 @@ export default {
                 cb(err, res);
             })
     },
-    deleteNews(id, cb) {
+    deleteNews(data, cb) {
         var request = new Request();
         request
-            .post(API.DELETE_NEWS, {
-                id
-            })
+            .post(API.DELETE_NEWS, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res)

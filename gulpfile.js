@@ -164,7 +164,7 @@ gulp.task("build", ["buildScripts", "assets"], function() {
 });
 
 // Task for shop
-gulp.task("client", ["clean", "build"]);
+gulp.task("client", ["build"]);
 
 // Task for admin
 
@@ -176,8 +176,8 @@ var adminFolder = "server/app/public/admin";
 
 // clean dist foler
 gulp.task("clean_admin", function(callback) {
-    // $.cache.clearAll();
-    // callback(del.sync([adminFolder]));
+    $.cache.clearAll();
+    callback(del.sync([adminFolder]));
 });
 
 // build app script js
@@ -212,7 +212,7 @@ gulp.task("styles_admin", function() {
         .pipe(gulp.dest(adminFolder + "/css"));
 });
 
-gulp.task("copyCss_admin",["clean_admin"], function(){
+gulp.task("copyCss_admin", function(){
     return gulp.src(["./client/admin/css/**/*.css"], { base: "./client/admin/css/" })
         .pipe(gulp.dest(adminFolder + "/styles"));
 });
@@ -333,7 +333,6 @@ gulp.task("dev_admin", rebundle_admin);
 
 // Task for shop
 gulp.task("admin", [
-    "clean_admin", 
     "build_admin"
 ]);
 
