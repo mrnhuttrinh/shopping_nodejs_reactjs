@@ -12,33 +12,33 @@ class Item extends Component {
         return (
             <li>
                 <div className="img">
-                    <a href="/voucher/du-lich-khach-san/tour-trong-nuoc/tour-nha-trang-3n3d-ve-vinpearl-land-khach-san-3_p59588.html?cmpid=59588&cmps=home_page&cmpm=list_t2&cmpc=1">
+                    <div className='mask'></div>
+                    <Link to={'/product/' + product.text_link}>
                         <img alt={product.alt} className="deal" height="235" src={product.thumbnail} width="235">
                         </img>
-                    </a>
+                    </Link>
                     <span className="lbl_place">
                         Nha Trang
                     </span>
                     <div className="listdeal_hover_B">
                         <span className="text_alert">
-                            Nh?n voucher di?n t? qua email/SMS
+
                         </span>
-                        <a className="btn_view" href="/voucher/du-lich-khach-san/tour-trong-nuoc/tour-nha-trang-3n3d-ve-vinpearl-land-khach-san-3_p59588.html?cmpid=59588&cmps=home_page&cmpm=list_t2&cmpc=1">
+                        <Link className="btn_view" to={'/product/' + product.text_link}>
                             XEM NGAY
-                        </a>
+                        </Link>
                     </div>
                     <div className="listdeal_evoucher">
                         <span className="ic_cm icon-voucher">
                             I
                         </span>
-                        Voucher
-                        di?n t?
+                        {product.code}
                     </div>
                 </div>
                 <div className="listdeal_info">
-                    <a className="list_name" href="/voucher/du-lich-khach-san/tour-trong-nuoc/tour-nha-trang-3n3d-ve-vinpearl-land-khach-san-3_p59588.html?cmpid=59588&cmps=home_page&cmpm=list_t2&cmpc=1">
+                    <Link className="list_name" to={'/product/' + product.text_link}>
                         {product.name}
-                    </a>
+                    </Link>
                     <div className="listdeal_group">
                         <p className="listdeal_info_L num_down">
                             {percentSale}

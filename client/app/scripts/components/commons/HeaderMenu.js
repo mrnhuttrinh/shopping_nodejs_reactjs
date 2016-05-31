@@ -48,6 +48,7 @@ export default class HeaderMenu extends Component {
 
                 var TwoLevelHtml;
                 var TwoLevelHtmlHidden;
+                // if have child menu
                 if (html.length) {
                     TwoLevelHtml = (
                         <div className="menu_ver_hover">

@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class HightLightDeal extends Component {
     render() {
         var menu = this.props.menu;
         return (
             <div className="hightlight_deal">
-                <a className="big_deal" href="http://www.cungmua.com/bn-cm-hcm070416-villas-nghi-duong.html?cmpid=0&cmps=home_page&cmpm=list_t2_banner&cmpc=1" target="_blank">
+                <Link className="big_deal" to={'/category/' + menu.link}>
+                    <div className='div_mask_one'></div>
+                    <div className='div_mask_two'></div>
                     <img alt={menu.name} src={"admin/" + menu.logo_image}></img>
-                </a>
+                </Link>
             </div>
         );
     }
 }
+// http://www.nikesh.me/blog/2010/05/sexy-image-hover-effects-using-css3/

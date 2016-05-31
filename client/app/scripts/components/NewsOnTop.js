@@ -44,10 +44,10 @@ export default class NewsOnTop extends Component {
                 color: "wheat"
             };
             var imageStyle = {
-                "box-shadow": "10px 10px 5px #ccc",
-                "-moz-box-shadow": "10px 10px 5px #ccc",
-                "-webkit-box-shadow": "10px 10px 5px #ccc",
-                "-khtml-box-shadow": "10px 10px 5px #ccc"
+                boxShadow: "10px 10px 5px #ccc",
+                MozBoxShadow: "10px 10px 5px #ccc",
+                WebkitBoxShadow: "10px 10px 5px #ccc",
+                KhtmlBoxShadow: "10px 10px 5px #ccc"
             }
             return (
                 <div style={style}>
