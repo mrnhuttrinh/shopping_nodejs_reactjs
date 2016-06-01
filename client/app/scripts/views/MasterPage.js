@@ -25,7 +25,7 @@ class MasterPage extends Component{
     showNewsOnTop(listNews) {
         var self = this;
         var firstLoad = sessionItem.getItem('first_load');
-        if (_.isNull(firstLoad) || _.isUndefined(firstLoad) || !Boolean(firstLoad)) {
+        if (!Boolean(firstLoad)) {
             var newsOnTop = _.find(listNews, (news) => {
                 return news.show_on_top;
             });

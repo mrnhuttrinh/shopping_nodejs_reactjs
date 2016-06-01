@@ -204,7 +204,7 @@ export default class Widget extends Component {
                     </li>
                     <li role="presentation">
                         <form>
-                            <div style={{"min-width": "250px"}}>
+                            <div style={{"minWidth": "250px"}}>
                                 <Select
                                     placeholder="Tìm Theo Nhà Cung Cấp"
                                     value={this.state.selectValue}

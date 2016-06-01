@@ -62,6 +62,17 @@ export default class HeaderMenu extends Component {
                             {html}
                         </ul>
                     );
+                } else {
+                    var style = {
+                        WebkitFilter: "blur(1px)",
+                        filter: "blur(1px)",
+                        overflow: "hidden"
+                    };
+                    TwoLevelHtml = (
+                        <div style={style} className="menu_ver_hover">
+                            <img src="../images/background_menu.jpg"/>
+                        </div>
+                    );
                 }
                 menu.html = (
                     <li key={"menu_" + menu.id}>

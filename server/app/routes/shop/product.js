@@ -50,12 +50,19 @@ function getListChildrenMenu(type, menus , res) {
 module.exports = {
     getListProductByCategory: function(req, res) {
         getMenu(function(listMenu) {
+            
             var type = req.param("type");
             var quantity  = +req.param("quantity");
             var page = +req.param("page");
             var start = (page - 1) * quantity;
             var condition;
             var orderBy = " ORDER BY p.createdAt DESC ";
+            var control = req.param("control");
+            if (!control === "undefined") {
+                if (control === "prev") {
+                    orderBy = " ORDER BY p.createdAt ASC ";
+                }
+            }
             var query;
             if (type === "sanphammoi") {
                 query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";

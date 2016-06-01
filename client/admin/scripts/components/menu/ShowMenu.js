@@ -26,11 +26,11 @@ export default class ShowMenu extends Component {
                 var countChildren = "";
                 if (menu.images) {
                     countChildren = (
-                        <span className="badge">{menu.images.length}</span>
+                        <span key={"span_" + menu.id} className="badge">{menu.images.length}</span>
                     );
                 }
                 menu.html = (
-                    <li onClick={self.liChooseCategory.bind(self, menu)}
+                    <li key={"menu_" + menu.id} onClick={self.liChooseCategory.bind(self, menu)}
                         className=" li-dropdown list-group-item">
                         {countChildren}
                         <a>{menu.name}</a>
@@ -53,7 +53,7 @@ export default class ShowMenu extends Component {
                 if (html.length) {
                     icon = (<span onClick={self.expandChildrenCategory.bind(self)} className="icon expand-icon glyphicon glyphicon-minus"></span>);
                     listMenuChildren = (
-                        <li className="li-parent-ul list-group-item">
+                        <li key={"menu_" + menu.id} className="li-parent-ul list-group-item">
                             <ul className="list-group ul-children-li-category">
                                 {html}
                             </ul>
@@ -63,12 +63,12 @@ export default class ShowMenu extends Component {
                 var countChildren = "";
                 if (menu.images) {
                     countChildren = (
-                        <span className="badge">{menu.images.length}</span>
+                        <span key={"span_" + menu.id} className="badge">{menu.images.length}</span>
                     );
                 }
                 menu.html = (
                     <div>
-                        <li onClick={self.liChooseCategory.bind(self, menu)}
+                        <li key={"menu_" + menu.id} onClick={self.liChooseCategory.bind(self, menu)}
                             className=" li-dropdown list-group-item">
                             {countChildren}
                             {icon} <a>{menu.name}</a>
@@ -93,7 +93,7 @@ export default class ShowMenu extends Component {
                 if (html.length) {
                     icon = (<span onClick={self.expandChildrenCategory.bind(self)} className="icon expand-icon glyphicon glyphicon-minus"></span>);
                     listMenuChildren = (
-                        <li className="li-parent-ul list-group-item">
+                        <li key={"menu_" + menu.id} className="li-parent-ul list-group-item">
                             <ul className="list-group ul-children-li" style={{"display": "block"}}>
                                 {html}
                             </ul>
@@ -103,12 +103,12 @@ export default class ShowMenu extends Component {
                 var countChildren = "";
                 if (menu.images) {
                     countChildren = (
-                        <span className="badge">{menu.images.length}</span>
+                        <span key={"span_" + menu.id} className="badge">{menu.images.length}</span>
                     );
                 }
                 menu.html = (
                     <div>
-                        <li onClick={self.liChooseCategory.bind(self, menu)}
+                        <li key={"menu_" + menu.id} onClick={self.liChooseCategory.bind(self, menu)}
                             className=" li-dropdown list-group-item">
                             {countChildren}
                             {icon} <a>{menu.name}</a>
