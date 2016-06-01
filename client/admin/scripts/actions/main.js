@@ -78,8 +78,14 @@ export default {
     },
     getListTradeMark: function(listTrademark) {
         return {
-            type: GET_LIST_TRADEMARK,
+            type: ACTION.GET_LIST_TRADEMARK,
             listTrademark: listTrademark
+        }
+    },
+    getListTradeMarkMini: function(trademarks) {
+        return {
+            type: ACTION.GET_LIST_TRADEMARK_MINI,
+            trademarks: trademarks
         }
     }
 }

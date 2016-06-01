@@ -15,45 +15,68 @@ export default class ListNews extends Component{
             openDialog: {}
         }
     }
+    getData(data) {
+        var self = this;
+        apis.getListNews(data, function(err, result) {
+            if (err) {
+                toastr.error("Tải Không Thành Công")
+            } else {
+                self.props.getListNews(result.body.data, "list")
+                self.setState({
+                    loadingData: !self.state.loadingData
+                })
+            }
+        });
+
+        apis.getTotalNews(data, function(err, result) {
+            if (err) {
+                toastr.error("Tải Không Thành Công!")
+            } else {
+                self.props.getListNews(result.body.data, "total")
+            }
+        });
+    }
     componentWillReceiveProps (nextProps) {
         var self = this;
-        var oldPage = self.props.page;
-        var page = nextProps.page;
-        if (page !== oldPage) {
-            self.setState({
-                loadingData: !self.state.loadingData
-            })
-            apis.getListNews(page, function(err, result) {
-                if (err) {
-                    toastr.error("Tải Không Thành Công")
-                } else {
-                    self.props.getListNews(result.body.data, "list")
-                    self.setState({
-                        loadingData: !self.state.loadingData
-                    })
-                }
-            })
+        var page = nextProps.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            var oldPage = self.props.params.page;
+            if (page !== oldPage) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextProps.params.page || 1;
+                self.getData(data);
+            }
+        } else {
+            var oldPage = self.props.params.search_page || 1;
+            var nextPage = nextProps.params.search_page || 1;
+
+            var oldSearch = self.props.params.search;
+            var nextSearch = nextProps.params.search;
+            if (oldPage !== nextPage ||
+                oldSearch !== nextSearch) {
+                self.setState({
+                    loadingData: !self.state.loadingData
+                });
+                data.page = nextPage;
+                data.search = nextSearch;
+                self.getData(data);
+            }
         }
     }
     componentDidMount() {
         var self = this;
-        var page = self.props.page;
-        if (!self.props.news.listNews.length) {
-            apis.getListNews(page, function(err, result) {
-                if (err) {
-                    toastr.error("Tải Không Thành Công")
-                } else {
-                    self.props.getListNews(result.body.data, "list")
-                    self.setState({
-                        loadingData: !self.state.loadingData
-                    })
-                }
-            })
-        } else {
-            self.setState({
-                loadingData: !self.state.loadingData
-            })
+        var page = this.props.params.page;
+        var data = {};
+        if (page === undefined || Number.isInteger(parseInt(page))) {
+            data.page = page || 1;
+        } else if (page === "search"){
+            data.search = this.props.params.search;
+            data.page = this.props.params.search_page || 1;
         }
+        self.getData(data);
     }
     deleteNews(_news, event) {
         event.preventDefault()
@@ -126,6 +149,9 @@ export default class ListNews extends Component{
                     name: "view_browser",
                     text: "Hiển Thị Trình Duyệt"
                 }, {
+                    name: "status_view",
+                    text: "Trạng Thái"
+                }, {
                     name: "delete_row",
                     text: ""
                 }
@@ -139,9 +165,18 @@ export default class ListNews extends Component{
                         Hiển Thị
                     </button>
                 );
-                row.delete_row = (
+                row.status_view = row.status ? (
+                    <p>Đang Sử Dụng</p>
+                ) : (
+                    <p></p>
+                );
+                row.delete_row = row.status ? (
                     <button onClick={self.deleteNews.bind(self, row)} data-target="#deleteNewsModal" data-toggle="modal" className="btn btn-danger btn-xs">
-                        Xóa Bài Viết
+                        Ẩn Bài Viết
+                    </button>
+                ) : (
+                    <button onClick={self.deleteNews.bind(self, row)} data-target="#deleteNewsModal" data-toggle="modal" className="btn btn-primary btn-xs">
+                        Sử Dụng Bài Viết
                     </button>
                 );
                 row.show_on_top_view = (

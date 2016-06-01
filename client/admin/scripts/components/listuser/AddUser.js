@@ -2,11 +2,15 @@ import React, {Component} from 'react'
 import Modal from '../Modal';
 import _ from 'lodash'
 import apis from '../../apis/main';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 export default class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            hireDate: moment(),
+            birthDate: null,
             newUser: {
                 fullname: "",
                 username: "",
@@ -28,6 +32,24 @@ export default class AddUser extends Component {
         var phone = self.refs["employerPhone"].value;
         var address = self.refs["employerAddress"].value;
         var role = self.refs["employerRole"].value;
+        var hiredate = self.state.hireDate ? self.state.hireDate._d : "";
+        var birthdate = self.state.birthDate ? self.state.birthDate._d : "";
+        if (_.isEmpty(fullname)) {
+            toastr.waring("Tên Nhân Viên Không Để Trống!");
+            return;
+        }
+        if (_.isEmpty(username)) {
+            toastr.waring("Tên Đăng Nhập Không Để Trống!");
+            return;
+        }
+        if (_.isEmpty(password)) {
+            toastr.waring("Mật Khẩu Không Để Trống!");
+            return;
+        }
+        if (username.search(" ") !== -1) {
+            toastr.waring("Tên Đăng Nhập Không Hợp Lệ!");
+            return;
+        }
         if (!_.isEmpty(username) && !_.isEmpty(password)) {
             apis.createEmployer({
                 fullname,
@@ -36,10 +58,12 @@ export default class AddUser extends Component {
                 email,
                 phone,
                 address,
-                role
+                role,
+                hiredate,
+                birthdate
             }, function(err, res) {
                 if (err) {
-                    toastr.error(err.message);
+                    toastr.error(err.response.body.error.message);
                 } else {
                     toastr.success("Tạo Thành Công!");
                     self.props.users.listUsers.push(res.body.data)
@@ -63,6 +87,10 @@ export default class AddUser extends Component {
                     self.refs["employerPhone"].value = "";
                     self.refs["employerAddress"].value = "";
                     self.refs["employerRole"].value = "3";
+                    self.setState({
+                        hireDate: moment(),
+                        birthDate: null
+                    });
                 }
             })
         } else {
@@ -70,10 +98,32 @@ export default class AddUser extends Component {
             toastr.warning(
                 'Tên Đăng Nhập Không Được Trống',
                 'Mật Khẩu Không Được Trống'
-            )
+            );
         }
     }
-
+    handleChange(date) {
+        this.setState({
+            hireDate: date
+        });
+    }
+    handleChangeBirthDate(date) {
+        this.setState({
+            birthDate: date
+        });
+    }
+    searchPress(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            var search_value = this.refs["inputSearch"].value;
+            var pathName = window.location.pathname;
+            if (_.isEmpty(search_value)) {
+                window.location = pathName + "#/listuser";
+            } else {
+                window.location = pathName + "#/listuser/search/" + search_value;
+            }
+            return;
+        }
+    }
     render() {
         var modalNameAdd = "modalNameAdd";
         var modalTitleAdd = "Thêm Mới Nhân Viên";
@@ -82,6 +132,7 @@ export default class AddUser extends Component {
         var newUser = this.state.newUser;
         return (
             <div>
+                <input ref="inputSearch" onKeyUp={this.searchPress.bind(this)} type="text" placeholder="Tìm Kiếm Nhân Viên" />
                 <button type="button" className="btn btn-success pull-right" data-target={"#" + modalNameAdd} data-toggle="modal">Thêm Mới</button>
                 <Modal ref={modalNameAdd}
                     modalName={modalNameAdd}
@@ -142,6 +193,36 @@ export default class AddUser extends Component {
                                     <div className="col-sm-10">
                                         <input defaultValue={newUser.address} className="form-control" ref="employerAddress" id="employerAddress" placeholder="Địa Chỉ" type="text">
                                         </input>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label className="col-sm-2 control-label" for="hiredate">
+                                        Ngày Làm Việc
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <DatePicker
+                                            showYearDropdown 
+                                            dateFormatCalendar="MMMM" 
+                                            dateFormat="DD/MM/YYYY"
+                                            className="form-control"
+                                            placeholderText="Click to select a date"
+                                            selected={this.state.hireDate}
+                                            onChange={this.handleChange.bind(this)} />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label className="col-sm-2 control-label" for="hiredate">
+                                        Birthdate
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <DatePicker
+                                            showYearDropdown 
+                                            dateFormatCalendar="MMMM" 
+                                            dateFormat="DD/MM/YYYY"
+                                            className="form-control"
+                                            placeholderText="Click to select a date"
+                                            selected={this.state.birthDate}
+                                            onChange={this.handleChangeBirthDate.bind(this)} />
                                     </div>
                                 </div>
                                 <div className="form-group">

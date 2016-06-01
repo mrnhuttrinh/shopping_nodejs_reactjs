@@ -5,16 +5,24 @@ export default class ViewNews extends Component{
     onDeleteNews(_news, event) {
         event.preventDefault();
         var self = this;
-        apis.deleteNews(_news.id, function(err, res) {
+        var data = {
+            id: _news.id,
+            status: !_news.status,
+            show_on_top: _news.show_on_top
+        }
+        apis.deleteNews(data, function(err, res) {
             if (err) {
                 toastr.error("Xóa Bài Viết Không Thành Công!")
             } else {
                 toastr.success("Xóa Bài Viết Thành Công!")
-                _.remove(self.props.news.listNews, (_removeNews) => {
-                    return _removeNews.id === _news.id;
+                var updateNews = _.find(self.props.news.listNews, (_removeNews) => {
+                    if (_removeNews.id === _news.id)
+                        return _removeNews;
                 });
+                updateNews.status = data.status;
+                if (!data.status && updateNews.show_on_top) 
+                    updateNews.show_on_top = false;
                 self.props.getListNews(self.props.news.listNews, "list")
-                self.props.getListNews(self.props.news.total - 1, "total")
                 $(self.refs["onCancelDeleteNews"]).click();
             }
         })
@@ -41,9 +49,18 @@ export default class ViewNews extends Component{
                             <button ref="onCancelDeleteNews" className="btn btn-default" data-dismiss="modal" type="button">
                                 Hủy
                             </button>
-                            <button onClick={this.onDeleteNews.bind(this, this.props.deleteNews)} className="btn btn-danger pull-right" type="button">
-                                Xóa
-                            </button>
+                            {
+                                this.props.deleteNews.status ? (
+                                    <button onClick={this.onDeleteNews.bind(this, this.props.deleteNews)} className="btn btn-danger pull-right" type="button">
+                                        Ẩn Bài Viết
+                                    </button>
+                                ) : (
+                                    <button onClick={this.onDeleteNews.bind(this, this.props.deleteNews)} className="btn btn-primary pull-right" type="button">
+                                        Sử Dụng Bài Viết
+                                    </button>
+                                )
+                            }
+                            
                         </div>
                     </div>
                 </div>

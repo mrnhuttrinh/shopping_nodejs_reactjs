@@ -2,13 +2,16 @@ import React, {Component} from 'react'
 import _ from 'lodash'
 
 export default class HeaderMenu extends Component {
+    componentDidMount() {
 
+    }
+    
     sortMenus(menus) {
 
         var menuLevelThree = _.filter(menus, menu => {
             if (menu.level === 3) {
                 menu.html = (
-                    <li>
+                    <li key={"menu_" + menu.id}>
                         <a href= {menu.href}>{menu.name}</a>
                     </li>
                 );
@@ -20,7 +23,7 @@ export default class HeaderMenu extends Component {
             if (menu.level === 2) {
                 var html = [];
                 html.push(
-                    <li className="bold">
+                    <li key={"menu_" + menu.id} className="bold">
                         <a href= {menu.href}>{menu.name}</a>
                     </li>
                 );
@@ -45,6 +48,7 @@ export default class HeaderMenu extends Component {
 
                 var TwoLevelHtml;
                 var TwoLevelHtmlHidden;
+                // if have child menu
                 if (html.length) {
                     TwoLevelHtml = (
                         <div className="menu_ver_hover">
@@ -58,9 +62,20 @@ export default class HeaderMenu extends Component {
                             {html}
                         </ul>
                     );
+                } else {
+                    var style = {
+                        WebkitFilter: "blur(1px)",
+                        filter: "blur(1px)",
+                        overflow: "hidden"
+                    };
+                    TwoLevelHtml = (
+                        <div style={style} className="menu_ver_hover">
+                            <img src="../images/background_menu.jpg"/>
+                        </div>
+                    );
                 }
                 menu.html = (
-                    <li>
+                    <li key={"menu_" + menu.id}>
                         <a href={menu.href}>
                             <span className={"ic_cm " + menu.icon}>
                                 {menu.char}

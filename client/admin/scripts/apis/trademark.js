@@ -3,10 +3,19 @@ var API = Constants.API;
 import Request from '../utils/request';
 
 export default { 
-    getListTrademark(cb) {
+    getListTrademark(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_LIST_TRADEMARK)
+            .get(API.GET_LIST_TRADEMARK, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    getListTrademarkMini(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_LIST_TRADEMARK_MINI)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
@@ -33,11 +42,11 @@ export default {
                 cb(err, res);
             })
     },
-    deleteTrademark(id, cb) {
+    deleteTrademark(data, cb) {
         var request = new Request();
         request
-            .post(API.DELETE_NEWS, {
-                id
+            .post(API.DELETE_TRADEMARK, {
+                data
             })
             .authorized()
             .then(function(err, res) {

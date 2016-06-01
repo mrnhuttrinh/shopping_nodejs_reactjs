@@ -82,7 +82,7 @@ gulp.task("styles", function() {
         .pipe(gulp.dest(publicFolder + "/css"));
 });
 
-gulp.task("copyCss",["clean"], function(){
+gulp.task("copyCss", function(){
     return gulp.src(["./client/app/css/**/*.css"], { base: "./client/app/css/" })
         .pipe(gulp.dest(publicFolder + "/styles"));
 });
@@ -164,7 +164,7 @@ gulp.task("build", ["buildScripts", "assets"], function() {
 });
 
 // Task for shop
-gulp.task("client", ["clean", "build"]);
+gulp.task("client", ["build"]);
 
 // Task for admin
 
@@ -212,7 +212,7 @@ gulp.task("styles_admin", function() {
         .pipe(gulp.dest(adminFolder + "/css"));
 });
 
-gulp.task("copyCss_admin",["clean_admin"], function(){
+gulp.task("copyCss_admin", function(){
     return gulp.src(["./client/admin/css/**/*.css"], { base: "./client/admin/css/" })
         .pipe(gulp.dest(adminFolder + "/styles"));
 });
@@ -250,6 +250,28 @@ gulp.task("watch_admin", [
     "dev_admin", 
     "assets_admin"
 ], function() {
+
+    browserSync({
+        notify: false,
+        logPrefix: "BS",
+        // Run as an https by uncommenting "https: true"
+        // Note: this uses an unsigned certificate which on first access
+        // will present a certificate warning in the browser.
+        server: [adminFolder, "admin"],
+        port: 4000
+    });
+
+    // Watch .html files
+    gulp.watch("client/admin/*.html", reload);
+
+    gulp.watch(["client/admin/styles/**/*.css"], 
+        ["styles", reload]);
+
+    // Watch image files
+    gulp.watch("client/admin/images/**/*", reload);
+});
+
+gulp.task("watch_admin_dev", function() {
 
     browserSync({
         notify: false,
@@ -311,7 +333,6 @@ gulp.task("dev_admin", rebundle_admin);
 
 // Task for shop
 gulp.task("admin", [
-    "clean_admin", 
     "build_admin"
 ]);
 

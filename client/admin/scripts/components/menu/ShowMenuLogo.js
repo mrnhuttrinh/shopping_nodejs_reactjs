@@ -57,7 +57,7 @@ export default class ShowMenu extends Component {
                     icon = (<span onClick={self.expandChildrenCategory.bind(self)} className="icon expand-icon glyphicon glyphicon-minus"></span>);
                     listMenuChildren = (
                         <li className="li-parent-ul list-group-item">
-                            <ul className="list-group ul-children-li-category">
+                            <ul key={"ul_menu_level2_" + menu.id} className="list-group ul-children-li-category">
                                 {html}
                             </ul>
                         </li>

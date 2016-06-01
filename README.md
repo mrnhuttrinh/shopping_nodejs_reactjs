@@ -28,4 +28,4 @@ create db: node ./server/app/generateDB
 
 
 // multiselect
-http://www.jqueryrain.com/?IV38o2Lr
+https://github.com/JedWatson/react-select

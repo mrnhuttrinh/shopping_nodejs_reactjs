@@ -14,7 +14,10 @@ module.exports = function(sequelize, DataTypes) {
         price_wholesale: DataTypes.DECIMAL,
         price_wholesale_promotion: DataTypes.DECIMAL,
         color: DataTypes.STRING,
-        trademark: DataTypes.STRING,
+        trademark_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         description: DataTypes.STRING,
         description_detail: DataTypes.TEXT,
         tech_information: DataTypes.TEXT,

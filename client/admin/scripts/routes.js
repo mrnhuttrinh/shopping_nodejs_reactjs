@@ -11,6 +11,7 @@ import MyProfile    from './views/MyProfile';
 import ProductDetail from './views/ProductDetail';
 import Menu from './views/Menu';
 import News from './views/News';
+import ViewUser from './views/ViewUser';
 import TradeMark from './views/TradeMark';
 import localItem from './utils/localItem';
 
@@ -19,7 +20,7 @@ function requireAuth(nextState, replace) {
         replace({
             pathname: '/login',
             state: { nextPathname: nextState.location.pathname }
-        })
+        });
     }
     // else occurs loop infinite
 }
@@ -32,7 +33,7 @@ export default {
     },
     childRoutes: [
         {
-            path: 'dashboard(/:category(/:page))',
+            path: 'dashboard(/:category(/:page(/:search)))',
             component: Dashboard,
             onEnter: requireAuth
         }, {
@@ -47,8 +48,12 @@ export default {
             component: About,
             onEnter: requireAuth
         }, {
-            path: 'listuser(/:page)',
+            path: 'listuser(/:page(/:search(/:search_page)))',
             component: ListUser,
+            onEnter: requireAuth
+        }, {
+            path: 'viewuser(/:id)',
+            component: ViewUser,
             onEnter: requireAuth
         }, {
             path: 'product/:id',
@@ -63,11 +68,11 @@ export default {
             component: Menu,
             onEnter: requireAuth
         }, {
-            path: 'news(/:page)',
+            path: 'news(/:page(/:search(/:search_page)))',
             component: News,
             onEnter: requireAuth
         }, {
-            path: 'trademark',
+            path: 'trademark(/:page(/:search(/:search_page)))',
             component: TradeMark,
             onEnter: requireAuth
         }, {

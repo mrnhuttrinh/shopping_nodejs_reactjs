@@ -231,7 +231,7 @@ export default class Profile extends Component{
                                             </td>
                                             <td>
                                                 {
-                                                    user.level === 1 ? "Admin" : (user.level === 2 ? "Mod" : "User") 
+                                                    user.level === 1 ? "Admin" : (user.level === 2 ? "Quản Lý" : "Nhân Viên") 
                                                 }
                                             </td>
                                         </tr>

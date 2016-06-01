@@ -3,33 +3,35 @@ import ListNews from './ListNews';
 import AddNews from './AddNews';
 import Pagination from '../Pagination';
 import _ from 'lodash'
-import apis from '../../apis/news';
 
 export default class NewsContent extends Component {
-    componentDidMount() {
-        var self = this;
-        if (_.isEmpty(self.props.news.listNews) || 
-            _.isNull(self.props.news.listNew)) {
-            apis.getTotalNews(function(err, result) {
-                if (err) {
-                    toastr.error("Tải Không Thành Công!")
-                } else {
-                    self.props.getListNews(result.body.data, "total")
-                }
-            })
-        }
-    }
     render() {
         var page = this.props.params.page || 1;
-        return (
-            <div>
-                <AddNews {...this.props}/>
-                <ListNews {...this.props} page={page} />
+        var paginationContent = "";
+        if (page === "search") {
+            var search_value = this.props.params.search;
+            page = this.props.params.search_page || 1;
+            paginationContent = (
+                <Pagination 
+                    page={page}
+                    href={"/news/search/" + search_value}
+                    totalRow={this.props.news.total} 
+                    rows={10} />
+            );
+        } else {
+            paginationContent = (
                 <Pagination 
                     page={page}
                     href={"/news"}
                     totalRow={this.props.news.total} 
                     rows={10} />
+            );
+        }
+        return (
+            <div>
+                <AddNews {...this.props}/>
+                <ListNews {...this.props} page={page} />
+                {paginationContent}
             </div>
         )
     }

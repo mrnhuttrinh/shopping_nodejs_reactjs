@@ -4,6 +4,7 @@ import Modal from '../Modal';
 import DropDown from './DropDown';
 import checkfileimage from '../../utils/checkfileimage';
 import apis from '../../apis/main';
+import Select from 'react-select';
 
 export default class AddProduct extends Component {
     constructor(props) {
@@ -24,9 +25,10 @@ export default class AddProduct extends Component {
                 price_wholesale: 0,
                 price_wholesale_promotion: 0,
                 color: "",
-                trademark: "",
+                trademark_id: 0,
                 description: ""
-            }
+            },
+            selectValue: null
         }
     }
 
@@ -85,7 +87,7 @@ export default class AddProduct extends Component {
                 price_wholesale: 0,
                 price_wholesale_promotion: 0,
                 color: "",
-                trademark: "",
+                trademark_id: 0,
                 description: ""
             }
         })
@@ -103,7 +105,7 @@ export default class AddProduct extends Component {
         newProduct.price_wholesale = self.refs["productWholeSalePrice"].value;
         newProduct.price_wholesale_promotion = self.refs["productPriceWholeSalePromotion"].value;
         newProduct.color = self.refs["productColor"].value;
-        newProduct.trademark = self.refs["productTrademark"].value;
+        newProduct.trademark_id = self.state.selectValue.value;
         newProduct.description = self.refs["productDescription"].value;
         newProduct.category = self.state.categoryArray.join(", ");
         newProduct.sizes = self.state.sizes;
@@ -151,7 +153,7 @@ export default class AddProduct extends Component {
         self.refs["productWholeSalePrice"].value = 0;
         self.refs["productPriceWholeSalePromotion"].value = 0;
         self.refs["productColor"].value = "";
-        self.refs["productTrademark"].value = "";
+        // self.refs["productTrademark"].value = "";
         self.refs["productDescription"].value = "";
         self.refs["productThumbnail"].value = "";
         var thumbnailImage = this.refs["thumbnailImage"];
@@ -160,7 +162,10 @@ export default class AddProduct extends Component {
         var LiChoosen = $("li.list-group-item-success.li-dropdown");
         _.map(LiChoosen, (li) => {
             $(li).removeClass("list-group-item-success");
-        })
+        });
+        self.setState({
+            selectValue: {}
+        });
     }
     formValidate(newProduct) {
         if (_.isEmpty(newProduct.sizeS) ) {
@@ -375,6 +380,11 @@ export default class AddProduct extends Component {
                 newProduct: newProduct
             })
         }
+    }
+    selectUpdateValue(newValue) {
+        this.setState({
+            selectValue: newValue
+        });
     }
     render() {
         var self = this;
@@ -593,12 +603,15 @@ export default class AddProduct extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group margin-right-10px">
-                                        <label className="col-sm-2 control-label" for="productTrademark">
+                                        <label className="col-sm-2 control-label" for="productTrademarkId">
                                             Thương Hiệu Sản Phẩm
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea defaultValue={newProduct.trademark} className="form-control" ref="productTrademark" id="productTrademark" placeholder="Thương Hiệu Sản Phẩm">
-                                            </textarea>
+                                            <Select id="productTrademarkId"
+                                                placeholder="Chọn Nhà Cung Cấp"
+                                                value={this.state.selectValue}
+                                                onChange={this.selectUpdateValue.bind(this)}
+                                                options={this.props.commons.trademarks}/>
                                         </div>
                                     </div>
                                     <div className="form-group margin-right-10px">

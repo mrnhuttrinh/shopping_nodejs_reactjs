@@ -4,20 +4,6 @@ import JumpMenu from './JumpMenu'
 import HeaderMenu from "../commons/HeaderMenu"
 
 export default class Menu extends Component {
-    componentDidMount() {
-        $(document).ready(function(){
-            var slider = $('.bxslider');
-            slider.bxSlider({
-                pager: true,
-                controls: true,
-                auto: true,
-                autoHover: true,
-                onSliderLoad: function() {
-                    slider.css("visibility", "visible")
-                }
-            });
-        });
-    }
     render() {
         return (
             <div className="index_middle">
@@ -26,11 +12,11 @@ export default class Menu extends Component {
                         <HeaderMenu menus={this.props.menus} />
                     </div>
                     <div className="banner_home slider">
-                        <Bxslider />
+                        <Bxslider {...this.props}/>
                     </div>
                     <br className="clean" />
                 </div>
-                <JumpMenu />
+                <JumpMenu menus={this.props.menus}/>
             </div>
         );
     }

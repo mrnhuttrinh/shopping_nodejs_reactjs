@@ -1,10 +1,11 @@
 var jwt = require("jsonwebtoken");
 var md5 = require('md5');
-var uuid = require("../utils/uuid");
-var config = require("../config");
-var toImage = require("../utils/toImage");
-var logger = require("../logger")
-var models = require("../models");
+var uuid = require("../../utils/uuid");
+var config = require("../../config");
+var toImage = require("../../utils/toImage");
+var logger = require("../../logger");
+var models = require("../../models");
+var _ = require("lodash");
 
 module.exports = {
     uploadEmployerPhoto: function(req, res) {
@@ -56,6 +57,8 @@ module.exports = {
                 });
             } else {
                 password = md5(newuser.password);
+                var hiredate = !_.isEmpty(newuser.hiredate) ? new Date(newuser.hiredate) : new Date(); 
+                var birthdate = !_.isEmpty(newuser.birthdate) ? new Date(newuser.birthdate) : null; 
                 models.Employer.create({
                     id: uuid(),
                     username: newuser.username,
@@ -64,7 +67,9 @@ module.exports = {
                     email: newuser.email,
                     phone: newuser.phone,
                     address: newuser.address,
-                    level: newuser.level
+                    level: +newuser.role,
+                    hiredate: hiredate,
+                    birthdate: birthdate
                 }).then(function(employer) {
                     return res.status(200).send({
                         data: employer
@@ -193,7 +198,7 @@ module.exports = {
     getUser: function(req, res) {
         models.Employer.find({
             where: {
-                id: req.body.id
+                id: req.param("id")
             }
         }).then(function(employer) {
             return res.status(200).send({
@@ -210,13 +215,20 @@ module.exports = {
         var empl = req.userToken.employer;
         var condition = ""
         if (empl.level === 1) {
-            condition = "WHERE level != 1";
+            condition = "WHERE level != 1 AND id != '" + empl.id + "' ";
         } else if (empl.level === 2) {
-            condition = "WHERE level = 3";
+            condition = "WHERE level = 3 AND id != '" + empl.id + "' ";
         } else {
-            condition = "WHERE level = 4";
+            condition = "WHERE level = 4 AND id != '" + empl.id + "' ";
         }
-        var query = "SELECT count(id) as total FROM employers " + condition;
+        var search = req.param("search");
+        var query = "";
+        if (search) {
+            var conditionExtend = " AND (username like '%" + search + "%' OR fullname like '%" + search + "%') ";
+            query = "SELECT count(id) as total FROM employers " + condition + conditionExtend;
+        } else {
+            query = "SELECT count(id) as total FROM employers " + condition;
+        }
         models.sequelize.query(query)
         .spread(function(result) {
             return res.status(200).send({
@@ -232,19 +244,26 @@ module.exports = {
     },
     getAllUser: function(req, res) {
         var empl = req.userToken.employer;
-        var condition = ""
+        var condition = "";
         if (empl.level === 1) {
-            condition = "WHERE level != 1";
+            condition = "WHERE level != 1 AND id != '" + empl.id + "' ";
         } else if (empl.level === 2) {
-            condition = "WHERE level = 3";
+            condition = "WHERE level = 3 AND id != '" + empl.id + "' ";
         } else {
-            condition = "WHERE level = 4";
+            condition = "WHERE level = 4 AND id != '" + empl.id + "' ";
         }
         var page = req.param("page");
+        var search = req.param("search");
+
         var numberRow = 10;
         var startRow = (page - 1) * 10
-        var query = "SELECT * FROM employers " + condition + " LIMIT " + startRow + ", " + numberRow;
-         
+        var query = "";
+        if (search) {
+            var conditionExtend = " AND (username like '%" + search + "%' OR fullname like '%" + search + "%') ";
+            query = "SELECT * FROM employers " + condition + conditionExtend + " LIMIT " + startRow + ", " + numberRow;;
+        } else {
+            query = "SELECT * FROM employers " + condition + " LIMIT " + startRow + ", " + numberRow;
+        }
         models.sequelize.query(query)
         .then(function(listUsers) {
             return res.status(200).send({
@@ -335,7 +354,19 @@ module.exports = {
             return res.status(400).send({
                 error: err
             });
-        })
-        
+        });
+    },
+    updateRoleEmployer: function(req, res) {
+        var data = req.body.data;
+        var query = "UPDATE employers SET level = " + data.level +" WHERE id = '" + data.id + "'";
+        models.sequelize.query(query)
+        .then(function() {
+            return res.status(200).send();
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 };

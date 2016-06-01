@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         address: DataTypes.TEXT,
         phone: DataTypes.STRING,
         email: DataTypes.STRING,
-        detail: DataTypes.TEXT,
+        detail: DataTypes.TEXT("long"),
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

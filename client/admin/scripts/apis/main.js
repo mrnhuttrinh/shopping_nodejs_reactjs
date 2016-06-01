@@ -24,11 +24,20 @@ export default {
                 cb(err, res);
             });
     },
-    getAllUser(page, cb) {
+    getAllUser(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_ALL_USER, {
-                page
+            .get(API.GET_ALL_USER, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    getUserById(id, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_USER_BY_ID, {
+                id
             })
             .authorized()
             .then(function(err, res) {
@@ -75,25 +84,19 @@ export default {
                 cb(err, res);
             });
     },
-    getListProduct(type, page, quantity , cb) {
+    getListProduct(data , cb) {
         var request = new Request();
         request
-            .get(API.GET_LIST_PRODUCT, {
-                type: type,
-                page: page,
-                quantity: quantity
-            })
+            .get(API.GET_LIST_PRODUCT, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
             });
     },
-    getTotalProduct(type, cb) {
+    getTotalProduct(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_TOTAL_PRODUCT, {
-                type: type
-            })
+            .get(API.GET_TOTAL_PRODUCT, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
@@ -134,10 +137,10 @@ export default {
                 cb(err, res);
             });
     },
-    getTotalUsers(cb) {
+    getTotalUsers(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_TOTAL_USERS)
+            .get(API.GET_TOTAL_USERS, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
@@ -167,7 +170,7 @@ export default {
                 cb(err, res);
             });
     },
-    updateProfile: function(data, cb) {
+    updateProfile(data, cb) {
         var request = new Request();
         request
             .post(API.UPDATE_USER_INFO, {
@@ -178,11 +181,22 @@ export default {
                 cb(err, res);
             });
     },
-    updatePassword: function(data, cb) {
+    updatePassword(data, cb) {
         var request = new Request();
         request
             .post(API.UPDATE_PASSWORD, {
                 data: data
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    updateRoleEmployer(employer, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_ROLE_EMPLOYER, {
+                data: employer
             })
             .authorized()
             .then(function(err, res) {

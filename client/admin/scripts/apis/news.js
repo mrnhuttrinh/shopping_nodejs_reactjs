@@ -3,12 +3,10 @@ var API = Constants.API;
 import Request from '../utils/request';
 
 export default { 
-    getListNews(page, cb) {
+    getListNews(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_LIST_NEWS, {
-                page: page
-            })
+            .get(API.GET_LIST_NEWS, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res);
@@ -35,21 +33,19 @@ export default {
                 cb(err, res);
             })
     },
-    deleteNews(id, cb) {
+    deleteNews(data, cb) {
         var request = new Request();
         request
-            .post(API.DELETE_NEWS, {
-                id
-            })
+            .post(API.DELETE_NEWS, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res)
             })
     },
-    getTotalNews(cb) {
+    getTotalNews(data, cb) {
         var request = new Request();
         request
-            .get(API.GET_TOTAL_NEWS)
+            .get(API.GET_TOTAL_NEWS, data)
             .authorized()
             .then(function(err, res) {
                 cb(err, res)

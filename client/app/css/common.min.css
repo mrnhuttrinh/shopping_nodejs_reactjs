@@ -2785,6 +2785,54 @@ div.hightlight_deal a:hover {
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=6,Direction=135,Color='#cccccc',offX=0, offY=0)";
 }
 
+div.hightlight_deal .div_mask {
+    width: 100%;
+    position: absolute;
+    height: 100%; 
+    opacity:0.2;
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+}
+
+div.hightlight_deal .div_mask_one {
+    width: 50%;
+    position: absolute;
+    height: 100%; 
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+}
+
+div.hightlight_deal .div_mask_two {
+    margin-left: 50%;
+    width: 50%;
+    position: absolute;
+    height: 100%; 
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+}
+
+div.hightlight_deal a:hover div.hightlight_deal .div_mask{
+    width:0%;
+    background-color: rgb(0, 0, 0);
+}
+
+div.hightlight_deal a:hover .div_mask_one {
+    width:0%;
+    opacity:0.1;
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+    background-color: rgb(192,192,192);
+}
+div.hightlight_deal a:hover .div_mask_two{
+    margin-left:100%;
+    width:0%;
+    opacity:0.1;
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+    background-color: rgb(192,192,192);
+}
+
+
 div.hightlight_deal a.end {
     margin-top: 20px;
 }
@@ -2830,11 +2878,14 @@ div.hightlight_deal a.hightlight_sm span.sm_view {
 
 div.hightlight_deal a.big_deal {
     margin: 0;
+    position: relative;
 }
 
 div.hightlight_deal a.big_deal img {
     width: 1000px;
-    height: auto;
+    height: 245px;
+    background: url('../images/background-logo.png');
+    background-repeat: no-repeat;
 }
 
 div.brand_logo {
@@ -6601,6 +6652,7 @@ div.title_home a.title_home_text {
     font-weight: 300;
     display: inline-block;
     line-height: 39px;
+    text-decoration: none;
 }
 
 div.title_home div.title_home_text {
@@ -10669,8 +10721,32 @@ ul.listdeal_four li {
 }
 
 ul.listdeal_four li:hover {
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+    z-index: 9999;
+    -webkit-transform:scale(1.05);
+    -webkit-box-shadow:0px 0px 30px #ccc;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=6,Direction=135,Color='#cccccc',offX=0, offY=0)";
+}
+
+ul.listdeal_four .mask{
+    width: 100%;
+    position: absolute;
+    height: 100%; 
+    cursor:pointer;
+    -webkit-transition-duration: 0.5s;
+}
+
+ul.listdeal_four li:hover .mask{
+    opacity:0.1;
+    cursor:pointer;
+    background-color: rgb(192,192,192);
+    margin-left:50%;
+    margin-top:50%;
+    height:0%;
+    width:0%;
+    -webkit-transform: rotateZ(750deg);
 }
 
 ul.listdeal_four li:hover div.listdeal_hover_T {
@@ -10697,6 +10773,8 @@ ul.listdeal_four div.img {
     position: relative;
     height: 235px;
     min-height: 200px;
+    background: url('../images/background-logo.png');
+    background-repeat: no-repeat;
 }
 
 ul.listdeal_four div.img a {
@@ -14440,6 +14518,7 @@ nav.mainmenu a span {
     div.title_home a.title_home_text {
         font-size: 25px;
     }
+
     div.title_deal div.title_deal_text {
         font-size: 23px;
         line-height: 42px;
@@ -14964,6 +15043,10 @@ nav.mainmenu a span {
 
     .scroll_menu {
         display: block;
+    }
+
+    ul.pagination {
+        display: none;
     }
 
     div.menu_ver_hover {

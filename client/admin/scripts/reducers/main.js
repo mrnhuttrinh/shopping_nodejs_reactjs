@@ -6,6 +6,9 @@ import localItem from '../utils/localItem';
 var initialState = {
     user: {},
     token: "",
+    commons: {
+        trademarks: []
+    },
     menus: [],
     // for view dashboard
     dashboard: {
@@ -27,7 +30,8 @@ var initialState = {
     },
     // for trademark page
     trademark: {
-        listTrademark: []
+        listTrademark: [],
+        total: 0
     }
 }
 
@@ -88,6 +92,17 @@ export default function update(state = initialState, action) {
         case ACTION.GET_LIST_TRADEMARK:
             newState = _.cloneDeep(state);
             newState.trademark.listTrademark = action.listTrademark;
+            newState.trademark.total = action.listTrademark.length;
+            return newState;
+        case ACTION.GET_LIST_TRADEMARK_MINI:
+            newState = _.cloneDeep(state);
+            // format trade select
+            newState.commons.trademarks = _.map(action.trademarks, (trademark) => {
+                return {
+                    value: trademark.id,
+                    label: trademark.name
+                };
+            });
             return newState;
         default:
             return state;
