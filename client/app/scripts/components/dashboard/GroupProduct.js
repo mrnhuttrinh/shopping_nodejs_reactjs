@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import apis from '../../apis/product';
 import ListFour from './ListFour';
 import DivLoading from '../FlatLoading';
@@ -17,7 +18,8 @@ export default class GroupProduct extends Component {
         super(props);
         this.state = {
             listProduct: [],
-            loading: true
+            loading: true,
+            offsetHeight: 0
         }
         this.next = 1;
         this.prev = 1;
@@ -29,7 +31,8 @@ export default class GroupProduct extends Component {
         var props = this.props;
         var type = props.menu.link;
         self.setState({
-            loading: true
+            loading: true,
+            offsetHeight: self.state.offsetHeight
         });
         apis.getListProduct({
             type: type,
@@ -50,7 +53,8 @@ export default class GroupProduct extends Component {
     }
     getProductInList(page) {
         this.setState({
-            loading: true
+            loading: true,
+            offsetHeight: this.state.offsetHeight
         });
         var listProductsLength = this.listProducts.length;
         var totalLength = page * this.next;
@@ -70,6 +74,8 @@ export default class GroupProduct extends Component {
     }
     clickControlButton(control) {
         var page = 1;
+        var ulListFour = ReactDOM.findDOMNode(this.refs["ulListFour"]);
+        this.state.offsetHeight = ulListFour.offsetHeight;
         if (control === "next") {
             this.next++;
             this.prev--;
@@ -102,9 +108,18 @@ export default class GroupProduct extends Component {
         var index = props.index;
         var listFour;
         if (this.state.loading) {
-            listFour = <FlatLoading />;
+            var style = {
+                height: this.state.offsetHeight
+            };
+            listFour = (
+                <div style={style} className="flat_loading_wrapper">
+                    <div className="flat_loading_inner">
+                        <FlatLoading />
+                    </div>
+                </div>
+            );
         } else {
-            listFour = <ListFour control={this.control} clickControlButton={this.clickControlButton.bind(this)} products={this.state.listProduct} menu={this.props.menu} />;
+            listFour = <ListFour ref="ulListFour" control={this.control} clickControlButton={this.clickControlButton.bind(this)} products={this.state.listProduct} menu={this.props.menu} />;
         }
         return (
             <div className="index_middle" data-floor={"T" + index}>

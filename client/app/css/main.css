@@ -244,3 +244,21 @@
         transform: translate(0);
     }
 }
+
+.flat_loading_wrapper {
+    position: relative;
+    min-height: 350px;
+    width: 100%;
+}
+
+.flat_loading_inner {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    display: block;
+}

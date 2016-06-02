@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 
 export default class Bxslider extends Component {
-    componentDidUpdate() {
+    mountBxSlider() {
         var props = this.props;
         var listNews = props.news.listNews;
         if (listNews.length > 0) {
@@ -18,6 +18,12 @@ export default class Bxslider extends Component {
                 }
             });
         }
+    }
+    componentDidUpdate() {
+        this.mountBxSlider();
+    }
+    componentDidMount() {
+        this.mountBxSlider();
     }
     render() {
         var props = this.props;
