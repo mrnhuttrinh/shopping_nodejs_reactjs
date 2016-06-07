@@ -18,6 +18,11 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        rate: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
         description: DataTypes.STRING,
         description_detail: DataTypes.TEXT,
         tech_information: DataTypes.TEXT,

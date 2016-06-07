@@ -1,17 +1,21 @@
-import React, {Component}   from 'react'
-import { connect }          from 'react-redux'
-import {getMenu}            from '../actions/main'
+import React, {Component}   from 'react';
+import { connect }          from 'react-redux';
+import {getMenu}            from '../actions/main';
 
-import Header               from '../components/headers'
-import Menu                 from '../components/menus'
-import ScrollTop            from '../components/ScrollTop'
-import Footer               from '../components/footers'
-import MainMenu             from '../components/MainMenu'
-import NewsOnTop            from '../components/NewsOnTop'
+import Header               from '../components/headers';
+import Menu                 from '../components/menus';
+import ScrollTop            from '../components/ScrollTop';
+import Footer               from '../components/footers';
+import MainMenu             from '../components/MainMenu';
+import NewsOnTop            from '../components/NewsOnTop';
+
+import BannerCenter         from '../components/BannerCenter';
+import BreadCrumb           from '../components/BreadCrumb';
+import MenuHorizon          from '../components/MenuHorizon';
 
 import apis                 from '../apis/main';
 import newsApis             from '../apis/news';
-import _                    from 'lodash'
+import _                    from 'lodash';
 import localItem            from '../utils/localItem';
 import sessionItem          from '../utils/sessionItem';
 
@@ -63,11 +67,21 @@ class MasterPage extends Component{
         }
     }
     render() {
+        var pathName = this.props.location.pathname;
         return (
             <div className="index">
                 <MainMenu />
-                <Header menus={this.props.menus}/>
+                <Header {...this.props}/>
                 <Menu {...this.props}/>
+                {
+                    pathName === "/" ? null : (
+                        <BannerCenter {...this.props}>
+                            <BreadCrumb {...this.props}>
+                                <MenuHorizon />
+                            </BreadCrumb>
+                        </BannerCenter>
+                    )
+                }
                 <div>
                     {this.props.children}
                 </div>

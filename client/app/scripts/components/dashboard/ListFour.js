@@ -61,7 +61,7 @@ class Item extends Component {
                                     f
                                 </span>
                                 <span className="text_num_people">
-                                    152
+                                    {product.rate}
                                 </span>
                             </p>
                         </div>

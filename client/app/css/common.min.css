@@ -2442,6 +2442,36 @@ div.logo_cungmua a.logo_cungmua {
     height: 34px;
 }
 
+header.index_header_detail {
+    width: 100%;
+    clear: both
+}
+
+header.index_header_detail ul.scroll_menu {
+    display: none;
+    z-index: 9979
+}
+
+header.index_header_detail ul.scroll_menu li {
+    z-index: 9979
+}
+
+header.index_header_detail nav.chose_cate {
+    cursor: pointer!important
+}
+
+header.index_header_detail nav.chose_cate a {
+    cursor: pointer!important
+}
+
+header.index_header_detail div.menu_ver_inside {
+    display: none
+}
+
+header.index_header_detail nav.chose_cate:hover div.menu_ver_inside {
+    display: block
+}
+
 nav.chose_cate1 {
     height: 49px;
     color: #fff;
