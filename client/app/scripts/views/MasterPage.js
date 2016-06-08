@@ -77,7 +77,7 @@ class MasterPage extends Component{
                     pathName === "/" ? null : (
                         <BannerCenter {...this.props}>
                             <BreadCrumb {...this.props}>
-                                <MenuHorizon />
+                                <MenuHorizon {...this.props}/>
                             </BreadCrumb>
                         </BannerCenter>
                     )

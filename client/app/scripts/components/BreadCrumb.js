@@ -29,7 +29,7 @@ export default class BreadCrumb extends Component {
             var arrayBC = this.getBreadCrumb(currentMenu, [currentMenu]);
             arrayBC = arrayBC.reverse();
             childBC = _.map(arrayBC, (_arr) => {
-                return <li><Link to={"/category/" + _arr.link}>{_arr.name}</Link></li>
+                return <li key={"li_breadcrumb_" + _arr.id}><Link to={"/category/" + _arr.link}>{_arr.name}</Link></li>
             });
         }
 
@@ -37,7 +37,7 @@ export default class BreadCrumb extends Component {
             <div className="inside_banner">
                 <div className="container inside_co" style={style}>
                     <ul className="breadcrumb">
-                        <li><Link to="/"><span className="ic_cm icon-home">c</span></Link></li>
+                        <li key={"li_breadcrumb_index"}><Link to="/"><span className="ic_cm icon-home">c</span></Link></li>
                         {childBC}
                     </ul>
                     {this.props.children}

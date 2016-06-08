@@ -5772,6 +5772,7 @@ ul.menu_cate_hoz {
     list-style: none;
     overflow: hidden;
     clear: both;
+    width: 300%;
 }
 
 ul.menu_cate_hoz > li {
@@ -15283,4 +15284,46 @@ nav.mainmenu a span {
 
 ul.menu_cate_hidden {
     display: none;
+}
+
+/*
+Horizontial menu
+ */
+div.sc_menu {
+    position: relative;
+    overflow: auto;
+    max-width: 1000px;
+    min-width: 400px;
+    vertical-align: middle;
+}
+
+ul.sc_menu {
+    display: block;
+    width: 1500px;
+    padding: 0 0 0 10px;
+    margin: 0;
+    list-style: none;
+}
+
+.sc_menu li {
+    display: block;
+    float: left;
+    padding: 0 4px;
+}
+
+.sc_menu a {
+    display: block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    color: #000;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.sc_menu a:hover, .sc_menu .active a {
+    color: #000;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #fff;
 }
