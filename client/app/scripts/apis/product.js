@@ -10,5 +10,14 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+
+    getTotalProduct(data, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_TOTAL_PRODUCT, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

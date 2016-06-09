@@ -13,7 +13,7 @@ export default {
             path: 'trang-chu',
             component: Home
         }, {
-            path: 'category/:category_link(/:child_category_link)',
+            path: 'category/:category_link(/:sort)',
             component: Category
         }, {
             path: '*',

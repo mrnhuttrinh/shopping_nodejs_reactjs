@@ -61,6 +61,10 @@ module.exports = {
             if (!control === "undefined") {
                 if (control === "prev") {
                     orderBy = " ORDER BY p.createdAt ASC ";
+                } else if (control === "hottest") {
+                    orderBy = " ORDER BY p.rate DESC ";
+                } else if (control === "newest") {
+                    orderBy = " ORDER BY p.createdAt DESC ";
                 }
             }
             var query;
@@ -116,6 +120,42 @@ module.exports = {
                     return res.status(400).send({
                         error: err
                     });
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
+        });
+    },
+    getTotalProduct: function(req, res) {
+        getMenu(function(listMenu) {
+            var category = req.param("category");
+            var condition;
+            var query;
+            if (category === "sanphammoi") {
+                query = "SELECT COUNT(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id ";
+            } else {
+                var listType = getListChildrenMenu(category, listMenu, res);
+                if (listType) {
+                    var typeArray = "(" + listType.toString() + ")";
+                    query = "SELECT COUNT(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                } else {
+                    return res.status(400).send({
+                        error: {
+                            message: "Tải Không Thành Công"
+                        }
+                    });
+                }
+            }
+            query += condition;
+            models.sequelize.query(query)
+            .spread(function(rows) {
+                return res.status(200).send({
+                    data: rows[0].total
                 });
             }).catch(function(err) {
                 logger("ERROR", err);
