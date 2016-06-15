@@ -1,38 +1,45 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class Item extends Component {
     render() {
+        var product = this.props.product;
+        var postFixProduct = product.text_link || product.id;
+        var percentSale = 0;
+        if (product.price_wholesale !== product.price_wholesale_promotion) {
+            percentSale = parseInt((product.price_wholesale_promotion/product.price_wholesale)*100);
+        }
         return (
             <li>
                 <div className="img">
-                    <a href="http://www.shipto.vn/dong-ho_c3970?utm_source=cungmua&utm_medium=dealgia&utm_campaign=dong-ho-nu">
-                        <img alt="Đồng hồ nữ chính hãng trên Amazon" className="deal" height="318" src="http://resources.cungmua.com/CMBanner/636009787819296663.jpg" width="318">
+                    <Link to={"/product/" + postFixProduct}>
+                        <img alt={product.name} className="deal" height="318" src={product.thumbnail} width="318">
                         </img>
-                    </a>
+                    </Link>
                     <div className="listdeal_hover_B">
-                        <a className="btn_view" href="http://www.shipto.vn/dong-ho_c3970?utm_source=cungmua&utm_medium=dealgia&utm_campaign=dong-ho-nu">
+                        <Link className="btn_view"to={"/product/" + postFixProduct}>
                             XEM NGAY
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="listdeal_info">
-                    <a className="list_name" href="http://www.shipto.vn/dong-ho_c3970?utm_source=cungmua&utm_medium=dealgia&utm_campaign=dong-ho-nu">
-                        Đồng hồ nữ chính hãng trên Amazon
-                    </a>
+                    <Link className="list_name" to={"/product/" + postFixProduct}>
+                        {product.name}
+                    </Link>
                     <div className="listdeal_group">
                         <p className="listdeal_info_L num_down">
-                            40
+                            {percentSale}
                             <span className="percent">
                                 %
                             </span>
                         </p>
                         <p className="listdeal_info_Ce">
                             <span className="trueprice">
-                                4.494.000đ
+                                {product.price_wholesale}
                             </span>
                             <br />
                             <span className="price">
-                                2.600.000đ
+                                {product.price_wholesale_promotion}
                             </span>
                         </p>
                     </div>

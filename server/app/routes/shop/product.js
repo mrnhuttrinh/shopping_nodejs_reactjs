@@ -37,16 +37,6 @@ function getListChildrenMenu(type, menus , res) {
     }
 }
 
-// sort product
-// if (type === "price_reduce") {
-//     condition = " WHERE status = 1 AND "
-// } else if (type === "price_increase") {
-
-// } else if (type === "rate") {
-
-// } else if (type === "sale_off") {
-
-// } else 
 module.exports = {
     getListProductByCategory: function(req, res) {
         getMenu(function(listMenu) {

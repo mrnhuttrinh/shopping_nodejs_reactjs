@@ -67,7 +67,7 @@ class MasterPage extends Component{
         }
     }
     render() {
-        var pathName = this.props.location.pathname;
+        var pathName = this.props.route.path ? this.props.route.path.split("/")[0] : "/";
         return (
             <div className="index">
                 <MainMenu />
@@ -75,11 +75,13 @@ class MasterPage extends Component{
                 <Menu {...this.props}/>
                 {
                     pathName === "/" ? null : (
-                        <BannerCenter {...this.props}>
-                            <BreadCrumb {...this.props}>
-                                <MenuHorizon {...this.props}/>
-                            </BreadCrumb>
-                        </BannerCenter>
+                        pathName === "product" ? null : (
+                            <BannerCenter {...this.props}>
+                                <BreadCrumb {...this.props}>
+                                    <MenuHorizon {...this.props}/>
+                                </BreadCrumb>
+                            </BannerCenter>
+                        )
                     )
                 }
                 <div>
