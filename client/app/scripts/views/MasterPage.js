@@ -28,15 +28,16 @@ class MasterPage extends Component{
     }
     showNewsOnTop(listNews) {
         var self = this;
-        var firstLoad = sessionItem.getItem('first_load');
-        if (!Boolean(firstLoad)) {
+        
+        var firstLoad = localItem.getItem('first_load');
+        if (!firstLoad) {
             var newsOnTop = _.find(listNews, (news) => {
                 return news.show_on_top;
             });
             self.setState({
                 NewsOnTop: (<NewsOnTop news={newsOnTop}/>)
             });
-            sessionItem.setItem("first_load", true);
+            localItem.setItem("first_load", newsOnTop.id, 3600);
         }
     }
     componentDidMount() {
@@ -66,16 +67,23 @@ class MasterPage extends Component{
             });
         }
     }
+    checkSegment(segment) {
+        if (segment === "product" ||
+            segment === "news") {
+            return true;
+        }
+        return false;
+    }
     render() {
-        var pathName = this.props.route.path ? this.props.route.path.split("/")[0] : "/";
+        var pathName = this.props.location.pathname.split("/")[1];
         return (
             <div className="index">
                 <MainMenu />
                 <Header {...this.props}/>
                 <Menu {...this.props}/>
                 {
-                    pathName === "/" ? null : (
-                        pathName === "product" ? null : (
+                    pathName === "" ? null : (
+                        this.checkSegment(pathName) ? null : (
                             <BannerCenter {...this.props}>
                                 <BreadCrumb {...this.props}>
                                     <MenuHorizon {...this.props}/>

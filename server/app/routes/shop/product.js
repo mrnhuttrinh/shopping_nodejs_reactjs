@@ -154,5 +154,43 @@ module.exports = {
                 });
             });
         });
+    },
+    getProductByLink: function(req, res) {
+        var productLink = req.param("text_link");
+        var query = "SELECT * FROM products p WHERE text_link = '" + productLink + "' OR name='" + productLink + "' OR code='" + productLink + "'";
+        models.sequelize.query(query)
+        .spread(function(rows) {
+            if (rows.length) {
+                var product = rows[0];
+                // get galleries
+                var queryGetGalleries = "SELECT id, image FROM product_galleries WHERE product_id = " + product.id;
+                // get menu
+                var queryGetMenu = "SELECT id, category_id FROM products_category WHERE product_id = " + product.id;
+                Q.all([
+                    models.sequelize.query(queryGetGalleries),
+                    models.sequelize.query(queryGetMenu)
+                ]).spread(function(galleries, categories) {
+                    product.galleries = galleries.length ? galleries[0] : [];
+                    product.categories = categories.length ? categories[0] : [];
+                    return res.status(200).send({
+                        data: product
+                    });
+                }).fail(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    });
+                });
+            } else {
+                return res.status(200).send({
+                    data: null
+                });
+            }
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 }

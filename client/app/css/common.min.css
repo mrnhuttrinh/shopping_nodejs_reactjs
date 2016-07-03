@@ -6686,6 +6686,10 @@ div.title_home a.title_home_text {
     text-decoration: none;
 }
 
+div.title_home a.title_home_text:hover {
+    color: #04b1e8;
+}
+
 div.title_home div.title_home_text {
     font-size: 32px;
     color: #333;
@@ -11892,13 +11896,11 @@ div.deal_img_big {
 
 div.deal_img_big img {
     width: 490px;
-    height: auto;
 }
 
 div.bg_img_list {
     position: relative;
-    width: 447px;
-    margin-left: 20px;
+    width: 100%;
     margin-top: 5px;
     margin-bottom: 10px;
 }
@@ -11957,9 +11959,10 @@ div.deal_img_list {
 div.deal_img_list a {
     display: block;
     width: 60px;
-    height: 60px;
+    height: 75px;
     float: left;
     padding-top: 6px;
+    padding-bottom: 6px;
     margin: 0 0;
 }
 
@@ -11990,7 +11993,7 @@ div.deal_img_list a.curent_img {
 
 div.deal_img_list img {
     width: 64px;
-    height: auto;
+    height: 64px;
     border: 2px solid #eee;
 }
 

@@ -6,8 +6,8 @@ export default class RightInfo extends Component {
     render() {
         return (
             <div className="col-md-6 col-sm-12">
-                <RightTop />
-                <RightBottom />
+                <RightTop product={this.props.product}/>
+                <RightBottom product={this.props.product}/>
             </div>
         );
     }

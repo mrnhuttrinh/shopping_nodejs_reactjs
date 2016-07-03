@@ -12,7 +12,6 @@ export default class NewsOnTop extends Component {
         document.body.style.overflowY = "hidden";
     }
     turnOffShowOnTop(event) {
-        event.preventDefault();
         document.body.style.overflowY = "visible";
         this.setState({
             show: false
@@ -53,7 +52,7 @@ export default class NewsOnTop extends Component {
                 <div style={style}>
                     <div style={divinside}>
                         <span onClick={this.turnOffShowOnTop.bind(this)} className="glyphicon glyphicon-remove cursor-pointer" style={spanStyle}></span>
-                        <Link to="/">
+                        <Link onClick={this.turnOffShowOnTop.bind(this)} to={"/news/" + news.id}>
                             <img style={imageStyle} src={"admin/" + news.main_image}></img>
                         </Link>
                     </div>

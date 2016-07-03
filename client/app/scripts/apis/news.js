@@ -10,5 +10,13 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    getNewsOnTop(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_NEWS_ON_TOP)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

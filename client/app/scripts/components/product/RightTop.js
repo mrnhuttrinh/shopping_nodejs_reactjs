@@ -1,50 +1,58 @@
 import React, {Component} from 'react';
+import formatCurrency from '../../utils/formatcurrency';
 
 export default class RightTop extends Component {
     render() {
+        var product = this.props.product;
+        var percentSale = 0;
+        if (product.price_wholesale !== product.price_wholesale_promotion) {
+            percentSale = 100 - Math.ceil((product.price_wholesale_promotion/product.price_wholesale)*100);
+        }
         return (
             <div className="detail_co">
                 <h1 className="deal_detail_name">
-                    Đầm suông phối màu - Xu hướng thời trang mới
+                    {product.name}
                 </h1>
-                <p className="market_note">
-                    Sản phẩm giao bởi Cùng Mua
-                </p>
+                <p className="market_note">Sản phẩm giao bởi Áo Thun Phong Cách</p>
                 <h2 className="deal_detail_name_long">
-                    Đầm suông phối màu - Kiểu dáng nữ tính, đan xen tinh tế giữa các gam màu trang nhã kết hợp chất liệu cát mềm mát, sang trọng mang đến cho bạn vẻ ngoài thanh lịch và cuốn hút. Chỉ 159.000đ cho trị giá 310.000đ.
+                    {product.description}
                 </h2>
                 <div className="detail_bar">
                     <p className="bg_price">
                         <span className="detail_trueprice" id="detail_trueprice">
-                            310.000đ
+                            {formatCurrency(product.price_wholesale)}đ
                         </span>
                         <br/>
                         <span className="detail_price" id="price">
-                            159.000đ
+                            {formatCurrency(product.price_wholesale_promotion)}đ
                         </span>
                     </p>
                     <p className="detail_precent">
-                        49
+                        {percentSale}
                         <span>
                             %
                         </span>
                     </p>
                     <div className="likeface">
-                        Mã SP: 71320
+                        Mã SP: {product.code}
                         <br/>
                         <div className="fb-like header_R new_TT fb_iframe_widget" data-action="like" data-href="http://www.cungmua.com/thoi-trang-nu/dam-vay/dam-suong/dam-suong-phoi-mau-xu-huong-thoi-trang-moi_p71320.html?cmpid=71320&cmps=home_page&cmpm=list_t3&cmpc=2" data-layout="button_count" data-share="true" data-show-faces="false" fb-iframe-plugin-query="action=like&app_id=137523489610094&container_width=0&href=http%3A%2F%2Fwww.cungmua.com%2Fthoi-trang-nu%2Fdam-vay%2Fdam-suong%2Fdam-suong-phoi-mau-xu-huong-thoi-trang-moi_p71320.html%3Fcmpid%3D71320%26cmps%3Dhome_page%26cmpm%3Dlist_t3%26cmpc%3D2&layout=button_count&locale=en_US&sdk=joey&share=true&show_faces=false" fb-xfbml-state="rendered">
-                            <span>
+                            <span style={{
+                                    "verticalAlign": "bottom",
+                                    "width": "124px",
+                                    "height": "20px"
+                                }}>
                                 <iframe 
                                     allowfullscreen="true" 
                                     allowtransparency="true" 
                                     className="" 
                                     frameborder="0" 
-                                    height="1000px" 
+                                    height="20px" 
                                     name="f35d1093d86f0d" 
                                     scrolling="no" 
                                     src="https://www.facebook.com/plugins/like.php?action=like&app_id=137523489610094&channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D42%23cb%3Df38deb318a044d8%26domain%3Dwww.cungmua.com%26origin%3Dhttp%253A%252F%252Fwww.cungmua.com%252Ff228071b453c14%26relation%3Dparent.parent&container_width=0&href=http%3A%2F%2Fwww.cungmua.com%2Fthoi-trang-nu%2Fdam-vay%2Fdam-suong%2Fdam-suong-phoi-mau-xu-huong-thoi-trang-moi_p71320.html%3Fcmpid%3D71320%26cmps%3Dhome_page%26cmpm%3Dlist_t3%26cmpc%3D2&layout=button_count&locale=en_US&sdk=joey&share=true&show_faces=false" 
                                     title="fb:like Facebook Social Plugin" 
-                                    width="1000px">
+                                    width="124px">
                                 </iframe>
                             </span>
                         </div>

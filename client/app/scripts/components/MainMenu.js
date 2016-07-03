@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class Agent extends Component {
     render() {
@@ -39,9 +40,9 @@ export default class Agent extends Component {
                             </a>
                         </li>
                         <li>
-                            <a className="link_premium" href="/#">
+                            <Link className="link_premium" to="/news">
                                 Tin Tức
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </nav>
