@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Cart from './Cart';
+import CartTitle from './CartTitle';
 
 export default class HeaderMenu extends Component {
     render() {
@@ -25,15 +27,8 @@ export default class HeaderMenu extends Component {
                             </li>
                             <li id="cartTopHeader">
                                 <div id="cartTop">
-                                    <a href="/checkout/gio-hang">Giỏ hàng (<span>0</span>)<span className="ic_cm icon-arrow-d">k</span></a>
-                                    <div className="hover_menu">
-                                        <p className="hover_TT">Giỏ hàng của bạn</p>
-                                            <p className="no_item">
-                                            Hiện chưa có sản phẩm nào
-                                            <br />
-                                            trong giỏ hàng của bạn
-                                        </p>
-                                    </div>
+                                    <CartTitle />
+                                    <Cart />
                                 </div>
                             </li>
                         </ul>

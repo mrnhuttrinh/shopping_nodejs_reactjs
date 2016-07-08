@@ -8718,7 +8718,7 @@ ul.shop_cart_list a.product_sum_de {
     right: 10px;
 }
 
-ul.shop_cart_list li.btn {
+ul.shop_cart_list li.btn_cart {
     text-align: center;
     padding: 10px 10px 10px 10px;
     background: #f8f8f8;
@@ -8726,16 +8726,16 @@ ul.shop_cart_list li.btn {
     position: relative;
 }
 
-ul.shop_cart_list li.btn button.btn_brand, ul.shop_cart_list li.btn a.btn_brand {
+ul.shop_cart_list li.btn_cart button.btn_brand, ul.shop_cart_list li.btn_cart a.btn_brand {
     width: 100%;
 }
 
-ul.shop_cart_list li.btn button.btn_brand1, ul.shop_cart_list li.btn a.btn_brand1 {
+ul.shop_cart_list li.btn_cart button.btn_brand1, ul.shop_cart_list li.btn_cart a.btn_brand1 {
     width: 100%;
     margin-bottom: 10px;
 }
 
-ul.shop_cart_list li.btn button.btn_pre {
+ul.shop_cart_list li.btn_cart button.btn_pre {
     width: 18px;
     background: url(../images/cm_icon.png) no-repeat left -886px;
     height: 18px;
@@ -8747,14 +8747,14 @@ ul.shop_cart_list li.btn button.btn_pre {
     text-indent: -999px;
 }
 
-ul.shop_cart_list li.btn button.btn_pre:hover {
+ul.shop_cart_list li.btn_cart button.btn_pre:hover {
     width: 18px;
     background: url(../images/cm_icon.png) no-repeat left -911px;
     height: 18px;
     display: block;
 }
 
-ul.shop_cart_list li.btn button.btn_next {
+ul.shop_cart_list li.btn_cart button.btn_next {
     width: 18px;
     background: url(../images/cm_icon.png) no-repeat -43px -886px;
     height: 18px;
@@ -8766,14 +8766,14 @@ ul.shop_cart_list li.btn button.btn_next {
     bottom: 10px;
 }
 
-ul.shop_cart_list li.btn button.btn_next:hover {
+ul.shop_cart_list li.btn_cart button.btn_next:hover {
     width: 18px;
     background: url(../images/cm_icon.png) no-repeat -43px -911px;
     height: 18px;
     display: block;
 }
 
-ul.shop_cart_list li.btn p.sum {
+ul.shop_cart_list li.btn_cart p.sum {
     text-align: center !important;
     padding: 10px 5px !important;
     border-bottom: 1px solid #e3e3e3;
@@ -8785,7 +8785,7 @@ ul.shop_cart_list li.btn p.sum {
     color: #3c3c3c;
 }
 
-ul.shop_cart_list li.btn p.pager {
+ul.shop_cart_list li.btn_cart p.pager {
     width: 100%;
     display: block;
     text-align: center;
@@ -12001,6 +12001,15 @@ div.detail_co {
     clear: both;
 }
 
+p.market_note {
+    font-size: 12px;
+    color: #828282;
+    text-align: left;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 7px;
+    margin-bottom: 4px;
+}
+
 h4.deal_detail_name, h1.deal_detail_name {
     font-size: 20px;
     color: #ff7a00;
@@ -12266,7 +12275,7 @@ span.book_price {
     font-weight: bolder;
 }
 
-select.select_number {
+select.select_number, input.select_number {
     border: 1px solid #bdbdbd;
     padding: 6px;
     margin-top: 3px;

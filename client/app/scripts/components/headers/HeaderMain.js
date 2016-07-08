@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import HeaderMenu from "../commons/HeaderMenu"
+import HeaderMenu from "../commons/HeaderMenu";
+import Cart from './Cart';
+import CartTitle from './CartTitle';
 
 export default class HeaderMain extends Component {
     clickSearch(e) {
@@ -66,15 +68,8 @@ export default class HeaderMain extends Component {
                                 </div>
                             </li>
                             <li id="cartTopScroll">
-                                <a href="/checkout/gio-hang">Giỏ hàng (<span>0</span>)<span className="ic_cm icon-arrow-d">k</span></a>
-                                <div className="hover_menu">
-                                    <p className="hover_TT">Giỏ hàng của bạn</p>
-                                    <p className="no_item">
-                                        Hiện chưa có sản phẩm nào
-                                        <br />
-                                        trong giỏ hàng của bạn
-                                    </p>
-                                </div>
+                                <CartTitle />
+                                <Cart />
                             </li>
                         </ul>
                     </div>

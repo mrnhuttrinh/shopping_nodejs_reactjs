@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import BreadCrumb2 from './BreadCrumb2';
 import Galleries from './Galleries';
-import RightInfo from './RightInfo';
+import RightInfo from './right_info';
 import FlatLoading from '../FlatLoading';
-import LongDescription from './LongDescription';
-import Promotion from './Promotion';
+import LongDescription from './long_description';
+import Promotion from './promotion';
 import productAPIs from '../../apis/product';
 
 export default class Product extends Component {

@@ -1,31 +1,22 @@
 import React, {Component} from 'react';
 
 export default class RightBottom extends Component {
+    clickAddToCart(event) {
+        event.preventDefault();
+        this.props.addToCart();
+    }
     render() {
+        var product = this.props.product;
         return (
             <div className="panel_info">
                 <div className="panel3 R">
-                    <button className="btn_primary" data-id="1" onclick="productdetail.addToCart(this);" type="button">
+                    <button className="btn_primary" data-id="1" onClick={this.clickAddToCart.bind(this)} type="button">
                         MUA NGAY
                         <span className="arrow_W_big">
                         </span>
                     </button>
                     <div id="wrapperSaveMoney" >
                     </div>
-                    <p className="txt_cmart" id="containerSaveMoney" >
-                        Bạn tích lũy được
-                        <strong id="saveMoneyForPremium">
-                            0đ
-                        </strong>
-                        khi mua sản phẩm này.
-                    </p>
-                    <p className="txt_cmart" id="containerDisplaySaveMoney" >
-                        Bạn sẽ được tích lũy
-                        <strong>
-                            2%
-                        </strong>
-                        khi là hội viên Premium
-                    </p>
                 </div>
                 <p className="panel2 R">
                     <span className="pane2_icon_delivery">
@@ -42,7 +33,7 @@ export default class RightBottom extends Component {
                     <span className="panel_icon">
                     </span>
                     <span className="panel_text">
-                        202
+                        {product.rate}
                     </span>
                     <br/>
                     <span className="panel_text1">
