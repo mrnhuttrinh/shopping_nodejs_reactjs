@@ -14,7 +14,7 @@ export default class Item extends Component {
             <li>
                 <div className="img">
                     <Link to={"/product/" + postFixProduct}>
-                        <img alt={product.name} className="deal" height="318" src={product.thumbnail} width="318">
+                        <img alt={product.name} className="deal" height="318" src={"/admin/" + product.thumbnail} width="318">
                         </img>
                     </Link>
                     <div className="listdeal_hover_B">

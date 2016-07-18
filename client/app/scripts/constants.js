@@ -10,6 +10,7 @@ module.exports = {
     ACTION: {
         GET_MENU: "GET_MENU",
         GET_LIST_NEWS: "GET_LIST_NEWS",
-        FIRST_LOAD: "FIRST_LOAD"
+        FIRST_LOAD: "FIRST_LOAD",
+        UPDATE_CART_ITEMS: "UPDATE_CART_ITEMS"
     }
 }

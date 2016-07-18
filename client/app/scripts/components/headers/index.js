@@ -49,8 +49,8 @@ export default class Header extends Component {
     render() {
         return (
             <header id="mainHeader" className={this.state.classCss}>
-                <HeaderMenu />
-                <HeaderMain menus={this.props.menus}/>
+                <HeaderMenu {...this.props} cartItems={this.props.cartItems} />
+                <HeaderMain {...this.props} cartItems={this.props.cartItems} menus={this.props.menus}/>
             </header>
         );
     }

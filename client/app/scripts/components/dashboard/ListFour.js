@@ -15,7 +15,7 @@ class Item extends Component {
                 <div className="img">
                     <div className='mask'></div>
                     <Link to={'/product/' + product.text_link}>
-                        <img alt={product.alt} className="deal" height="235" src={product.thumbnail} width="235">
+                        <img alt={product.alt} className="deal" height="235" src={"/admin/" + product.thumbnail} width="235">
                         </img>
                     </Link>
                     <span className="lbl_place">

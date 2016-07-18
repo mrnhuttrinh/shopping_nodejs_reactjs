@@ -13,18 +13,32 @@ export default class RightInfo extends Component {
             onPopUp: null
         };
     }
+    turnOffShowOnTop() {
+        this.setState({
+            onPopUp: null
+        });
+    }
     addToCart() {
         if (!this.carts.length) {
             // show pop up
             this.setState({
-                onPopUp: (<PopUpWarn />)
+                onPopUp: (<PopUpWarn turnOffShowOnTop={this.turnOffShowOnTop.bind(this)} show={true}/>)
             });
             return;
         }
         // add to local item
         var cartItems = localItem.getItem("cartItems");
+        cartItems = cartItems || {};
+        var product = this.props.product;
+
         // merge item to local store
-        //_.map();
+        cartItems[product.id] = {
+            product: product,
+            items: this.carts
+        };
+        this.props.updateCartItems(cartItems);
+        localItem.setItem("cartItems", cartItems);
+        window.location = "/#/checkout/cart";
     }
     increaseSize(size, quantity) {
         var sizeInCart = _.find(this.carts, (cart) => {

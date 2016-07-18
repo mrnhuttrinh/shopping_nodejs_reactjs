@@ -57,12 +57,12 @@ export default class Product extends Component {
                                 <br className="clean" />
                                 <div className="row">
                                     <Galleries product={this.state.product} />
-                                    <RightInfo product={this.state.product} />
+                                    <RightInfo {...this.props} product={this.state.product} />
                                 </div>
                             </div>
                         </div>
-                        <LongDescription />
-                        <Promotion />
+                        <LongDescription product={this.state.product} />
+                        <Promotion product={this.state.product} />
                     </div>
                 );
             } else {

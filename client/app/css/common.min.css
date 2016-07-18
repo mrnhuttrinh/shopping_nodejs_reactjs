@@ -6618,6 +6618,14 @@ div.title_page_new a {
     font-weight: bold;
 }
 
+div.product_promotion div.title_page_new {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #38b04a;
+    padding: 7px 0 5px 0!important;
+    width: auto!important;
+}
+
 h2.like_text {
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
@@ -7611,7 +7619,6 @@ div.popup_brand div.popup_brand_top span.logo_pop {
     display: inline-block;
     width: 163px;
     height: 34px;
-    background: url(../images/logo_cungmua.png) no-repeat center top;
 }
 
 div.popup_brand div.title_L {

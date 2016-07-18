@@ -14,6 +14,13 @@ export default {
             type: ACTION.GET_LIST_NEWS,
             listNews: listNews
         }
+    },
+
+    updateCartItems: function(cartItems) {
+        return {
+            type: ACTION.UPDATE_CART_ITEMS,
+            cartItems: cartItems
+        }
     }
 }
 

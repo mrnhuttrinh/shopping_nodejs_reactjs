@@ -4,6 +4,7 @@ import Category from './views/Category';
 import Product from './views/Product';
 import CartDetail from './views/CartDetail';
 import News from './views/News';
+import Register from './views/Register';
 
 function enterOtherRouter(nextState, replace) {
     window.location = "/#/";
@@ -34,6 +35,12 @@ export default {
         }, {
             path: 'search/:search_value(/:sort(/:page))',
             component: News
+        }, {
+            path: 'checkout/cart',
+            component: CartDetail
+        }, {
+            path: 'register(/:return_url)',
+            component: Register
         }, {
             path: '*',
             component: Home,

@@ -29,3 +29,6 @@ create db: node ./server/app/generateDB
 
 // multiselect
 https://github.com/JedWatson/react-select
+
+using passport login open 
+https://scotch.io/tutorials/easy-node-authentication-facebook

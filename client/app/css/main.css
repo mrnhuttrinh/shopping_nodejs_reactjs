@@ -709,6 +709,7 @@ span.button_close_popup {
     background: url(../images/cmc_icon.png) no-repeat -129px -343px !important;
     width: 25px;
     height: 25px;
+    z-index: 9999;
 }
 
 div.popup_news {
@@ -733,4 +734,26 @@ img.popup_news_image {
     -moz-box-shadow: 10px 10px 5px #ccc;
     -webkit-box-shadow: 10px 10px 5px #ccc;
     -khtml-box-shadow: 10px 10px 5px #ccc;
+}
+
+div.popup-warning {
+    height: auto;
+    width: 400px;
+    top: 238px;
+    left: 483px;
+    display: block;
+    position: fixed;
+    z-index: 9999;
+}
+
+div.popup_parent_warning {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+}
 }
