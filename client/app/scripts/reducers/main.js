@@ -26,6 +26,9 @@ export default function update(state = initialState, action) {
             newState = _.cloneDeep(state);
             newState.cartItems = action.cartItems;
             return newState;
+        case ACTION.LOGOUT:
+            newState = _.cloneDeep(state);
+            return newState;
         default:
             return state;
     }

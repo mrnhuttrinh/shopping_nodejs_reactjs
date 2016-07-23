@@ -1,11 +1,31 @@
 import React, {Component} from 'react';
+import localItem from '../../utils/localItem';
+import PopUp from './PopUp';
 
 export default class UserInfo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dialogPopUp: null
+        };
+    }
+    turnOffShowOnTop() {
+        localItem.removeItem("user");
+        this.props.logOut();
+    }
+    logOut(event) {
+        event.preventDefault();
+        this.setState({
+            dialogPopUp: <PopUp show={true} turnOffShowOnTop={this.turnOffShowOnTop.bind(this)}/>
+        });
+    }
     render() {
+        var userInfo = this.props.userInfo;
         return (
             <li>
+                {this.state.dialogPopUp}
                 <a href="/thong-tin-tai-khoan">
-                    Trình
+                    {userInfo.fullname}
                     <span className="ic_cm icon-arrow-d">
                         k
                     </span>
@@ -43,7 +63,7 @@ export default class UserInfo extends Component {
                             </a>
                         </li>
                         <li className="btn full_width">
-                            <button className="btn_brand1" onclick="location.href = '/dang-xuat'">
+                            <button className="btn_brand1" onClick={this.logOut.bind(this)}>
                                 ĐĂNG XUẤT
                             </button>
                         </li>

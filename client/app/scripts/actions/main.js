@@ -21,6 +21,12 @@ export default {
             type: ACTION.UPDATE_CART_ITEMS,
             cartItems: cartItems
         }
+    },
+
+    logOut: function() {
+        return {
+            type: ACTION.LOGOUT
+        }
     }
 }
 

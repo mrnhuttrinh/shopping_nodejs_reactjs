@@ -59,10 +59,13 @@ router.post("/update_logo_category", authorized, menu.updateLogoImage);
 // for shop
 var productShop = require("./shop/product");
 var newsShow = require("./shop/news");
+var user = require("./shop/user");
 router.get("/shop_get_list_product", productShop.getListProductByCategory);
 router.get("/shop_get_news", newsShow.getList);
 router.get("/shop_get_news_on_top", newsShow.getNewsOnTop);
 router.get("/shop_get_total_product", productShop.getTotalProduct);
 router.get("/shop_get_product_by_text_link", productShop.getProductByLink);
+router.post("/shop_register_user", user.registerUser);
+router.post("/shop_login_user", user.loginUser);
 
 module.exports = router;

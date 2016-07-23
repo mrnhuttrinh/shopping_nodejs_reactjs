@@ -2,9 +2,16 @@ import React, {Component} from 'react';
 import Cart from './Cart';
 import CartTitle from './CartTitle';
 import Login from './Login';
+import UserInfo from './UserInfo';
+import localItem from '../../utils/localItem';
 
 export default class HeaderMenu extends Component {
     render() {
+        var user = localItem.getItem("user");
+        var loginUser = <Login />;
+        if (user) {
+            loginUser = <UserInfo {...this.props} userInfo={user}/>;
+        }
         return (
             <div className="header_menu">
                 <div className="container">
@@ -32,7 +39,7 @@ export default class HeaderMenu extends Component {
                                     <Cart {...this.props} cartItems={this.props.cartItems}/>
                                 </div>
                             </li>
-                            <Login />
+                            {loginUser}
                         </ul>
                     </div>
                 </div>

@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 
 export default class Login extends Component {
+    redirectLogin(event) {
+        event.preventDefault();
+        window.location = "/#/login";
+    }
     render() {
         return (
             <li>
@@ -21,13 +25,13 @@ export default class Login extends Component {
                             </a>
                         </li>
                         <li className="btn full_width">
-                            <button className="btn_brand1 full_width_button">
+                            <button onClick={this.redirectLogin.bind(this)} className="btn_brand1 full_width_button">
                                 ĐĂNG NHẬP
                             </button>
                         </li>
                         <li className="note">
                             Khách hàng mới?
-                            <a href="/dang-ky-tai-khoan">
+                            <a href="/#/register">
                                 {" "}Tạo tài khoản
                             </a>
                         </li>

@@ -10,7 +10,7 @@ export default class Years extends Component {
         var options = [];
         for (var i = endYear; i >= startYear; i--) {
             options.push(
-                <option key={i} defaultValue={i}>
+                <option key={i} value={i}>
                     {i}
                 </option>
             );
@@ -19,8 +19,8 @@ export default class Years extends Component {
     }
     render() {
         return (
-            <select className="date_chose fr_end" data-val="true" data-val-number="The field BirthDate_Year must be a number." data-val-required="The BirthDate_Year field is required." data-val-requiredifferent=" " data-val-requiredifferent-param="0" id="BirthDate_Year" name="BirthDate_Year">
-                <option defaultChecked="selected" defaultValue="0">
+            <select className={"date_chose fr_end " + this.props.classCss} defaultValue="0" data-val="true" data-val-number="The field BirthDate_Year must be a number." data-val-required="The BirthDate_Year field is required." data-val-requiredifferent=" " data-val-requiredifferent-param="0" id="BirthDate_Year" ref="BirthDate_Year" name="BirthDate_Year">
+                <option defaultChecked="selected" value="0">
                     Năm
                 </option>
                 {this.initRangeValue()}
