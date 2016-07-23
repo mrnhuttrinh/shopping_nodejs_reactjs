@@ -5,6 +5,9 @@ import MasterPage           from './MasterPage';
 import Contents             from '../components/register';
 
 export default class Register extends Component {
+    componentDidMount() {
+        document.title = "Đăng Ký";
+    }
     render() {
         return (
             <MasterPage {...this.props}>

@@ -756,4 +756,7 @@ div.popup_parent_warning {
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%;
 }
+
+li.full_width {
+    width: 100%;
 }

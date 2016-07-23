@@ -23,8 +23,8 @@ export default class CartDetail extends Component {
         var cartItems = localItem.getItem("cartItems");
         return _.map(cartItems, cart => {
             return _.map(cart.items, item => {
-                this.total += this.total + cart.product.price_wholesale_promotion;
-                return (<Item item={item} product={cart.product}/>);
+                this.total += (cart.product.price_wholesale_promotion * item.quantity);
+                return (<Item item={item} {...this.props} product={cart.product}/>);
             });
         });
     }

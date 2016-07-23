@@ -5,7 +5,6 @@ import Product from './views/Product';
 import CartDetail from './views/CartDetail';
 import News from './views/News';
 import Login from './views/Login';
-import Register from './views/Register';
 
 function enterOtherRouter(nextState, replace) {
     window.location = "/#/";
@@ -42,9 +41,6 @@ export default {
         }, {
             path: 'login(/:return_url)',
             component: Login
-        }, {
-            path: 'register',
-            component: Register
         }, {
             path: '*',
             component: Home,

@@ -71,7 +71,8 @@ class MasterPage extends Component{
         if (segment === "product" ||
             segment === "news" ||
             segment === "checkout" ||
-            segment === "register") {
+            segment === "register" ||
+            segment === "login") {
             return true;
         }
         return false;

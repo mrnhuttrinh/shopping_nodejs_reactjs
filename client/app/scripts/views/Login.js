@@ -2,11 +2,11 @@ import React, {Component}   from 'react';
 import { connect }          from 'react-redux';
 import actions              from '../actions/main';
 import MasterPage           from './MasterPage';
-import Contents             from '../components/category';
+import Contents             from '../components/login';
 
-export default class Category extends Component {
+export default class Login extends Component {
     componentDidMount() {
-        document.title = "Áo Thun Phong Cách";
+        document.title = "Đăng Nhập";
     }
     render() {
         return (
@@ -23,4 +23,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, actions)(Category)
+export default connect(mapStateToProps, actions)(Login)

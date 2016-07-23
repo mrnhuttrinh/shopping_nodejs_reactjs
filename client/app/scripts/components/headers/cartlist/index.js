@@ -10,7 +10,7 @@ export default class CartList extends Component {
         var cartItems = this.props.cartItems;
         var cartListItem = _.map(cartItems, cart => {
             return _.map(cart.items, item => {
-                total += total + cart.product.price_wholesale_promotion;
+                total += (cart.product.price_wholesale_promotion * item.quantity);
                 return (<CartItem {...this.props} item={item} product={cart.product}/>);
             });
         });

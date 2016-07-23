@@ -5,6 +5,9 @@ import MasterPage           from './MasterPage';
 import Contents             from '../components/news';
 
 export default class News extends Component {
+    componentDidMount() {
+        document.title = "Tin Tức";
+    }
     render() {
         return (
             <MasterPage {...this.props}>

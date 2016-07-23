@@ -7,7 +7,10 @@ export default class LoginForm extends Component {
             $(function () {
                 $("#Email").focus();
             });
-         });
+        });
+    }
+    handleSubmit(event) {
+        event.preventDefault();
     }
     render() {
         return (
@@ -15,7 +18,7 @@ export default class LoginForm extends Component {
                 <p className="title_login1">
                     Đăng nhập bằng tài khoản Áo Thun Phong Cách
                 </p>
-                <form action="/dang-nhap" method="post" novalidate="novalidate">
+                <form onSubmit={this.handleSubmit.bind(this)} action="/dang-nhap" method="post" novalidate="novalidate">
                     <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="~/" />
                     <div className="form login">
                         <span className="field-validation-valid" data-valmsg-for="IsValidUser" data-valmsg-replace="true">
@@ -59,7 +62,7 @@ export default class LoginForm extends Component {
                                 <span className="arrow_W">
                                 </span>
                             </button>
-                            <a className="link_register" href="/dang-ky-tai-khoan?returnUrl=~%2F">
+                            <a className="link_register" href="/#/register">
                                 Bạn chưa có tài khoản?
                             </a>
                         </div>

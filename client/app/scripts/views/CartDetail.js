@@ -5,6 +5,9 @@ import MasterPage           from './MasterPage';
 import Contents             from '../components/cartdetail';
 
 export default class CartDetail extends Component {
+    componentDidMount() {
+        document.title = "Giỏ Hàng";
+    }
     render() {
         return (
             <MasterPage {...this.props}>

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import formatCurrency from '../../utils/formatcurrency';
+import localItem from '../../utils/localItem';
+import _ from 'lodash';
 
 export default class Item extends Component {
     removeFromCart(event) {

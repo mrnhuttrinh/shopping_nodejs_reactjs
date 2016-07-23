@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import OpenLogin from './OpenLogin';
-import RegisterForm from './register_form';
+import LoginForm from './LoginForm';
 import Title from './Title';
 
-export default class Register extends Component {
+export default class Login extends Component {
     render() {
         return (
             <div className="container payment">
                 <Title />
                 <div className="row">
                     <OpenLogin />
-                    <RegisterForm />
+                    <LoginForm />
                 </div>
                 <br className="clean" />
             </div>

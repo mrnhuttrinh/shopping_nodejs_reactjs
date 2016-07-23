@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Cart from './Cart';
 import CartTitle from './CartTitle';
+import Login from './Login';
 
 export default class HeaderMenu extends Component {
     render() {
@@ -31,6 +32,7 @@ export default class HeaderMenu extends Component {
                                     <Cart {...this.props} cartItems={this.props.cartItems}/>
                                 </div>
                             </li>
+                            <Login />
                         </ul>
                     </div>
                 </div>

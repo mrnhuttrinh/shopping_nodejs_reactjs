@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
 export default class ProductRecommend extends Component {
+    componentDidMount() {
+        
+    }
     render() {
         return (
             <div className="container1">

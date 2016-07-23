@@ -5,6 +5,9 @@ import MasterPage           from './MasterPage';
 import Contents             from '../components/search';
 
 export default class Search extends Component {
+    componentDidMount() {
+        document.title = "Tìm Kiếm";
+    }
     render() {
         return (
             <MasterPage {...this.props}>
