@@ -16,7 +16,8 @@ module.exports = function(sequelize, DataTypes) {
         color: DataTypes.STRING,
         trademark_id: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            defaultValue: null
         },
         rate: {
             type: DataTypes.INTEGER,

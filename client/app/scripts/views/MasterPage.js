@@ -72,7 +72,11 @@ class MasterPage extends Component{
             segment === "news" ||
             segment === "checkout" ||
             segment === "register" ||
-            segment === "login") {
+            segment === "login" ||
+            segment === "payment" ||
+            segment === "profile" ||
+            segment === "myorder" ||
+            segment === "changepassword") {
             return true;
         }
         return false;

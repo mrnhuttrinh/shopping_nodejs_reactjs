@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 
 export default class Control extends Component {
+    redirectPay(event) {
+        event.preventDefault();
+        window.location = "/#/payment";
+    }
     render() {
         var cartItems = this.props.cartItems;
         return (
@@ -14,7 +18,7 @@ export default class Control extends Component {
                 </a>
                 {
                     !_.isEmpty(cartItems) ? (
-                        <button className="btn_primary" onclick="window.location = '/checkout/thanh-toan' ">
+                        <button className="btn_primary" onClick={this.redirectPay.bind(this)}>
                             ĐẶT MUA
                         </button>
                     ) : null

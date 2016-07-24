@@ -24,7 +24,7 @@ export default class UserInfo extends Component {
         return (
             <li>
                 {this.state.dialogPopUp}
-                <a href="/thong-tin-tai-khoan">
+                <a href="/#/profile">
                     {userInfo.fullname}
                     <span className="ic_cm icon-arrow-d">
                         k
@@ -33,33 +33,18 @@ export default class UserInfo extends Component {
                 <div className="hover_menu">
                     <ul className="list_hotline">
                         <li>
-                            <a href="/thong-tin-tai-khoan">
+                            <a href="/#/profile">
                                 Tài khoản của bạn
                             </a>
                         </li>
                         <li>
-                            <a href="/don-hang">
+                            <a href="/#/myorder">
                                 Đơn hàng của bạn
                             </a>
                         </li>
                         <li>
-                            <a href="/tien-thuong">
-                                Tiền trong tài khoản
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/doi-mat-khau">
+                            <a href="/#/changepassword">
                                 Đổi mật khẩu
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/thong-tin-diem-thuong">
-                                Tài khoản thẻ Premium
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/voucher-dien-tu">
-                                Quản lý voucher điện tử
                             </a>
                         </li>
                         <li className="btn full_width">

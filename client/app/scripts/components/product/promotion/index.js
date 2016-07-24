@@ -12,7 +12,6 @@ export default class Promotion extends Component {
                             <h4 className="title">Chi tiết khuyến mãi</h4>
                             <div id="description" className="deal_content">
                                 <div className="deal_detail_Hi">
-                                    <h4>Điểm nổi bật</h4>
                                     <div dangerouslySetInnerHTML={{__html: product.tech_information}}></div>
                                 </div>
                             </div>

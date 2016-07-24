@@ -10812,6 +10812,7 @@ ul.listdeal_four li:hover p.num_product_hover_T {
 }
 
 ul.listdeal_four div.img {
+    overflow: hidden;
     position: relative;
     height: 235px;
     min-height: 200px;

@@ -6,6 +6,10 @@ import CartDetail from './views/CartDetail';
 import News from './views/News';
 import Login from './views/Login';
 import Register from './views/Register';
+import Payment from './views/Payment';
+import Profile from './views/Profile';
+import MyOrder from './views/MyOrder';
+import ChangePassword from './views/ChangePassword';
 
 function enterOtherRouter(nextState, replace) {
     window.location = "/#/";
@@ -45,6 +49,18 @@ export default {
         }, {
             path: 'register',
             component: Register
+        }, {
+            path: 'payment',
+            component: Payment
+        }, {
+            path: 'profile',
+            component: Profile
+        }, {
+            path: 'myorder',
+            component: MyOrder
+        }, {
+            path: 'changepassword',
+            component: ChangePassword
         }, {
             path: '*',
             component: Home,
