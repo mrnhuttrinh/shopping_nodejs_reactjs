@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import OpenLogin from './OpenLogin';
+import OpenLogin from '../commons/OpenLogin';
 import RegisterForm from './register_form';
 import Title from './Title';
 

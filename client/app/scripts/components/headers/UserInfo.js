@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import localItem from '../../utils/localItem';
 import PopUp from './PopUp';
 
 export default class UserInfo extends Component {
@@ -10,7 +9,6 @@ export default class UserInfo extends Component {
         };
     }
     turnOffShowOnTop() {
-        localItem.removeItem("user");
         this.props.logOut();
     }
     logOut(event) {

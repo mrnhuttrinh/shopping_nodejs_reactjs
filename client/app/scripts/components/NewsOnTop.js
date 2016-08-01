@@ -9,7 +9,9 @@ export default class NewsOnTop extends Component {
         };
     }
     componentWillMount() {
-        document.body.style.overflowY = "hidden";
+        if (this.props.news) {
+            document.body.style.overflowY = "hidden";
+        }
     }
     turnOffShowOnTop(event) {
         document.body.style.overflowY = "visible";
@@ -18,7 +20,7 @@ export default class NewsOnTop extends Component {
         });
     }
     render() {
-        if (this.state.show) {
+        if (this.state.show && this.props.news) {
             var news = this.props.news;
             return (
                 <div className="popup_news" onClick={this.turnOffShowOnTop.bind(this)}>

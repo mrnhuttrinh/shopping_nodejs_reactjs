@@ -37,7 +37,8 @@ class MasterPage extends Component{
             self.setState({
                 NewsOnTop: (<NewsOnTop news={newsOnTop}/>)
             });
-            localItem.setItem("first_load", newsOnTop.id, 3600);
+            if (newsOnTop)
+                localItem.setItem("first_load", newsOnTop.id, 3600);
         }
     }
     componentDidMount() {

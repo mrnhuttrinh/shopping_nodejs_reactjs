@@ -5,6 +5,20 @@ export default class Login extends Component {
         event.preventDefault();
         window.location = "/#/login";
     }
+    behaviorSuccess(user) {
+        window.userLogin(user);
+    }
+    openURLFacebook(event) {
+        event.preventDefault();
+        window.behaviorSuccess = this.behaviorSuccess;
+        window.userLogin = this.props.userLogin;
+        window.open("/auth/facebook", "MsgWindow", "width=800, height=600");
+    }
+    openURLGoogle(event) {
+        event.preventDefault();
+        window.behaviorSuccess = this.behaviorSuccess;
+        window.open("/auth/google", "MsgWindow", "width=800, height=600");
+    }
     render() {
         return (
             <li>
@@ -17,11 +31,11 @@ export default class Login extends Component {
                 <div className="hover_menu">
                     <ul className="list_hotline">
                         <li className="btn">
-                            <a className="btn_google">
+                            <a className="btn_google" onClick={this.openURLGoogle.bind(this)}>
                             </a>
                         </li>
                         <li className="btn">
-                            <a className="btn_face">
+                            <a className="btn_face" onClick={this.openURLFacebook.bind(this)}>
                             </a>
                         </li>
                         <li className="btn full_width">

@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         username: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
+        token: DataTypes.STRING,
         info: DataTypes.STRING,
         fullname: DataTypes.STRING,
         address: DataTypes.STRING,
@@ -20,10 +21,13 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: true
         },
         birthdate: DataTypes.DATE,
-        type: DataTypes.STRING,
+        type: {
+            type: DataTypes.STRING,
+            defaultValue: "Local"
+        },
         status: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true,
+            defaultValue: 1,
         }
     }, {
         instanceMethods: {

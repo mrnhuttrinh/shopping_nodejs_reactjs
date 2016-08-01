@@ -20,9 +20,9 @@
         },
         "openAuthentication": {
             "facebookAuth" : {
-                "clientID"      : "your-secret-clientID-here",
-                "clientSecret"  : "your-client-secret-here",
-                "callbackURL"   : "http://localhost:8080/auth/facebook/callback"
+                "clientID"      : "745581532251215",
+                "clientSecret"  : "21ff1cb046e594183393d15367445ba4",
+                "callbackURL"   : "http://localhost:8000/auth/facebook/callback"
             },
             "twitterAuth" : {
                 "consumerKey"       : "your-consumer-key-here",

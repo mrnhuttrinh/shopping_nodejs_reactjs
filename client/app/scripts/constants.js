@@ -14,6 +14,7 @@ module.exports = {
         GET_LIST_NEWS: "GET_LIST_NEWS",
         FIRST_LOAD: "FIRST_LOAD",
         UPDATE_CART_ITEMS: "UPDATE_CART_ITEMS",
+        USER_LOGIN: "USER_LOGIN",
         LOGOUT: "LOGOUT"
     }
 }

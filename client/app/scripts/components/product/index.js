@@ -28,6 +28,7 @@ export default class Product extends Component {
                 self.setState({
                     product: res.body.data
                 });
+                document.title = res.body.data.name;
             }
             self.setState({
                 loading: false

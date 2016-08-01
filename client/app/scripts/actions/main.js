@@ -23,6 +23,13 @@ export default {
         }
     },
 
+    userLogin: function(user) {
+        return {
+            type: ACTION.USER_LOGIN,
+            user: user
+        }
+    },
+
     logOut: function() {
         return {
             type: ACTION.LOGOUT

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import OpenLogin from './OpenLogin';
+import OpenLogin from '../commons/OpenLogin';
 import LoginForm from './LoginForm';
 import Title from './Title';
 
@@ -9,8 +9,8 @@ export default class Login extends Component {
             <div className="container payment">
                 <Title />
                 <div className="row">
-                    <OpenLogin />
-                    <LoginForm />
+                    <OpenLogin {...this.props}/>
+                    <LoginForm {...this.props}/>
                 </div>
                 <br className="clean" />
             </div>

@@ -5,6 +5,7 @@ var config = require("../../config");
 var toImage = require("../../utils/toImage");
 var logger = require("../../logger");
 var models = require("../../models");
+var path = require("path");
 var _ = require("lodash");
 
 module.exports = {

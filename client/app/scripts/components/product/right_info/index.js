@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import RightTop from './RightTop';
 import RightBottom from './RightBottom';
-import localItem from '../../../utils/localItem';
 import PopUpWarn from '../PopUpWarn';
 
 export default class RightInfo extends Component {
@@ -27,7 +26,7 @@ export default class RightInfo extends Component {
             return;
         }
         // add to local item
-        var cartItems = localItem.getItem("cartItems");
+        var cartItems = this.props.cartItems;
         cartItems = cartItems || {};
         var product = this.props.product;
 
@@ -37,7 +36,6 @@ export default class RightInfo extends Component {
             items: this.carts
         };
         this.props.updateCartItems(cartItems);
-        localItem.setItem("cartItems", cartItems);
         window.location = "/#/checkout/cart";
     }
     increaseSize(size, quantity) {

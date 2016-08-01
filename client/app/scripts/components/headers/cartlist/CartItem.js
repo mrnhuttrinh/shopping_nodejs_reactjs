@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import localItem from '../../../utils/localItem';
 import _ from 'lodash';
 
 export default class CartItem extends Component {
     removeFromCart() {
         // add to local item
-        var cartItems = localItem.getItem("cartItems");
+        var cartItems = this.props.cartItems;
         cartItems = cartItems || {};
 
         var product = this.props.product;
@@ -27,7 +26,6 @@ export default class CartItem extends Component {
         }
 
         this.props.updateCartItems(cartItems);
-        localItem.setItem("cartItems", cartItems);
     }
     render() {
         var product = this.props.product;

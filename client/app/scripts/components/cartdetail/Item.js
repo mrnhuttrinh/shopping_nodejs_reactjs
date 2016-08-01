@@ -4,10 +4,28 @@ import localItem from '../../utils/localItem';
 import _ from 'lodash';
 
 export default class Item extends Component {
+    updateNumberItem(event) {
+        event.preventDefault();
+
+        var total = event.currentTarget.value;
+
+        var cartItems = this.props.cartItems;
+        var product = this.props.product;
+
+        var item = this.props.item;
+        var carts = cartItems[product.id];
+        _.forEach(carts.items, (_item) => {
+            if (_item.name === item.name) {
+                _item.quantity = total;
+            }
+        });
+
+        this.props.updateCartItems(cartItems);
+    }
     removeFromCart(event) {
         event.preventDefault();
         // add to local item
-        var cartItems = localItem.getItem("cartItems");
+        var cartItems = this.props.cartItems;
         cartItems = cartItems || {};
 
         var product = this.props.product;
@@ -29,7 +47,6 @@ export default class Item extends Component {
         }
 
         this.props.updateCartItems(cartItems);
-        localItem.setItem("cartItems", cartItems);
     }
     render() {
         var item = this.props.item;
@@ -53,7 +70,7 @@ export default class Item extends Component {
                     </strong>
                 </td>
                 <td align="center">
-                    <input style={{color: "black"}} min="0" defaultValue={item.quantity} type="number" className="select_number num selectUpdateQTY"/>
+                    <input onChange={this.updateNumberItem.bind(this)} style={{color: "black"}} min="0" defaultValue={item.quantity} type="number" className="select_number num selectUpdateQTY"/>
                     <a className="ic_cm icon-close1" onClick={this.removeFromCart.bind(this)}>
                         W
                     </a>

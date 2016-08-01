@@ -5,6 +5,9 @@ import MasterPage           from './MasterPage';
 import Contents             from '../components/dashboard';
 
 export default class Main extends Component {
+    componentDidMount() {
+        document.title = "Áo Thun Phong Cách";
+    }
     render() {
         return (
             <MasterPage {...this.props}>

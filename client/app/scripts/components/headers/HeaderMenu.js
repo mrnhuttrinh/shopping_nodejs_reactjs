@@ -3,12 +3,11 @@ import Cart from './Cart';
 import CartTitle from './CartTitle';
 import Login from './Login';
 import UserInfo from './UserInfo';
-import localItem from '../../utils/localItem';
 
 export default class HeaderMenu extends Component {
     render() {
-        var user = localItem.getItem("user");
-        var loginUser = <Login />;
+        var user = this.props.user;
+        var loginUser = <Login {...this.props} />;
         if (user) {
             loginUser = <UserInfo {...this.props} userInfo={user}/>;
         }

@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import OpenLogin from './OpenLogin';
 import Validate from './Validate';
 import _ from 'lodash';
 import userAPIs from '../../apis/user';
 import PopUp from './PopUp';
-import localItem from '../../utils/localItem';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -71,7 +69,7 @@ export default class LoginForm extends Component {
                 this.setState({
                     dialogPopup: <PopUp turnOffShowOnTop={this.turnOffShowOnTop.bind(this)} status={true} textShow="Đăng Nhập Thành Công." show={true}/>
                 });
-                localItem.setItem("user", res.body.data);
+                this.props.userLogin(res.body.data);
             }
         });
     }

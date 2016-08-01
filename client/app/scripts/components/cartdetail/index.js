@@ -4,7 +4,6 @@ import Item from './Item';
 import EndItem from './EndItem';
 import Control from './Control';
 import ProductRecommend from './ProductRecommend';
-import localItem from '../../utils/localItem';
 import _ from 'lodash';
 
 export default class CartDetail extends Component {
@@ -20,16 +19,16 @@ export default class CartDetail extends Component {
     // }
     renderListItem() {
         this.total = 0;
-        var cartItems = localItem.getItem("cartItems");
+        var cartItems = this.props.cartItems;
         return _.map(cartItems, cart => {
             return _.map(cart.items, item => {
                 this.total += (cart.product.price_wholesale_promotion * item.quantity);
-                return (<Item item={item} {...this.props} product={cart.product}/>);
+                return (<Item key={"product_" + cart.product.id + "_item_" + item.id} item={item} {...this.props} product={cart.product}/>);
             });
         });
     }
     render() {
-        var cartItems = localItem.getItem("cartItems");
+        var cartItems = this.props.cartItems;
         return (
             <div>
                 <div className="container">
@@ -51,7 +50,7 @@ export default class CartDetail extends Component {
                                     <p className="no_product">Không có sản phẩm nào trong giỏ hàng</p>
                                 )
                             }
-                            <Control cartItems={cartItems}/>
+                            <Control cartItems={cartItems} {...this.props}/>
                             <br className="clean" />
                         </div>
                     </div>

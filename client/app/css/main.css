@@ -760,3 +760,27 @@ div.popup_parent_warning {
 li.full_width {
     width: 100%;
 }
+
+div.intro_menu_div {
+    padding: 10px 0px;
+}
+div.payment_step {
+    /*background-color: #38b04a;*/
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+textarea.no_resize {
+    resize: vertical;
+}
+
+div.parent_column_payment {
+    height: 100%;
+}
+
+div.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
