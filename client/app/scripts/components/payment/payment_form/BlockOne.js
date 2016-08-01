@@ -13,7 +13,7 @@ export default class BlockOne extends Component {
     }
     render() {
         return (
-            <div className="col-md-4 col-sm-12">
+            <div className={this.props.classCSS} id="block_one_payment">
                 <div className="parent_column_payment">
                     <p className="title_buy">
                         1. Sản phẩm
