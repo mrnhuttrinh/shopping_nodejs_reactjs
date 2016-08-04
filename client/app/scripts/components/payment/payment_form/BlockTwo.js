@@ -10,7 +10,9 @@ export default class BlockTwo extends Component {
                     <p className="title_buy">
                         2. Địa chỉ nhận hàng
                     </p>
-                    <AddAddress />
+                    <div className="delivery">
+                        <AddAddress formType={this.props.formType} {...this.props}/>
+                    </div>
                 </div>
             </div>
         );
@@ -34,7 +36,7 @@ export default class BlockTwo extends Component {
                                 <p>
                                     01656033621, 8/4 Đường 21, Khác, Quận Thủ Đức, TP Hồ Chí Minh
                                 </p>
-                                <ChooseAddress />
+                                <ChooseAddress {...this.props}/>
                             </div>
                             <div className="clearfix">
                             </div>
@@ -45,6 +47,10 @@ export default class BlockTwo extends Component {
         );
     }
     render() {
-        return this.renderShowAddress();
+        if (this.props.addressForm) {
+            return this.renderAddAddress();
+        } else {
+            return this.renderShowAddress();
+        }
     }
 }
