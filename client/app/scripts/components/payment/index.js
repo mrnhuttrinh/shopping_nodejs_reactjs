@@ -18,7 +18,7 @@ export default class Payment extends Component {
             <div className="container payment">
                 <Title />
                 <PaymentForm cartItems={cartItems} {...this.props}/>
-                <SumPayment />
+                <SumPayment {...this.props}/>
             </div>
         )
     }

@@ -67,5 +67,8 @@ router.get("/shop_get_total_product", productShop.getTotalProduct);
 router.get("/shop_get_product_by_text_link", productShop.getProductByLink);
 router.post("/shop_register_user", user.registerUser);
 router.post("/shop_login_user", user.loginUser);
+router.get("/shop_get_user_address", user.getUserAddress);
+router.post("/shop_add_new_address", user.addNewAddress);
+router.post("/shop_update_address", user.updateAddress);
 
 module.exports = router;

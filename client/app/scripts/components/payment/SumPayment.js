@@ -1,6 +1,18 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
+import formatCurrency from '../../utils/formatcurrency';
 
 export default class SumPayment extends Component {
+    calculateSum() {
+        var total = 0;
+        var cartItems = this.props.cartItems;
+        _.forEach(cartItems, cart => {
+            _.forEach(cart.items, item => {
+                total += (cart.product.price_wholesale_promotion * item.quantity);
+            });
+        });
+        return total;
+    }
     render() {
         return (
             <div className="row payment_sum">
@@ -19,7 +31,7 @@ export default class SumPayment extends Component {
                                 THÀNH TIỀN
                             </span>
                             <span className="row_R">
-                                199.000đ
+                                {formatCurrency(this.calculateSum())}đ
                             </span>
                             <br className="clean" />
                         </div>
@@ -63,9 +75,6 @@ export default class SumPayment extends Component {
                                 </p>
                                 <ul>
                                     <li>
-                                        Miễn phí hội viên có thẻ Premium chính thức
-                                    </li>
-                                    <li>
                                         Miễn phí đơn hàng từ
                                         <span>
                                             100.000đ
@@ -100,7 +109,7 @@ export default class SumPayment extends Component {
                                 Cần thanh toán
                             </span>
                             <span className="row_R total_sum">
-                                199.000đ
+                                {formatCurrency(this.calculateSum())}đ
                             </span>
                             <br className="clean" />
                         </div>

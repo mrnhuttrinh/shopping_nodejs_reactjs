@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
 
 export default class ChooseAddress extends Component {
     constructor(props) {
@@ -21,21 +22,48 @@ export default class ChooseAddress extends Component {
         event.preventDefault();
         this.props.addAddressForm(true, "create");
     }
-    render() {
+    changeSelectAddress(event) {
+        event.preventDefault();
+        var index = parseInt(this.refs["CustomerAddress"].value);
+        this.props.updateChooseAddress(index);
+        this.setState({
+            chooseAddress: !this.state.chooseAddress
+        });
+    }
+    renderSelectAddress() {
+        var listAddress = this.props.listAddress;
+        var chooseAddress = this.props.chooseAddress;
+        var options = _.map(listAddress, (address, index) => {
+            if (index === chooseAddress) {
+                return (<option selected value={index} key={address.id}>{address.homeno} Đường {address.street}, {address.ward}, {address.district}, {address.province}</option>);
+            } else {
+                return (<option value={index} key={address.id}>{address.homeno} Đường {address.street}, {address.ward}, {address.district}, {address.province}</option>);
+            }
+        });
         return (
-            <div className="chose_add">
+            <p>
+                <select onChange={this.changeSelectAddress.bind(this)} autocomplete="off" ref="CustomerAddress" name="CustomerAddress">
+                    {options}
+                </select>
+            </p>
+        );
+    }
+    render() {
+        var listAddress = this.props.listAddress;
+        var control = null;
+        if (listAddress && listAddress.length) {
+            control = (
                 <p>
                     <a className="other_add" onClick={this.chooseAddressOther.bind(this)}>Chọn địa chỉ khác</a>
                     <a className="change" onClick={this.changeAddress.bind(this)}>Thay đổi</a>
                 </p>
+            );
+        }
+        return (
+            <div className="chose_add">
+                {control}
                 {
-                    this.state.chooseAddress ? (
-                        <p>
-                            <select autocomplete="off" name="CustomerAddress">
-                                <option selected="selected" value="2013704">8/4 Đường 21, Khác, Quận Thủ Đức, TP Hồ Chí Minh</option>
-                            </select>
-                        </p>
-                    ) : null
+                    this.state.chooseAddress ? this.renderSelectAddress() : null
                 }
                 {
                     this.state.chooseAddress ? (

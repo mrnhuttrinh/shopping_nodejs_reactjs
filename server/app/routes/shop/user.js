@@ -103,5 +103,52 @@ module.exports = {
                 error: err
             });
         });
+    },
+    getUserAddress: function (req, res) {
+        var userID = req.param("user_id");
+        models.UserAddress.findAll({
+            where: {
+                user_id: userID
+            }
+        }).then(function(addresses) {
+            return res.status(200).send({
+                data: addresses
+            });
+        }).catch(function() {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    addNewAddress: function(req, res) {
+        var newAddress = req.body.address;
+        models.UserAddress.create(newAddress).then(function(address) {
+            return res.status(200).send({
+                data: address
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    updateAddress: function(req, res) {
+        var address = req.body.address;
+        models.UserAddress.update(address, {
+            where: {
+                id: address.id
+            }
+        }).then(function(address) {
+            return res.status(200).send({
+                data: address
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 }

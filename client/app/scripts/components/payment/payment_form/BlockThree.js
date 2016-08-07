@@ -9,12 +9,10 @@ export default class PaymentForm extends Component {
                 </p>
                 <div id="wrapperPaymentMethod">
                     <div className="payment_choose">
-                        <ul className="choose_item">
+                        <ul className="choose_item border_left_e8e8e8">
                             <li>
                                 <label>
-                                    <span className="ic_cm icon-money">
-                                        B
-                                    </span>
+                                    <span className="ic_cm icon-money">B</span>
                                     <span>
                                         {" "}Bằng tiền mặt khi nhận hàng
                                     </span>

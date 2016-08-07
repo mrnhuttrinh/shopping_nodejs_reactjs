@@ -18,5 +18,29 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    getUserAddresses(data, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_USER_ADDRESSES, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    addNewAddress(data, cb) {
+        var request = new Request();
+        request
+            .post(API.ADD_NEW_ADDRESS, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    updateAddress(data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_ADDRESS, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

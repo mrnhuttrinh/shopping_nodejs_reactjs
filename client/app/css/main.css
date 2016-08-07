@@ -805,19 +805,19 @@ div.clear_padding_bottom {
     padding-bottom: 0px;
 }
 
-div.border_right_e8e8e8 {
+.border_right_e8e8e8 {
     border-right: 1px solid #e8e8e8;
 }
 
-div.border_left_e8e8e8 {
+.border_left_e8e8e8 {
     border-left: 1px solid #e8e8e8;
 }
 
-div.border_top_e8e8e8 {
+.border_top_e8e8e8 {
     border-top: 1px solid #e8e8e8;
 }
 
-div.border_bottom_e8e8e8 {
+.border_bottom_e8e8e8 {
     border-bottom: 1px solid #e8e8e8;
 }
 
@@ -872,4 +872,9 @@ a.link_register {
 
 button.btn_payment_form {
     padding: 10px 20px;
+}
+
+.payment-validate-error {
+    margin-top: -15px;
+    color: red;
 }
