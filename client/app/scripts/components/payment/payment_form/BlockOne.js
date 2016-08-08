@@ -13,21 +13,19 @@ export default class BlockOne extends Component {
     }
     render() {
         return (
-            <div className="col-md-4 col-sm-12">
-                <div className="parent_column_payment">
-                    <p className="title_buy">
-                        1. Sản phẩm
+            <div className="col-xl-4 col-md-4 col-sm-12">
+                <p className="title_buy col-xl-12 col-md-12 col-sm-12">
+                    1. Sản phẩm
+                </p>
+                <div className="col-xl-12 col-md-12 col-sm-12 clear_padding border_right_e8e8e8">
+                    <ul className="list_pay">
+                        {this.renderListItem()}
+                    </ul>
+                    <p className="change_cart">
+                        <a className="change_shop" href="/#/checkout/cart">
+                            Thay đổi giỏ hàng
+                        </a>
                     </p>
-                    <div>
-                        <ul className="list_pay">
-                            {this.renderListItem()}
-                        </ul>
-                        <p className="change_cart">
-                            <a className="change_shop" href="/#/checkout/cart">
-                                Thay đổi giỏ hàng
-                            </a>
-                        </p>
-                    </div>
                 </div>
             </div>
         )

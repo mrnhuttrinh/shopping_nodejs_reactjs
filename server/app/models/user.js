@@ -11,9 +11,6 @@ module.exports = function(sequelize, DataTypes) {
         token: DataTypes.STRING,
         info: DataTypes.STRING,
         fullname: DataTypes.STRING,
-        address: DataTypes.STRING,
-        phone: DataTypes.STRING,
-        address2: DataTypes.STRING,
         phone: DataTypes.STRING,
         image: DataTypes.STRING,
         gender: {

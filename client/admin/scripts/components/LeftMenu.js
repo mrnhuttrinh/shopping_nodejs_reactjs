@@ -30,6 +30,9 @@ export default class LeftMenu extends Component{
                         <li className={pathName == "/myprofile" ? "active" : ""}>
                             <Link to="/myprofile"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">My Profile</span></Link>
                         </li>
+                        <li className={pathName == "/size_type" ? "active" : ""}>
+                            <Link to="/size_type"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">Quản Lý Sizes</span></Link>
+                        </li>
                         <li className={pathName == "/menu" ? "active" : ""}>
                             <Link to="/menu"><i className="fa fa-lg fa-fw fa-desktop"></i> <span className="menu-item-parent">Quản Lý Menu</span></Link>
                         </li>
