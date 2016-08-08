@@ -9,7 +9,7 @@ export default class Register extends Component {
             <div className="container payment">
                 <Title />
                 <div className="row">
-                    <OpenLogin />
+                    <OpenLogin {...this.props}/>
                     <RegisterForm />
                 </div>
                 <br className="clean" />
