@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import formatCurrency from '../../utils/formatcurrency';
+import orderAPI from '../../apis/order';
 
 export default class SumPayment extends Component {
     calculateSum() {
@@ -13,6 +14,10 @@ export default class SumPayment extends Component {
         });
         return total;
     }
+    createNewOrder(event) {
+        event.preventDefault();
+        this.props.createNewOrder()
+    }
     render() {
         return (
             <div className="row payment_sum">
@@ -20,7 +25,7 @@ export default class SumPayment extends Component {
                     <p className="buy_note">
                         Ghi chú cho đơn hàng
                         <br />
-                        <textarea className="GINGER_SOFTWARE_control no_resize" ginger_software_editor="true" id="orderNote" placeholder="Nhập vào đây các ghi chú cho đơn hàng này, nếu có" spellcheck="false" >
+                        <textarea className="GINGER_SOFTWARE_control no_resize" ginger_software_editor="true" ref="orderNote" id="orderNote" placeholder="Nhập vào đây các ghi chú cho đơn hàng này, nếu có" spellcheck="false" >
                         </textarea>
                     </p>
                 </div>
@@ -117,11 +122,21 @@ export default class SumPayment extends Component {
                 </div>
                 <div className="col-md-4 col-sm-12">
                     <p className="bg_btn_buy">
-                        <button className="btn_primary">
-                            ĐẶT HÀNG
-                            <span className="arrow_W_big">
-                            </span>
-                        </button>
+                        {
+                            this.props.submitLoading ? (
+                                <button className="btn_primary">
+                                    Loading...
+                                    <span className="arrow_W_big">
+                                    </span>
+                                </button>
+                            ) : (
+                                <button className="btn_primary" onClick={this.createNewOrder.bind(this)}>
+                                    ĐẶT HÀNG
+                                    <span className="arrow_W_big">
+                                    </span>
+                                </button>
+                            )
+                        }
                     </p>
                     <div className="logo_brand">
                         <span className="logo_acb">

@@ -12,7 +12,6 @@ module.exports = function(sequelize, DataTypes) {
         info: DataTypes.STRING,
         fullname: DataTypes.STRING,
         phone: DataTypes.STRING,
-        phone2: DataTypes.STRING,
         image: DataTypes.STRING,
         gender: {
             type: DataTypes.BOOLEAN,

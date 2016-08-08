@@ -58,6 +58,7 @@ export default class AddAddress extends Component {
                 if (err) {
                     // TODO
                 } else {
+                    this.props.updateListAddress(res.body.data, "create");
                     this.props.addAddressForm(false);
                 }
                 this.setState({
@@ -72,6 +73,8 @@ export default class AddAddress extends Component {
                 if (err) {
                     // TODO
                 } else {
+                    _.merge(address, data.address);
+                    this.props.updateListAddress(address, "update")
                     this.props.addAddressForm(false);
                 }
                 this.setState({

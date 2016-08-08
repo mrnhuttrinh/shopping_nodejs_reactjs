@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        size_id: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER
     }, {
         tableName: 'sizes'

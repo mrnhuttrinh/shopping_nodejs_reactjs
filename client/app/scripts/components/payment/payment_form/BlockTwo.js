@@ -22,7 +22,7 @@ export default class BlockTwo extends Component {
                         2. Địa chỉ nhận hàng
                     </p>
                     <div className="delivery">
-                        <AddAddress chooseAddress={this.state.chooseAddress} formType={this.props.formType} {...this.props}/>
+                        <AddAddress updateListAddress={this.props.updateListAddress} chooseAddress={this.state.chooseAddress} formType={this.props.formType} {...this.props}/>
                     </div>
                 </div>
             </div>

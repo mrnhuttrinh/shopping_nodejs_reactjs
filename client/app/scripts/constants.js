@@ -10,7 +10,8 @@ module.exports = {
         LOGIN_USER: "/api/shop_login_user",
         GET_USER_ADDRESSES: "/api/shop_get_user_address",
         ADD_NEW_ADDRESS: "/api/shop_add_new_address",
-        UPDATE_ADDRESS: "/api/shop_update_address"
+        UPDATE_ADDRESS: "/api/shop_update_address",
+        CREATE_NEW_ORDER: "/api/shop_create_new_oder"
     },
     ACTION: {
         GET_MENU: "GET_MENU",
