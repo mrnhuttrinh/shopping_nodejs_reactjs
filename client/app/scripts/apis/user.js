@@ -42,5 +42,13 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    getUserInfo(data, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_USER_INFO, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

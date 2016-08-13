@@ -11,7 +11,9 @@ module.exports = {
         GET_USER_ADDRESSES: "/api/shop_get_user_address",
         ADD_NEW_ADDRESS: "/api/shop_add_new_address",
         UPDATE_ADDRESS: "/api/shop_update_address",
-        CREATE_NEW_ORDER: "/api/shop_create_new_oder"
+        CREATE_NEW_ORDER: "/api/shop_create_new_oder",
+        GET_USER_INFO: "/api/shop_get_user_info",
+        GET_YOUR_ORDER: "/api/shop_get_your_order"
     },
     ACTION: {
         GET_MENU: "GET_MENU",

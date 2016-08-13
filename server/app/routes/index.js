@@ -72,5 +72,7 @@ router.get("/shop_get_user_address", user.getUserAddress);
 router.post("/shop_add_new_address", user.addNewAddress);
 router.post("/shop_update_address", user.updateAddress);
 router.post("/shop_create_new_oder", order.createNewOrder);
+router.get("/shop_get_user_info", user.getUserInfo);
+router.get("/shop_get_your_order", order.getYourOrder);
 
 module.exports = router;

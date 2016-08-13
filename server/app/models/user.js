@@ -20,7 +20,8 @@ module.exports = function(sequelize, DataTypes) {
         birthdate: DataTypes.DATE,
         type: {
             type: DataTypes.STRING,
-            defaultValue: "Local"
+            defaultValue: "Local",
+            values: ['Local', 'Facebook', 'Google']
         },
         status: {
             type: DataTypes.BOOLEAN,

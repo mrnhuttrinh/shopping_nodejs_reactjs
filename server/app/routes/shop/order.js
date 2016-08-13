@@ -15,12 +15,12 @@ module.exports = {
         var products = req.body.products;
         var address_id = req.body.address_id;
         var note = req.body.note;
-
+        var createTextUnique = (new Date()).getTime();
         models.Order.create({
-            id: uuid(),
             customer_id: customer_id,
             address_id: address_id,
-            note: note
+            note: note,
+            text_id: createTextUnique
         }).then(function(order) {
             // create order_detail
             var listPromises = [];
@@ -44,7 +44,24 @@ module.exports = {
                 return res.status(400).send({
                     error: err
                 });
-            })
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    getYourOrder: function(req, res) {
+        var id = req.param("id");
+        models.Order.findAll({
+            where: {
+                customer_id: id
+            }
+        }).then(function(yourOrder) {
+            res.status(200).send({
+                data: yourOrder
+            });
         }).catch(function(err) {
             logger("ERROR", err);
             return res.status(400).send({
