@@ -37,7 +37,9 @@ module.exports = {
         DELETE_GALLERY_MENU:    "/api/delete_gallery_menu",
         EDIT_GALLERY_MENU:      "/api/edit_gallery_menu",
         UPDATE_LOGO_CATEGORY:   "/api/update_logo_category",
-        UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer"
+        UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer",
+        FILTER_ORDER:           "/api/filter_order",
+        GET_ORDER_BY_ID:        "/api/get_order_by_id"
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",
@@ -57,6 +59,7 @@ module.exports = {
         CREATE_NEWS:            "CREATE_NEWS",
         GET_LIST_TRADEMARK:     "GET_LIST_TRADEMARK",
         TAB_SELECTED_DASHBOARD: "TAB_SELECTED_DASHBOARD",
-        GET_LIST_TRADEMARK_MINI:"GET_LIST_TRADEMARK_MINI"
+        GET_LIST_TRADEMARK_MINI:"GET_LIST_TRADEMARK_MINI",
+        UPDATE_LIST_ORDERS:     "UPDATE_LIST_ORDERS"
     }
 }

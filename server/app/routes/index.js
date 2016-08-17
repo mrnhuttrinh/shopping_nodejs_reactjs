@@ -7,6 +7,7 @@ var menu = require("./admin/menu");
 var product = require("./admin/product");
 var news = require("./admin/news")
 var trademark = require("./admin/trademark");
+var orderAdmin = require("./admin/order");
 
 // for admin
 router.post('/signin_employer', admin.signin);
@@ -21,6 +22,8 @@ router.post("/change_status_employer", authorized, admin.changeStatusEmployer)
 router.post("/update_employer_info", authorized, admin.updateEmployerInfo)
 router.post("/update_password_employer", authorized, admin.updatePasswordEmployers)
 router.post("/update_role_employer", authorized, admin.updateRoleEmployer);
+router.post("/filter_order", authorized, orderAdmin.filterOrder);
+router.get("/get_order_by_id", authorized, orderAdmin.getOrderById);
 
 // for product
 router.post('/create_product',authorized, product.createProduct)

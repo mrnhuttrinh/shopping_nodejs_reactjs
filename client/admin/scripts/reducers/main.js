@@ -32,7 +32,8 @@ var initialState = {
     trademark: {
         listTrademark: [],
         total: 0
-    }
+    },
+    listOrders: []
 }
 
 export default function update(state = initialState, action) {
@@ -103,6 +104,10 @@ export default function update(state = initialState, action) {
                     label: trademark.name
                 };
             });
+            return newState;
+        case ACTION.UPDATE_LIST_ORDERS:
+            newState = _.cloneDeep(state);
+            newState.listOrders = action.listOrders;
             return newState;
         default:
             return state;

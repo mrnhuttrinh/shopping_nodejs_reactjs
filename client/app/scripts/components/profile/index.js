@@ -122,7 +122,6 @@ export default class Profile extends Component {
                             <th>
                                 <p className="line-height-30px">
                                     Đơn Hàng Của Bạn
-                                    <button onClick={this.editInfo.bind(this, 4)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>
                                 </p>
                             </th>
                         </tr>

@@ -8,7 +8,14 @@ import _ from 'lodash'
 import localItem from '../utils/localItem';
 
 export default class MasterPage extends Component {
-    componentWillMount() {
+    constructor(props) {
+        super(props);
+        // this.authentication();
+        this.state = {
+            authenticate: true
+        };
+    }
+    authentication() {
         var tokenLocal = localItem.getItem("token");
         var self = this;
         if(_.isEmpty(tokenLocal) 
@@ -24,8 +31,10 @@ export default class MasterPage extends Component {
                     window.location = "/admin/#/login";
                 } else {
                     if (res.status === 200) {
+                        self.state.authenticate = true;
                         self.props.signIn(res.body.data);
                     } else {
+                        self.state.authenticate = false;
                         localItem.removeItem("token");
                         window.location = "/admin/#/login";
                     }
@@ -33,7 +42,9 @@ export default class MasterPage extends Component {
             });
         }
     }
-
+    componentWillMount() {
+        this.authentication();
+    }
     componentDidUpdate() {
         var self = this;
         if (!_.isNull(self.props.user) 
@@ -49,12 +60,9 @@ export default class MasterPage extends Component {
     }
 
     render() {
-        var tokenLocal = localItem.getItem("token");
         var self = this;
         var contentRender = "";
-        if(_.isEmpty(tokenLocal)) {
-
-        } else {
+        if(this.state.authenticate) {
             contentRender = this.props.children;
         }
         return (

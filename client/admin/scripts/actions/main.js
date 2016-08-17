@@ -87,5 +87,11 @@ export default {
             type: ACTION.GET_LIST_TRADEMARK_MINI,
             trademarks: trademarks
         }
+    },
+    updateListOrders: function(listOrders) {
+        return {
+            type: ACTION.UPDATE_LIST_ORDERS,
+            listOrders: listOrders
+        };
     }
 }
