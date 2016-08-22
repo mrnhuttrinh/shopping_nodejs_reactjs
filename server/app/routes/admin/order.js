@@ -52,6 +52,7 @@ module.exports = {
         var query = " SELECT distinct(`order`.id), `order`.*, `user`.fullname ";
         query += " FROM `order` ";
         query += " Inner Join order_detail ON `order`.id = order_detail.id ";
+        query += " Inner Join useraddress ON `order`.address_id = useraddress.id ";
         query += " Inner Join products ON order_detail.product_id = products.id ";
         query += " Inner Join `user` ON `order`.customer_id = `user`.id ";
         query += " Inner Join products_category ON products.id = products_category.product_id ";
@@ -59,13 +60,13 @@ module.exports = {
         query += " Where "
         var condition = [];
         if (orderId) {
-            condition.push(" `order`.id = " + orderId + " ");
+            condition.push(" `order`.text_id like '%" + orderId + "%' ");
         }
         if (productName) {
-            condition.push(" `products`.name like '%" + productName + "%'' ");
+            condition.push(" `products`.name like '%" + productName + "%' OR `products`.name like '%" + productName + "%' ");
         }
         if (customerName) {
-            condition.push(" `user`.fullname like '%" + customerName + "%'' ");
+            condition.push(" `useraddress`.fullname like '%" + customerName + "%' OR `user`.fullname like '%" + customerName + "%' ");
         }
         if (categoryId) {
             condition.push(" `categories`.id = " + categoryId +" ");
@@ -107,17 +108,47 @@ module.exports = {
         }).then(function(order) {
 
             // get order detail
-            models.OrderDetail.findAll({
-                where: {
-                    order_id: order.id
-                }
-            }).then(function(orderDetail) {
+            var queryOrderDetail = "select * from order_detail where order_id='" + order.id + "';";
+            
+            // get customer
+            var queryCustomer = "select * from user where id='" + order.customer_id + "'";
+            
+            // get address
+            var queryAddress = "select * from useraddress where id=" + order.address_id;
+
+            Q.all([
+                models.sequelize.query(queryOrderDetail),
+                models.sequelize.query(queryCustomer),
+                models.sequelize.query(queryAddress)
+            ]).spread(function(orderDetail, customer, address) {
+                orderDetail = orderDetail[0];
+                customer = customer[0];
+                address = address[0];
                 var resultOrder = order["dataValues"];
                 resultOrder.orderDetail = orderDetail;
-                console.log(resultOrder);
-                res.status(200).send({
-                    data: resultOrder
+                resultOrder.customer = customer;
+                resultOrder.address = address;
+                // get product
+                var listPromise = [];
+                for (var i = 0; i < orderDetail.length; i++) {
+                    var textQuery = "select * from products where id=" + orderDetail[i].product_id;
+                    listPromise.push(models.sequelize.query(textQuery));
+                }
+                Q.all(listPromise).then(function(products) {
+                    products = products[0][0];
+                    for (var i = 0; i < orderDetail.length; i++) {
+                        for (var j = 0; j < products.length; j++) {
+                            if (orderDetail[i].product_id === products[j].id) {
+                                orderDetail[i].product = products[j];
+                                break;
+                            }
+                        }
+                    }
+                    return res.status(200).send({
+                        data: resultOrder
+                    });
                 });
+                
             }).catch(function(err) {
                 logger("ERROR", err);
                 return res.status(400).send({

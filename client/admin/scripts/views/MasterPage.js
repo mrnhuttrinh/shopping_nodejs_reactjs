@@ -10,10 +10,6 @@ import localItem from '../utils/localItem';
 export default class MasterPage extends Component {
     constructor(props) {
         super(props);
-        // this.authentication();
-        this.state = {
-            authenticate: true
-        };
     }
     authentication() {
         var tokenLocal = localItem.getItem("token");
@@ -28,13 +24,14 @@ export default class MasterPage extends Component {
             apis.getMe(function(err, res) {
                 if (err) {
                     localItem.removeItem("token");
+                    MasterPage.prototype.authenticate = false;
                     window.location = "/admin/#/login";
                 } else {
                     if (res.status === 200) {
-                        self.state.authenticate = true;
+                        MasterPage.prototype.authenticate = true;
                         self.props.signIn(res.body.data);
                     } else {
-                        self.state.authenticate = false;
+                        MasterPage.prototype.authenticate = false;
                         localItem.removeItem("token");
                         window.location = "/admin/#/login";
                     }
@@ -62,7 +59,7 @@ export default class MasterPage extends Component {
     render() {
         var self = this;
         var contentRender = "";
-        if(this.state.authenticate) {
+        if(MasterPage.prototype.authenticate) {
             contentRender = this.props.children;
         }
         return (
@@ -77,3 +74,4 @@ export default class MasterPage extends Component {
         );
     }
 }
+MasterPage.prototype.authenticate = false;

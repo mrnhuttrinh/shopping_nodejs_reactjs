@@ -3,22 +3,34 @@ import Filter from './Filter';
 import ListOrder from './ListOrder';
 import orderAPI from '../../apis/order';
 import _ from 'lodash';
+import OrderDetail from './OrderDetail';
 
 export default class Order extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: null
+            order: null,
+            filtering: false
         };
     }
     updateListOrders(orders) {
         this.props.updateListOrders(orders);
     }
+    updateFilterState(value) {
+        this.setState({
+            filtering: value
+        });
+    }
     renderFilterAndResult() {
         return (
             <div>
-                <Filter updateListOrders={this.updateListOrders.bind(this)} {...this.props}/>
-                <ListOrder orders={this.props.listOrders}/>
+                <Filter 
+                    updateListOrders={this.updateListOrders.bind(this)} 
+                    {...this.props} 
+                    updateFilterState={this.updateFilterState.bind(this)}/>
+                <ListOrder 
+                    filtering={this.state.filtering} 
+                    orders={this.props.listOrders}/>
             </div>
         )
     }
@@ -42,16 +54,7 @@ export default class Order extends Component {
     }
     renderOrderById() {
         var id = this.props.params.id;
-        return (
-            <div className="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-custombutton="false">
-                <header>
-                    <span className="widget-icon"> 
-                        <i className="fa fa-edit"></i> 
-                    </span>
-                    <h2>Đơn Đặt Hàng - {id}</h2>
-                </header>
-            </div>
-        );
+        return (<OrderDetail orderId={id}/>);
     }
     render() {
         var id = this.props.params.id;

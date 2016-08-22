@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {Link} from 'react-router';
+import DivLoading from '../DivLoading';
 
 export default class ListOrder extends Component {
     renderListOrder() {
@@ -55,7 +56,7 @@ export default class ListOrder extends Component {
                 </header>
                 <div>
                     <div className="widget-body no-padding">
-                        {this.renderListOrder()}
+                        {this.props.filtering ? (<DivLoading />) : this.renderListOrder()}
                     </div>
                 </div>
             </div>

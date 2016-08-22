@@ -54,12 +54,12 @@ export default class Filter extends Component {
             completed: Completed,
             un_completed: UnCompleted
         };
-
+        this.props.updateFilterState(true);
         orderAPI.filterOrder(data, (err, res) => {
             if (err) {} else {
-                console.log(res.body.data);
                 this.props.updateListOrders(res.body.data);
             }
+            this.props.updateFilterState(false);
         });
     }
     render() {
