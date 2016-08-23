@@ -34,6 +34,13 @@ export default class Order extends Component {
             </div>
         )
     }
+    // componentDidMount() {
+    //     if (this.state.filtering) {
+    //         this.setState({
+    //             filtering: true
+    //         });
+    //     }
+    // }
     componentDidUpdate() {
         var id = this.props.params.id;
         if (id) {

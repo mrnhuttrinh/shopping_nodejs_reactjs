@@ -21,7 +21,6 @@ export default class OrderDetail extends Component {
             text_id: orderId
         }, (err, res) => {
             if (err) {} else {
-                console.log(res.body.data)
                 this.setState({
                     order: res.body.data
                 });

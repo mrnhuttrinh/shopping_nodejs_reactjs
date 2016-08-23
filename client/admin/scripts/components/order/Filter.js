@@ -73,10 +73,10 @@ export default class Filter extends Component {
                 </header>
                 <div>
                     <div className="widget-body no-padding">
-                        <form id="order-form" className="smart-form" novalidate="novalidate">
+                        <form id="order-form" className="smart-form" noValidate="novalidate">
                             <header>
                                 Tìm Kiếm
-                                <a onClick={this._onSearch.bind(this)} className="pull-right btn btn-primary btn-sm">Small button</a>
+                                <a id="click_search" onClick={this._onSearch.bind(this)} className="pull-right btn btn-primary btn-sm">Small button</a>
                             </header>
                             <fieldset>
                                 <div className="row">

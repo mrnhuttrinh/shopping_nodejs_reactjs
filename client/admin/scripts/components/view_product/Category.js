@@ -198,7 +198,7 @@ export default class DropDown extends Component {
                 <button type="button" data-target="#categoryModal" data-toggle="modal" className="btn btn-default btn-xs pull-right">
                     <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
-                <div className="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div className="modal fade" id="categoryModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">

@@ -216,7 +216,7 @@ export default class Sizes extends Component {
                     <button data-target="#sizesModal" data-toggle="modal" type="button" className="btn btn-default btn-xs pull-right">
                         <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>
-                    <div className="modal fade" id="sizesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div className="modal fade" id="sizesModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">

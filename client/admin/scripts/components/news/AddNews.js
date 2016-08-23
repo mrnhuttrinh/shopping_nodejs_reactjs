@@ -143,13 +143,13 @@ export default class AddNews extends Component{
                     <div className="col-md-12">
                         <form>
                             <div className="form-group">
-                                <label for="title">
+                                <label htmlFor="title">
                                     Tiều Đề Bài Viết
                                 </label>
                                 <input ref="title" type="text" className="form-control" id="title" placeholder="Tiêu Đề Bài Viết"/>
                             </div>
                             <div className="form-group">
-                                <label for="mainImage">
+                                <label htmlFor="mainImage">
                                     Hình Ảnh Bài Viết
                                 </label>
                                 <div>
@@ -165,7 +165,7 @@ export default class AddNews extends Component{
                                 </label>
                             </div>
                             <div className="form-group">
-                                <label for="Content">
+                                <label htmlFor="Content">
                                     Nội Dung
                                 </label>
                                 <div id="contentTitle" ></div>

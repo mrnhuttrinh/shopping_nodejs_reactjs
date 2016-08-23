@@ -29,7 +29,7 @@ export default class ViewNews extends Component{
     }
     render() {
         return (
-            <div className="modal fade" id="deleteNewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div className="modal fade" id="deleteNewsModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
