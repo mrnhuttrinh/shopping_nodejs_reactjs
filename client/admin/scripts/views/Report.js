@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import MasterPage from './MasterPage';
-import actions from '../actions/main';
-import MenuContent from '../components/size';
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import MasterPage from './MasterPage'
+import actions from '../actions/main'
+import Content from '../components/report'
 
-class Size extends Component{
+class Report extends Component{
     render() {
         return (
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
-                title={"Quản Lý Size"}>
+                title={"Thống Kê"}>
                 <div id="content">
-                    <MenuContent {...this.props} />
+                    <Content {...this.props} />
                 </div>
             </MasterPage>
         )
@@ -22,10 +22,10 @@ class Size extends Component{
 function mapStateToProps(state) {
     return {
         ...state.default
-    };
+    }
 }
 
 export default connect(
     mapStateToProps,
     actions
-)(Size);
+)(Report)

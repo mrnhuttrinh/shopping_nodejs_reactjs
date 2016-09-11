@@ -10,6 +10,11 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.UUID,
             allowNull: false
         },
+        gender: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
+        birthdate: DataTypes.DATE,
         fullname: DataTypes.STRING,
         phone: DataTypes.STRING,
         homeno: DataTypes.STRING,
@@ -20,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         province: DataTypes.STRING,
         type: {
             type: DataTypes.ENUM,
-            values: ['Home', 'Office']
+            values: ['Home', 'Office', 'Extract']
         },
         status: {
             type: DataTypes.BOOLEAN,

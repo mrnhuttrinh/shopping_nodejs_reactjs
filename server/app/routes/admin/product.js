@@ -539,5 +539,49 @@ module.exports = {
                 break;
         }
         
+    },
+    searchProduct: function(req, res) {
+        var value = req.param("value");
+        var query = "SELECT * FROM products WHERE name like '%" + value + "%' OR code='" + value + "'";
+        models.sequelize.query(query)
+        .spread(function(products) {
+            if (products.length) {
+                _.forEach(products, function(row) {
+                    row.sizes = [];
+                });
+                var arrayQuerySize = [];
+                _.forEach(products, function(row) {
+                    var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
+                    arrayQuerySize.push(models.sequelize.query(querysize))
+                });
+                Q.all(arrayQuerySize).spread(function(rowsSizes) {
+                    _.forEach(rowsSizes[0], function(newRowSi) {
+                        _.forEach(products, function(row) {
+                            if (row.id === newRowSi.product_id) {
+                                row.sizes.push(newRowSi);
+                            }
+                        });
+                    });
+                    return res.status(200).send({
+                        data: products
+                    });
+                }).fail(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    });
+                });
+            } else {
+                return res.status(200).send({
+                    data: products
+                });
+            }
+        })
+        .catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 };

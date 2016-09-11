@@ -15,14 +15,9 @@ export default class Profile extends Component {
             user: {},
             listAddress: [],
             listOrder: [],
-            menuIndex: 0,
-            editIndex: 0
+            editIndex: 0,
+            editAccountInfor: false
         };
-    }
-    selectMenu(index) {
-        this.setState({
-            menuIndex: index
-        });
     }
     componentDidMount() {
         var userId = this.props.user.id;
@@ -67,10 +62,10 @@ export default class Profile extends Component {
     }
     renderAccountInfo() {
         var content = (<AccountInfo user={this.state.user} />);
-        var button = (<button onClick={this.editInfo.bind(this, 1)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>);
-        if (this.state.editIndex === 1) {
+        var button = (<button onClick={this.editInfo.bind(this, 1, true)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>);
+        if (this.state.editAccountInfor) {
             content = (<AccountInfoEdit user={this.state.user} />);
-            button = (<button type="button" className="btn btn-success btn-sm pull-right">Save</button>);
+            button = (<button type="button" onClick={this.editInfo.bind(this, 1, false)} className="btn btn-success btn-sm pull-right">Save</button>);
         }
         return (
             <div className="col-lg-9 col-md-10">
@@ -133,25 +128,30 @@ export default class Profile extends Component {
             </div>
         );
     }
-    editInfo(index, event) {
+    editInfo(index, value, event) {
         event.preventDefault();
-        this.setState({
-            editIndex: index
-        });
+        switch(index) {
+            case 1:
+                this.setState({
+                    editAccountInfor: value
+                });
+                break;
+        }
     }
     render() {
+        var menuName = this.props.params.sub_segment;
         var content = null;
-        switch (this.state.menuIndex) {
-            case 1:
+        switch (menuName) {
+            case "user_info":
                 content = this.renderAccountInfo();
                 break;
-            case 2:
+            case "addresses":
                 content = this.renderListAddress();
                 break;
-            case 3:
-                content = null;
-                break;
-            case 4:
+            // case "":
+            //     content = null;
+            //     break;
+            case "myorders":
                 content = this.renderListOrder();
                 break;
             default: 
@@ -162,8 +162,7 @@ export default class Profile extends Component {
                 <div className="container">
                     <div className="row">
                         <LeftControl 
-                            menuIndex={this.state.menuIndex}
-                            selectMenu={this.selectMenu.bind(this)}/>
+                            menuName={menuName}/>
                         {content}
                     </div>
                 </div>

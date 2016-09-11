@@ -38,7 +38,7 @@ export default class Modal extends Component {
                                         Close
                                     </button>
                                     {
-                                        pressAddButton ?  (
+                                        pressAddButton ? (
                                             <Loading />
                                         ): (
                                             <button onClick={modalExcute} className="btn btn-primary" type="button">

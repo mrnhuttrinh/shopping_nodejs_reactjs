@@ -39,7 +39,11 @@ module.exports = {
         UPDATE_LOGO_CATEGORY:   "/api/update_logo_category",
         UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer",
         FILTER_ORDER:           "/api/filter_order",
-        GET_ORDER_BY_ID:        "/api/get_order_by_id"
+        GET_ORDER_BY_ID:        "/api/get_order_by_id",
+        MARK_COMPLETED_ORDER:   "/api/mark_completed_order",
+        SEARCH_PRODUCT:         "/api/search_product",
+        CREATE_NEW_ORDER:       "/api/create_new_order",
+        CANCEL_ORDER:           "/api/cancel_order",
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",

@@ -4,13 +4,15 @@ import ListOrder from './ListOrder';
 import orderAPI from '../../apis/order';
 import _ from 'lodash';
 import OrderDetail from './OrderDetail';
+import CreateOrder from './CreateOrder';
 
 export default class Order extends Component {
     constructor(props) {
         super(props);
         this.state = {
             order: null,
-            filtering: false
+            filtering: false,
+            createOrder: false
         };
     }
     updateListOrders(orders) {
@@ -21,10 +23,16 @@ export default class Order extends Component {
             filtering: value
         });
     }
+    createOrderFrom(value) {
+        this.setState({
+            createOrder: value
+        });
+    }
     renderFilterAndResult() {
         return (
             <div>
                 <Filter 
+                    createOrderFrom={this.createOrderFrom.bind(this)}
                     updateListOrders={this.updateListOrders.bind(this)} 
                     {...this.props} 
                     updateFilterState={this.updateFilterState.bind(this)}/>
@@ -63,12 +71,19 @@ export default class Order extends Component {
         var id = this.props.params.id;
         return (<OrderDetail orderId={id}/>);
     }
+    renderCreateOrderForm() {
+        return (<CreateOrder {...this.props} createOrderFrom={this.createOrderFrom.bind(this)}/>);
+    }
     render() {
-        var id = this.props.params.id;
-        if (id) {
-            return this.renderOrderById();
+        if (this.state.createOrder) {
+            return this.renderCreateOrderForm();
         } else {
-            return this.renderFilterAndResult();
+            var id = this.props.params.id;
+            if (id) {
+                return this.renderOrderById();
+            } else {
+                return this.renderFilterAndResult();
+            }
         }
     }
 }

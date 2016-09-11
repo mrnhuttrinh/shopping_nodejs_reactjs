@@ -24,6 +24,9 @@ router.post("/update_password_employer", authorized, admin.updatePasswordEmploye
 router.post("/update_role_employer", authorized, admin.updateRoleEmployer);
 router.post("/filter_order", authorized, orderAdmin.filterOrder);
 router.get("/get_order_by_id", authorized, orderAdmin.getOrderById);
+router.post("/mark_completed_order", authorized, orderAdmin.markCompletedOrder);
+router.post("/create_new_order", authorized, orderAdmin.createNewOrder);
+router.post("/cancel_order", authorized, orderAdmin.cancelOrder);
 
 // for product
 router.post('/create_product',authorized, product.createProduct)
@@ -32,6 +35,7 @@ router.get('/get_list_product',authorized, product.getListProduct);
 router.get('/get_total_product',authorized, product.getTotalProduct);
 router.post('/delete_product',authorized, product.deleteProduct);
 router.post('/update_product',authorized, product.updateProduct);
+router.get('/search_product', authorized, product.searchProduct);
 
 // for news
 router.get("/get_list_news", authorized, news.getList)

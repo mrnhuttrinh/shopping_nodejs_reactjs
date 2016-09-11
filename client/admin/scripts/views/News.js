@@ -10,7 +10,7 @@ class News extends Component{
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
-                title={"Dashboard"}>
+                title={"Tin Tức"}>
                 <div id="content">
                     <NewsContent {...this.props} />
                 </div>

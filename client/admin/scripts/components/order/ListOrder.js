@@ -2,18 +2,30 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import {Link} from 'react-router';
 import DivLoading from '../DivLoading';
+import formatCurrency from '../../utils/formatCurrency';
 
 export default class ListOrder extends Component {
     renderListOrder() {
         var orders = this.props.orders;
         if (orders.length) {
             var orderContent = _.map(orders, (order, index) => {
+                var statusContent = "";
+                if (order.status) {
+                    if (order.completed) {
+                        statusContent = (<span className="label label-success">Hoàn Thành</span>);
+                    } else {
+                        statusContent = (<span className="label label-warning">Chưa Hoàn Thành</span>) ;
+                    }
+                } else {
+                    statusContent = (<span className="label label-danger">Hủy Đơn Hàng</span>);
+                }
                 return (
                     <tr key={"order_" + index}>
                         <td>{index + 1}</td>
                         <td><Link to={"/order/" + order.text_id}>{order.text_id}</Link></td>
                         <td>{order.fullname}</td>
-                        <td>{order.total}</td>
+                        <td>{formatCurrency(order.total)}đ</td>
+                        <td>{statusContent}</td>
                     </tr>
                 );
             });
@@ -25,6 +37,7 @@ export default class ListOrder extends Component {
                             <th></th>
                             <th>Tên Khách Hàng</th>
                             <th>Tổng Tiền</th>
+                            <th>Trạng Thái</th>
                         </tr>
                     </thead>
                     <tbody>

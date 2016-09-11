@@ -2,6 +2,7 @@ import Constants from '../constants'
 import _ from 'lodash';
 var ACTION = Constants.ACTION;
 import localItem from '../utils/localItem';
+import locations from './locations';
 
 var initialState = {
     user: {},
@@ -33,7 +34,8 @@ var initialState = {
         listTrademark: [],
         total: 0
     },
-    listOrders: []
+    listOrders: [],
+    locations: locations
 }
 
 export default function update(state = initialState, action) {

@@ -10,7 +10,7 @@ class Order extends Component{
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
-                title={"Dashboard"}>
+                title={"Đơn Đặt Hàng"}>
                 <div id="content">
                     <Content {...this.props} />
                 </div>

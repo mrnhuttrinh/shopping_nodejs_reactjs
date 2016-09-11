@@ -45,6 +45,9 @@ export default class LeftMenu extends Component{
                         <li className={pathName == "/order" ? "active" : ""}>
                             <Link to="/order"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-child">Đơn Đặt Hàng</span></Link>
                         </li>
+                        <li className={pathName == "/report" ? "active" : ""}>
+                            <Link to="/report"><i className="fa fa-lg fa-fw fa-inbox"></i> <span className="menu-item-child">Thống Kê</span></Link>
+                        </li>
                     </ul>
                 </nav>
                 <span className="minifyme" data-action="minifyMenu"> 

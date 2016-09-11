@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class LeftControl extends Component {
-    switchMenu(index, event) {
-        event.preventDefault();
-        this.props.selectMenu(index);
-    }
     render() {
-        var menuIndex = this.props.menuIndex;
+        var menuName = this.props.menuName;
         return (
             <div className="col-lg-3 col-md-2">
                 <table className="table table-hover table_profile">
@@ -23,30 +20,40 @@ export default class LeftControl extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className={menuIndex===0 ? "info" : ""} onClick={this.switchMenu.bind(this, 0)}>
-                                Thông Tin Chung
+                            <td className={menuName===undefined? "info" : ""}>
+                                <Link to="/profile">
+                                    Thông Tin Chung
+                                </Link>
                             </td> 
                         </tr>
                         <tr>
-                            <td className={menuIndex===1 ? "info" : ""} onClick={this.switchMenu.bind(this, 1)}>
-                                Thông Tin Tài Khoản
+                            <td className={menuName==="user_info" ? "info" : ""}>
+                                <Link to="/profile/user_info">
+                                    Thông Tin Tài Khoản
+                                </Link>
                             </td> 
                         </tr> 
                         <tr> 
-                            <td className={menuIndex===2 ? "info" : ""} onClick={this.switchMenu.bind(this, 2)}>
-                                Danh Sách Địa Chỉ
+                            <td className={menuName==="addresses" ? "info" : ""}>
+                                <Link to="/profile/addresses">
+                                    Danh Sách Địa Chỉ
+                                </Link>
                             </td> 
                         </tr>
                         <tr> 
-                            <td className={menuIndex===3 ? "info" : ""} onClick={this.switchMenu.bind(this, 3)}>
-                                Thông Báo Của Bạn
-                            </td> 
+                            <td className={menuName==="notifications" ? "info" : ""}>
+                                <Link to="/profile/notifications">
+                                    Thông Báo Của Bạn
+                                </Link>
+                            </td>
                         </tr> 
                         <tr> 
-                            <td className={menuIndex===4 ? "info" : ""} onClick={this.switchMenu.bind(this, 4)}>
-                                Đơn Hàng Của Bạn
-                            </td> 
-                        </tr> 
+                            <td className={menuName==="myorders" ? "info" : ""}>
+                                <Link to="/profile/myorders">
+                                    Đơn Hàng Của Bạn
+                                </Link>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

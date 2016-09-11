@@ -20,5 +20,32 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    markCompletedOrder(data, cb) {
+        var request = new Request();
+        request
+            .post(API.MARK_COMPLETED_ORDER, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    createNewOrder(data, cb) {
+        var request = new Request();
+        request
+            .post(API.CREATE_NEW_ORDER, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    cancelOrder(data, cb) {
+        var request = new Request();
+        request
+            .post(API.CANCEL_ORDER, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

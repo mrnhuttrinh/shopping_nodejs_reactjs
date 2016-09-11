@@ -43,7 +43,7 @@ export default class OrderDetail extends Component {
             contact = "www.google.com/" + customer.id;
         }
         return (
-            <table className="table table-bordered">
+            <table key="table_info" className="table table-bordered">
                 <thead>
                     <tr>
                         <th colSpan ="2">Thông Tin Khách Hàng</th>
@@ -78,7 +78,7 @@ export default class OrderDetail extends Component {
         var order = this.state.order;
         var address = order.address[0];
         return (
-            <table className="table table-bordered">
+            <table key="table_person" className="table table-bordered">
                 <thead>
                     <tr>
                         <th colSpan ="2">Thông Tin Người Nhận Hàng</th>
@@ -107,8 +107,18 @@ export default class OrderDetail extends Component {
     }
     renderOrderGeneral() {
         var order = this.state.order;
+        var statusContent = "";
+        if (order.status) {
+            if (order.completed) {
+                statusContent = (<span className="label label-success">Hoàn Thành</span>);
+            } else {
+                statusContent = (<span className="label label-warning">Chưa Hoàn Thành</span>) ;
+            }
+        } else {
+            statusContent = (<span className="label label-danger">Hủy Đơn Hàng</span>);
+        }
         return (
-            <table className="table table-bordered">
+            <table key="table_general" className="table table-bordered">
                 <thead>
                     <tr>
                         <th colSpan ="2">Thông Tin Đơn Hàng</th>
@@ -117,11 +127,11 @@ export default class OrderDetail extends Component {
                 <tbody>
                     <tr>
                         <th width="200">Tình Trạng</th>
-                        <th>{order.completed ? "Hoàn Thành" : "Chưa Hoàn Thành"}</th>
+                        <th>{statusContent}</th>
                     </tr>
                     <tr>
                         <th>Tổng Tiền</th>
-                        <th>{formatCurrency(order.total)}</th>
+                        <th>{formatCurrency(order.total)}đ</th>
                     </tr>
                     <tr>
                         <th>Ngày Đặt Hàng</th>
@@ -139,8 +149,8 @@ export default class OrderDetail extends Component {
             var product = _od.product;
             totalQuantity += _od.quantity;
             return (
-                <tr>
-                    <th>{product.name}</th>
+                <tr key={"order_product_" + _od.product.id}>
+                    <th><Link to={"/product/" + _od.product.id}>{product.name}</Link></th>
                     <th>{product.code}</th>
                     <th>{_od.size}</th>
                     <th>{_od.quantity}</th>
@@ -148,7 +158,7 @@ export default class OrderDetail extends Component {
             );
         });
         return (
-            <table className="table table-bordered">
+            <table key="table_detail" className="table table-bordered">
                 <thead>
                     <tr>
                         <th>Tên Sản Phẩm</th>
@@ -172,11 +182,52 @@ export default class OrderDetail extends Component {
         var order = this.state.order;
         PrintPopup($("#print_area").html(), order.text_id);
     }
+    markSuccess(event) {
+        event.preventDefault();
+        var data = {
+            order_id: this.props.orderId
+        };
+        orderAPI.markCompletedOrder(data, (err, res) => {
+            if (err) {
+                toastr.error("Cập Nhật Không Thành Công");
+            } else {
+                toastr.success("Cập Nhật Thành Công");
+                var order = this.state.order;
+                order.completed = true;
+                this.setState({
+                    order: order
+                });
+            }
+        });
+    }
+    cancelOrder(event) {
+        event.preventDefault();
+        var data = {
+            order_id: this.props.orderId
+        };
+        orderAPI.cancelOrder(data, (err, res) => {
+            if (err) {
+                toastr.error("Hủy Đơn Hàng Lỗi!");
+            } else {
+                toastr.success("Hủy Đơn Hàng Thành Công");
+                this.state.order.status = false;
+                this.setState({
+                    order: this.state.order
+                });
+            }
+        });
+    }
     render() {
         if (this.state.getOrder) {
             return (<DivLoading />);
         } else {
             var orderId = this.props.orderId;
+
+            var order = this.state.order;
+
+            var cancelOrder = false;
+            if (!order.completed && order.status) cancelOrder = true;
+
             return (
                 <div className="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
@@ -184,6 +235,9 @@ export default class OrderDetail extends Component {
                             <i className="fa fa-edit"></i> 
                         </span>
                         <h2>Đơn Đặt Hàng - {orderId}</h2>
+                        {
+                            (cancelOrder)?(<a onClick={this.cancelOrder.bind(this)} className="pull-right btn btn-danger btn-sm">Hủy Đơn Đặt Hàng</a>) : null
+                        }
                     </header>
                     <div>
                         <div className="widget-body no-padding" id="print_area">
@@ -193,6 +247,9 @@ export default class OrderDetail extends Component {
                             {this.renderOrderDetail()}
                         </div>
                     </div>
+                    {
+                        order.completed ? null : (<a onClick={this.markSuccess.bind(this)} className="pull-left btn btn-success">Đánh Dấu Hoàn Thành</a>)
+                    }
                     <a onClick={this.printOrder.bind(this)} className="pull-right btn btn-primary">Print</a>
                 </div>
             );

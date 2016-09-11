@@ -46,7 +46,7 @@ export default class HeaderMain extends Component {
                     <div className="menu_right_home">
                         <div id="divSearch" className="search">
                             <form id="frmSearch">
-                                <input type="text" id="search" name="q" autocomplete="off" placeholder="Tìm kiếm khuyến mãi..." maxlength="200" />
+                                <input type="text" id="search" name="q" autoComplete="off" placeholder="Tìm kiếm khuyến mãi..." maxLength="200" />
                                 <button onClick={this.clickSearch.bind(null)} className="btn_search" value="Tìm kiếm khuyến mãi..."><span className="ic_cm">E</span></button>
                             </form>
                         </div>
