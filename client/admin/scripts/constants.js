@@ -44,6 +44,7 @@ module.exports = {
         SEARCH_PRODUCT:         "/api/search_product",
         CREATE_NEW_ORDER:       "/api/create_new_order",
         CANCEL_ORDER:           "/api/cancel_order",
+        REPORT_ORDER:           "/api/report_order",
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",

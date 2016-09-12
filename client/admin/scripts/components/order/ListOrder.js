@@ -34,7 +34,7 @@ export default class ListOrder extends Component {
                     <thead>
                         <tr>
                             <th></th>
-                            <th></th>
+                            <th>Mã Đặt Hàng</th>
                             <th>Tên Khách Hàng</th>
                             <th>Tổng Tiền</th>
                             <th>Trạng Thái</th>

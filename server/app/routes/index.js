@@ -27,6 +27,7 @@ router.get("/get_order_by_id", authorized, orderAdmin.getOrderById);
 router.post("/mark_completed_order", authorized, orderAdmin.markCompletedOrder);
 router.post("/create_new_order", authorized, orderAdmin.createNewOrder);
 router.post("/cancel_order", authorized, orderAdmin.cancelOrder);
+router.post("/report_order", authorized, orderAdmin.reportOrder);
 
 // for product
 router.post('/create_product',authorized, product.createProduct)

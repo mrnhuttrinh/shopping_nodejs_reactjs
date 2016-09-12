@@ -47,5 +47,14 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    reportOrder(data, cb) {
+        var request = new Request();
+        request
+            .post(API.REPORT_ORDER, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

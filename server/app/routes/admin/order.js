@@ -59,7 +59,7 @@ module.exports = {
         query += " Inner Join `user` ON `order`.customer_id = `user`.id ";
         query += " Inner Join products_category ON products.id = products_category.product_id ";
         query += " Inner Join categories ON products_category.category_id = categories.id ";
-        query += " Where "
+        query += " Where ";
         var condition = [];
         if (orderId) {
             condition.push(" `order`.text_id like '%" + orderId + "%' ");
@@ -273,6 +273,51 @@ module.exports = {
         }).then(function() {
             return res.status(200).send({
                 data: "Cancel Success"
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    reportOrder: function(req, res) {
+        var dateStart = req.body.date_start;
+        var dateEnd = req.body.date_end;
+        var completed = req.body.completed;
+        var unCompleted = req.body.un_completed;
+
+        var query = " SELECT distinct(`order`.id), `order`.*, `user`.fullname ";
+        query += " FROM `order` ";
+        query += " Inner Join order_detail ON `order`.id = order_detail.id ";
+        query += " Inner Join useraddress ON `order`.address_id = useraddress.id ";
+        query += " Inner Join products ON order_detail.product_id = products.id ";
+        query += " Inner Join `user` ON `order`.customer_id = `user`.id ";
+        query += " Inner Join products_category ON products.id = products_category.product_id ";
+        query += " Inner Join categories ON products_category.category_id = categories.id ";
+        query += " Where ";
+        var condition = [];
+        if (dateStart) {
+            condition.push(" `order`.createdAt >= '" + dateStart +"' ");
+        }
+        if (dateEnd) {
+            condition.push(" `order`.createdAt <= '" + dateEnd + "'");
+        }
+        if (completed && !unCompleted) {
+            condition.push(" `order`.completed = 1 ");
+        } else if (!completed && unCompleted) {
+            condition.push(" `order`.completed = 0 ");
+        }
+        condition.push(" `order`.status = 1 ");
+        var conditionText = condition.join(" AND ");
+
+        query += conditionText;
+
+        models.sequelize.query(query)
+        .spread(function(result) {
+            var orders = result;
+            return res.status(200).send({
+                data: orders
             });
         }).catch(function(err) {
             logger("ERROR", err);
