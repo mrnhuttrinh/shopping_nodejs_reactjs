@@ -53,7 +53,7 @@ export default {
             path: 'payment',
             component: Payment
         }, {
-            path: 'profile',
+            path: 'profile(/:sub_segment)',
             component: Profile
         }, {
             path: 'myorder',

@@ -139,7 +139,7 @@ module.exports = {
                         token: jwt.sign({
                             "employer": employer
                         }, config.secret, {
-                            expiresIn: 86400 // expires in 24 hours
+                            // expiresIn: 86400 // expires in 24 hours
                         })
                     }
                 })
@@ -169,6 +169,11 @@ module.exports = {
                 "image",
             ]
         }).then(function(employer) {
+            // employer.token = jwt.sign({
+            //     "employer": employer
+            // }, config.secret, {
+            //     expiresIn: 86400 // expires in 24 hours
+            // });
             return res.status(200).send({
                 data: employer
             })

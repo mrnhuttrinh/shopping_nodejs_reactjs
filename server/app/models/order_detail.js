@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        order_id: DataTypes.UUID,
+        order_id: DataTypes.INTEGER,
         product_id: DataTypes.INTEGER,
         price: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER,

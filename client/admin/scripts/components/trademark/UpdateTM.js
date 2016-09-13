@@ -106,7 +106,7 @@ export default class UpdateTM extends Component {
     }
     render() {
         return (
-            <div className="modal fade" id="updateTMModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div className="modal fade" id="updateTMModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">

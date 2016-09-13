@@ -45,7 +45,10 @@ export default class PaymentForm extends Component {
         };
         UserAPI.getUserAddresses(data, (err, res) => {
             if (err) {} else {
-                this.state.listAddress = res.body.data;
+                // this.state.listAddress = res.body.data;
+                this.setState({
+                    listAddress: res.body.data
+                });
             }
         });
     }

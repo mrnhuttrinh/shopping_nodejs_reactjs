@@ -10,7 +10,7 @@ class Size extends Component{
             <MasterPage 
                 {...this.props}
                 pathname={this.props.location.pathname}
-                title={"Quản Lý Menu"}>
+                title={"Quản Lý Size"}>
                 <div id="content">
                     <MenuContent {...this.props} />
                 </div>

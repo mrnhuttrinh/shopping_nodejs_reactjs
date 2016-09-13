@@ -12,6 +12,8 @@ import ProductDetail from './views/ProductDetail';
 import Menu from './views/Menu';
 import News from './views/News';
 import Size from './views/Size';
+import Order from './views/Order';
+import Report from './views/Report';
 import ViewUser from './views/ViewUser';
 import TradeMark from './views/TradeMark';
 import localItem from './utils/localItem';
@@ -67,6 +69,14 @@ export default {
         }, {
             path: 'menu',
             component: Menu,
+            onEnter: requireAuth
+        }, {
+            path: 'order(/:id)',
+            component: Order,
+            onEnter: requireAuth
+        }, {
+            path: 'report',
+            component: Report,
             onEnter: requireAuth
         }, {
             path: 'size_type',

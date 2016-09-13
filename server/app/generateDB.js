@@ -20,7 +20,53 @@ models.sequelize.sync().then(function () {
     };
     insertAdminUser(adminUserTest);
     insertMenu();
+
+    var noUser = {
+        username: "noname",
+        password: "noname",
+        email: "noname@aothunphongcach.com",
+        fullname: "Tài Khoản Không Tồn Tại",
+        type: "Local",
+        status: true
+    };
+    insertNoNameCustomer(noUser);
 });
+
+function insertNoNameCustomer(noUser) {
+    console.log("No Name Customer");
+    models.User.find({
+        where: {username: noUser.username}
+    }).then(function(user, err) {
+        if (err) {
+            console.log("insert user error");
+            console.log(JSON.stringify(err));
+            return;
+        }
+        if (user) {
+            console.log("User has exist");
+            return;
+        } else {
+            password = md5(noUser.password);
+            models.User.create({
+                id: uuid(),
+                username: noUser.username,
+                password: md5(noUser.password),
+                email: noUser.email,
+                fullname: noUser.fullname,
+                type: noUser.type,
+                status: noUser.status
+            }).then(function(employer, err) {
+                if (err) {
+                    console.log("insert user error");
+                    console.log(JSON.stringify(err));
+                    return;
+                }
+                console.log("Insert user successed!");
+                return;
+            });
+        }
+    });
+}
 
 // insert admin user
 function insertAdminUser(adminUser) {

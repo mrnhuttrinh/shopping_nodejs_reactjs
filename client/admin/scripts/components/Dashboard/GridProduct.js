@@ -39,10 +39,10 @@ export default class GridProduct extends Component {
         if (this.state.gridView) {
             rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
-                var showSize = _.map(product.sizes, (size) => {
+                var showSize = _.map(product.sizes, (size, index) => {
                     totalSize += size.quantity;
                     return (
-                        <p className="text-left">Size: {size.name} <p className="pull-right">{size.quantity}</p></p>
+                        <p key={"size_" + index} className="text-left">Size: {size.name} <p className="pull-right">{size.quantity}</p></p>
                     )
                 })
                 if (showSize.length === 0) {

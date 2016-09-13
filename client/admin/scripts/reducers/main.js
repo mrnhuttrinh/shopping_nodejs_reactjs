@@ -2,6 +2,7 @@ import Constants from '../constants'
 import _ from 'lodash';
 var ACTION = Constants.ACTION;
 import localItem from '../utils/localItem';
+import locations from './locations';
 
 var initialState = {
     user: {},
@@ -32,7 +33,9 @@ var initialState = {
     trademark: {
         listTrademark: [],
         total: 0
-    }
+    },
+    listOrders: [],
+    locations: locations
 }
 
 export default function update(state = initialState, action) {
@@ -103,6 +106,10 @@ export default function update(state = initialState, action) {
                     label: trademark.name
                 };
             });
+            return newState;
+        case ACTION.UPDATE_LIST_ORDERS:
+            newState = _.cloneDeep(state);
+            newState.listOrders = action.listOrders;
             return newState;
         default:
             return state;

@@ -61,7 +61,7 @@ export default class ModalLogo extends Component {
     }
     render() {
         return (
-            <div id={this.props.name} className="modal modal-wide fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div id={this.props.name} className="modal modal-wide fade" tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">

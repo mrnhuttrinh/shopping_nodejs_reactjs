@@ -150,5 +150,40 @@ module.exports = {
                 error: err
             });
         });
+    },
+    getUserInfo: function(req, res) {
+        var id = req.param("id");
+        models.User.find({
+            where: {
+                id: id
+            }, attributes: [
+                "id",
+                "email",
+                "fullname",
+                "address",
+                "phone",
+                "birthdate",
+                "gender",
+                "username",
+                "type"
+            ]
+        }).then(function(user) {
+            if (!user) {
+                return res.status(400).send({
+                    error: {
+                        message: "User not exist!"
+                    }
+                });
+            }
+
+            res.status(200).send({
+                data: user
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
     }
 }

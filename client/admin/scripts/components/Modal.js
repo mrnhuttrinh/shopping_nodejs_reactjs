@@ -15,7 +15,7 @@ export default class Modal extends Component {
         var modalExcute = this.props.modalExcute;
         var pressAddButton = this.props.pressAddButton;
         return (
-            <div aria-labelledby="myModalLabel" className="modal modal-wide fade" id={modalName} role="dialog" tabindex="-1">
+            <div aria-labelledby="myModalLabel" className="modal modal-wide fade" id={modalName} role="dialog" tabIndex="-1">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -38,7 +38,7 @@ export default class Modal extends Component {
                                         Close
                                     </button>
                                     {
-                                        pressAddButton ?  (
+                                        pressAddButton ? (
                                             <Loading />
                                         ): (
                                             <button onClick={modalExcute} className="btn btn-primary" type="button">

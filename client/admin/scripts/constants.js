@@ -37,7 +37,14 @@ module.exports = {
         DELETE_GALLERY_MENU:    "/api/delete_gallery_menu",
         EDIT_GALLERY_MENU:      "/api/edit_gallery_menu",
         UPDATE_LOGO_CATEGORY:   "/api/update_logo_category",
-        UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer"
+        UPDATE_ROLE_EMPLOYER:   "/api/update_role_employer",
+        FILTER_ORDER:           "/api/filter_order",
+        GET_ORDER_BY_ID:        "/api/get_order_by_id",
+        MARK_COMPLETED_ORDER:   "/api/mark_completed_order",
+        SEARCH_PRODUCT:         "/api/search_product",
+        CREATE_NEW_ORDER:       "/api/create_new_order",
+        CANCEL_ORDER:           "/api/cancel_order",
+        REPORT_ORDER:           "/api/report_order",
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",
@@ -57,6 +64,7 @@ module.exports = {
         CREATE_NEWS:            "CREATE_NEWS",
         GET_LIST_TRADEMARK:     "GET_LIST_TRADEMARK",
         TAB_SELECTED_DASHBOARD: "TAB_SELECTED_DASHBOARD",
-        GET_LIST_TRADEMARK_MINI:"GET_LIST_TRADEMARK_MINI"
+        GET_LIST_TRADEMARK_MINI:"GET_LIST_TRADEMARK_MINI",
+        UPDATE_LIST_ORDERS:     "UPDATE_LIST_ORDERS"
     }
 }

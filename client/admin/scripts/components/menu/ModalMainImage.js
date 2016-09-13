@@ -140,7 +140,7 @@ export default class ModalMainImage extends Component {
             )
         }
         return (
-            <div id={this.props.name} className="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div id={this.props.name} className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">

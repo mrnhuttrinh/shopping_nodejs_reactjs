@@ -73,7 +73,7 @@ export default class DeleteProduct extends Component {
                     )
                 }
                 {title}
-                <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div className="modal fade" id="deleteModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">

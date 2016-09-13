@@ -14,8 +14,8 @@ export default class HeaderMenu extends Component {
         return (
             <div className="header_menu">
                 <div className="container">
-                    <div className="col-lg-3"><a className="link_premium" href="/#"><span className="ic_cm icon-card">c</span>Trang Chủ</a></div>
-                    <div className="col-lg-9">
+                    <div className="col-lg-3 col-md-3 L"><a className="link_premium" href="/#"><span className="ic_cm icon-card">c</span>Trang Chủ</a></div>
+                    <div className="col-lg-9 col-md-9">
                         <ul className="menu_top">
                             <li className="end">
                                 <a><span className="icon-phone ic_cm">D</span>Hỗ trợ: 19006637 (8h-21h)<span className="ic_cm icon-arrow-d">k</span></a>
