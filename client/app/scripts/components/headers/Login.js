@@ -7,6 +7,7 @@ export default class Login extends Component {
     }
     behaviorSuccess(user) {
         window.userLogin(user);
+        window.location = "/#/";
     }
     openURLFacebook(event) {
         event.preventDefault();

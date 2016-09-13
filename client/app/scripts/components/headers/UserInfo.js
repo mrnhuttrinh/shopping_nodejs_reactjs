@@ -10,11 +10,17 @@ export default class UserInfo extends Component {
     }
     turnOffShowOnTop() {
         this.props.logOut();
+        window.location = "/#/";
     }
     logOut(event) {
         event.preventDefault();
         this.setState({
-            dialogPopUp: <PopUp show={true} turnOffShowOnTop={this.turnOffShowOnTop.bind(this)}/>
+            dialogPopUp: <PopUp cancelLogOut={this.cancelLogOut.bind(this)} show={true} turnOffShowOnTop={this.turnOffShowOnTop.bind(this)}/>
+        });
+    }
+    cancelLogOut() {
+        this.setState({
+            dialogPopUp: null
         });
     }
     render() {
