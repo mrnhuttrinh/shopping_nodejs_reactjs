@@ -109,15 +109,15 @@ gulp.task("assets", ["vendor", "js", "fonts", "images", "extras", "styles", "htm
 
 gulp.task("watch", ["dev", "assets"], function() {
 
-    browserSync({
-        notify: false,
-        logPrefix: "BS",
-        // Run as an https by uncommenting "https: true"
-        // Note: this uses an unsigned certificate which on first access
-        // will present a certificate warning in the browser.
-        server: [publicFolder, "app"],
-        port: 3000
-    });
+    // browserSync({
+    //     notify: false,
+    //     logPrefix: "BS",
+    //     // Run as an https by uncommenting "https: true"
+    //     // Note: this uses an unsigned certificate which on first access
+    //     // will present a certificate warning in the browser.
+    //     // server: [publicFolder, "app"],
+    //     // port: 3000
+    // });
 
     // Watch .html files
     gulp.watch("client/app/*.html", reload);
@@ -251,15 +251,15 @@ gulp.task("watch_admin", [
     "assets_admin"
 ], function() {
 
-    browserSync({
-        notify: false,
-        logPrefix: "BS",
-        // Run as an https by uncommenting "https: true"
-        // Note: this uses an unsigned certificate which on first access
-        // will present a certificate warning in the browser.
-        server: [adminFolder, "admin"],
-        port: 4000
-    });
+    // browserSync({
+    //     notify: false,
+    //     logPrefix: "BS",
+    //     // Run as an https by uncommenting "https: true"
+    //     // Note: this uses an unsigned certificate which on first access
+    //     // will present a certificate warning in the browser.
+    //     // server: [adminFolder, "admin"],
+    //     // port: 4000
+    // });
 
     // Watch .html files
     gulp.watch("client/admin/*.html", reload);

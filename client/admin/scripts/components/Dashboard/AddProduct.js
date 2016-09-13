@@ -105,7 +105,7 @@ export default class AddProduct extends Component {
         newProduct.price_wholesale = self.refs["productWholeSalePrice"].value;
         newProduct.price_wholesale_promotion = self.refs["productPriceWholeSalePromotion"].value;
         newProduct.color = self.refs["productColor"].value;
-        newProduct.trademark_id = self.state.selectValue.value;
+        newProduct.trademark_id = self.state.selectValue;
         newProduct.description = self.refs["productDescription"].value;
         newProduct.category = self.state.categoryArray.join(", ");
         newProduct.sizes = self.state.sizes;

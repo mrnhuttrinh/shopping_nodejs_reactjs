@@ -14,6 +14,26 @@ export default {
             type: ACTION.GET_LIST_NEWS,
             listNews: listNews
         }
+    },
+
+    updateCartItems: function(cartItems) {
+        return {
+            type: ACTION.UPDATE_CART_ITEMS,
+            cartItems: cartItems
+        }
+    },
+
+    userLogin: function(user) {
+        return {
+            type: ACTION.USER_LOGIN,
+            user: user
+        }
+    },
+
+    logOut: function() {
+        return {
+            type: ACTION.LOGOUT
+        }
     }
 }
 

@@ -25,7 +25,7 @@ export default class ResetPassword extends Component{
     }
     render() {
         return (
-            <div className="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div className="modal fade" id="resetPasswordModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -29,3 +29,13 @@ create db: node ./server/app/generateDB
 
 // multiselect
 https://github.com/JedWatson/react-select
+
+using passport login open 
+https://scotch.io/tutorials/easy-node-authentication-facebook
+
+http://code.tutsplus.com/articles/social-authentication-for-nodejs-apps-with-passport--cms-21618
+https://github.com/tutsplus/passport-social/blob/master/app.js
+
+https://suspicious.website/2014/12/29/using-google-authentication-with-node-js-express/
+
+http://www.danielgynn.com/node-auth-part2/

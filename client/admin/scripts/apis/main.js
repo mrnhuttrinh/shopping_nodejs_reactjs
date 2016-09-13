@@ -202,5 +202,14 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    searchProduct(data, cb) {
+        var request = new Request();
+        request
+            .get(API.SEARCH_PRODUCT, data)
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

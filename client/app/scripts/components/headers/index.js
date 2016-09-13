@@ -3,6 +3,21 @@ import HeaderMain from './HeaderMain'
 import HeaderMenu from './HeaderMenu'
 
 export default class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            classCss: this.getClassCSS(this.props)
+        };
+    }
+    getClassCSS(props) {
+        var classCss = "index_header_detail";
+        var pathName = props.location.pathname;
+        if (pathName === "/") {
+            classCss = "index_header";
+        }
+        return classCss;
+    }
     componentDidMount() {
         $(function() {
             var myHeader = $('#mainHeader');
@@ -11,8 +26,7 @@ export default class Header extends Component {
                 var hPos = myHeader.data('position'), scroll = getScroll();
                 if ( hPos.top < scroll.top ){
                     myHeader.addClass('scroll_fixed');
-                }
-                else {
+                } else {
                     myHeader.removeClass('scroll_fixed');
                 }
             });
@@ -27,11 +41,16 @@ export default class Header extends Component {
             }
         })
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            classCss: this.getClassCSS(nextProps)
+        });
+    }
     render() {
         return (
-            <header id="mainHeader" className="index_header">
-                <HeaderMenu />
-                <HeaderMain menus={this.props.menus}/>
+            <header id="mainHeader" className={this.state.classCss}>
+                <HeaderMenu {...this.props} cartItems={this.props.cartItems} />
+                <HeaderMain {...this.props} cartItems={this.props.cartItems} menus={this.props.menus}/>
             </header>
         );
     }

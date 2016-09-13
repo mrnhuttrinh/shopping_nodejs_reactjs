@@ -67,7 +67,7 @@ export default class DescriptionDetail extends Component {
                         <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>
                     <div dangerouslySetInnerHTML={{__html: product.tech_information}}></div>
-                    <div className="modal fade" id="techInformationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div className="modal fade" id="techInformationModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div className="modal-dialog modal-lg">
                             <div className="modal-content">
                                 <div className="modal-header">

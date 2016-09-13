@@ -1,18 +1,14 @@
-import React, {Component} from 'react'
-import _ from 'lodash'
+import React, {Component} from 'react';
+import {Link} from 'react-router';
+import _ from 'lodash';
 
 export default class HeaderMenu extends Component {
-    componentDidMount() {
-
-    }
-    
     sortMenus(menus) {
-
         var menuLevelThree = _.filter(menus, menu => {
             if (menu.level === 3) {
                 menu.html = (
                     <li key={"menu_" + menu.id}>
-                        <a href= {menu.href}>{menu.name}</a>
+                        <Link to={"/category/" + menu.link}>{menu.name}</Link>
                     </li>
                 );
                 return menu;
@@ -24,7 +20,7 @@ export default class HeaderMenu extends Component {
                 var html = [];
                 html.push(
                     <li key={"menu_" + menu.id} className="bold">
-                        <a href= {menu.href}>{menu.name}</a>
+                        <Link to={"/category/" + menu.link}>{menu.name}</Link>
                     </li>
                 );
                 _.map(menuLevelThree, ml3 => {
@@ -76,7 +72,7 @@ export default class HeaderMenu extends Component {
                 }
                 menu.html = (
                     <li key={"menu_" + menu.id}>
-                        <a href={menu.href}>
+                        <Link to={"/category/" + menu.link}>
                             <span className={"ic_cm " + menu.icon}>
                                 {menu.char}
                             </span>
@@ -84,7 +80,7 @@ export default class HeaderMenu extends Component {
                             <span className="ic_cm icon_arr">
                                 K
                             </span>
-                        </a>
+                        </Link>
                         {TwoLevelHtml}
                         {TwoLevelHtmlHidden}
                     </li>

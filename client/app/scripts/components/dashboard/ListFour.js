@@ -1,20 +1,21 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router';
 import _ from 'lodash';
+import formatCurrency from '../../utils/formatcurrency';
 
 class Item extends Component {
     render() {
         var product = this.props.product;
         var percentSale = 0;
         if (product.price_wholesale !== product.price_wholesale_promotion) {
-            percentSale = parseInt((product.price_wholesale_promotion/product.price_wholesale)*100);
+            percentSale = 100 - Math.ceil((product.price_wholesale_promotion/product.price_wholesale)*100);
         }
         return (
             <li>
                 <div className="img">
                     <div className='mask'></div>
                     <Link to={'/product/' + product.text_link}>
-                        <img alt={product.alt} className="deal" height="235" src={product.thumbnail} width="235">
+                        <img alt={product.alt} className="deal" height="235" src={"/admin/" + product.thumbnail} width="235">
                         </img>
                     </Link>
                     <span className="lbl_place">
@@ -48,11 +49,11 @@ class Item extends Component {
                         </p>
                         <p className="listdeal_info_Ce">
                             <span className="trueprice">
-                                {product.price_wholesale}đ
+                                {formatCurrency(product.price_wholesale)}đ
                             </span>
                             <br />
                             <span className="price">
-                                {product.price_wholesale_promotion}đ
+                                {formatCurrency(product.price_wholesale_promotion)}đ
                             </span>
                         </p>
                         <div className="listdeal_info_R">
@@ -61,7 +62,7 @@ class Item extends Component {
                                     f
                                 </span>
                                 <span className="text_num_people">
-                                    152
+                                    {product.rate}
                                 </span>
                             </p>
                         </div>

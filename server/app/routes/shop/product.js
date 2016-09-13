@@ -37,16 +37,6 @@ function getListChildrenMenu(type, menus , res) {
     }
 }
 
-// sort product
-// if (type === "price_reduce") {
-//     condition = " WHERE status = 1 AND "
-// } else if (type === "price_increase") {
-
-// } else if (type === "rate") {
-
-// } else if (type === "sale_off") {
-
-// } else 
 module.exports = {
     getListProductByCategory: function(req, res) {
         getMenu(function(listMenu) {
@@ -61,6 +51,10 @@ module.exports = {
             if (!control === "undefined") {
                 if (control === "prev") {
                     orderBy = " ORDER BY p.createdAt ASC ";
+                } else if (control === "hottest") {
+                    orderBy = " ORDER BY p.rate DESC ";
+                } else if (control === "newest") {
+                    orderBy = " ORDER BY p.createdAt DESC ";
                 }
             }
             var query;
@@ -122,6 +116,84 @@ module.exports = {
                 return res.status(400).send({
                     error: err
                 });
+            });
+        });
+    },
+    getTotalProduct: function(req, res) {
+        getMenu(function(listMenu) {
+            var category = req.param("category");
+            var condition;
+            var query;
+            if (category === "sanphammoi") {
+                query = "SELECT COUNT(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id ";
+            } else {
+                var listType = getListChildrenMenu(category, listMenu, res);
+                if (listType) {
+                    var typeArray = "(" + listType.toString() + ")";
+                    query = "SELECT COUNT(DISTINCT(p.id)) as total FROM products p, categories c, products_category pc ";
+                    condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + typeArray;
+                } else {
+                    return res.status(400).send({
+                        error: {
+                            message: "Tải Không Thành Công"
+                        }
+                    });
+                }
+            }
+            query += condition;
+            models.sequelize.query(query)
+            .spread(function(rows) {
+                return res.status(200).send({
+                    data: rows[0].total
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
+        });
+    },
+    getProductByLink: function(req, res) {
+        var productLink = req.param("text_link");
+        var query = "SELECT * FROM products p WHERE text_link = '" + productLink + "' OR name='" + productLink + "' OR code='" + productLink + "'";
+        models.sequelize.query(query)
+        .spread(function(rows) {
+            if (rows.length) {
+                var product = rows[0];
+                // get galleries
+                var queryGetGalleries = "SELECT id, image FROM product_galleries WHERE product_id = " + product.id;
+                // get menu
+                var queryGetMenu = "SELECT id, category_id FROM products_category WHERE product_id = " + product.id;
+                // get sizes
+                var queryGetSizes = "SELECT * FROM sizes WHERE product_id = " + product.id;
+                Q.all([
+                    models.sequelize.query(queryGetGalleries),
+                    models.sequelize.query(queryGetMenu),
+                    models.sequelize.query(queryGetSizes)
+                ]).spread(function(galleries, categories, sizes) {
+                    product.galleries = galleries.length ? galleries[0] : [];
+                    product.categories = categories.length ? categories[0] : [];
+                    product.sizes = sizes.length ? sizes[0] : [];
+                    return res.status(200).send({
+                        data: product
+                    });
+                }).fail(function(err) {
+                    logger("ERROR", err);
+                    return res.status(400).send({
+                        error: err
+                    });
+                });
+            } else {
+                return res.status(200).send({
+                    data: null
+                });
+            }
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
             });
         });
     }

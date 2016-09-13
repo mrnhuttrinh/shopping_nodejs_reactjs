@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import HeaderMenu from "../commons/HeaderMenu"
+import HeaderMenu from "../commons/HeaderMenu";
+import Cart from './Cart';
+import CartTitle from './CartTitle';
 
 export default class HeaderMain extends Component {
     clickSearch(e) {
@@ -44,7 +46,7 @@ export default class HeaderMain extends Component {
                     <div className="menu_right_home">
                         <div id="divSearch" className="search">
                             <form id="frmSearch">
-                                <input type="text" id="search" name="q" autocomplete="off" placeholder="Tìm kiếm khuyến mãi..." maxlength="200" />
+                                <input type="text" id="search" name="q" autoComplete="off" placeholder="Tìm kiếm khuyến mãi..." maxLength="200" />
                                 <button onClick={this.clickSearch.bind(null)} className="btn_search" value="Tìm kiếm khuyến mãi..."><span className="ic_cm">E</span></button>
                             </form>
                         </div>
@@ -56,25 +58,18 @@ export default class HeaderMain extends Component {
                                         <li><a href="/phuong-thuc-van-chuyen">Phương thức vận chuyển </a></li>
                                         <li><a href="/chinh-sach-doi-tra">Chính sách đổi trả</a></li>
                                         <li><a href="/su-dung-voucher">Sử dụng voucher</a></li>
-                                        <li className="email"><span className="ic_cm icon-email">2</span><a href="mailto:hotro@cungmua.com">hotro@cungmua.com</a></li>
+                                        <li className="email"><span className="ic_cm icon-email">2</span><a href="mailto:hotro@aothunphongcach.com">hotro@aothunphongcach.com</a></li>
                                         <li className="phone">
                                             <span className="icon-phone ic_cm">D</span>
-                                            <p className="bold">19006637</p>
+                                            <p className="bold">1234567890</p>
                                             <p>(8h - 21h kể cả Thứ 7 - Chủ Nhật)</p>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                             <li id="cartTopScroll">
-                                <a href="/checkout/gio-hang">Giỏ hàng (<span>0</span>)<span className="ic_cm icon-arrow-d">k</span></a>
-                                <div className="hover_menu">
-                                    <p className="hover_TT">Giỏ hàng của bạn</p>
-                                    <p className="no_item">
-                                        Hiện chưa có sản phẩm nào
-                                        <br />
-                                        trong giỏ hàng của bạn
-                                    </p>
-                                </div>
+                                <CartTitle cartItems={this.props.cartItems}/>
+                                <Cart {...this.props} cartItems={this.props.cartItems}/>
                             </li>
                         </ul>
                     </div>

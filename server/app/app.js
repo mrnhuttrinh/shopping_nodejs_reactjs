@@ -15,6 +15,20 @@ configGlobal._globalPath = __dirname;
 var logger = require("./logger");
 var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'templates'));
+app.set('view engine', 'jade');
+
+// passport
+// Configuring Passport
+var passport = require('passport');
+var expressSession = require('express-session');
+// TODO - Why Do we need this key ?
+app.use(expressSession({secret: configGlobal.secret}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// other
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(cookieParser());
@@ -49,6 +63,12 @@ app.get(Constrains.ROUTE.ADMIN, function(req, res) {
     res.sendFile(path.join(__dirname, "public/admin/index.html"));
 });
 
+// Initialize Passport
+// open Auth
+var initPassport = require('./passport/init');
+initPassport(passport);
+var auth = require("./routes/auth");
+app.use(Constrains.ROUTE.AUTH, auth(passport));
 
 // catch 404 and forward to error handler
 app.use( function(req, res) {

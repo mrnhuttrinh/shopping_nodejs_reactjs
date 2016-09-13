@@ -163,7 +163,7 @@ export default class Gallery extends Component {
                     <button data-target="#galleryModal" data-toggle="modal" type="button" className="btn btn-default btn-xs pull-right">
                         <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>
-                    <div className="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div className="modal fade" id="galleryModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div className="modal-dialog modal-lg">
                             <div className="modal-content">
                                 <div className="modal-header">

@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 
 export default class Bxslider extends Component {
-    componentDidUpdate() {
+    mountBxSlider() {
         var props = this.props;
         var listNews = props.news.listNews;
         if (listNews.length > 0) {
@@ -19,12 +19,18 @@ export default class Bxslider extends Component {
             });
         }
     }
+    componentDidUpdate() {
+        this.mountBxSlider();
+    }
+    componentDidMount() {
+        this.mountBxSlider();
+    }
     render() {
         var props = this.props;
         var listNews = props.news.listNews;
         var listImages = _.map(listNews, (news) => {
             if (!_.isEmpty(news.main_image))
-                return (<li key={"bxslider_" + news.id}><Link target="_blank" to="/"><img src={"admin/" + news.main_image} /></Link></li>);
+                return (<li key={"bxslider_" + news.id}><Link to={"/news/" + news.id}><img src={"admin/" + news.main_image} /></Link></li>);
         });
         if (listImages.length === 0) {
             listImages.push(<li key={"bxslider_null"}><img src="" /></li>);
