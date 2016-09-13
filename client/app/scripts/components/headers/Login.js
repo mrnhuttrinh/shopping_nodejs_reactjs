@@ -22,7 +22,7 @@ export default class Login extends Component {
     render() {
         return (
             <li>
-                <a href="/dang-nhap">
+                <a href="/#/login">
                     Đăng nhập
                     <span className="ic_cm icon-arrow-d">
                         k

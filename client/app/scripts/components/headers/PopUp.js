@@ -22,7 +22,7 @@ export default class PopUpWarn extends Component {
                         aria-describedby="ui-id-3" 
                         aria-labelledby="ui-id-4">
                         <div className="popup_brand ui-dialog-content ui-widget-content">
-                            <span className="cursor-pointer button_close_popup"></span>
+                            <span onClick={this.turnOffShowOnTop.bind(this)} className="cursor-pointer button_close_popup"></span>
                             <div className="popup_brand_top">
                                 <img className="logo_pop" alt="Áo Thun Phong Cách" src="/images/logo_main.png" width="163" height="34" />
                             </div>
