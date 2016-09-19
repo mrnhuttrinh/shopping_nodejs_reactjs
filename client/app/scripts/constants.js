@@ -13,7 +13,8 @@ module.exports = {
         UPDATE_ADDRESS: "/api/shop_update_address",
         CREATE_NEW_ORDER: "/api/shop_create_new_oder",
         GET_USER_INFO: "/api/shop_get_user_info",
-        GET_YOUR_ORDER: "/api/shop_get_your_order"
+        GET_YOUR_ORDER: "/api/shop_get_your_order",
+        GET_YOUR_ORDER_BY_ID: "/api/shop_get_my_order_by_id"
     },
     ACTION: {
         GET_MENU: "GET_MENU",

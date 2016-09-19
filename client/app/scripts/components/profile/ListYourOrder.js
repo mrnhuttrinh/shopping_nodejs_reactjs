@@ -34,6 +34,7 @@ export default class ListYourOrder extends Component {
                         <td><Link to={"/myorder/" + order.text_id}>{order.text_id}</Link></td>
                         <td>{formatCurrency(order.total)}đ</td>
                         <td>{statusContent}</td>
+                        <td>{moment(order.createdAt).format("DD/MM/YYYY")}</td>
                     </tr>
                 );
             });
@@ -45,6 +46,7 @@ export default class ListYourOrder extends Component {
                             <th>Mã Đặt Hàng</th>
                             <th>Tổng Tiền</th>
                             <th>Trạng Thái</th>
+                            <th>Ngày Đặt Hàng</th>
                         </tr>
                     </thead>
                     <tbody>

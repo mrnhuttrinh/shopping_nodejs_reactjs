@@ -135,7 +135,7 @@ export default class OrderDetail extends Component {
                     </tr>
                     <tr>
                         <th>Ngày Đặt Hàng</th>
-                        <th>{moment(order.createdAt).format("MM/DD/YYYY")}</th>
+                        <th>{moment(order.createdAt).format("DD/MM/YYYY")}</th>
                     </tr>
                 </tbody>
             </table>
@@ -148,12 +148,22 @@ export default class OrderDetail extends Component {
         var listProduct = _.map(orderDetail, _od => {
             var product = _od.product;
             totalQuantity += _od.quantity;
+            // return (
+            //     <tr key={"order_product_" + _od.product.id}>
+            //         <th><Link to={"/product/" + _od.product.id}>{product.name}</Link></th>
+            //         <th>{product.code}</th>
+            //         <th>{_od.size}</th>
+            //         <th>{formatCurrency(_od.price)}</th>
+            //         <th>{_od.quantity}</th>
+            //     </tr>
+            // );
             return (
-                <tr key={"order_product_" + _od.product.id}>
-                    <th><Link to={"/product/" + _od.product.id}>{product.name}</Link></th>
-                    <th>{product.code}</th>
-                    <th>{_od.size}</th>
-                    <th>{_od.quantity}</th>
+                <tr key={"order_product_" + _od.id}>
+                    <td><Link to={"/product/" + _od.product.id}>{product.name}</Link></td>
+                    <td>{product.code}</td>
+                    <td>{_od.size}</td>
+                    <td>{formatCurrency(_od.price)}</td>
+                    <td>{_od.quantity}</td>
                 </tr>
             );
         });
@@ -164,13 +174,14 @@ export default class OrderDetail extends Component {
                         <th>Tên Sản Phẩm</th>
                         <th>Mã Sản Phẩm</th>
                         <th>Size</th>
+                        <th>Đơn Giá</th>
                         <th>Số Lượng</th>
                     </tr>
                 </thead>
                 <tbody>
                     {listProduct}
                     <tr>
-                        <th colSpan="3">Tổng</th>
+                        <th colSpan="4">Tổng</th>
                         <th>{totalQuantity}</th>
                     </tr>
                 </tbody>
