@@ -41,13 +41,6 @@ export default class LeftControl extends Component {
                             </td> 
                         </tr>
                         <tr> 
-                            <td className={menuName==="notifications" ? "info" : ""}>
-                                <Link to="/profile/notifications">
-                                    Thông Báo Của Bạn
-                                </Link>
-                            </td>
-                        </tr> 
-                        <tr> 
                             <td className={menuName==="myorders" ? "info" : ""}>
                                 <Link to="/profile/myorders">
                                     Đơn Hàng Của Bạn

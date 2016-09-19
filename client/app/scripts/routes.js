@@ -56,7 +56,7 @@ export default {
             path: 'profile(/:sub_segment)',
             component: Profile
         }, {
-            path: 'myorder',
+            path: 'myorder(/:id)',
             component: MyOrder
         }, {
             path: 'changepassword',

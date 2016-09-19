@@ -54,7 +54,7 @@ export default class Payment extends Component {
                 // TODO
             } else {
                 this.props.updateCartItems({});
-                window.location = "/#/myorder";
+                window.location = "/#/myorder/" + res.body.data.text_id;
             }
             this.setState({
                 submitLoading: false

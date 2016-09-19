@@ -57,7 +57,8 @@ module.exports = {
         models.Order.findAll({
             where: {
                 customer_id: id
-            }
+            },
+            order: '"createdAt" DESC'
         }).then(function(yourOrder) {
             res.status(200).send({
                 data: yourOrder

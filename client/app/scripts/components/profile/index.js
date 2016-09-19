@@ -96,7 +96,6 @@ export default class Profile extends Component {
                             <th>
                                 <p className="line-height-30px">
                                     Sổ địa chỉ
-                                    <button onClick={this.editInfo.bind(this, 2)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>
                                 </p>
                             </th>
                         </tr>
@@ -148,9 +147,6 @@ export default class Profile extends Component {
             case "addresses":
                 content = this.renderListAddress();
                 break;
-            // case "":
-            //     content = null;
-            //     break;
             case "myorders":
                 content = this.renderListOrder();
                 break;
