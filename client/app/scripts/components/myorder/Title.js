@@ -2,6 +2,16 @@ import React, {Component} from 'react';
 
 export default class Title extends Component {
     render() {
+        var status = this.props.status;
+        var transform = "";
+        var completed = "";
+        if (status) {
+            completed = "actived";
+            transform = "";
+        } else {
+            transform = "actived";
+            completed = "";
+        }
         return (
             <div className="row payment_step">
                 <p className="title_inside1 col-md-4 col-sm-12"><strong>{this.props.id}</strong><span></span></p>
@@ -12,12 +22,12 @@ export default class Title extends Component {
                             <a className="intro_menu_ce">Thanh Toán</a>
                             <span className="intro_menu_R"></span>
                         </li>
-                        <li className="actived">
+                        <li className={transform}>
                             <span className="intro_menu_L">2</span>
                             <a className="intro_menu_ce">Vận Chuyển</a>
                             <span className="intro_menu_R"></span>
                         </li>
-                        <li className="">
+                        <li className={completed}>
                             <span className="intro_menu_L">3</span>
                             <a className="intro_menu_ce">Hoàn tất</a>
                         </li>

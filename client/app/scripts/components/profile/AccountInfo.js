@@ -18,6 +18,14 @@ export default class AccountInfo extends Component {
                             </tr>
                             <tr>
                                 <td>
+                                    Ảnh Đại Diện: 
+                                </td>
+                                <td>
+                                    {" "} <img style={{width: "140px", height: "140px;"}} src={user.image} alt="Ảnh Đại Diện" className="img-rounded" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     Tên Đăng Nhập: 
                                 </td>
                                 <td>
@@ -56,14 +64,26 @@ export default class AccountInfo extends Component {
                                     {" "} {user.birthdate}
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Liên Kết: 
-                                </td>
-                                <td>
-                                    {" "} {user.type}
-                                </td>
-                            </tr>
+                            {
+                                user.type === "Local" ? (
+                                    <tr>
+                                        <td>
+                                            Đổi Mật Khẩu
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    <tr>
+                                        <td>
+                                            Liên Kết: 
+                                        </td>
+                                        <td>
+                                            {" "} {user.type}
+                                        </td>
+                                    </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </td> 

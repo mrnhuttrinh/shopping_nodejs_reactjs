@@ -83,5 +83,6 @@ router.post("/shop_create_new_oder", order.createNewOrder);
 router.get("/shop_get_user_info", user.getUserInfo);
 router.get("/shop_get_your_order", order.getYourOrder);
 router.get("/shop_get_my_order_by_id", order.getMyOrderById);
+router.get("/get_address_by_id", user.getAddressById);
 
 module.exports = router;

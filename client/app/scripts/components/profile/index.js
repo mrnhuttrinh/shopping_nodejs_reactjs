@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LeftControl from './LeftControl';
+import LeftControl from '../LeftControl';
 import RightInfo from './RightInfo';
 import UserAPI from '../../apis/user';
 import OrderAPI from '../../apis/order';
@@ -96,6 +96,7 @@ export default class Profile extends Component {
                             <th>
                                 <p className="line-height-30px">
                                     Sổ địa chỉ
+                                    <a className="btn btn-success btn-sm pull-right" href="/#/address/add">Tạo Địa Chỉ Mới</a>
                                 </p>
                             </th>
                         </tr>

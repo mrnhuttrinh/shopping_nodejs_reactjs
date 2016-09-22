@@ -14,7 +14,8 @@ module.exports = {
         CREATE_NEW_ORDER: "/api/shop_create_new_oder",
         GET_USER_INFO: "/api/shop_get_user_info",
         GET_YOUR_ORDER: "/api/shop_get_your_order",
-        GET_YOUR_ORDER_BY_ID: "/api/shop_get_my_order_by_id"
+        GET_YOUR_ORDER_BY_ID: "/api/shop_get_my_order_by_id",
+        GET_ADDRESS_BY_ID: "/api/get_address_by_id",
     },
     ACTION: {
         GET_MENU: "GET_MENU",

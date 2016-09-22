@@ -108,7 +108,8 @@ module.exports = {
         var userID = req.param("user_id");
         models.UserAddress.findAll({
             where: {
-                user_id: userID
+                user_id: userID,
+                status: 1
             }
         }).then(function(addresses) {
             return res.status(200).send({
@@ -165,7 +166,8 @@ module.exports = {
                 "birthdate",
                 "gender",
                 "username",
-                "type"
+                "type",
+                "image"
             ]
         }).then(function(user) {
             if (!user) {
@@ -180,6 +182,26 @@ module.exports = {
                 data: user
             });
         }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    getAddressById: function(req, res) {
+        var userID = req.param("user_id");
+        var id = req.param("id");
+        models.UserAddress.find({
+            where: {
+                user_id: userID,
+                id: id,
+                status: 1
+            }
+        }).then(function(address) {
+            return res.status(200).send({
+                data: address
+            });
+        }).catch(function() {
             logger("ERROR", err);
             return res.status(400).send({
                 error: err
