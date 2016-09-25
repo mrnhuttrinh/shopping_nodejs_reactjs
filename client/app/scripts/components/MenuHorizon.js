@@ -21,7 +21,7 @@ export default class MenuHorizon extends Component {
     getChildrenMenu(currentMenu) {
         return _.map(this.props.menus, menu => {
             if(menu.parent === currentMenu.id && menu.level === (currentMenu.level + 1)) {
-                return (<li key={"li_horizontial_" + menu.id} className=""><Link to={"/category/" + menu.link}>{menu.name}</Link></li>);
+                return (<li key={"li_horizontial_" + menu.id} className=""><Link to={"/" + menu.link}>{menu.name}</Link></li>);
             }
         });
     }
@@ -39,7 +39,7 @@ export default class MenuHorizon extends Component {
             <div className="cate_menu_hoz">
                 <ul className="menu_cate_hoz">
                     <li key={"li_horizontial_first"} className="active">
-                        <Link to={"/category/" + currentHash}>Tất cả</Link>
+                        <Link to={"/" + currentHash}>Tất cả</Link>
                     </li>
                     {listChildren}
                 </ul>

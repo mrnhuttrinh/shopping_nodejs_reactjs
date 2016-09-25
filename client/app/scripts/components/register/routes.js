@@ -7,7 +7,7 @@ import News from './views/News';
 import Login from './views/Login';
 
 function enterOtherRouter(nextState, replace) {
-    window.location = "/#/";
+    window.location = "/";
 }
 
 export default {

@@ -36,7 +36,7 @@ export default class RightInfo extends Component {
             items: this.carts
         };
         this.props.updateCartItems(cartItems);
-        window.location = "/#/checkout/cart";
+        window.location = "/checkout/cart";
     }
     increaseSize(size, quantity) {
         var sizeInCart = _.find(this.carts, (cart) => {

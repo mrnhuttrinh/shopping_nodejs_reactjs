@@ -46,7 +46,7 @@ export default class MyOrder extends Component {
                 }
             });
         } else {
-            window.location = "/#/profile/myorders";
+            window.location = "/profile/myorders";
         }
     }
     componentWillReceiveProps(nextProps) {

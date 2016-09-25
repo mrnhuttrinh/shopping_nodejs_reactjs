@@ -10,7 +10,7 @@ export default  class TitleHome extends Component {
                 <p className="bg_ic ic_text">
                     T{this.props.index}
                 </p>
-                <Link className="title_home_text" to={"/category/" + menu.link}>
+                <Link className="title_home_text" to={"/" + menu.link}>
                     {menu.name}
                 </Link>
                 <NavMenu menu={menu} menus={this.props.menus}/>

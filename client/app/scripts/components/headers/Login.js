@@ -3,11 +3,11 @@ import React, {Component} from 'react';
 export default class Login extends Component {
     redirectLogin(event) {
         event.preventDefault();
-        window.location = "/#/login";
+        window.location = "/login";
     }
     behaviorSuccess(user) {
         window.userLogin(user);
-        window.location = "/#/";
+        window.location = "/";
     }
     openURLFacebook(event) {
         event.preventDefault();
@@ -23,7 +23,7 @@ export default class Login extends Component {
     render() {
         return (
             <li>
-                <a href="/#/login">
+                <a href="/login">
                     Đăng nhập
                     <span className="ic_cm icon-arrow-d">
                         k
@@ -46,7 +46,7 @@ export default class Login extends Component {
                         </li>
                         <li className="note">
                             Khách hàng mới?
-                            <a href="/#/register">
+                            <a href="/register">
                                 {" "}Tạo tài khoản
                             </a>
                         </li>

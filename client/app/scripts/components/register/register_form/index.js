@@ -255,7 +255,7 @@ export default class FormElement extends Component {
             dialogPopup: null
         });
         if (status) {
-            window.location = "/#/login";
+            window.location = "/login";
         }
     }
     render() {
@@ -358,7 +358,7 @@ export default class FormElement extends Component {
                             <button className="btn_primary" id="btnRegister" type="submit">
                                 HOÀN THÀNH
                             </button>
-                            <a className="link_register" href="/#/login">
+                            <a className="link_register" href="/login">
                                 Đã đăng ký?
                             </a>
                         </div>

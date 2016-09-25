@@ -26,7 +26,7 @@ export default class ListNews extends Component {
             return (
                 <tr>
                     <td>
-                        <a href={"/#/news/" + news.id}>{news.title}</a>
+                        <a href={"/news/" + news.id}>{news.title}</a>
                     </td>
                 </tr>
             );

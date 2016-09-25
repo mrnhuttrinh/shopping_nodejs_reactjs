@@ -13,7 +13,7 @@ import Address from './views/Address';
 import ChangePassword from './views/ChangePassword';
 
 function enterOtherRouter(nextState, replace) {
-    window.location = "/#/";
+    window.location = "/";
 }
 
 export default {
@@ -27,10 +27,7 @@ export default {
             path: 'trang-chu',
             component: Home
         }, {
-            path: 'category/:category_link(/:sort(/:page))',
-            component: Category
-        }, {
-            path: 'product/:product_name',
+            path: ':category_link/:product_name',
             component: Product
         }, {
             path: 'cartdetail',
@@ -65,6 +62,9 @@ export default {
         }, {
             path: 'changepassword',
             component: ChangePassword
+        }, {
+            path: ':category_link(/:sort(/:page))',
+            component: Category
         }, {
             path: '*',
             component: Home,

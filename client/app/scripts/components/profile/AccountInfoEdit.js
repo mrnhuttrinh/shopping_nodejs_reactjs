@@ -115,7 +115,7 @@ export default class AccountInfoEdit extends Component {
                 this.props.user.image = this.state.avatar;
                 this.state.avatar = null;
                 this.props.userLogin(this.props.user);
-                window.location = "/#/profile";
+                window.location = "/profile";
             }
         });
     }

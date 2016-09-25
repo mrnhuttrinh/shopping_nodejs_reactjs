@@ -24,7 +24,7 @@ export default class BlockOne extends Component {
                             {this.renderListItem()}
                         </ul>
                         <p className="change_cart">
-                            <a className="change_shop" href="/#/checkout/cart">
+                            <a className="change_shop" href="/checkout/cart">
                                 Thay đổi giỏ hàng
                             </a>
                         </p>

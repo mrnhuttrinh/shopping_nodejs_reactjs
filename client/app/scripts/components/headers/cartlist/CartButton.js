@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 export default class CartButton extends Component {
     redirect() {
-        window.location = '/#/checkout/cart';
+        window.location = '/checkout/cart';
     }
     render() {
         return (

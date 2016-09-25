@@ -10,7 +10,7 @@ export default class UserInfo extends Component {
     }
     turnOffShowOnTop() {
         this.props.logOut();
-        window.location = "/#/";
+        window.location = "/";
     }
     logOut(event) {
         event.preventDefault();
@@ -28,7 +28,7 @@ export default class UserInfo extends Component {
         return (
             <li>
                 {this.state.dialogPopUp}
-                <a href="/#/profile">
+                <a href="/profile">
                     {userInfo.fullname}
                     <span className="ic_cm icon-arrow-d">
                         k
@@ -37,17 +37,17 @@ export default class UserInfo extends Component {
                 <div className="hover_menu">
                     <ul className="list_hotline">
                         <li>
-                            <a href="/#/profile">
+                            <a href="/profile">
                                 Tài khoản của bạn
                             </a>
                         </li>
                         <li>
-                            <a href="/#/myorder">
+                            <a href="/myorder">
                                 Đơn hàng của bạn
                             </a>
                         </li>
                         <li>
-                            <a href="/#/changepassword">
+                            <a href="/changepassword">
                                 Đổi mật khẩu
                             </a>
                         </li>

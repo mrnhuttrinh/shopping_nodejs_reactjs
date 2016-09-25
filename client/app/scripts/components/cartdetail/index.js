@@ -14,7 +14,7 @@ export default class CartDetail extends Component {
     // componentWillMount() {
     //     var cartItems = localItem.getItem("cartItems");
     //     if (_.isEmpty()) {
-    //         window.location = "/#";
+    //         window.location = "/";
     //     }
     // }
     renderListItem() {

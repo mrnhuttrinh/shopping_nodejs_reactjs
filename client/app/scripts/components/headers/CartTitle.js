@@ -11,7 +11,7 @@ export default class CartTitle extends Component {
             });
         });
         return (
-            <a href="/#/checkout/cart">Giỏ hàng (<span>{total}</span>)<span className="ic_cm icon-arrow-d">k</span></a>
+            <a href="/checkout/cart">Giỏ hàng (<span>{total}</span>)<span className="ic_cm icon-arrow-d">k</span></a>
         );
     }
 }

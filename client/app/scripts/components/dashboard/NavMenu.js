@@ -32,7 +32,7 @@ class Item extends Component {
             <li 
                 onMouseOver={this._onMouseOver.bind(this)}
                 onMouseOut={this._onMouseOut.bind(this)}>
-                <Link to={"/category/" + menu.link}>
+                <Link to={"/" + menu.link}>
                     <span aria-hidden="true">{this.state.textShow}</span>
                 </Link>
             </li>

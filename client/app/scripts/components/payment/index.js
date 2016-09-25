@@ -31,10 +31,10 @@ export default class Payment extends Component {
                 });
             });
             if (products.length) {} else {
-                window.location = "/#";
+                window.location = "/";
             }
         } else {
-            window.location = "/#/login";
+            window.location = "/login";
         }
     }
     createNewOrder() {
@@ -72,14 +72,14 @@ export default class Payment extends Component {
                     // TODO
                 } else {
                     this.props.updateCartItems({});
-                    window.location = "/#/myorder/" + res.body.data.text_id;
+                    window.location = "/myorder/" + res.body.data.text_id;
                 }
                 this.setState({
                     submitLoading: false
                 });
             });
         } else {
-            window.location = "/#";
+            window.location = "/";
         }
     }
     render() {

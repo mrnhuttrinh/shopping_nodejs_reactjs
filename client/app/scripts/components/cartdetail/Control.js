@@ -8,7 +8,7 @@ export default class Control extends Component {
     redirectPay(event) {
         event.preventDefault();
         if (this.props.user) {
-            window.location = "/#/payment";
+            window.location = "/payment";
         }
     }
     render() {
@@ -16,7 +16,7 @@ export default class Control extends Component {
         var user = this.props.user;
         return (
             <div className="cart_link">
-                <a className="continue_cart" href="/#">
+                <a className="continue_cart" href="/">
                     <span className="ic_cm icon-arrow-double-l">
                         N
                     </span>

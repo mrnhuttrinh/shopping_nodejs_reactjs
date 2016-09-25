@@ -1,6 +1,9 @@
 /*jshint node: true */
 "use strict";
 
+// var ReactRouter = require("react-router")''
+// var Router = ReactRouter.Router;
+
 var express = require("express");
 var morgan = require("morgan");
 var path = require("path");
@@ -47,6 +50,16 @@ app.use(function(req, res, next) {
     next();
 });
 
+// app.get('*', function (req, res) {
+//     // This wildcard method handles all requests
+//     Router.run(routes, req.path, function (Handler, state) {
+//         var element = React.createElement(Handler);
+//         var html = React.renderToString(element);
+//         res.render('index', { content: html });
+//     });
+// });
+// 
+
 /**
  * Routers api
  */
@@ -69,6 +82,12 @@ var initPassport = require('./passport/init');
 initPassport(passport);
 var auth = require("./routes/auth");
 app.use(Constrains.ROUTE.AUTH, auth(passport));
+
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'public/shop', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use( function(req, res) {

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class OpenLogin extends Component {
     behaviorSuccess(user) {
         window.userLogin(user);
-        window.location = "/#/";
+        window.location = "/";
     }
     openURLFacebook(event) {
         event.preventDefault();
