@@ -58,5 +58,13 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    updateUserInfo(data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_USER_INFO, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

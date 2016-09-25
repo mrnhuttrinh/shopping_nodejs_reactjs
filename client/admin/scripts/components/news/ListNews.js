@@ -195,7 +195,7 @@ export default class ListNews extends Component{
                 )
                 var host = window.location.host;
                 row.view_browser = (
-                    <a target="_blank" href={host + "/#/" + "tin-tuc/" + row.id}>{row.title}</a>
+                    <a target="_blank" href={host + "/#/" + "news/" + row.id}>{row.title}</a>
                 );
             })
             return (

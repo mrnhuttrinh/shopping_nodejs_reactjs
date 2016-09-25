@@ -20,7 +20,6 @@ export default class LongDescription extends Component {
         var product = this.props.product;
         return (
             <div className="deal_detail_Hi">
-                <h4>Điểm nổi bật</h4>
                 <div dangerouslySetInnerHTML={{__html: product.description_detail}}></div>
             </div>
         );

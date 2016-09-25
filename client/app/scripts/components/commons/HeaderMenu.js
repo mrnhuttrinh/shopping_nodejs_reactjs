@@ -51,6 +51,23 @@ export default class HeaderMenu extends Component {
                             <ul className="menu_ver_item">
                                 {html}
                             </ul>
+                            {
+                                menu.thumbnail ? (
+                                    <a style={{
+                                        position: "absolute",
+                                        border: "0px",
+                                        right: "0px",
+                                        bottom: "0px"
+                                    }} href={"#/category/" + menu.link}>
+                                        <img style={{
+                                                maxWidth: "450px",
+                                                maxHeight: "450px",
+                                                margin: "0px"
+                                            }} src={"/admin/" + menu.thumbnail} />
+                                    </a>
+                                ) : null
+                            }
+                            
                         </div>
                     );
                     TwoLevelHtmlHidden = (
@@ -64,9 +81,12 @@ export default class HeaderMenu extends Component {
                         filter: "blur(1px)",
                         overflow: "hidden"
                     };
+                    var imageString = menu.thumbnail ? "/admin/" + menu.thumbnail : "../images/background_menu.jpg";
                     TwoLevelHtml = (
                         <div style={style} className="menu_ver_hover">
-                            <img src="../images/background_menu.jpg"/>
+                            <a href={"#/category/" + menu.link}>
+                                <img src={imageString} />
+                            </a>
                         </div>
                     );
                 }

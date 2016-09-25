@@ -154,24 +154,28 @@ module.exports = {
             query += condition + orderBy + limit;
             models.sequelize.query(query)
             .spread(function(rows) {
-                _.forEach(rows, function(row) {
-                    row.sizes = [];
-                });
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
+                    row.sizes = [];
                     var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 });
-                Q.all(arrayQuerySize).spread(function(rowsSizes) {
-                    if (rowsSizes) {
-                        _.forEach(rowsSizes[0], function(newRowSi) {
-                            _.forEach(rows, function(row) {
-                                if (row.id === newRowSi.product_id) {
-                                    row.sizes.push(newRowSi);
-                                }
+                Q.all(arrayQuerySize).then(function(rowsSizes) {
+                    if (rowsSizes.length) {
+                        _.forEach(rows, function(row) {
+
+                            _.forEach(rowsSizes, function(newRowSi) {
+
+                                _.forEach(newRowSi[0], function(newLevelRow) {
+                                    if (row.id === newLevelRow.product_id) {
+                                        row.sizes.push(newLevelRow);
+                                    }
+                                })
+
                             });
                         });
+
                         return res.status(200).send({
                             data: rows
                         });
@@ -284,7 +288,8 @@ module.exports = {
                     models.Size.create({
                         name: size.name,
                         product_id: prod.id,
-                        quantity: size.quantity
+                        quantity: size.quantity,
+                        quantity_temp: size.quantity
                     }).then(function(si) {
 
                     }).catch(function(err) {
@@ -466,7 +471,8 @@ module.exports = {
                         models.Size.create({
                             name: _addnew.name,
                             product_id: id,
-                            quantity: _addnew.quantity
+                            quantity: _addnew.quantity,
+                            quantity_temp: _addnew.quantity
                         })
                     )
                 })
@@ -477,7 +483,8 @@ module.exports = {
                     var conditionSize = " WHERE id = " + _update.id;
                     var name = _update.name;
                     var quantity = _update.quantity;
-                    var queryUpdate = "UPDATE sizes SET name = '" + name + "', quantity = " + quantity + conditionSize; 
+                    var quantity_temp = _update.quantity_temp;
+                    var queryUpdate = "UPDATE sizes SET name = '" + name + "', quantity = " + quantity + ", quantity_temp = " + quantity_temp + conditionSize; 
                     arrayPromise.push(models.sequelize.query(queryUpdate))
                 })
                 // remove
@@ -554,17 +561,42 @@ module.exports = {
                     var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 });
-                Q.all(arrayQuerySize).spread(function(rowsSizes) {
-                    _.forEach(rowsSizes[0], function(newRowSi) {
+                // Q.all(arrayQuerySize).spread(function(rowsSizes) {
+                //     _.forEach(rowsSizes[0], function(newRowSi) {
+                //         _.forEach(products, function(row) {
+                //             if (row.id === newRowSi.product_id) {
+                //                 row.sizes.push(newRowSi);
+                //             }
+                //         });
+                //     });
+                //     return res.status(200).send({
+                //         data: products
+                //     });
+                // }).fail(function(err) {
+                //     logger("ERROR", err);
+                //     return res.status(400).send({
+                //         error: err
+                //     });
+                // });
+                Q.all(arrayQuerySize).then(function(rowsSizes) {
+                    if (rowsSizes.length) {
                         _.forEach(products, function(row) {
-                            if (row.id === newRowSi.product_id) {
-                                row.sizes.push(newRowSi);
-                            }
+                            _.forEach(rowsSizes, function(newRowSi) {
+                                _.forEach(newRowSi[0], function(newLevelRow) {
+                                    if (row.id === newLevelRow.product_id) {
+                                        row.sizes.push(newLevelRow);
+                                    }
+                                })
+                            });
                         });
-                    });
-                    return res.status(200).send({
-                        data: products
-                    });
+                        return res.status(200).send({
+                            data: products
+                        });
+                    } else {
+                        return res.status(200).send({
+                            data: []
+                        });
+                    }
                 }).fail(function(err) {
                     logger("ERROR", err);
                     return res.status(400).send({

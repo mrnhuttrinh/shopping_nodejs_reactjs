@@ -65,5 +65,16 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    updateThumbnailCategory(data, cb) {
+        var request = new Request();
+        request
+            .post(API.UPDATE_THUMBNAIL_CATEGORY, {
+                data: data
+            })
+            .authorized()
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

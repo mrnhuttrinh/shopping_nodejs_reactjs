@@ -118,11 +118,35 @@ module.exports = {
 
         var dataImage = imageData.split(";");
         var imageType = (dataImage[0]).split("/")[1];
-        var imageFilePath = config.productImage + data.link + "." + imageType;
+        var imageFilePath = config.productImage + data.link + "_logo_" + "." + imageType;
         data.logo_image = imageFilePath;
         toImage(dataImage[1], imageFilePath, config.adminPath);
 
         query = "UPDATE categories SET logo_image='" + data.logo_image + "' WHERE id =" + id;
+        models.sequelize.query(query)
+        .spread(function() {
+            return res.status(200).send({});
+        })
+        .catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    updateThumbnailImage: function(req, res) {
+        var data = req.body.data;
+        var imageData = data.imageData;
+        var id = data.id;
+        var query = "";
+
+        var dataImage = imageData.split(";");
+        var imageType = (dataImage[0]).split("/")[1];
+        var imageFilePath = config.productImage + data.link + "_thumbnail_" + "." + imageType;
+        data.logo_image = imageFilePath;
+        toImage(dataImage[1], imageFilePath, config.adminPath);
+
+        query = "UPDATE categories SET thumbnail='" + data.logo_image + "' WHERE id =" + id;
         models.sequelize.query(query)
         .spread(function() {
             return res.status(200).send({});

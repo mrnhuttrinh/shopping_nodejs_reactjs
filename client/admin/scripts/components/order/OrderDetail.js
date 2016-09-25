@@ -161,7 +161,7 @@ export default class OrderDetail extends Component {
                 <tr key={"order_product_" + _od.id}>
                     <td><Link to={"/product/" + _od.product.id}>{product.name}</Link></td>
                     <td>{product.code}</td>
-                    <td>{_od.size}</td>
+                    <td>{_od.size_name}</td>
                     <td>{formatCurrency(_od.price)}</td>
                     <td>{_od.quantity}</td>
                 </tr>
@@ -259,7 +259,9 @@ export default class OrderDetail extends Component {
                         </div>
                     </div>
                     {
-                        order.completed ? null : (<a onClick={this.markSuccess.bind(this)} className="pull-left btn btn-success">Đánh Dấu Hoàn Thành</a>)
+                        order.status ? (
+                            order.completed ? null : (<a onClick={this.markSuccess.bind(this)} className="pull-left btn btn-success">Đánh Dấu Hoàn Thành</a>)
+                        ) : null
                     }
                     <a onClick={this.printOrder.bind(this)} className="pull-right btn btn-primary">Print</a>
                 </div>

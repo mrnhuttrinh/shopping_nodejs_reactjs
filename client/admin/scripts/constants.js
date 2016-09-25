@@ -45,6 +45,7 @@ module.exports = {
         CREATE_NEW_ORDER:       "/api/create_new_order",
         CANCEL_ORDER:           "/api/cancel_order",
         REPORT_ORDER:           "/api/report_order",
+        UPDATE_THUMBNAIL_CATEGORY: "/api/update_thumbnail_category"
     },
     ACTION: {
         SIGN_IN:                "SIGN_IN",

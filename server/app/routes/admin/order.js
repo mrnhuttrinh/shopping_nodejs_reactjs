@@ -111,7 +111,8 @@ module.exports = {
         }).then(function(order) {
 
             // get order detail
-            var queryOrderDetail = "select * from order_detail where order_id='" + order.id + "';";
+            var queryOrderDetail = "select order_detail.*, sizes.name as size_name from order_detail, sizes where order_detail.size = sizes.id and order_id='" + order.id + "';";
+            // var queryOrderDetail = "select * from order_detail where order_id='" + order.id + "';";
             
             // get customer
             var queryCustomer = "select * from user where id='" + order.customer_id + "'";
@@ -179,6 +180,36 @@ module.exports = {
                 text_id: orderId
             }
         }).then(function(suc) {
+            // get all orderdetail of order
+            var queryGetOrderDetail = " select od.* from order_detail od, `order` where od.order_id = `order`.id and `order`.text_id = '" + orderId +"'";
+            models.sequelize.query(queryGetOrderDetail)
+            .spread(function(orderDetails) {
+                // update quantity for product size
+                _.forEach(orderDetails, (_oDetail) => {
+                    var size_id = _oDetail.size;
+                    models.Size.find({
+                        where: {
+                            id: size_id
+                        }
+                    }).then(function(size) {
+                        var _quantity = size.quantity - _oDetail.quantity;
+                        models.Size.update({
+                            quantity: _quantity
+                        }, {
+                            where: {
+                                id: size_id
+                            }
+                        }).catch(function(err) {
+                            logger("ERROR", err);
+                        });
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                    });
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+            });
+
             return res.status(200).send();
         }).catch(function(err) {
             logger("ERROR", err);
@@ -224,6 +255,25 @@ module.exports = {
                                 quantity: product.quantity,
                                 size: product.size
                             }));
+
+                            // update quantity_temp for size
+                            models.Size.find({
+                                where: {
+                                    product_id: product.id,
+                                    id: product.size
+                                }
+                            }).then(function(size) {
+                                var quantity_temp = size.quantity - product.quantity;
+                                models.Size.update({
+                                    quantity_temp: quantity_temp
+                                }, {
+                                    where: {
+                                        id: size.id
+                                    }
+                                });
+                            }).catch(function(err) {
+                                logger("ERROR", err);
+                            });
                         });
 
                         Q.all(listPromises).then(function(products) {
@@ -271,6 +321,37 @@ module.exports = {
                 text_id: order_id
             }
         }).then(function() {
+
+            // get all orderdetail of order
+            var queryGetOrderDetail = " select od.* from order_detail od, `order` where od.order_id = `order`.id and `order`.text_id = '" + order_id +"'";
+            models.sequelize.query(queryGetOrderDetail)
+            .spread(function(orderDetails) {
+                // update quantity for product size
+                _.forEach(orderDetails, (_oDetail) => {
+                    var size_id = _oDetail.size;
+                    models.Size.find({
+                        where: {
+                            id: size_id
+                        }
+                    }).then(function(size) {
+                        var _quantity_temp = size.quantity;
+                        models.Size.update({
+                            quantity_temp: _quantity_temp
+                        }, {
+                            where: {
+                                id: size_id
+                            }
+                        }).catch(function(err) {
+                            logger("ERROR", err);
+                        });
+                    }).catch(function(err) {
+                        logger("ERROR", err);
+                    });
+                });
+            }).catch(function(err) {
+                logger("ERROR", err);
+            });
+
             return res.status(200).send({
                 data: "Cancel Success"
             });

@@ -28,5 +28,21 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    getProductsRelateWithProduct(data, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_PRODUCTS_RALATE_WITH_PRODUCT, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
+    },
+    getRecommendProducts(cb) {
+        var request = new Request();
+        request
+            .get(API.GET_RECOMMEND_PRODUCTS)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

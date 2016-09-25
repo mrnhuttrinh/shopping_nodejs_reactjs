@@ -14,7 +14,7 @@ export default class Item extends Component {
                         <img alt={product.name} height="64" src={"/admin/" + product.thumbnail} width="64"/>
                     </a>
                     <a className="deal_name" href={"/#/product/" + product.text_link}>
-                        {product.name} - size: {item.name}
+                        {product.name} - size: {item.size_name}
                     </a>
                     <p className="acc_note">
                         Giao sản phẩm toàn quốc

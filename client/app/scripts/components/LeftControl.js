@@ -5,7 +5,7 @@ import localItem from '../utils/localItem';
 export default class LeftControl extends Component {
     render() {
         var menuName = this.props.menuName;
-        var user = localItem.getItem("user");
+        var user = this.props.user;
         return (
             <div className="col-lg-3 col-md-2">
                 <table className="table table-hover table_profile">

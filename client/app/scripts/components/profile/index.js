@@ -61,11 +61,11 @@ export default class Profile extends Component {
         );
     }
     renderAccountInfo() {
-        var content = (<AccountInfo user={this.state.user} />);
-        var button = (<button onClick={this.editInfo.bind(this, 1, true)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>);
+        var content = (<AccountInfo {...this.props} user={this.state.user} />);
+        var button = (<button onClick={this.editInfo.bind(this, 1, true)} type="button" className="btn btn-primary btn-sm pull-right">Sửa Thông Tin</button>);
         if (this.state.editAccountInfor) {
-            content = (<AccountInfoEdit user={this.state.user} />);
-            button = (<button type="button" onClick={this.editInfo.bind(this, 1, false)} className="btn btn-success btn-sm pull-right">Save</button>);
+            content = (<AccountInfoEdit {...this.props} user={this.state.user} />);
+            button = (<button type="button" onClick={this.editInfo.bind(this, 1, false)} className="btn btn-success btn-sm pull-right">Quay Lại</button>);
         }
         return (
             <div className="col-lg-9 col-md-10">
@@ -159,6 +159,7 @@ export default class Profile extends Component {
                 <div className="container">
                     <div className="row">
                         <LeftControl 
+                            {...this.props}
                             menuName={menuName}/>
                         {content}
                     </div>

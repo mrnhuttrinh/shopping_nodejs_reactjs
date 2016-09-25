@@ -83,7 +83,8 @@ module.exports = {
                 "fullname",
                 "address",
                 "phone",
-                "birthdate"
+                "birthdate",
+                "image"
             ]
         }).then(function(user) {
             if (!user) {
@@ -202,6 +203,36 @@ module.exports = {
                 data: address
             });
         }).catch(function() {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    updateUserInfo: function(req, res) {
+        var data = req.body.data;
+        var image = req.body.image_data;
+        var dataImage = image.split(";");
+        var imageType = (dataImage[0]).split("/")[1];
+        if (dataImage.length === 2) {
+            var imageFilePath = config.userImage + data.id + "." + imageType;
+            data.image = imageFilePath;
+            toImage(dataImage[1], imageFilePath, config.shopPath)
+        }
+        if (_.isEmpty(data.fullname)) {
+            return res.status(400).send({
+                error: "Tên Không Được Trống"
+            });
+        }
+        models.User.update(data, {
+            where: {
+                id: data.id
+            }
+        }).then(function(user) {
+            return res.status(200).send({
+                data: user
+            });
+        }).catch(function(err) {
             logger("ERROR", err);
             return res.status(400).send({
                 error: err

@@ -13,7 +13,7 @@ export default class GroupProduct extends Component {
     prev: 1;
     listProducts: [];
     control: null;
-    
+
     constructor(props) {
         super(props);
         this.state = {

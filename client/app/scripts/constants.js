@@ -16,6 +16,10 @@ module.exports = {
         GET_YOUR_ORDER: "/api/shop_get_your_order",
         GET_YOUR_ORDER_BY_ID: "/api/shop_get_my_order_by_id",
         GET_ADDRESS_BY_ID: "/api/get_address_by_id",
+        UPDATE_USER_INFO: "/api/update_user_info",
+        GET_NEWS_BY_ID: "/api/shop_get_news_by_id",
+        GET_PRODUCTS_RALATE_WITH_PRODUCT: "/api/shop_get_products_relate_with_product",
+        GET_RECOMMEND_PRODUCTS: "/api/get_recommend_products",
     },
     ACTION: {
         GET_MENU: "GET_MENU",

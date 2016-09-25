@@ -51,7 +51,7 @@ export default class Address extends Component {
             <div className="index_middle">
                 <div className="container">
                     <div className="row">
-                        <LeftControl menuName={"addresses"}/>
+                        <LeftControl {...this.props} menuName={"addresses"}/>
                         <CreateAddress updateAddressForm={this.updateAddressForm.bind(this)} formType={formType} {...this.props} address={address}/>
                     </div>
                 </div>

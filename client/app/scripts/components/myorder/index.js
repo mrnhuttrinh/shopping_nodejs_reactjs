@@ -28,10 +28,7 @@ export default class MyOrder extends Component {
             return null;
         }
     }
-    componentDidMount() {
-        var props = this.props;
-        var params = props.params;
-        var id = params.id;
+    getOrder(id) {
         if (!_.isEmpty(id) && !_.isNull(id)) {
             var props = this.props;
             var params = props.params;
@@ -51,6 +48,17 @@ export default class MyOrder extends Component {
         } else {
             window.location = "/#/profile/myorders";
         }
+    }
+    componentWillReceiveProps(nextProps) {
+        var params = nextProps.params;
+        var id = params.id;
+        this.getOrder(id);
+    }
+    componentDidMount() {
+        var props = this.props;
+        var params = props.params;
+        var id = params.id;
+        this.getOrder(id);
     }
     renderRecievePerson() {
         var order = this.state.order;
