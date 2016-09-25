@@ -18,5 +18,13 @@ export default {
             .then(function(err, res) {
                 cb(err, res);
             });
+    },
+    getNewsById(data, cb) {
+        var request = new Request();
+        request
+            .get(API.GET_NEWS_BY_ID, data)
+            .then(function(err, res) {
+                cb(err, res);
+            });
     }
 }

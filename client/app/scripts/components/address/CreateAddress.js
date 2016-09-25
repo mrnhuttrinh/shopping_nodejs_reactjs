@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import Validate from '../../commons/Validate';
-import UserAPI from '../../../apis/user';
+import Validate from '../commons/Validate';
+import UserAPI from '../../apis/user';
 
-export default class AddAddress extends Component {
+export default class CreateAddress extends Component {
     constructor(props) {
         super(props);
         this.state = this.initStateValidate();
         this.state.selectCity = 0;
         this.state.saveLoading = false;
     }
-
     initStateValidate() {
         return {
             validateReceiverName: {
@@ -57,34 +56,36 @@ export default class AddAddress extends Component {
         });
         if (this.props.formType === "create") {
             UserAPI.addNewAddress(data, (err, res) => {
-                if (err) {
-                    // TODO
-                } else {
-                    this.props.updateListAddress(res.body.data, "create");
-                    this.props.addAddressForm(false);
-                }
                 this.setState({
                     saveLoading: false
                 });
+                if (err) {
+                    // TODO
+                } else {
+                    // this.props.updateListAddress(res.body.data, "create");
+                    // this.props.updateAddressForm(res.body.data);
+                    // console.log(res.body.data);
+                    window.location = "/#/address/" + res.body.data.id;
+                }
+                
             });
         } else {
-            var chooseAddress = this.props.chooseAddress;
-            var address = this.props.listAddress[chooseAddress];
+            var address = this.props.address;
             data.address.id = address.id;
             UserAPI.updateAddress(data, (err, res) => {
-                if (err) {
-                    // TODO
-                } else {
-                    _.merge(address, data.address);
-                    this.props.updateListAddress(address, "update")
-                    this.props.addAddressForm(false);
-                }
                 this.setState({
                     saveLoading: false
                 });
+                if (err) {
+                    // TODO
+                } else {
+                    // _.merge(address, data.address);
+                    // this.props.updateListAddress(address, "update")
+                    // this.props.updateAddressForm(res.body.data);
+                    window.location = "/#/address/" + res.body.data.id;
+                }
             });
         }
-
     }
     getData() {
         var ReceiverName = this.refs["ReceiverName"];
@@ -218,15 +219,12 @@ export default class AddAddress extends Component {
                             </button>
                         ) : (
                         <button className="btn_primary btn_payment_form" type="submit">
-                            TIẾP TỤC
+                            Lưu
                             <span className="arrow_W">
                             </span>
                         </button>
                     )
                 }
-                <a className="link_register" onClick={this.onCancel.bind(this)}>
-                    Quay lại
-                </a>
             </div>
         );
     }
@@ -235,12 +233,7 @@ export default class AddAddress extends Component {
             <div className="field_btn">
                 <button className="btn_primary btn_payment_form" type="submit">
                     LƯU CHỈNH SỬA
-                    <span className="arrow_W">
-                    </span>
                 </button>
-                <a className="link_register" onClick={this.onCancel.bind(this)}>
-                    Chọn lại địa chỉ cũ
-                </a>
             </div>
         );
     }
@@ -315,9 +308,12 @@ export default class AddAddress extends Component {
             </div>
         );
     }
-    renderPage(address) {
+    renderPageForm(address) {
         return (
-            <div className="info_delivery">
+            <div className="col-lg-9 col-md-10">
+                <h2><small>{address.title}</small></h2>
+                <hr />
+                <br />
                 <form className="form" onSubmit={this.handlerSubmitForm.bind(this)}>
                     <div className="form-group">
                         <label htmlFor="ReceiverName" className="field_L padding_bottom_5px padding_top_5px">
@@ -326,7 +322,7 @@ export default class AddAddress extends Component {
                                 *
                             </span>
                         </label>
-                        <input className="form-control text_form_control" data-val="true" data-val-required="Vui lòng nhập họ và tên" ref="ReceiverName" id="ReceiverName" maxlength="100" name="ReceiverName" type="text" defaultValue={address.fullname} />
+                        <input placeholder="Họ & Tên" className="form-control text_form_control" data-val="true" data-val-required="Vui lòng nhập họ và tên" ref="ReceiverName" id="ReceiverName" maxlength="100" name="ReceiverName" type="text" defaultValue={address.fullname} />
                     </div>
                     {this.state.validateReceiverName.tagError}
                     <div className="form-group">
@@ -336,7 +332,7 @@ export default class AddAddress extends Component {
                                 *
                             </span>
                         </label>
-                        <input className="form-control text_form_control" data-val="true" data-val-regex="Không hợp lệ, vui lòng nhập đủ số di động" data-val-regex-pattern="09\d{8}|01\d{9}|0868\d{6}|088\d{7}|089\d{7}" data-val-required="Vui lòng nhập số điện thoại" ref="Mobile" id="Mobile" name="Mobile" type="text" defaultValue={address.phone} />
+                        <input placeholder="Số Điện Thoại" className="form-control text_form_control" data-val="true" data-val-regex="Không hợp lệ, vui lòng nhập đủ số di động" data-val-regex-pattern="09\d{8}|01\d{9}|0868\d{6}|088\d{7}|089\d{7}" data-val-required="Vui lòng nhập số điện thoại" ref="Mobile" id="Mobile" name="Mobile" type="text" defaultValue={address.phone} />
                     </div>
                     {this.state.validateMobile.tagError}
                     <div className="form-group">
@@ -346,7 +342,7 @@ export default class AddAddress extends Component {
                                 *
                             </span>
                         </label>
-                        <input className="form-control text_form_control" data-val="true" data-val-length="Số nhà tối đa 50 ký tự" data-val-length-max="50" data-val-required="Vui lòng nhập số nhà" ref="HouseNumber" id="HouseNumber" name="HouseNumber" type="text" defaultValue={address.homeno} />
+                        <input placeholder="Số Nhà" className="form-control text_form_control" data-val="true" data-val-length="Số nhà tối đa 50 ký tự" data-val-length-max="50" data-val-required="Vui lòng nhập số nhà" ref="HouseNumber" id="HouseNumber" name="HouseNumber" type="text" defaultValue={address.homeno} />
                     </div>
                     {this.state.validateHouseNumber.tagError}
                     <div className="form-group">
@@ -356,7 +352,7 @@ export default class AddAddress extends Component {
                                 *
                             </span>
                         </label>
-                        <input className="form-control text_form_control" data-val="true" data-val-required="Vui lòng nhập đường/phố" id="StreetName" ref="StreetName" name="StreetName" type="text" defaultValue={address.street} />
+                        <input placeholder="Tên Đường" className="form-control text_form_control" data-val="true" data-val-required="Vui lòng nhập đường/phố" id="StreetName" ref="StreetName" name="StreetName" type="text" defaultValue={address.street} />
                     </div>
                     {this.state.validateStreetName.tagError}
                     <div className="form-group">
@@ -365,7 +361,7 @@ export default class AddAddress extends Component {
                             <span className="other_color">
                             </span>
                         </label>
-                        <input className="form-control text_form_control" id="BuildingName" ref="BuildingName" name="BuildingName" type="text" defaultValue={address.building} />
+                        <input placeholder="Tòa Nhà" className="form-control text_form_control" id="BuildingName" ref="BuildingName" name="BuildingName" type="text" defaultValue={address.building} />
                     </div>
                     {this.state.validateBuildingName.tagError}
                     {this.renderCity(address)}
@@ -379,7 +375,7 @@ export default class AddAddress extends Component {
                                 *
                             </span>
                         </label>
-                        <input data-val-required="Vui lòng nhập phường/xã" className="form-control text_form_control" id="WardID" ref="WardID" name="WardID" type="text" defaultValue={address.ward} />
+                        <input placeholder="Phường/Xã" data-val-required="Vui lòng nhập phường/xã" className="form-control text_form_control" id="WardID" ref="WardID" name="WardID" type="text" defaultValue={address.ward} />
                     </div>
                     {this.state.validateWardID.tagError}
                     <div className="form-group">
@@ -407,18 +403,73 @@ export default class AddAddress extends Component {
             </div>
         );
     }
-    render() {
-        var formType = this.props.formType;
+    renderPageAddress(address) {
+        return (
+            <div className="col-lg-9 col-md-10">
+                <h2><small>{address.title}</small></h2>
+                <hr />
+                <br />
+                <form className="form" onSubmit={this.handlerSubmitForm.bind(this)}>
+                    <div className="form-group">
+                        <label htmlFor="ReceiverName" className="field_L padding_bottom_5px padding_top_5px">
+                            Họ và tên: {address.fullname}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="Mobile" className="field_L padding_bottom_5px padding_top_5px">
+                            Điện thoại: {address.phone}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="HouseNumber" className="field_L padding_bottom_5px padding_top_5px">
+                            Số nhà: {address.homeno}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="StreetName" className="field_L padding_bottom_5px padding_top_5px">
+                            Đường/Phố: {address.street}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="BuildingName" className="field_L padding_bottom_5px padding_top_5px">
+                            Tòa nhà: {address.building}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="BuildingName" className="field_L padding_bottom_5px padding_top_5px">
+                            Phường/Xã: {address.ward}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="BuildingName" className="field_L padding_bottom_5px padding_top_5px">
+                            Quận/Huyện: {address.district}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="BuildingName" className="field_L padding_bottom_5px padding_top_5px">
+                            Tỉnh/Tp: {address.province}
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="BuildingName" className="field_L padding_bottom_5px padding_top_5px">
+                            Loại Địa Chỉ: {address.type}
+                        </label>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+    recieveDataFromParent() {
         var address = {};
-        if (formType === "create") {
+        if (this.props.formType === "create") {
+            address.title = "Tạo Địa Chỉ Mới";
             address.provinceID = 0;
             address.districtID = 0;
             address.addressTypeHome = true;
             address.addressTypeOffice = false;
         } else {
-            var chooseAddress = this.props.chooseAddress;
-            address = this.props.listAddress[chooseAddress];
-
+            address = this.props.address;
+            address.title = "Địa Chỉ";
             var locations = this.props.locations;
 
             var province = _.findKey(locations, location => {
@@ -446,6 +497,14 @@ export default class AddAddress extends Component {
                 address.addressTypeOffice = true;
             }
         }
-        return this.renderPage(address);
+        return address;
+    }
+    render() {
+        var address = this.recieveDataFromParent();
+        if (this.props.formType === "create") {
+            return this.renderPageForm(address);
+        } else {
+            return this.renderPageAddress(address);
+        }
     }
 }

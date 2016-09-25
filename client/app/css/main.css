@@ -878,3 +878,41 @@ button.btn_payment_form {
     margin-top: -15px;
     color: red;
 }
+
+.profiles {
+    background: #00b7f1;
+    color: #fff;
+    padding: 5px;
+    margin-top: 0px;
+}
+
+.profiles .image {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.profiles .image img {
+    width: 45px;
+    height: 45px;
+}
+
+.profiles:after, .profiles:before {
+    display: table;
+    content: "";
+    clear: both;
+}
+
+.profiles .name {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.profiles h6 {
+    font-size: 15px;
+    margin: 0;
+    font-weight: 500;
+}

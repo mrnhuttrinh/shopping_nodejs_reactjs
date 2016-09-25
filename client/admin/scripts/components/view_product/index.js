@@ -400,7 +400,9 @@ export default class ViewProduct extends Component {
                 return (
                     <li className="list-size-group list-group-item list-group-item-success">
                         Size {size.name + "   "}
-                        <span className="label label-info">{size.quantity}</span>
+                        <span className="label label-info">Tổng {size.quantity}</span>{" "}
+                        <span className="label label-warning">Đặt Hàng {size.quantity - size.quantity_temp}</span>{" "}
+                        <span className="label label-success">Còn Lại {size.quantity_temp}</span>
                     </li>
                 )
             });
@@ -459,6 +461,10 @@ export default class ViewProduct extends Component {
                             </div>
                         </div>
                         <div className="col-sm-8">
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-12">
                             <h1>
                                 Thông Tin Sản Phẩm
                                 <DeleteProduct {...this.props}/>
@@ -466,10 +472,10 @@ export default class ViewProduct extends Component {
                             <table className="table table-bordered table-striped" id="user">
                                 <tbody>
                                     <tr>
-                                        <td style={{"width": "40%"}}>
+                                        <td style={{"width": "40%", "minWidth": "150px"}}>
                                             Loại Sản Phẩm
                                         </td>
-                                        <td style={{"width": "60%"}}>
+                                        <td style={{"width": "60%", "maxWidth": "850px", "overflow": "hidden"}}>
                                             <span className="label label-info">{totalCategory}</span>
                                             <Category {...this.props}/>
                                         </td>

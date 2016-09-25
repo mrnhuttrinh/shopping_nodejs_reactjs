@@ -4,6 +4,7 @@
         "adminImage": "img/data/employers/",
         "adminPath": "public/admin/",
         "shopPath": "public/shop/",
+        "userImage": "images/",
         "secret": "aothunphongcach",
         "server": {
             "port": 8000
@@ -40,6 +41,7 @@
         "productImage": "img/data/products/",
         "adminPath": "public/admin/",
         "shopPath": "public/shop/",
+        "userImage": "images/",
         "secret": "aothunphongcach",
         "server": {
             "port": 9000

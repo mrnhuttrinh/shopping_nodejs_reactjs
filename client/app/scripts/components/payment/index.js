@@ -16,6 +16,23 @@ export default class Payment extends Component {
         var cartItems = this.props.cartItems;
         var user = this.props.user;
         if (cartItems && user) {
+            var cartItems = this.props.cartItems;
+            var products = [];
+            _.forEach(cartItems, cart => {
+                _.forEach(cart.items, item => {
+                    var product = cart.product;
+                    products.push({
+                        id: product.id,
+                        price_wholesale: product.price_wholesale,
+                        price_wholesale_promotion: product.price_wholesale_promotion,
+                        quantity: item.quantity,
+                        size: item.id
+                    });
+                });
+            });
+            if (products.length) {} else {
+                window.location = "/#";
+            }
         } else {
             window.location = "/#/login";
         }
@@ -40,26 +57,30 @@ export default class Payment extends Component {
                     price_wholesale: product.price_wholesale,
                     price_wholesale_promotion: product.price_wholesale_promotion,
                     quantity: item.quantity,
-                    size: item.name
+                    size: item.id
                 });
             });
         });
-        data.products = products;
-        data.note = this.refs["SumPayment"].refs["orderNote"].value;
-        this.setState({
-            submitLoading: true
-        });
-        orderAPI.createNewOrder(data, (err, res) => {
-            if (err) {
-                // TODO
-            } else {
-                this.props.updateCartItems({});
-                window.location = "/#/myorder";
-            }
+        if (products.length) {
+            data.products = products;
+            data.note = this.refs["SumPayment"].refs["orderNote"].value;
             this.setState({
-                submitLoading: false
+                submitLoading: true
             });
-        });
+            orderAPI.createNewOrder(data, (err, res) => {
+                if (err) {
+                    // TODO
+                } else {
+                    this.props.updateCartItems({});
+                    window.location = "/#/myorder/" + res.body.data.text_id;
+                }
+                this.setState({
+                    submitLoading: false
+                });
+            });
+        } else {
+            window.location = "/#";
+        }
     }
     render() {
         var cartItems = this.props.cartItems;

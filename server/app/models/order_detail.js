@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         product_id: DataTypes.INTEGER,
         price: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER,
-        size: DataTypes.STRING,
+        size: DataTypes.INTEGER,
         status: {
             type: DataTypes.BOOLEAN,
             defaultValue: 1,

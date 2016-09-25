@@ -21,7 +21,7 @@ export default class RightInfo extends Component {
         if (!this.carts.length) {
             // show pop up
             this.setState({
-                onPopUp: (<PopUpWarn turnOffShowOnTop={this.turnOffShowOnTop.bind(this)} show={true}/>)
+                onPopUp: (<PopUpWarn contentText={"Vui lòng chọn số lượng."} turnOffShowOnTop={this.turnOffShowOnTop.bind(this)} show={true}/>)
             });
             return;
         }
@@ -42,6 +42,14 @@ export default class RightInfo extends Component {
         var sizeInCart = _.find(this.carts, (cart) => {
             return cart.id === size.id;
         });
+
+        if (quantity > size.quantity_temp) {
+            this.setState({
+                onPopUp: (<PopUpWarn contentText="Số Lượng Hàng Trong Kho Không Đủ!" turnOffShowOnTop={this.turnOffShowOnTop.bind(this)} show={true}/>)
+            });
+            return false;
+        }
+
         if (sizeInCart) {
             if (quantity) {
                 sizeInCart.quantity = quantity;
@@ -57,6 +65,7 @@ export default class RightInfo extends Component {
                 quantity: quantity
             });
         }
+        return true;
     }
     render() {
         var product = this.props.product;

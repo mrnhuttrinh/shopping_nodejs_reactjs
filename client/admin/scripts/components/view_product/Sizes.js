@@ -5,8 +5,11 @@ import apis from '../../apis/main';
 export default class Sizes extends Component {
     constructor(props) {
         super(props);
+
+        // backup old sizes
+        var product = _.cloneDeep(this.props.product);
         this.state = {
-            product: _.cloneDeep(this.props.product),
+            product: product,
             newSizes: [],
             sizeRemove: [],
             saveUpdateStatus: false
@@ -102,6 +105,7 @@ export default class Sizes extends Component {
         var sizeUpdate = _.find(self.state.product.sizes, (size) => {
             return size.id === sizeid
         })
+        sizeUpdate.quantity_temp = (event.currentTarget.value - sizeUpdate.quantity) + sizeUpdate.quantity_temp ;
         sizeUpdate.quantity = event.currentTarget.value;
     }
 
@@ -136,11 +140,13 @@ export default class Sizes extends Component {
     }
     render() {
         var totalProduct = 0;
+        var totalProductOrder = 0;
         var product = this.state.product;
         var viewSize = [];
         if (this.props.product) {
             _.forEach(this.props.product.sizes, size => {
                 totalProduct += size.quantity;
+                totalProductOrder += size.quantity_temp;
             })
         }
 
@@ -209,10 +215,12 @@ export default class Sizes extends Component {
         return (
             <tr>
                 <td>
-                    Tổng Số Lượng
+                    Số Lượng
                 </td>
                 <td>
-                    <span className="label label-info">{totalProduct}</span>
+                    <span className="label label-info">Tổng {totalProduct}</span>{" "}
+                    <span className="label label-warning">Đặt Hàng {totalProduct - totalProductOrder}</span>{" "}
+                    <span className="label label-success">Còn Lại {totalProductOrder}</span>
                     <button data-target="#sizesModal" data-toggle="modal" type="button" className="btn btn-default btn-xs pull-right">
                         <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>

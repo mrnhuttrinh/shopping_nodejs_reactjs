@@ -2,20 +2,15 @@ import React, {Component} from 'react'
 import checkfileimage from '../../utils/checkfileimage';
 import apis from '../../apis/menu';
 import _ from 'lodash';
-import ViewPicture from './ViewPicture';
 import ButtonLoading from '../ButtonLoading';
 
 export default class ModalMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectMenu: null,
-            newImageStatus: false,
-            savingNewImage: false,
-            newImage: {
-                link: "",
-                image: "",
-                category_id: 0
+            updatingLogo: false,
+            selectMenu: {
+                logo_image: ""
             }
         }
     }
@@ -36,141 +31,64 @@ export default class ModalMenu extends Component {
         if (checkfileimage(file)) {
             var fr = new FileReader();
             fr.onload = function() {
-                // fr.result is base-64
+                var data = {
+                    imageData: fr.result,
+                    id: self.state.selectMenu.id,
+                    logo_image: self.state.selectMenu.logo_image,
+                    link: self.state.selectMenu.link
+                }
                 self.setState({
-                    newImage: {
-                        category_id: self.props.menu.id,
-                        image: fr.result
+                    updatingLogo: !self.state.updatingLogo
+                })
+                apis.updateThumbnailCategory(data, function(err, res) {
+                    if (err) {
+                        toastr.error("Thay Đổi Logo Không Thành Công!");
+                    } else {
+                        self.state.selectMenu.thumbnail = fr.result;
+                        self.setState({
+                            selectMenu: self.state.selectMenu,
+                            updatingLogo: !self.state.updatingLogo
+                        })
+                        self.props.updateMenu(self.state.selectMenu);
+                        toastr.success("Thay Đổi Logo Thành Công!");
                     }
-                });
+                })
             }
             fr.readAsDataURL(file);
         } else {
             $(inputPhoto).val("");
         }
     }
-    saveMorePicture(event) {
-        event.preventDefault();
-        var self = this;
-        var linkTo = self.refs["linkTo"].value;
-        self.state.newImage.link = linkTo;
-        self.setState({
-            savingNewImage: !self.state.savingNewImage
-        })
-        apis.addMorePicture(this.state.newImage, function(err, res) {
-            if (err) {
-                toastr.error("Thêm Hình Ảnh Không Thành Công")
-            } else {
-                self.setState({
-                    newImage: {
-                        link: "",
-                        image: "",
-                        category_id: 0
-                    },
-                    newImageStatus: !self.state.newImageStatus,
-                    savingNewImage: !self.state.savingNewImage
-                });
-                if (!self.state.selectMenu.images) {
-                    self.state.selectMenu.images = [];
-                }
-                self.state.selectMenu.images.push(res.body.data);
-                self.props.addMorePicture(self.state.selectMenu);
-                toastr.success("Thêm Hình Ảnh Thành Công")
-            }
-            self.setState({
-                savingNewImage: !self.state.savingNewImage
-            });
-        })
-    }
-
-    addMorePicture(event) {
-        event.preventDefault();
-        $('.scroll-customize').animate({scrollTop: 0}, 'slow');
-        this.setState({
-            newImageStatus: !this.state.newImageStatus
-        });
-    }
-    deleteGallery(_image) {
-        _.remove(this.state.selectMenu.images, (image) => {
-            return image.id === _image.id;
-        })
-        this.props.deleteGallery(this.state.selectMenu);
-    }
     render() {
-        var self = this;
-        var addImageContent = "";
-        if (this.state.newImageStatus) {
-            addImageContent = (
-                <div className="col-md-12">
-                    <div className="panel panel-success">
-                        <div className="panel-heading">
-                            Thêm Hình Ảnh Mới
-                        </div>
-                        <div className="panel-body">
-                            <img src={this.state.newImage.image} alt="Hình Ảnh Mới" style={{"width": "100%", "height": "387px"}}/>
-                            <div>
-                                <input onChange={this.changePhoto.bind(this)} ref="exampleInputFile" id="exampleInputFile" type="file"/>
-                            </div>
-                            <br />
-                            <form className="form-horizontal">
-                                <div className="form-group">
-                                    <div className="col-sm-12">
-                                        <input id="linkTo" ref="linkTo" type="text" className="form-control" id="link" placeholder="Đường Dẫn Liên Kết"/>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <hr />
-                </div>
-            );
-        }
-
-        var indexCount = 0;
-        var listImages = _.map(self.props.menu.images, (image)=> {
-            return (<ViewPicture 
-                    deleteGallery={self.deleteGallery.bind(self)}
-                    indexCount={++indexCount}
-                    image={image} />
-            )
-        })
-        if (!listImages.length) {
-            listImages = (
-                <h2>Chưa Có Hình Ảnh!</h2>
-            )
-        }
         return (
-            <div id={this.props.name} className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                <div className="modal-dialog modal-lg">
+            <div id={this.props.name} className="modal modal-wide fade" tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 className="modal-title" id="exampleModalLabel">
-                                Danh Sách Hình Ảnh - [<strong className="brand-primary">{this.props.menu.name}</strong>]({indexCount})
+                                Thay Đổi Thumbnail [<strong>{this.state.selectMenu.name}</strong>]
                             </h4>
                         </div>
                         <div className="modal-body">
-                            <div className="row inline-modal500px scroll-customize">
-                                {addImageContent}
-                                <div className="col-md-12">
-                                    <table className="table table-hover">
-                                        {listImages}
-                                    </table>
+                            <div className="row">
+                                <div className="col-md-1">
+                                </div>
+                                <div className="col-md-10">
+                                    <div>
+                                        <img src={this.state.selectMenu.thumbnail} alt="Hình Ảnh Mới" style={{"width": "100%", "height": "387px"}}/>
+                                        {
+                                            this.state.updatingLogo ? (
+                                                <ButtonLoading />
+                                            ) : (
+                                                <input onChange={this.changePhoto.bind(this)} ref="exampleInputFile" id="exampleInputFile" type="file"/>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                <div className="col-md-1">
                                 </div>
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                        {
-                            this.state.newImageStatus ? (
-                                this.state.savingNewImage ? (
-                                    <ButtonLoading />
-                                ) : (
-                                    <button type="button" onClick={this.saveMorePicture.bind(this)} className="btn btn-primary">Lưu</button>
-                                )
-                            ) : (
-                                <button type="button" onClick={this.addMorePicture.bind(this)} className="btn btn-success">Thêm</button>
-                            )
-                        }
                         </div>
                     </div>
                 </div>

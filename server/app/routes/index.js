@@ -62,7 +62,7 @@ router.post("/add_more_picture", authorized, menu.addMorePicture);
 router.post("/delete_gallery_menu", authorized, menu.deleteGallery);
 router.post("/edit_gallery_menu", authorized, menu.editGallery);
 router.post("/update_logo_category", authorized, menu.updateLogoImage);
-
+router.post("/update_thumbnail_category", authorized, menu.updateThumbnailImage);
 
 // for shop
 var productShop = require("./shop/product");
@@ -82,5 +82,11 @@ router.post("/shop_update_address", user.updateAddress);
 router.post("/shop_create_new_oder", order.createNewOrder);
 router.get("/shop_get_user_info", user.getUserInfo);
 router.get("/shop_get_your_order", order.getYourOrder);
+router.get("/shop_get_my_order_by_id", order.getMyOrderById);
+router.get("/get_address_by_id", user.getAddressById);
+router.post("/update_user_info", user.updateUserInfo);
+router.get("/shop_get_news_by_id", newsShow.getByNewsId);
+router.get("/shop_get_products_relate_with_product", productShop.getProductsRelateWithProduct);
+router.get("/get_recommend_products", productShop.getRecommendProducts);
 
 module.exports = router;

@@ -83,7 +83,8 @@ module.exports = {
                 "fullname",
                 "address",
                 "phone",
-                "birthdate"
+                "birthdate",
+                "image"
             ]
         }).then(function(user) {
             if (!user) {
@@ -108,7 +109,8 @@ module.exports = {
         var userID = req.param("user_id");
         models.UserAddress.findAll({
             where: {
-                user_id: userID
+                user_id: userID,
+                status: 1
             }
         }).then(function(addresses) {
             return res.status(200).send({
@@ -165,7 +167,8 @@ module.exports = {
                 "birthdate",
                 "gender",
                 "username",
-                "type"
+                "type",
+                "image"
             ]
         }).then(function(user) {
             if (!user) {
@@ -177,6 +180,56 @@ module.exports = {
             }
 
             res.status(200).send({
+                data: user
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    getAddressById: function(req, res) {
+        var userID = req.param("user_id");
+        var id = req.param("id");
+        models.UserAddress.find({
+            where: {
+                user_id: userID,
+                id: id,
+                status: 1
+            }
+        }).then(function(address) {
+            return res.status(200).send({
+                data: address
+            });
+        }).catch(function() {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    updateUserInfo: function(req, res) {
+        var data = req.body.data;
+        var image = req.body.image_data;
+        var dataImage = image.split(";");
+        var imageType = (dataImage[0]).split("/")[1];
+        if (dataImage.length === 2) {
+            var imageFilePath = config.userImage + data.id + "." + imageType;
+            data.image = imageFilePath;
+            toImage(dataImage[1], imageFilePath, config.shopPath)
+        }
+        if (_.isEmpty(data.fullname)) {
+            return res.status(400).send({
+                error: "Tên Không Được Trống"
+            });
+        }
+        models.User.update(data, {
+            where: {
+                id: data.id
+            }
+        }).then(function(user) {
+            return res.status(200).send({
                 data: user
             });
         }).catch(function(err) {

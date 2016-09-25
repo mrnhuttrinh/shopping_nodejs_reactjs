@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LeftControl from './LeftControl';
+import LeftControl from '../LeftControl';
 import RightInfo from './RightInfo';
 import UserAPI from '../../apis/user';
 import OrderAPI from '../../apis/order';
@@ -61,11 +61,11 @@ export default class Profile extends Component {
         );
     }
     renderAccountInfo() {
-        var content = (<AccountInfo user={this.state.user} />);
-        var button = (<button onClick={this.editInfo.bind(this, 1, true)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>);
+        var content = (<AccountInfo {...this.props} user={this.state.user} />);
+        var button = (<button onClick={this.editInfo.bind(this, 1, true)} type="button" className="btn btn-primary btn-sm pull-right">Sửa Thông Tin</button>);
         if (this.state.editAccountInfor) {
-            content = (<AccountInfoEdit user={this.state.user} />);
-            button = (<button type="button" onClick={this.editInfo.bind(this, 1, false)} className="btn btn-success btn-sm pull-right">Save</button>);
+            content = (<AccountInfoEdit {...this.props} user={this.state.user} />);
+            button = (<button type="button" onClick={this.editInfo.bind(this, 1, false)} className="btn btn-success btn-sm pull-right">Quay Lại</button>);
         }
         return (
             <div className="col-lg-9 col-md-10">
@@ -96,7 +96,7 @@ export default class Profile extends Component {
                             <th>
                                 <p className="line-height-30px">
                                     Sổ địa chỉ
-                                    <button onClick={this.editInfo.bind(this, 2)} type="button" className="btn btn-primary btn-sm pull-right">Edit</button>
+                                    <a className="btn btn-success btn-sm pull-right" href="/#/address/add">Tạo Địa Chỉ Mới</a>
                                 </p>
                             </th>
                         </tr>
@@ -148,9 +148,6 @@ export default class Profile extends Component {
             case "addresses":
                 content = this.renderListAddress();
                 break;
-            // case "":
-            //     content = null;
-            //     break;
             case "myorders":
                 content = this.renderListOrder();
                 break;
@@ -162,6 +159,7 @@ export default class Profile extends Component {
                 <div className="container">
                     <div className="row">
                         <LeftControl 
+                            {...this.props}
                             menuName={menuName}/>
                         {content}
                     </div>

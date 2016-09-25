@@ -39,10 +39,12 @@ export default class GridProduct extends Component {
         if (this.state.gridView) {
             rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
+                var totalSizeOrder = 0;
                 var showSize = _.map(product.sizes, (size, index) => {
                     totalSize += size.quantity;
+                    totalSizeOrder += size.quantity_temp;
                     return (
-                        <p key={"size_" + index} className="text-left">Size: {size.name} <p className="pull-right">{size.quantity}</p></p>
+                        <p key={"size_" + index} className="text-left">Size: {size.name} <p className="pull-right">{size.quantity - size.quantity_temp}/{size.quantity}</p></p>
                     )
                 })
                 if (showSize.length === 0) {
@@ -71,7 +73,7 @@ export default class GridProduct extends Component {
                                     <p>{product.name}</p>
                                 </div>
                                 <h5 className="border-bottom-dotted">Mã <span className="label label-info pull-right">{product.code}</span></h5>
-                                <h5 className="border-bottom-dotted">Số Lượng <span className="label label-info pull-right">{totalSize}</span></h5>
+                                <h5 className="border-bottom-dotted">Số Lượng <span className="label label-info pull-right">{totalSize - totalSizeOrder}/{totalSize}</span></h5>
                             </div>
                         </Link>
                     </div>
@@ -80,11 +82,13 @@ export default class GridProduct extends Component {
         } else {
             rows = _.map(this.props.dashboard.listProduct, function(product) {
                 var totalSize = 0;
+                var totalSizeOrder = 0;
                 var sizeView = _.map(product.sizes, (size) => {
                     totalSize += size.quantity;
+                    totalSizeOrder += size.quantity_temp;
                     return (
                         <button key={size.id} className="btn btn-default btn-xs" type="button">
-                            Size {size.name} <span className="badge">{size.quantity}</span>
+                            Size {size.name} <span className="badge">{size.quantity - size.quantity_temp}/{size.quantity}</span>
                         </button>
                     )
                 })
@@ -110,7 +114,7 @@ export default class GridProduct extends Component {
                                     <div className="col-md-9">
                                         <h5 className="border-bottom-dotted">Tên <span className="label label-info pull-right">{product.name}</span></h5>
                                         <h5 className="border-bottom-dotted">Mã <span className="label label-info pull-right">{product.code}</span></h5>
-                                        <h5 className="border-bottom-dotted">Số Lượng: {sizeView} <span className="label label-info pull-right">{totalSize}</span></h5>
+                                        <h5 className="border-bottom-dotted">Số Lượng: {sizeView} <span className="label label-info pull-right">{totalSize - totalSizeOrder}/{totalSize}</span></h5>
                                         <h5 className="border-bottom-dotted">Giá Sỉ <span className="label label-info pull-right">{product.price_wholesale} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Giá Lẻ <span className="label label-info pull-right">{product.price_retail} VNĐ</span></h5>
                                         <h5 className="border-bottom-dotted">Màu Sắc <span className="label label-info pull-right">{product.color}</span></h5>

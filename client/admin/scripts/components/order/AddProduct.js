@@ -15,7 +15,8 @@ export default class AddProduct extends Component {
             listSizeOptions: [],
             resultSearchProduct: "",
             selectValueProduct: null,
-            selectValueSize: null
+            selectValueSize: null,
+            sizeQuantity: null
         };
     }
     subtractProduct(event) {
@@ -28,7 +29,8 @@ export default class AddProduct extends Component {
         if (_.isEmpty(textProduct)) return;
         this.setState({
             emptyProduct: false,
-            resultSearchProduct: ""
+            resultSearchProduct: "",
+            sizeQuantity: null
         });
         var data = {
             value: textProduct
@@ -74,18 +76,31 @@ export default class AddProduct extends Component {
         });
         this.setState({
             listSizeOptions: options,
-            selectValueProduct: val
+            selectValueProduct: val,
+            selectValueSize: null,
+            sizeQuantity: null
         });
     }
     selectChangeSize(val) {
+        // sizeQuantity
+        var listProduct = this.state.listProduct;
+        var selectValueProduct = this.state.selectValueProduct;
+        var currentProduct = _.find(listProduct, product => {
+            return product.id === selectValueProduct;
+        });
+        var currentSize = _.find(currentProduct.sizes, size => {
+            return size.id === val;
+        });
         this.setState({
-            selectValueSize: val
+            selectValueSize: val,
+            sizeQuantity: currentSize.quantity_temp
         });
     }
     checkPrePost() {
         if (this.state.selectValueSize === null) return false;
         if (this.state.selectValueProduct === null) return false;
         if (_.isEmpty(this.refs["Quantity"].value)) return false;
+        if (+this.refs["Quantity"].value > this.state.sizeQuantity) return false;
         return true;
     }
     getProperties() {
@@ -99,6 +114,14 @@ export default class AddProduct extends Component {
             price_wholesale: product.price_wholesale,
             price_wholesale_promotion: product.price_wholesale_promotion
         };
+    }
+    inputSizeQuantityChange(event) {
+        event.preventDefault();
+        var quantity = +event.target.value;
+        if (quantity > this.state.sizeQuantity) {
+            toastr.warning("Không Đủ Số Lượng!")
+            return;
+        }
     }
     render() {
         return (
@@ -123,7 +146,6 @@ export default class AddProduct extends Component {
                                 placeholder="Tên Sản Phẩm/Mã Sản Phẩm"
                                 options={this.state.listProductOptions}/>
                             <div className="note note-error">{this.state.resultSearchProduct}</div>
-                            <span className="help-block"><i className="fa fa-warning"></i> Please correct the error</span>
                         </section>
                         <section className="col col-2">
                             <a onClick={this.searchProduct.bind(this)} className="pull-right btn btn-primary btn-sm">Tìm Kiếm</a>
@@ -137,7 +159,7 @@ export default class AddProduct extends Component {
                                 </label>
                             </div>
                         </section>
-                        <section className="col col-10">
+                        <section className="col col-8">
                             <Select
                                 onChange={this.selectChangeSize.bind(this)}
                                 value={this.state.selectValueSize}
@@ -147,6 +169,9 @@ export default class AddProduct extends Component {
                                 name="ProductSize" 
                                 placeholder="Size"
                                 options={this.state.listSizeOptions}/>
+                        </section>
+                        <section className="col col-2">
+                            Số Lượng Kho: {this.state.sizeQuantity}
                         </section>
                     </div>
                     <div className="row">
@@ -160,7 +185,7 @@ export default class AddProduct extends Component {
                         <section className="col col-10">
                             <label className="input"> 
                                 <i className="icon-append fa fa-lock"></i>
-                                <input type="text" ref="Quantity" name="Quantity" placeholder="Số Lượng" />
+                                <input onChange={this.inputSizeQuantityChange.bind(this)} type="number" ref="Quantity" name="Quantity" placeholder="Số Lượng" />
                             </label>
                         </section>
                     </div>

@@ -79,24 +79,28 @@ module.exports = {
             query += condition + orderBy + limit;
             models.sequelize.query(query)
             .spread(function(rows) {
-                _.forEach(rows, function(row) {
-                    row.sizes = [];
-                });
                 //get size 
                 var arrayQuerySize = [];
                 _.forEach(rows, function(row) {
+                    row.sizes = [];
                     var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
                     arrayQuerySize.push(models.sequelize.query(querysize))
                 });
-                Q.all(arrayQuerySize).spread(function(rowsSizes) {
-                    if (rowsSizes) {
-                        _.forEach(rowsSizes[0], function(newRowSi) {
-                            _.forEach(rows, function(row) {
-                                if (row.id === newRowSi.product_id) {
-                                    row.sizes.push(newRowSi);
-                                }
+                Q.all(arrayQuerySize).then(function(rowsSizes) {
+                    if (rowsSizes.length) {
+                        _.forEach(rows, function(row) {
+
+                            _.forEach(rowsSizes, function(newRowSi) {
+
+                                _.forEach(newRowSi[0], function(newLevelRow) {
+                                    if (row.id === newLevelRow.product_id) {
+                                        row.sizes.push(newLevelRow);
+                                    }
+                                })
+
                             });
                         });
+
                         return res.status(200).send({
                             data: rows
                         });
@@ -190,6 +194,103 @@ module.exports = {
                     data: null
                 });
             }
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    getProductsRelateWithProduct: function(req, res) {
+        var product_name = req.param("product_name");
+        var queryCategory = " (select pc.category_id from  products_category as pc, products where products.id=pc.product_id and  products.text_link = '" + product_name + "') ";
+        var queryProduct = " and p.text_link <> '" + product_name + "' ";
+        var query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
+        var condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id and c.id IN " + queryCategory + queryProduct;
+        var orderBy = " ORDER BY p.createdAt DESC ";
+        var limit = " LIMIT 0, 5";
+        query += condition + orderBy + limit;
+        models.sequelize.query(query)
+        .spread(function(rows) {
+            _.forEach(rows, function(row) {
+                row.sizes = [];
+            });
+            //get size 
+            var arrayQuerySize = [];
+            _.forEach(rows, function(row) {
+                var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
+                arrayQuerySize.push(models.sequelize.query(querysize))
+            });
+            Q.all(arrayQuerySize).spread(function(rowsSizes) {
+                if (rowsSizes) {
+                    _.forEach(rowsSizes[0], function(newRowSi) {
+                        _.forEach(rows, function(row) {
+                            if (row.id === newRowSi.product_id) {
+                                row.sizes.push(newRowSi);
+                            }
+                        });
+                    });
+                    return res.status(200).send({
+                        data: rows
+                    });
+                } else {
+                    return res.status(200).send({
+                        data: []
+                    });
+                }
+            }).fail(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
+        }).catch(function(err) {
+            logger("ERROR", err);
+            return res.status(400).send({
+                error: err
+            });
+        });
+    },
+    getRecommendProducts: function(req, res) {
+        var query = "SELECT DISTINCT(p.id), p.* FROM products p, categories c, products_category pc ";
+        var condition = " WHERE p.status = 1 and p.id = pc.product_id and pc.category_id = c.id ";
+        var orderBy = " ORDER BY (p.price_wholesale_promotion) ASC ";
+        var limit = " LIMIT 0, 4";
+        query += condition + orderBy + limit;
+        models.sequelize.query(query)
+        .spread(function(rows) {
+            _.forEach(rows, function(row) {
+                row.sizes = [];
+            });
+            //get size 
+            var arrayQuerySize = [];
+            _.forEach(rows, function(row) {
+                var querysize = "SELECT * FROM sizes WHERE product_id = " + row.id;
+                arrayQuerySize.push(models.sequelize.query(querysize))
+            });
+            Q.all(arrayQuerySize).spread(function(rowsSizes) {
+                if (rowsSizes) {
+                    _.forEach(rowsSizes[0], function(newRowSi) {
+                        _.forEach(rows, function(row) {
+                            if (row.id === newRowSi.product_id) {
+                                row.sizes.push(newRowSi);
+                            }
+                        });
+                    });
+                    return res.status(200).send({
+                        data: rows
+                    });
+                } else {
+                    return res.status(200).send({
+                        data: []
+                    });
+                }
+            }).fail(function(err) {
+                logger("ERROR", err);
+                return res.status(400).send({
+                    error: err
+                });
+            });
         }).catch(function(err) {
             logger("ERROR", err);
             return res.status(400).send({

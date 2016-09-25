@@ -12,7 +12,8 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         size_id: DataTypes.INTEGER,
-        quantity: DataTypes.INTEGER
+        quantity: DataTypes.INTEGER,
+        quantity_temp: DataTypes.INTEGER
     }, {
         tableName: 'sizes'
     });

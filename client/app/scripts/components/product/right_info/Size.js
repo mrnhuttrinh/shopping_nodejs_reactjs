@@ -10,7 +10,10 @@ export default class Size extends Component {
             return;
         }
         var props = this.props;
-        props.increaseSize(props.size, value);
+        var result = props.increaseSize(props.size, value);
+        if (!result) {
+            event.target.value = props.size.quantity_temp;
+        }
     }
     render() {
         var product = this.props.product;
@@ -27,6 +30,8 @@ export default class Size extends Component {
                     <a href="javascript:;" is-cmoprice="" onclick="productdetail.changeSkuImages(159321);" price="">
                         Size: <strong>{size.name}</strong>
                     </a>
+                    <br />
+                    <abbr style={{color: "gray"}} title="attribute">Số Lượng Còn Trong Kho: <strong>{size.quantity_temp}</strong></abbr>
                 </td>
                 <td className="bg_price" width="126">
                     <span className="book_true_price">

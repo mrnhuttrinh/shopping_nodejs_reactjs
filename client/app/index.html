@@ -37,10 +37,45 @@
         <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/js/jquery.bxslider.min.js"></script>
         <link rel="stylesheet" href="styles/main.css">
+        <link href="styles/react-datepicker.min.css" rel="stylesheet" />
     </head>
     <body>
         <div id="app"></div>
+        <div id="fb-root"></div>
     </body>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '745581532251215',
+                xfbml      : true,
+                version    : 'v2.7'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=745581532251215";
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'facebook-jssdk'));
+    </script>
     <script src="scripts/app.js"></script>
     <script src="js/home.js"></script>
+    <!-- Your GOOGLE ANALYTICS CODE Below -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+            _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
 </html>

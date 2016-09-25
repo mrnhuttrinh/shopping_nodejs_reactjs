@@ -9,6 +9,7 @@ import Register from './views/Register';
 import Payment from './views/Payment';
 import Profile from './views/Profile';
 import MyOrder from './views/MyOrder';
+import Address from './views/Address';
 import ChangePassword from './views/ChangePassword';
 
 function enterOtherRouter(nextState, replace) {
@@ -56,8 +57,11 @@ export default {
             path: 'profile(/:sub_segment)',
             component: Profile
         }, {
-            path: 'myorder',
+            path: 'myorder(/:id)',
             component: MyOrder
+        }, {
+            path: 'address(/:id)',
+            component: Address
         }, {
             path: 'changepassword',
             component: ChangePassword

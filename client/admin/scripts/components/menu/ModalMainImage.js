@@ -134,11 +134,11 @@ export default class ModalMainImage extends Component {
                     image={image} />
             )
         })
-        if (!listImages.length) {
-            listImages = (
-                <h2>Chưa Có Hình Ảnh!</h2>
-            )
-        }
+        // if (!listImages.length) {
+        //     listImages = (
+        //         <h2>Chưa Có Hình Ảnh!</h2>
+        //     )
+        // }
         return (
             <div id={this.props.name} className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div className="modal-dialog modal-lg">

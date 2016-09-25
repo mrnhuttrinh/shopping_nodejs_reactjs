@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 
 export default class AccountInfo extends Component {
     render() {
         var user = this.props.user;
+        var sub_segment = this.props.params ? this.props.params["sub_segment"] : "";
         return (
             <tr>
                 <td className="padding-0px">
@@ -18,10 +20,10 @@ export default class AccountInfo extends Component {
                             </tr>
                             <tr>
                                 <td>
-                                    Tên Đăng Nhập: 
+                                    Ảnh Đại Diện: 
                                 </td>
                                 <td>
-                                    {" "} {user.username}
+                                    {" "} <img style={{width: "140px", height: "140px"}} src={user.image} alt="Ảnh Đại Diện" className="img-rounded" />
                                 </td>
                             </tr>
                             <tr>
@@ -53,17 +55,32 @@ export default class AccountInfo extends Component {
                                     Ngày Sinh: 
                                 </td>
                                 <td>
-                                    {" "} {user.birthdate}
+                                    {" "} {moment(user.birthdate).format("DD/MM/YYYY")}
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Liên Kết: 
-                                </td>
-                                <td>
-                                    {" "} {user.type}
-                                </td>
-                            </tr>
+                            {
+                                user.type === "Local" ? (
+                                    sub_segment === "user_info" ? (
+                                        <tr>
+                                            <td>
+                                                Đổi Mật Khẩu
+                                            </td>
+                                            <td>
+                                                <button type="button" className="btn btn-primary btn-sm">Đổi Mật Khẩu</button>
+                                            </td>
+                                        </tr>
+                                        ) : null
+                                ) : (
+                                    <tr>
+                                        <td>
+                                            Liên Kết: 
+                                        </td>
+                                        <td>
+                                            {" "} {user.type}
+                                        </td>
+                                    </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </td> 

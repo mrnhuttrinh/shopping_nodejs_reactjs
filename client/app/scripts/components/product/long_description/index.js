@@ -19,17 +19,8 @@ export default class LongDescription extends Component {
     render() {
         var product = this.props.product;
         return (
-            <div className="index_middle index_middle_grey dad">
-                <div className="container">
-                    <div className="row content_deal_hi">
-                        <div className="col-md-12 col-sm-12">
-                            <div className="deal_detail_Hi">
-                                <h4>Điểm nổi bật</h4>
-                                <div dangerouslySetInnerHTML={{__html: product.description_detail}}></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="deal_detail_Hi">
+                <div dangerouslySetInnerHTML={{__html: product.description_detail}}></div>
             </div>
         );
     }

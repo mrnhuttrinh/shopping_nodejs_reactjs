@@ -40,7 +40,7 @@ export default class News extends Component {
         return (
             <div className="index_middle">
                 <div className="container">
-                    <OneNews />
+                    <OneNews {...this.props} />
                 </div>
             </div>
         );

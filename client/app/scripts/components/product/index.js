@@ -6,6 +6,8 @@ import FlatLoading from '../FlatLoading';
 import LongDescription from './long_description';
 import Promotion from './promotion';
 import productAPIs from '../../apis/product';
+import LeftRelative from './LeftRelative';
+import FbComment from '../FbComment';
 
 export default class Product extends Component {
     constructor(props) {
@@ -15,9 +17,8 @@ export default class Product extends Component {
             loading: true
         }
     }
-    getProduct() {
+    getProduct(text_link) {
         var self = this;
-        var text_link = self.props.params.product_name;
         self.setState({
             loading: true
         });
@@ -35,11 +36,20 @@ export default class Product extends Component {
             });
         });
     }
+    componentWillReceiveProps(nextProps) {
+        var self = this;
+        var text_link = self.props.params.product_name;
+        var next_text_link = nextProps.params.product_name;
+        if (text_link !== next_text_link) {
+            this.getProduct(next_text_link);
+        }
+    }
     componentDidMount() {
         $(function() {
             $("body, html").scrollTop(0);
         });
-        this.getProduct();
+        var text_link = this.props.params.product_name;
+        this.getProduct(text_link);
     }
     render() {
         if (this.state.loading) {
@@ -62,8 +72,37 @@ export default class Product extends Component {
                                 </div>
                             </div>
                         </div>
-                        <LongDescription product={this.state.product} />
-                        <Promotion product={this.state.product} />
+                        <div className="index_middle">
+                            <div className="container content_detail">
+                                <div className="row">
+                                    <div className="col-md-9 col-sm-12">
+                                        <div>
+                                            <ul className="nav nav-tabs" role="tablist">
+                                                <li role="presentation">
+                                                    <a href="#long_description" aria-controls="long_description" role="tab" data-toggle="tab">Mô Tả Sản Phẩm</a></li>
+                                                <li role="presentation">
+                                                    <a href="#promotion" aria-controls="promotion" role="tab" data-toggle="tab">Thông Tin Chi Tiết</a></li>
+                                                <li role="presentation" className="active">
+                                                    <a href="#facebook_comments" aria-controls="facebook_comments" role="tab" data-toggle="tab">Bình Luận</a>
+                                                </li>
+                                            </ul>
+                                            <div className="tab-content">
+                                                <div role="tabpanel" className="tab-pane" id="long_description">
+                                                    <LongDescription product={this.state.product} />
+                                                </div>
+                                                <div role="tabpanel" className="tab-pane" id="promotion">
+                                                    <Promotion product={this.state.product} />
+                                                </div>
+                                                <div role="tabpanel" className="tab-pane active" id="facebook_comments">
+                                                    <div className="fb-comments" data-href={window.location.href} data-numposts="5"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <LeftRelative productName={this.props.params.product_name}/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 );
             } else {
