@@ -65,7 +65,8 @@ export default class CreateAddress extends Component {
                     // this.props.updateListAddress(res.body.data, "create");
                     // this.props.updateAddressForm(res.body.data);
                     // console.log(res.body.data);
-                    window.location = "/address/" + res.body.data.id;
+                    // window.location = "/address/" + res.body.data.id;
+                    this.context.router.push("/address/" + res.body.data.id);
                 }
                 
             });
@@ -82,7 +83,8 @@ export default class CreateAddress extends Component {
                     // _.merge(address, data.address);
                     // this.props.updateListAddress(address, "update")
                     // this.props.updateAddressForm(res.body.data);
-                    window.location = "/address/" + res.body.data.id;
+                    // window.location = "/address/" + res.body.data.id;
+                    this.context.router.push("/address/" + res.body.data.id);
                 }
             });
         }
@@ -508,3 +510,7 @@ export default class CreateAddress extends Component {
         }
     }
 }
+
+CreateAddress.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 export default class CartButton extends Component {
     redirect() {
-        window.location = '/checkout/cart';
+        // window.location = '/checkout/cart';
+        this.context.router.push('/checkout/cart');
     }
     render() {
         return (
@@ -12,3 +13,7 @@ export default class CartButton extends Component {
         );
     }
 }
+
+CartButton.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

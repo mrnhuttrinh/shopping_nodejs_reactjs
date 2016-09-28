@@ -12,6 +12,7 @@ import NewsOnTop            from '../components/NewsOnTop';
 import BannerCenter         from '../components/BannerCenter';
 import BreadCrumb           from '../components/BreadCrumb';
 import MenuHorizon          from '../components/MenuHorizon';
+import CategoryContents     from '../components/category';
 
 import apis                 from '../apis/main';
 import newsApis             from '../apis/news';
@@ -69,6 +70,10 @@ class MasterPage extends Component{
         }
     }
     checkSegment(segment) {
+        if (this.props.children) {
+            var children = this.props.children;
+            if (children.ref === "Product") return true;
+        }
         if (segment === "product" ||
             segment === "news" ||
             segment === "checkout" ||
@@ -85,6 +90,10 @@ class MasterPage extends Component{
     }
     render() {
         var pathName = this.props.location.pathname.split("/")[1];
+        var Content = this.props.children;
+        if (this.props.children) {} else {
+            Content = (<CategoryContents ref="Category" {...this.props}/>)
+        }
         return (
             <div className="index">
                 <MainMenu />
@@ -102,7 +111,7 @@ class MasterPage extends Component{
                     )
                 }
                 <div>
-                    {this.props.children}
+                    {Content}
                 </div>
                 <ScrollTop />
                 <Footer />

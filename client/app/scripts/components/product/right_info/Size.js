@@ -21,13 +21,13 @@ export default class Size extends Component {
         return (
             <tr className={this.props.classCSS}>
                 <td className="left_col" data-abc="" width="78">
-                    <a href="javascript:;" onclick="return'">
-                        <img alt="" height="45" src={"admin/" + product.thumbnail} width="45">
+                    <a href="javascript:;">
+                        <img alt="" height="45" src={window.pathAdmin + product.thumbnail} width="45">
                         </img>
                     </a>
                 </td>
                 <td className="name_book" width="221">
-                    <a href="javascript:;" is-cmoprice="" onclick="productdetail.changeSkuImages(159321);" price="">
+                    <a href="javascript:;">
                         Size: <strong>{size.name}</strong>
                     </a>
                     <br />

@@ -31,10 +31,12 @@ export default class Payment extends Component {
                 });
             });
             if (products.length) {} else {
-                window.location = "/";
+                this.context.router.push("/");
+                // window.location = "/";
             }
         } else {
-            window.location = "/login";
+            this.context.router.push("/login");
+            // window.location = "/login";
         }
     }
     createNewOrder() {
@@ -72,14 +74,16 @@ export default class Payment extends Component {
                     // TODO
                 } else {
                     this.props.updateCartItems({});
-                    window.location = "/myorder/" + res.body.data.text_id;
+                    this.context.router.push("/myorder/" + res.body.data.text_id);
+                    // window.location = "/myorder/" + res.body.data.text_id;
                 }
                 this.setState({
                     submitLoading: false
                 });
             });
         } else {
-            window.location = "/";
+            this.context.router.push("/");
+            // window.location = "/";
         }
     }
     render() {
@@ -95,3 +99,7 @@ export default class Payment extends Component {
         )
     }
 }
+
+Payment.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

@@ -11,7 +11,7 @@ export default class Item extends Component {
             <tr>
                 <td valign="left">
                     <a href={"/product/" + product.text_link}>
-                        <img alt={product.name} height="64" src={"/admin/" + product.thumbnail} width="64"/>
+                        <img alt={product.name} height="64" src={window.pathAdmin + product.thumbnail} width="64"/>
                     </a>
                     <a className="deal_name" href={"/product/" + product.text_link}>
                         {product.name} - size: {item.size_name}

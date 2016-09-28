@@ -9,7 +9,7 @@ export default class HightLightDeal extends Component {
                 <Link className="big_deal" to={'/' + menu.link}>
                     <div className='div_mask_one'></div>
                     <div className='div_mask_two'></div>
-                    <img alt={menu.name} src={"admin/" + menu.logo_image}></img>
+                    <img alt={menu.name} src={window.pathAdmin + menu.logo_image}></img>
                 </Link>
             </div>
         );

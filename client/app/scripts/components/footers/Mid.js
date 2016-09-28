@@ -41,7 +41,7 @@ export default class Mid extends React.Component {
                                 <li><span className="ic_cm icon-master"></span><span className="text">Master</span></li>
                             </ul>
                             <h4 className="footer_title">TẢI ỨNG DỤNG aothun MUA</h4>
-                            <p className="btn_android_ios"> <a className="btn_ios" target="_blank" href="http://itunes.apple.com/lb/app/truecaller-caller-id-number/id833357298?mt=8"></a> <a class="btn_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.cungmua.app&amp;hl=en"></a> </p>
+                            <p className="btn_android_ios"> <a className="btn_ios" target="_blank" href="http://itunes.apple.com/lb/app/truecaller-caller-id-number/id833357298?mt=8"></a> <a className="btn_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.cungmua.app&amp;hl=en"></a> </p>
                         </div>
                     </div>
                     <div className="col-md-6 col-sm-12">
@@ -54,8 +54,8 @@ export default class Mid extends React.Component {
                                 <div id="errorSubscribeEmail" className="buy_err">
                                 </div>
                                 <p>
-                                    <button className="btn_brand mR" onclick="layout.SubscribeEmail(1, 0)">NAM</button>
-                                    <button className="btn_brand" onclick="layout.SubscribeEmail(1, 1)">NỮ</button>
+                                    <button className="btn_brand mR">NAM</button>
+                                    <button className="btn_brand">NỮ</button>
                                 </p>
                             </div>
                             <div className="connect">

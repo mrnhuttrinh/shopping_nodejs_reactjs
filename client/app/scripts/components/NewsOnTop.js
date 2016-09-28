@@ -27,7 +27,7 @@ export default class NewsOnTop extends Component {
                     <div className="popup_news_inside">
                         <span onClick={this.turnOffShowOnTop.bind(this)} className="cursor-pointer button_close_popup"></span>
                         <Link onClick={this.turnOffShowOnTop.bind(this)} to={"/news/" + news.id}>
-                            <img className="popup_news_image" src={"admin/" + news.main_image}></img>
+                            <img className="popup_news_image" src={window.pathAdmin + news.main_image}></img>
                         </Link>
                     </div>
                 </div>

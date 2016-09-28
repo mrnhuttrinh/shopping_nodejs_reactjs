@@ -1,9 +1,7 @@
 /*jshint node: true */
 "use strict";
-
 // var ReactRouter = require("react-router")''
 // var Router = ReactRouter.Router;
-
 var express = require("express");
 var morgan = require("morgan");
 var path = require("path");
@@ -11,36 +9,38 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 var fs = require("fs-extra");
-
 var Constrains = require("./constrains");
 var configGlobal = require("./config");
 configGlobal._globalPath = __dirname;
 var logger = require("./logger");
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'templates'));
 app.set('view engine', 'jade');
-
 // passport
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
 // TODO - Why Do we need this key ?
-app.use(expressSession({secret: configGlobal.secret}));
+app.use(expressSession({
+    secret: configGlobal.secret
+}));
 app.use(passport.initialize());
 app.use(passport.session());
-
 // other
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+    extended: false,
+    limit: '50mb'
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public/shop")));
 app.use("/admin", express.static(path.join(__dirname, "public/admin")));
 // app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.disable('etag');
-
 // show log
 app.use(morgan("dev"));
 app.use(function(req, res, next) {
@@ -49,7 +49,6 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
-
 // app.get('*', function (req, res) {
 //     // This wildcard method handles all requests
 //     Router.run(routes, req.path, function (Handler, state) {
@@ -59,44 +58,81 @@ app.use(function(req, res, next) {
 //     });
 // });
 // 
-
 /**
  * Routers api
  */
 var routes = require('./routes/index');
 app.use(Constrains.ROUTE.API.INDEX, routes);
- 
 // index
 app.get(Constrains.ROUTE.INDEX, function(req, res) {
     res.sendFile(path.join(__dirname, "public/shop/index.html"));
 });
-
 // admin
 app.get(Constrains.ROUTE.ADMIN, function(req, res) {
-    res.sendFile(path.join(__dirname, "public/admin/index.html"));
+    res.sendFile(path.join(__dirname, "public/admin/other-page.html"));
 });
-
 // Initialize Passport
 // open Auth
 var initPassport = require('./passport/init');
 initPassport(passport);
 var auth = require("./routes/auth");
 app.use(Constrains.ROUTE.AUTH, auth(passport));
-
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).
+
+var groupExtendAPI = ['/checkout/cart'];
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'public/shop', 'index.html'));
 });
 
+// response.writeHeader(200, {"Content-Type": "text/html"});  
+// response.write(html);  
+// response.end();  
+
+// app.get(['/', '/checkout/cart'], function(req, res) {
+//     var ReactRouter = require('react-router');
+//     var match = ReactRouter.match;
+//     var RouterContext = React.createFactory(ReactRouter.RouterContext);
+//     var Provider = React.createFactory(require('react-redux').Provider);
+//     var routes = require('../../client/app/shop/routes.js').routes
+//     var store = require('../../client/app/shop/reducers.js');
+//     fs.readFile(COMMENTS_FILE, function(err, data) {
+//         if (err) {
+//             console.error(err);
+//             process.exit(1);
+//         }
+//         var comments = JSON.parse(data);
+//         var initialState = {
+//             data: comments,
+//             url: "/api/comments",
+//             pollInterval: 2000
+//         }
+//         store = store.configureStore(initialState);
+//         match({
+//             routes: routes,
+//             location: req.url
+//         }, function(error, redirectLocation, renderProps) {
+//             if (error) {
+//                 res.status(500).send(error.message)
+//             } else if (redirectLocation) {
+//                 res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+//             } else if (renderProps) {
+//                 res.send("<!DOCTYPE html>" + ReactDOMServer.renderToString(Provider({
+//                     store: store
+//                 }, RouterContext(renderProps))));
+//             } else {
+//                 res.status(404).send('Not found')
+//             }
+//         });
+//     });
+// });
 // catch 404 and forward to error handler
-app.use( function(req, res) {
+app.use(function(req, res) {
     res.sendFile(path.join(__dirname, "public/shop/notfound.html"));
 });
-
 // production error handler
 // no stacktraces leaked to user
-app.use( function(err, req, res) {
+app.use(function(err, req, res) {
     res.status(err.status || 500);
     logger("ERROR", err)
     res.render("error", {
@@ -104,6 +140,5 @@ app.use( function(err, req, res) {
         error: (app.get('env') === 'development') ? err : {}
     });
 });
-
 var autoUpdateDB = require("./db/autoUpdate");
 module.exports = app;

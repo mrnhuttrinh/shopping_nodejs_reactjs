@@ -63,7 +63,7 @@ export default class HeaderMenu extends Component {
                                                 maxWidth: "450px",
                                                 maxHeight: "450px",
                                                 margin: "0px"
-                                            }} src={"/admin/" + menu.thumbnail} />
+                                            }} src={window.pathAdmin + menu.thumbnail} />
                                     </a>
                                 ) : null
                             }
@@ -81,7 +81,7 @@ export default class HeaderMenu extends Component {
                         filter: "blur(1px)",
                         overflow: "hidden"
                     };
-                    var imageString = menu.thumbnail ? "/admin/" + menu.thumbnail : "../images/background_menu.jpg";
+                    var imageString = menu.thumbnail ? window.pathAdmin + menu.thumbnail : "../images/background_menu.jpg";
                     TwoLevelHtml = (
                         <div style={style} className="menu_ver_hover">
                             <a href={"/" + menu.link}>

@@ -27,9 +27,6 @@ export default {
             path: 'trang-chu',
             component: Home
         }, {
-            path: ':category_link/:product_name',
-            component: Product
-        }, {
             path: 'cartdetail',
             component: CartDetail
         }, {

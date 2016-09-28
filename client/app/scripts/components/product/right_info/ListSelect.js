@@ -30,8 +30,8 @@ export default class ListSelect extends Component {
         return (
             <div className="bg_detail" id="SkuList">
                 <div style={style} className="detail_listcart">
-                    <form autocomplete="off">
-                        <table border="0" cellpadding="0" cellspacing="0" className="shopping_cart_detail" id="tblListSkus">
+                    <form autoComplete="off">
+                        <table cellPadding="0" cellSpacing="0" className="shopping_cart_detail" id="tblListSkus">
                             <tbody>
                                 {listSizes}
                             </tbody>

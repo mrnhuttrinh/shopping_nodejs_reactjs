@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PopUp from './PopUp';
+import { Router, Link, Navigation } from 'react-router';
 
 export default class UserInfo extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ export default class UserInfo extends Component {
     }
     turnOffShowOnTop() {
         this.props.logOut();
-        window.location = "/";
+        // window.location = "/";
+        this.context.router.push("/" );
     }
     logOut(event) {
         event.preventDefault();
@@ -28,28 +30,28 @@ export default class UserInfo extends Component {
         return (
             <li>
                 {this.state.dialogPopUp}
-                <a href="/profile">
+                <Link to="/profile">
                     {userInfo.fullname}
                     <span className="ic_cm icon-arrow-d">
                         k
                     </span>
-                </a>
+                </Link>
                 <div className="hover_menu">
                     <ul className="list_hotline">
                         <li>
-                            <a href="/profile">
+                            <Link to="/profile">
                                 Tài khoản của bạn
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/myorder">
+                            <Link to="/myorder">
                                 Đơn hàng của bạn
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/changepassword">
+                            <Link to="/changepassword">
                                 Đổi mật khẩu
-                            </a>
+                            </Link>
                         </li>
                         <li className="btn full_width">
                             <button className="btn_brand1" onClick={this.logOut.bind(this)}>

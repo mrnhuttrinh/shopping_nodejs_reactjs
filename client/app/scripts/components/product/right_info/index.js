@@ -3,6 +3,8 @@ import _ from 'lodash';
 import RightTop from './RightTop';
 import RightBottom from './RightBottom';
 import PopUpWarn from '../PopUpWarn';
+import { Router, Link, Navigation } from 'react-router';
+var transitionTo = Router.transitionTo;
 
 export default class RightInfo extends Component {
     constructor(props) {
@@ -36,7 +38,7 @@ export default class RightInfo extends Component {
             items: this.carts
         };
         this.props.updateCartItems(cartItems);
-        window.location = "/checkout/cart";
+        this.context.router.push("/checkout/cart");
     }
     increaseSize(size, quantity) {
         var sizeInCart = _.find(this.carts, (cart) => {
@@ -79,5 +81,11 @@ export default class RightInfo extends Component {
                     product={product}/>
             </div>
         );
+    }
+};
+
+RightInfo.contextTypes = {
+    router: () => {
+        return React.PropTypes.object
     }
 };

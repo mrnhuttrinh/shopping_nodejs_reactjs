@@ -115,7 +115,8 @@ export default class AccountInfoEdit extends Component {
                 this.props.user.image = this.state.avatar;
                 this.state.avatar = null;
                 this.props.userLogin(this.props.user);
-                window.location = "/profile";
+                this.context.router.push("/profile");
+                // window.location = "/profile";
             }
         });
     }
@@ -203,3 +204,7 @@ export default class AccountInfoEdit extends Component {
         );
     }
 }
+
+AccountInfoEdit.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

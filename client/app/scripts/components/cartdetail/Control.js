@@ -8,7 +8,8 @@ export default class Control extends Component {
     redirectPay(event) {
         event.preventDefault();
         if (this.props.user) {
-            window.location = "/payment";
+            // window.location = "/payment";
+            this.context.router.push("/payment" );
         }
     }
     render() {
@@ -33,3 +34,7 @@ export default class Control extends Component {
         );
     }
 }
+
+Control.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

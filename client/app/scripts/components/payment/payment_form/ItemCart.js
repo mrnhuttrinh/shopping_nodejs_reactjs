@@ -8,7 +8,7 @@ export default class ItemCart extends Component {
         return (
             <li>
                 <a href={"/product/" + product.text_link}>
-                    <img alt={product.name} src={"admin/" + product.thumbnail} className="img" height="57" width="57" />
+                    <img alt={product.name} src={window.pathAdmin + product.thumbnail} className="img" height="57" width="57" />
                 </a>
                 <p className="title">
                     <a href={"/product/" + product.text_link}>

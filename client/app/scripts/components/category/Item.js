@@ -13,18 +13,18 @@ export default class Item extends Component {
         return (
             <li>
                 <div className="img">
-                    <Link to={"/product/" + postFixProduct}>
-                        <img alt={product.name} className="deal" height="318" src={"/admin/" + product.thumbnail} width="318">
+                    <Link to={"/" + postFixProduct}>
+                        <img alt={product.name} className="deal" height="318" src={window.pathAdmin + product.thumbnail} width="318">
                         </img>
                     </Link>
                     <div className="listdeal_hover_B">
-                        <Link className="btn_view"to={"/product/" + postFixProduct}>
+                        <Link className="btn_view"to={"/" + postFixProduct}>
                             XEM NGAY
                         </Link>
                     </div>
                 </div>
                 <div className="listdeal_info">
-                    <Link className="list_name" to={"/product/" + postFixProduct}>
+                    <Link className="list_name" to={"/" + postFixProduct}>
                         {product.name}
                     </Link>
                     <div className="listdeal_group">

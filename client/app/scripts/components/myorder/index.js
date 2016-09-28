@@ -46,7 +46,8 @@ export default class MyOrder extends Component {
                 }
             });
         } else {
-            window.location = "/profile/myorders";
+            this.context.router.push("/profile/myorders");
+            // window.location = "/profile/myorders";
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -137,3 +138,7 @@ export default class MyOrder extends Component {
         }
     }
 }
+
+MyOrder.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

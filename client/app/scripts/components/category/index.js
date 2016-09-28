@@ -68,9 +68,9 @@ export default class CategoryContents extends Component {
         var currentPage = props.params.page;
         var nextPage = nextProps.params.page;
 
-        if (    currentHash !== nextHash
-            ||  currentSort !== nextSort
-            ||  currentPage !== nextPage) {
+        if (currentHash !== nextHash
+            || currentSort !== nextSort
+            || currentPage !== nextPage) {
             if (currentHash !== nextHash) {
                 this.getTotalProduct(nextProps);
             }

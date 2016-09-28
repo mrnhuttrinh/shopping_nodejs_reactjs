@@ -30,7 +30,7 @@ export default class OneNews extends Component {
                     <div className="container">
                         <h1>{news.title}</h1>
                         <hr />
-                        <img src={"/admin/" + news.main_image} />
+                        <img src={window.pathAdmin + news.main_image} />
                         <div dangerouslySetInnerHTML={{__html: news.content}}>
                         </div>
                     </div>
