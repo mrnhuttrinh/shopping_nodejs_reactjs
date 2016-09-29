@@ -20,7 +20,7 @@ export default class Title extends Component {
                 </div>
                 <ul className="title_menu">
                     <li>
-                        <Link className={sort === "newest" ? "actived" : ""} to={"/category/" + currentMenu.link + "/newest"} id="newest">
+                        <Link className={sort === "newest" ? "actived" : ""} to={"/" + currentMenu.link + "/newest"} id="newest">
                             <span className="ic_cm ic_check">
                                 r
                             </span>
@@ -28,7 +28,7 @@ export default class Title extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link className={sort === "hottest" ? "actived" : ""} to={"/category/" + currentMenu.link + "/hottest"} id="best_seller">
+                        <Link className={sort === "hottest" ? "actived" : ""} to={"/" + currentMenu.link + "/hottest"} id="best_seller">
                             <span className="ic_cm ic_check">
                                 r
                             </span>

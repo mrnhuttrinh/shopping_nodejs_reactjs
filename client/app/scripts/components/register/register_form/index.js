@@ -8,6 +8,7 @@ import Validate from './Validate';
 import _ from 'lodash';
 import userAPIs from '../../../apis/user';
 import PopUp from './PopUp';
+import { Router, Link, Navigation } from 'react-router';
 
 export default class FormElement extends Component {
     constructor(props) {
@@ -255,7 +256,8 @@ export default class FormElement extends Component {
             dialogPopup: null
         });
         if (status) {
-            window.location = "/#/login";
+            this.context.router.push("/login");
+            // window.location = "/login";
         }
     }
     render() {
@@ -358,9 +360,9 @@ export default class FormElement extends Component {
                             <button className="btn_primary" id="btnRegister" type="submit">
                                 HOÀN THÀNH
                             </button>
-                            <a className="link_register" href="/#/login">
+                            <Link className="link_register" to="/login">
                                 Đã đăng ký?
-                            </a>
+                            </Link>
                         </div>
                         {this.state.registerSubmit.tagError}
                     </div>
@@ -369,3 +371,7 @@ export default class FormElement extends Component {
         );
     }
 }
+
+FormElement.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

@@ -34,7 +34,7 @@ export default class Galleries extends Component {
             return (
                 <div key={"small-imge" + index} className="slide"> 
                     <a data-slide-index={index} className={"small-img" + firstImage}>
-                        <img src={"admin/" + _gal.image}/>
+                        <img src={window.pathAdmin + _gal.image}/>
                     </a>
                 </div>
             )
@@ -42,7 +42,7 @@ export default class Galleries extends Component {
         var listBigImage = _.map(galleries, (_gal, index) => {
             return (
                 <li key={"big_image_" + index}>
-                    <img alt={product.name} height="490" src={"admin/" + _gal.image} />
+                    <img alt={product.name} height="490" src={window.pathAdmin + _gal.image} />
                 </li>
             );
         });

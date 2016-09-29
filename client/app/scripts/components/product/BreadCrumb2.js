@@ -37,7 +37,7 @@ export default class BreadCrumb2 extends Component {
             var arrayBC = this.getBreadCrumb(currentMenu, [currentMenu]);
             arrayBC = arrayBC.reverse();
             childBC = _.map(arrayBC, (_arr) => {
-                return <li key={"li_breadcrumb_" + _arr.id}><Link to={"/category/" + _arr.link}>{_arr.name}</Link></li>
+                return <li key={"li_breadcrumb_" + _arr.id}><Link to={"/" + _arr.link}>{_arr.name}</Link></li>
             });
         }
         return (

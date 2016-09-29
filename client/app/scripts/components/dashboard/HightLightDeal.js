@@ -6,10 +6,10 @@ export default class HightLightDeal extends Component {
         var menu = this.props.menu;
         return (
             <div className="hightlight_deal">
-                <Link className="big_deal" to={'/category/' + menu.link}>
+                <Link className="big_deal" to={'/' + menu.link}>
                     <div className='div_mask_one'></div>
                     <div className='div_mask_two'></div>
-                    <img alt={menu.name} src={"admin/" + menu.logo_image}></img>
+                    <img alt={menu.name} src={window.pathAdmin + menu.logo_image}></img>
                 </Link>
             </div>
         );

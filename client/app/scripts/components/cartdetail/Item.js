@@ -54,10 +54,10 @@ export default class Item extends Component {
         return (
             <tr>
                 <td valign="left">
-                    <a href={"/#/product/" + product.text_link}>
-                        <img alt={product.name} height="64" src={"/admin/" + product.thumbnail} width="64"/>
+                    <a href={"/product/" + product.text_link}>
+                        <img alt={product.name} height="64" src={window.pathAdmin + product.thumbnail} width="64"/>
                     </a>
-                    <a className="deal_name" href={"/#/product/" + product.text_link}>
+                    <a className="deal_name" href={"/product/" + product.text_link}>
                         {product.name} - size: {item.name}
                     </a>
                     <p className="acc_note">

@@ -30,7 +30,7 @@ export default class Bxslider extends Component {
         var listNews = props.news.listNews;
         var listImages = _.map(listNews, (news) => {
             if (!_.isEmpty(news.main_image))
-                return (<li key={"bxslider_" + news.id}><Link to={"/news/" + news.id}><img src={"admin/" + news.main_image} /></Link></li>);
+                return (<li key={"bxslider_" + news.id}><Link to={"/news/" + news.id}><img src={window.pathAdmin + news.main_image} /></Link></li>);
         });
         if (listImages.length === 0) {
             listImages.push(<li key={"bxslider_null"}><img src="" /></li>);

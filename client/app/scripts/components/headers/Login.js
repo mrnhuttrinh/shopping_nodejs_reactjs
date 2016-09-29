@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
+import { Router, Link, Navigation } from 'react-router';
 
 export default class Login extends Component {
     redirectLogin(event) {
         event.preventDefault();
-        window.location = "/#/login";
+        this.context.router.push("/login");
+        // window.location = "/login";
     }
     behaviorSuccess(user) {
         window.userLogin(user);
-        window.location = "/#/";
+        // this.context.router.push("/");
+        window.location = "/";
     }
     openURLFacebook(event) {
         event.preventDefault();
@@ -23,12 +26,12 @@ export default class Login extends Component {
     render() {
         return (
             <li>
-                <a href="/#/login">
+                <Link to="login">
                     Đăng nhập
                     <span className="ic_cm icon-arrow-d">
                         k
                     </span>
-                </a>
+                </Link>
                 <div className="hover_menu">
                     <ul className="list_hotline">
                         <li className="btn">
@@ -46,9 +49,9 @@ export default class Login extends Component {
                         </li>
                         <li className="note">
                             Khách hàng mới?
-                            <a href="/#/register">
+                            <Link to="/register">
                                 {" "}Tạo tài khoản
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -56,3 +59,6 @@ export default class Login extends Component {
         );
     }
 }
+Login.contextTypes = {
+    router: function() { return React.PropTypes.func.isRequired; }
+};

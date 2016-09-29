@@ -68,9 +68,9 @@ export default class CategoryContents extends Component {
         var currentPage = props.params.page;
         var nextPage = nextProps.params.page;
 
-        if (    currentHash !== nextHash
-            ||  currentSort !== nextSort
-            ||  currentPage !== nextPage) {
+        if (currentHash !== nextHash
+            || currentSort !== nextSort
+            || currentPage !== nextPage) {
             if (currentHash !== nextHash) {
                 this.getTotalProduct(nextProps);
             }
@@ -99,7 +99,7 @@ export default class CategoryContents extends Component {
                         }
                         <Pagination 
                             page={page}
-                            href={"/category/" + currentHash + "/" + sort}
+                            href={"/" + currentHash + "/" + sort}
                             totalRow={this.state.totalProduct} 
                             rows={NUMBER_PRODUCT} />
                     </div>

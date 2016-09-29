@@ -38,8 +38,8 @@ export default class Product extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var self = this;
-        var text_link = self.props.params.product_name;
-        var next_text_link = nextProps.params.product_name;
+        var text_link = self.props.params["category_link"];
+        var next_text_link = nextProps.params["category_link"];
         if (text_link !== next_text_link) {
             this.getProduct(next_text_link);
         }
@@ -48,7 +48,7 @@ export default class Product extends Component {
         $(function() {
             $("body, html").scrollTop(0);
         });
-        var text_link = this.props.params.product_name;
+        var text_link = this.props.params["category_link"];
         this.getProduct(text_link);
     }
     render() {
@@ -99,7 +99,7 @@ export default class Product extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <LeftRelative productName={this.props.params.product_name}/>
+                                    <LeftRelative productName={this.props.params["category_link"]}/>
                                 </div>
                             </div>
                         </div>

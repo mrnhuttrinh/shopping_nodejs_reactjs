@@ -8,7 +8,7 @@ export default class HeaderMenu extends Component {
             if (menu.level === 3) {
                 menu.html = (
                     <li key={"menu_" + menu.id}>
-                        <Link to={"/category/" + menu.link}>{menu.name}</Link>
+                        <Link to={"/" + menu.link}>{menu.name}</Link>
                     </li>
                 );
                 return menu;
@@ -20,7 +20,7 @@ export default class HeaderMenu extends Component {
                 var html = [];
                 html.push(
                     <li key={"menu_" + menu.id} className="bold">
-                        <Link to={"/category/" + menu.link}>{menu.name}</Link>
+                        <Link to={"/" + menu.link}>{menu.name}</Link>
                     </li>
                 );
                 _.map(menuLevelThree, ml3 => {
@@ -58,12 +58,12 @@ export default class HeaderMenu extends Component {
                                         border: "0px",
                                         right: "0px",
                                         bottom: "0px"
-                                    }} href={"#/category/" + menu.link}>
+                                    }} href={"/" + menu.link}>
                                         <img style={{
                                                 maxWidth: "450px",
                                                 maxHeight: "450px",
                                                 margin: "0px"
-                                            }} src={"/admin/" + menu.thumbnail} />
+                                            }} src={window.pathAdmin + menu.thumbnail} />
                                     </a>
                                 ) : null
                             }
@@ -81,10 +81,10 @@ export default class HeaderMenu extends Component {
                         filter: "blur(1px)",
                         overflow: "hidden"
                     };
-                    var imageString = menu.thumbnail ? "/admin/" + menu.thumbnail : "../images/background_menu.jpg";
+                    var imageString = menu.thumbnail ? window.pathAdmin + menu.thumbnail : "../images/background_menu.jpg";
                     TwoLevelHtml = (
                         <div style={style} className="menu_ver_hover">
-                            <a href={"#/category/" + menu.link}>
+                            <a href={"/" + menu.link}>
                                 <img src={imageString} />
                             </a>
                         </div>
@@ -92,7 +92,7 @@ export default class HeaderMenu extends Component {
                 }
                 menu.html = (
                     <li key={"menu_" + menu.id}>
-                        <Link to={"/category/" + menu.link}>
+                        <Link to={"/" + menu.link}>
                             <span className={"ic_cm " + menu.icon}>
                                 {menu.char}
                             </span>

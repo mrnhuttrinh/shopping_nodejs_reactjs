@@ -78,7 +78,7 @@ export default class LoginForm extends Component {
             dialogPopup: null
         });
         if (status) {
-            window.location = "/#/";
+            window.location = "/";
         }
     }
     render() {
@@ -116,7 +116,7 @@ export default class LoginForm extends Component {
                         </div>
                         {this.state.validatePassword.tagError}
                         <div className="field_link">
-                            <a href="/#/forgot_password">
+                            <a href="/forgot_password">
                                 Bạn quên mật khẩu
                             </a>
                         </div>
@@ -126,7 +126,7 @@ export default class LoginForm extends Component {
                                 <span className="arrow_W">
                                 </span>
                             </button>
-                            <a className="link_register" href="/#/register">
+                            <a className="link_register" href="/register">
                                 Bạn chưa có tài khoản?
                             </a>
                         </div>

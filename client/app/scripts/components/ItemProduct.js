@@ -15,8 +15,8 @@ export default class ItemProduct extends Component {
             <li>
                 <div className="img">
                     <div className='mask'></div>
-                    <Link to={'/product/' + product.text_link}>
-                        <img alt={product.alt} className="deal" height="235" src={"/admin/" + product.thumbnail} width="235">
+                    <Link to={product.text_link}>
+                        <img alt={product.alt} className="deal" height="235" src={window.pathAdmin + product.thumbnail} width="235">
                         </img>
                     </Link>
                     <span className="lbl_place">
@@ -26,7 +26,7 @@ export default class ItemProduct extends Component {
                         <span className="text_alert">
 
                         </span>
-                        <Link className="btn_view" to={'/product/' + product.text_link}>
+                        <Link className="btn_view" to={product.text_link}>
                             XEM NGAY
                         </Link>
                     </div>
@@ -38,7 +38,7 @@ export default class ItemProduct extends Component {
                     </div>
                 </div>
                 <div className="listdeal_info">
-                    <Link className="list_name" to={'/product/' + product.text_link}>
+                    <Link className="list_name" to={product.text_link}>
                         {product.name}
                     </Link>
                     <div className="listdeal_group">
